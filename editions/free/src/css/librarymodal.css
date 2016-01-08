@@ -1,0 +1,181 @@
+/* frame */
+
+.libframe {
+    position: absolute;
+    z-index: 10000;
+    background: url('../assets/libbkg.png');
+    background-size: 100%;
+    display: none;
+    width: ${css_vw(100)};
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.libframe.appear {display: block;}
+
+.libframe.disappear {display: none;}
+
+/* Header */
+
+.topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: ${css_vh(9.77)};
+    overflow: hidden;
+    text-shadow: none;
+    z-index: 11000;
+    background: url('../assets/pagebkg.png');
+    background-size: 100%;
+    -webkit-box-shadow: 0px ${1 * scaleMultiplier}px ${3 * scaleMultiplier}px rgba(166, 168, 171, 1);
+    border: 0px solid #fff;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: rgba(166, 168, 171, 1);
+}
+
+.topbar .actions {
+    margin: ${css_vh(0.65)} ${css_vh(0.00)} ${css_vh(0.00)};
+    height: ${css_vh(8.46)};
+}
+
+.assetname-container {
+    position: absolute;
+    top: ${css_vh(3)};
+    width: 100%;
+    pointer-events: none;
+}
+
+.assetname {
+    top:  0px;
+    height: ${css_vh(6.51)};
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.assetname p{
+    text-align: center;
+    font-size: ${css_vh(4.17)};
+    /*  font-weight: bold;  */
+    color:  #4682B5;
+    font-weight: 500 !important;
+    text-shadow: 0px -${1 * scaleMultiplier}px #0D1D28;
+    font-family: Roboto;
+    line-height: ${css_vh(4.69)};
+    cursor: default;
+    outline: ${css_vh(0.00)};
+    height: ${css_vh(5.21)};
+}
+
+.actions .bkgbuttons {
+    float: right;
+    display: block;
+    margin: ${css_vh(0.00)};
+    padding: ${css_vh(0.00)};
+    width: ${css_vh(31.25)};
+    height: ${css_vh(8.46)};
+}
+
+.actions .shapebuttons {
+    float: right;
+    display: block;
+    margin: ${css_vh(0.00)};
+    padding: ${css_vh(0.00)};
+    width: ${css_vh(54.30)};
+    height: ${css_vh(8.46)};
+    background: like
+}
+
+.painticon {
+    display: inline-block;
+    position: relative;
+    margin: ${css_vh(0.00)} ${css_vh(0.91)} ${css_vh(0.00)};
+    width: ${css_vh(8.46)};
+    height: ${css_vh(8.46)};
+    background: url('../assets/paint/paintbrush.svg');
+    background-size: ${css_vh(8.46)} ${css_vh(8.46)};
+    background-size: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.okicon {
+    display: inline-block;
+    position: relative;
+    margin: ${css_vh(0.00)} ${css_vh(0.91)} ${css_vh(0.00)};
+    width: ${css_vh(8.46)};
+    height: ${css_vh(8.46)};
+    background: url('../assets/paint/ok.svg');
+    background-size: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.cancelicon {
+    display: inline-block;
+    position: relative;
+    margin: ${css_vh(0.00)} ${css_vh(0.91)} ${css_vh(0.00)};
+    width: ${css_vh(8.46)};
+    height: ${css_vh(8.46)};
+    background: url('../assets/paint/cancel.svg');
+    background-size: 100.5%; /* webview pixelates the image unless we do this */
+    -webkit-tap-highlight-color: transparent;
+}
+
+.okicon:active {
+     background: url('../assets/paint/okPressed.svg');
+     background-size: 100%;
+}
+.cancelicon:active {
+     background: url('../assets/paint/cancelPressed.svg');
+     background-size: 100.5%; /* webview pixelates the image unless we do this */
+}
+.painticon:active {
+     background: url('../assets/paint/paintbrushPressed.svg');
+     background-size: 100%;
+}
+
+/*
+Assets chooser
+*/
+
+*.innerlibrary {
+    padding: ${css_vh(11.72)} ${css_vh(0.00)} ${css_vh(6.51)};
+    margin: ${css_vh(0.00)};
+    margin-left: auto;
+    margin-right: auto;
+}
+
+*.scrollarea{
+    position: relative;
+    padding: ${css_vh(0.00)};
+    margin: ${css_vh(0.00)} auto;
+    width: ${css_vw(92.77)};
+
+}
+
+hr.bigdivide{
+    height: ${css_vh(0.52)};
+    border: 0;
+    box-shadow: inset 0 ${4 * scaleMultiplier}px ${4 * scaleMultiplier}px -${4 * scaleMultiplier}px rgba(166, 168, 171, 1);
+}
+
+.assetbox {
+    display: inline-block;
+    vertical-align: top;
+    width: ${css_vh(17.84)};
+    height: ${css_vh(14.45)};
+    margin: ${css_vh(0.65)};
+    padding: ${css_vh(0.65)};
+}
+
+.assetbox.off {
+    background: url('../assets/paint/thumbOff.png') no-repeat center top;
+    background-size: 100%;
+}
+
+.assetbox.on {
+    background: url('../assets/paint/thumbOn.png') no-repeat center top;
+    background-size: 100%;
+}

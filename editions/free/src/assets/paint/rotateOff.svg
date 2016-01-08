@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px"
+	 height="58px" viewBox="0 0 60 58" enable-background="new 0 0 60 58" xml:space="preserve">
+<g id="Pressed_states" display="none">
+	<g id="buttons_pressed" display="inline">
+	</g>
+	<g id="buttons_pressed_on" display="inline">
+	</g>
+	<g id="buttons_pressed_copy" display="inline">
+	</g>
+	<g id="DrawingToolsButtonsTaped" display="inline">
+		<g>
+			<g>
+				<g>
+					<path fill="#FFAA00" d="M57.597,8.61c0-2.966-2.507-5.367-5.6-5.367H9.437c-3.093,0-5.6,2.401-5.6,5.367v40.787
+						c0,2.964,2.507,5.365,5.6,5.365h42.561c3.093,0,5.6-2.401,5.6-5.365V8.61z"/>
+				</g>
+				<defs>
+					<filter id="Adobe_OpacityMaskFilter" filterUnits="userSpaceOnUse" x="3.837" y="3.243" width="53.76" height="51.52">
+						
+							<feColorMatrix  type="matrix" values="-1 0 0 0 1  0 -1 0 0 1  0 0 -1 0 1  0 0 0 1 0" color-interpolation-filters="sRGB" result="source"/>
+					</filter>
+				</defs>
+				<mask maskUnits="userSpaceOnUse" x="3.837" y="3.243" width="53.76" height="51.52" id="SVGID_2_">
+					<g filter="url(#Adobe_OpacityMaskFilter)">
+						<image overflow="visible" width="59" height="57" xlink:href="74BD1CDE.jpg"  transform="matrix(1 0 0 1 1.0366 0.7529)">
+						</image>
+					</g>
+				</mask>
+				<g opacity="0.31" mask="url(#SVGID_2_)">
+					<path d="M57.597,8.61c0-2.966-2.507-5.367-5.6-5.367H9.437c-3.093,0-5.6,2.401-5.6,5.367v40.787c0,2.964,2.507,5.365,5.6,5.365
+						h42.561c3.093,0,5.6-2.401,5.6-5.365V8.61z"/>
+				</g>
+			</g>
+			<linearGradient id="SVGID_4_" gradientUnits="userSpaceOnUse" x1="29.9966" y1="55.8828" x2="29.9966" y2="2.8643">
+				<stop  offset="0" style="stop-color:#FFFFFF"/>
+				<stop  offset="0.2309" style="stop-color:#FBFBFB"/>
+				<stop  offset="0.4598" style="stop-color:#EFEFEF"/>
+				<stop  offset="0.6879" style="stop-color:#DBDBDB"/>
+				<stop  offset="0.9144" style="stop-color:#C0C0C0"/>
+				<stop  offset="1" style="stop-color:#B3B3B3"/>
+			</linearGradient>
+			<path fill="url(#SVGID_4_)" d="M57.997,49.397c0,3.582-3.009,6.485-6.72,6.485H8.716c-3.711,0-6.72-2.903-6.72-6.485V8.608
+				c0-3.582,3.009-6.485,6.72-6.485h42.561c3.711,0,6.72,2.903,6.72,6.485V49.397z M55.756,8.61c0-2.347-2.006-4.248-4.479-4.248
+				H8.716c-2.474,0-4.479,1.901-4.479,4.248v40.785c0,2.347,2.006,4.247,4.479,4.247h42.561c2.474,0,4.479-1.9,4.479-4.247V8.61z"/>
+			<path fill="#FFFFFF" d="M25.61,28.368l1.873-0.958c0,0,4.127-2.318-0.74-3.935c-0.593-0.196-7.327-2.434-7.327-2.434
+				s-0.678-0.246-1.56,0.224c-0.897,0.372-1.096,1.109-1.096,1.109s-2.229,6.737-2.433,7.328c-0.708,2.127,0.019,4.296,2.71,2.946
+				c0.472-0.236,1.163-0.575,1.577-0.779c1.729,8.658,10.658,15.1,22.131,9.302c0.022-0.705,0.016-4.325,0.016-5.125
+				C25.967,40.358,25.645,28.468,25.61,28.368z"/>
+			<path fill="#FFFFFF" d="M42.532,35.495c-0.332,0-0.541-0.085-0.55-0.09l-6.454-2.477c-1.377-0.528-2.094-1.152-2.127-1.852
+				c-0.055-1.084,1.545-1.903,1.614-1.937l1.641-0.746c-0.071-1.887-0.901-7.899-8.47-7.899c-1.38,0-2.933,0.206-4.612,0.613
+				l-0.167,0.04l0.026-0.578c0.049-1.09,0.164-3.636,0.207-4.185l0.005-0.077l0.07-0.032c2.453-1.101,4.857-1.66,7.143-1.66
+				c3.25,0,6.174,1.126,8.458,3.254c2.084,1.943,3.494,4.626,3.978,7.571c0.382-0.165,0.913-0.396,1.289-0.563
+				c0.488-0.217,0.927-0.328,1.305-0.328c0.503,0,0.906,0.198,1.162,0.57c0.411,0.598,0.416,1.621,0.012,2.671
+				c-0.204,0.515-2.455,6.398-2.479,6.458c-0.006,0.021-0.233,0.711-1.101,1.024C43.175,35.419,42.853,35.495,42.532,35.495z"/>
+		</g>
+	</g>
+	<g id="DrawingsShapesStrokesTaped" display="inline">
+	</g>
+</g>
+<g id="Layer_17" display="none">
+</g>
+<g id="unpress_states">
+	<g id="Buttons_copy">
+	</g>
+	<g id="Buttons_on">
+	</g>
+	<g id="Buttons">
+	</g>
+	<g id="DrawingToolsButtonsDefault">
+		<g>
+			<linearGradient id="SVGID_6_" gradientUnits="userSpaceOnUse" x1="29.9966" y1="3.8027" x2="29.9966" y2="55.5165">
+				<stop  offset="0.3573" style="stop-color:#FFFFFF"/>
+				<stop  offset="0.5178" style="stop-color:#FBFBFB"/>
+				<stop  offset="0.6599" style="stop-color:#F1F1F1"/>
+				<stop  offset="0.7949" style="stop-color:#DFDFDF"/>
+				<stop  offset="0.9249" style="stop-color:#C5C5C5"/>
+				<stop  offset="1" style="stop-color:#B3B3B3"/>
+			</linearGradient>
+			<path fill="url(#SVGID_6_)" d="M56.876,8.61c0-2.965-2.507-5.367-5.6-5.367H8.716c-3.093,0-5.6,2.402-5.6,5.367v40.785
+				c0,2.965,2.507,5.367,5.6,5.367h42.561c3.093,0,5.6-2.402,5.6-5.367V8.61z"/>
+			<linearGradient id="SVGID_8_" gradientUnits="userSpaceOnUse" x1="29.9966" y1="55.8828" x2="29.9966" y2="2.8643">
+				<stop  offset="0" style="stop-color:#FFFFFF"/>
+				<stop  offset="0.2309" style="stop-color:#FBFBFB"/>
+				<stop  offset="0.4598" style="stop-color:#EFEFEF"/>
+				<stop  offset="0.6879" style="stop-color:#DBDBDB"/>
+				<stop  offset="0.9144" style="stop-color:#C0C0C0"/>
+				<stop  offset="1" style="stop-color:#B3B3B3"/>
+			</linearGradient>
+			<path fill="url(#SVGID_8_)" d="M57.997,49.397c0,3.582-3.009,6.485-6.72,6.485H8.716c-3.711,0-6.72-2.903-6.72-6.485V8.608
+				c0-3.582,3.009-6.485,6.72-6.485h42.561c3.711,0,6.72,2.903,6.72,6.485V49.397z M55.756,8.61c0-2.347-2.006-4.248-4.479-4.248
+				H8.716c-2.474,0-4.479,1.901-4.479,4.248v40.785c0,2.347,2.006,4.247,4.479,4.247h42.561c2.474,0,4.479-1.9,4.479-4.247V8.61z"/>
+			<path fill="#606060" d="M25.049,28.368l1.874-0.958c0,0,4.126-2.318-0.741-3.935c-0.593-0.196-7.327-2.434-7.327-2.434
+				s-0.679-0.246-1.56,0.224c-0.897,0.372-1.096,1.109-1.096,1.109s-2.228,6.737-2.432,7.328c-0.708,2.127,0.019,4.296,2.71,2.946
+				c0.471-0.236,1.162-0.575,1.577-0.779c1.729,8.658,10.657,15.1,22.131,9.302c0.021-0.705,0.015-4.325,0.015-5.125
+				C25.407,40.358,25.084,28.468,25.049,28.368z"/>
+			<path fill="#606060" d="M41.972,35.495c-0.333,0-0.542-0.085-0.55-0.09l-6.454-2.477c-1.377-0.528-2.093-1.152-2.127-1.852
+				c-0.055-1.084,1.545-1.903,1.614-1.937l1.641-0.746c-0.071-1.887-0.901-7.899-8.47-7.899c-1.38,0-2.934,0.206-4.612,0.613
+				l-0.167,0.04l0.026-0.578c0.05-1.09,0.164-3.636,0.207-4.185l0.005-0.077l0.07-0.032c2.454-1.101,4.857-1.66,7.144-1.66
+				c3.25,0,6.174,1.126,8.458,3.254c2.085,1.943,3.493,4.626,3.978,7.571c0.381-0.165,0.913-0.396,1.29-0.563
+				c0.488-0.217,0.926-0.328,1.305-0.328c0.503,0,0.906,0.198,1.162,0.57c0.411,0.598,0.416,1.621,0.012,2.671
+				c-0.205,0.515-2.456,6.398-2.479,6.458c-0.007,0.021-0.234,0.711-1.102,1.024C42.615,35.419,42.292,35.495,41.972,35.495z"/>
+		</g>
+	</g>
+	<g id="DrawingsShapesStrokesDefault">
+	</g>
+</g>
+<g id="Layer_21">
+</g>
+<g id="Layer_22">
+</g>
+<g id="Layer_23" display="none">
+</g>
+</svg>

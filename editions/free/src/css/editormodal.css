@@ -1,0 +1,278 @@
+.modal-outer {
+    display: table;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.modal-middle {
+    display: table-cell;
+    vertical-align: middle;
+    pointer-events: none;
+}
+
+.modal-backdrop {
+    background-color: #000000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10000;
+}
+
+.modal-backdrop.fade {
+    opacity: 0;
+}
+
+.modal-backdrop, .modal-backdrop.fade.in {opacity: 0.8;}
+
+.modal-backdrop, .modal-backdrop.fade.dark {opacity: 1;  background-color: #333;}
+
+.modal {
+    position: relative;
+    z-index: 11000;
+    width: ${css_vh(54.69)};
+    height: ${css_vh(14.71)};
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.modal.fade {
+    top: -100%;
+}
+
+.modal-body {
+    width: 420px;
+    height: 113px;
+}
+
+.loadscreencover{
+    position: absolute;
+    left: 20px;
+    top: 27px;
+    width: 378px;
+    height: 66px;
+    background: white;
+}
+
+.topcover{
+    position: absolute;
+    left: 100px;
+    top: 23px;
+    width: 250px;
+    height: 4px;
+    background: white;
+}
+
+.loadscreenfill{
+    position: absolute;
+    left: 20px;
+    top: 27px;
+    width: 378px;
+    height: 66px;
+    background: #F9A737;
+}
+
+.loadicon{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 420px;
+    height: 113px;
+}
+
+
+///////////////////
+// record
+///////////////////
+
+.record-backdrop.fade.out {
+    -webkit-transition: opacity 1s linear;
+    opacity: 0;
+}
+
+.record {
+    position: fixed;
+    top: 32%;
+    left: 40%;
+    z-index: 11000;
+    width: ${241 * scaleMultiplier}px;
+    height: ${219 * scaleMultiplier}px;
+    margin: 1px 1px 0px;
+    background-color: #f9f9f9;
+    border: 1px solid #999;
+    -webkit-border-radius: ${6 * scaleMultiplier}px;
+    -moz-border-radius: ${6 * scaleMultiplier}px;
+    border-radius: ${6 * scaleMultiplier}px;
+    -webkit-box-shadow: 0 ${3 * scaleMultiplier}px ${7 * scaleMultiplier}px rgba(0, 0, 0, 0.3);
+    opacity: 1;
+}
+
+.record.fade {
+    -webkit-transition: opacity .3s linear, top .3s ease-out;
+    top: -100%;
+    opacity: 0;
+}
+
+.recorddone {
+    display: inline-block;
+    position: relative;
+    margin: 0px;
+    width: ${65 * scaleMultiplier}px;
+    height: ${65 * scaleMultiplier}px;
+    zoom: 75%;
+    background: url('../assets/paint/ok.svg') no-repeat left top;
+    background-size: 101%;
+}
+
+.record.fade.in {
+    top: 32%;
+    opacity: 1;
+}
+
+.record.fade.out {
+    top: -100%;
+    opacity: 0;
+}
+
+
+.record	.toolbar {
+    position: absoulte;
+    width: ${239 * scaleMultiplier}px;
+    height: ${66 * scaleMultiplier}px;
+    overflow: hidden;
+    text-shadow: none;
+    z-index: 11000;
+    border: 1px solid #4682B5;
+    border-bottom-color: #355D7C;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop(0%,#67afe5), color-stop(2%,#4682b5),  color-stop(100%,#4682b5));
+    -webkit-box-shadow: 0px 1px 0px #fff;
+    -webkit-border-top-left-radius: ${6 * scaleMultiplier}px;
+    -webkit-border-top-right-radius: ${6 * scaleMultiplier}px;
+}
+
+.toolbar .actions {
+    margin: ${5 * scaleMultiplier}px ${5 * scaleMultiplier}px ${5 * scaleMultiplier}px;
+    height: ${65 * scaleMultiplier}px;
+}
+
+.actions .recordbuttons {
+    float: right;
+    display: block;
+    margin: ${5 * scaleMultiplier}px;
+    padding: 0px;
+    width: ${44 * scaleMultiplier}px;
+    height: ${44 * scaleMultiplier}px;
+}
+
+.actions .microphone {
+    float: left;
+    width: ${45 * scaleMultiplier}px;
+    height: ${65 * scaleMultiplier}px;
+    margin: -${5 * scaleMultiplier}px ${5 * scaleMultiplier}px 0px;
+    background: url('../assets/lib/mic.svg');
+    background-size: 101%;
+}
+
+*.soundbox {
+    display: inline-block;
+    position: relative;
+    padding: 0px;
+    margin: 0px;
+    left: ${20 * scaleMultiplier}px;
+    top: ${20 * scaleMultiplier}px;
+    width: ${239 * scaleMultiplier}px;
+    height: ${151 * scaleMultiplier}px;
+}
+
+.soundcontrols {
+    position: relative;
+    display: inline-block;
+    margin: ${20 * scaleMultiplier}px ${5 * scaleMultiplier}px 0px;
+    width: ${200 * scaleMultiplier}px;
+    height: ${45 * scaleMultiplier}px;
+}
+
+.controlwrap{
+    margin: 0px ${10 * scaleMultiplier}px 0px;
+    padding: 0px 0px 0px;
+    display: inline-block;
+    width: ${45 * scaleMultiplier}px;
+    height: ${45 * scaleMultiplier}px;
+}
+
+.playsnd {
+    display: inline-block;
+    width: ${45 * scaleMultiplier}px;
+    height: ${45 * scaleMultiplier}px;
+	background: url('../assets/lib/playoff.svg');
+    background-size: 101%;
+}
+
+.stopsnd {
+    display: inline-block;
+    width: ${45 * scaleMultiplier}px;
+    height: ${45 * scaleMultiplier}px;
+	background: url('../assets/lib/stopoff.svg');
+    background-size: 101%;
+}
+
+.recordsnd {
+    display: inline-block;
+    width: ${45 * scaleMultiplier}px;
+    height: ${45 * scaleMultiplier}px;
+    background: url('../assets/lib/recordoff.svg');
+    background-size: 101%;
+}
+
+.playsnd.on{ background: url('../assets/lib/playon.svg'); background-size: 101%; }
+.playsnd.off{ background: url('../assets/lib/playoff.svg'); background-size: 101%; }
+
+.recordsnd.on{ background: url('../assets/lib/recordon.svg'); background-size: 101%; }
+.recordsnd.off{ background: url('../assets/lib/recordoff.svg'); background-size: 101%; }
+
+.stopsnd.on{ background: url('../assets/lib/stopon.svg'); background-size: 101%; }
+.stopsnd.off{ background: url('../assets/lib/stopoff.svg'); background-size: 101%; }
+
+.undowrap.select {background: rgba(0,0,0, 0.15);}
+
+.undowrap.unselect {background: none;}
+
+.soundvolume {
+    position: relative;
+    display: inline-block;
+    margin: 0px ${5 * scaleMultiplier}px 0px;
+    width: ${197 * scaleMultiplier}px;
+    height: ${44 * scaleMultiplier}px;
+}
+
+.indicator {
+    margin: ${scaleMultiplier}px ${scaleMultiplier}px 0px;
+    padding: 0px;
+    display: inline-block;
+    width: ${13 * scaleMultiplier}px;
+    height: ${44 * scaleMultiplier}px;
+    background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+    -webkit-border-radius: ${5 * scaleMultiplier}px;
+    -moz-border-radius: ${5 * scaleMultiplier}px;
+    border-radius: ${3 * scaleMultiplier}px;
+}
+
+.soundlevel {
+    margin: 1px 1px 0px;
+    padding: 0px;
+    display: inline-block;
+    width: ${11 * scaleMultiplier}px;
+    height: ${42 * scaleMultiplier}px;
+    -webkit-border-radius: ${3 * scaleMultiplier}px;
+    -moz-border-radius: ${3 * scaleMultiplier}px;
+    border-radius: ${3 * scaleMultiplier}px;
+    background: #B3B3B3;
+}
+
+.soundlevel.on{ background: #8CC63F;}
+.soundlevel.off{background: #B3B3B3;}

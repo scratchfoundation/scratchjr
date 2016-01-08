@@ -1,0 +1,606 @@
+.paintframe {
+    position: absolute;
+    z-index: 10000;
+    background: url('../assets/pagebkg.png');
+    background-size: 100%;
+    display: none;
+    width: ${css_vw(100)};
+    height: ${css_vh(100)};
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.paintframe.appear {display: block;}
+
+.paintframe.disappear {display: none;}
+
+/*name*/
+
+.spriteform {
+    margin: ${css_vh(0.65)} auto;
+    position: relative;
+    top:  ${css_vh(0.65)};
+    width: ${css_vh(31.25)};
+    height: ${css_vh(6.51)};
+}
+
+.spriteform input{
+    text-align: center;
+    color: #929497;
+    font-family: Verdana;
+    font-size: ${css_vh(2.60)};
+    cursor: default;
+    padding: ${css_vh(0.26)};
+    padding-left: ${css_vh(0.65)};
+    border: ${css_vh(0.13)} solid #808080;
+    -webkit-border-radius: ${32 * scaleMultiplier}px;
+    outline: ${css_vh(0.00)};
+    background: white;
+    width: ${css_vh(31.25)};
+    height: ${css_vh(5.21)};
+}
+
+spriteform.on {visibility: hidden;};
+spriteform.off {visibility: hidden; };
+
+/* main canvas */
+
+*.maincanvas {
+    position: absolute;
+    width: 432px;
+    height: 384px;
+    z-index: 4;
+    top: ${css_vh(0.00)};
+    left: ${css_vh(0.00)};
+    cursor: default;
+    background: #F5F2F7;
+    -webkit-transform-style: preserve-3d;
+}
+
+*.active3d {
+    -webkit-transform-style: preserve-3d;
+}
+
+*.paintop {
+    position: absolute;
+    padding: ${css_vh(0.00)};
+    margin: ${css_vh(0.00)};
+    width: ${css_vw(100)};
+    height: ${css_vh(8.33)};
+}
+
+.paintdone {
+    float: right;
+    display: block;
+    margin: ${css_vh(0.65)} ${css_vh(0.65)} ${css_vh(0.00)};
+    padding: ${css_vh(0.00)};
+    width: ${css_vh(8.46)};
+    height: ${css_vh(8.46)};
+    background: url('../assets/paint/ok.svg');
+    background-size: 100%;
+    -webkit-user-select: none;
+    z-index: 1000;
+}
+
+.paintdone:active {
+    background: url('../assets/paint/okPressed.svg');
+    background-size: 100%;
+}
+
+/* camera */
+
+.phototopbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: ${css_vh(10.29)};
+    width: ${css_vw(100)};
+    overflow: hidden;
+    text-shadow: none;
+    background: none;
+    border: ${css_vh(0.00)} solid black;
+}
+
+.actions .photobuttons {
+    float: right;
+    display: block;
+    margin: ${css_vh(0.00)};
+    padding: ${css_vh(0.00)};
+    width: ${css_vh(10.29)};
+    height: ${css_vh(10.29)};
+}
+
+.flipcamera {
+    float: right;
+    position: relative;
+    display: block;
+    margin: ${css_vh(0.00)};
+    width: ${css_vh(10.29)};
+    height: ${css_vh(10.29)};
+    margin: ${css_vh(0.65)};
+    background: url('../assets/paint/cameraFlip.svg');
+    background-size: 100%;
+}
+
+.flipcamera:active {
+    background: url('../assets/paint/cameraFlipPressed.svg');
+    background-size: 100%;
+}
+
+.cameraclose {
+    float: left;
+    display: block;
+    margin: ${css_vh(0.00)};
+    width: ${css_vh(10.29)};
+    height: ${css_vh(10.29)};
+    margin: ${css_vh(0.65)};
+    background: url('../assets/paint/cameraExit.svg');
+    background-size: 100%;
+}
+
+.cameraclose:active {
+    background: url('../assets/paint/cameraExitOn.svg');
+    background-size: 100%; }
+
+.snapshot-container {
+    position: absolute;
+    bottom: ${css_vh(1.30)};
+    height: ${css_vh(10.29)};
+    width: 100%;
+    pointer-events: auto;
+}
+
+.snapshot {
+    width: ${css_vh(10.29)};
+    height: ${css_vh(10.29)};
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+    background: url('../assets/paint/cameraSnap.svg');
+    background-size: 100%;
+}
+
+.snapshot:active {
+    background: url('../assets/paint/cameraExitOn.svg');
+    background-size: 100%;
+}
+
+
+/* Undo */
+
+.paintundo {
+    float: left;
+    position: relative;
+    margin:  ${css_vh(0.78)} ${css_vh(0.65)} ${css_vh(0.00)};
+    width: ${css_vh(23.44)};
+    height: ${css_vh(8.07)};
+}
+
+
+.undocircle{
+    display: inline-block;
+    position: relative;
+    margin: ${css_vh(0.00)} ${css_vh(1.30)} ${css_vh(0.00)};
+    padding: ${css_vh(0.00)};
+    width: ${css_vh(8.46)};
+    height: ${css_vh(8.33)};
+}
+
+.undo {
+    position: relative;
+    width: ${css_vh(8.46)};
+    height: ${css_vh(8.33)};
+    background: url('../assets/paint/undoOff.svg');
+    background-size: 100%;
+    -webkit-user-select: none;
+}
+
+.redo {
+    position: relative;
+    width: ${css_vh(8.46)};
+    height: ${css_vh(8.33)};
+    background: url('../assets/paint/redoOff.svg');
+    background-size: 100%;
+    -webkit-user-select: none;
+}
+
+.undo.on {
+    background: url('../assets/paint/undoOn.svg');
+    background-size: 100%;
+}
+
+.undo.off {
+    background: url('../assets/paint/undoOff.svg');
+    background-size: 100%;
+}
+
+.redo.on {
+    background: url('../assets/paint/redoOn.svg');
+    background-size: 100%;
+}
+
+.redo.off {
+    background: url('../assets/paint/redoOff.svg');
+    background-size: 100%;
+}
+
+.undo.on:active {
+    background: url('../assets/paint/undoOnPressed.svg');
+    background-size: 100%;
+}
+
+.undo.off:active {
+    background: url('../assets/paint/undoOffPressed.svg');
+    background-size: 100%;
+}
+
+.redo.on:active {
+    background: url('../assets/paint/redoOnPressed.svg');
+    background-size: 100%;
+}
+
+.redo.off:active {
+    background: url('../assets/paint/redoOffPressed.svg');
+    background-size: 100%;
+}
+
+
+/* inner */
+
+*.innerpaint {
+    position: absolute;
+    top: ${css_vh(8.33)};
+    padding: ${css_vh(0.00)};
+    margin: ${css_vh(0.00)};
+    width: ${css_vw(100)};
+    height: ${css_vh(76.56)};
+}
+
+*.side {
+    position: absolute;
+    right: ${css_vw(2)};
+    top: ${css_vh(8.25)};
+    margin: ${css_vh(1.56)} ${css_vh(0.00)} 0;
+    padding: ${css_vh(0.00)} ${css_vh(0.39)} ${css_vh(0.00)};
+    width: ${css_vh(10.42)};
+    height: ${css_vh(65.18)};
+    overflow: hidden;
+    z-index: 100;
+}
+
+*.side.up {
+    top: ${css_vh(3)};
+    height: ${css_vh(73.18)};
+    left: ${css_vw(2.00)};
+}
+
+*.paintpalette {
+    display: inline-block;
+    position: absolute;
+    margin: ${css_vh(0.00)};
+    margin-bottom: ${css_vh(0.65)};
+    padding: ${css_vh(0.00)};
+    width: ${css_vh(10.42)};
+    overflow: hidden;
+    height: 100%;
+}
+
+*.paintpalette .section {
+    display: inline-block;
+    position: absolute;
+    top: ${css_vh(0)};
+}
+
+*.paintpalette .section.space {
+    margin-top: ${css_vh(3.13)};
+    top: ${css_vh(33)};
+}
+
+*.paintpalette.short {
+    display: inline-block;
+    position: absolute;
+    margin: ${css_vh(0.65)} ${css_vh(0.00)} ${css_vh(0.65)};
+    height: ${css_vh(16.67)};
+}
+
+*.paintpalette.short#selectortools {
+    top: ${css_vh(0)};
+}
+
+*.paintpalette.short#edittools {
+    top: ${css_vh(19.4)};
+}
+
+*.paintpalette.short#filltools {
+    top: ${css_vh(38.7)};
+}
+
+*.paintpalette.medium {
+    display: inline-block;
+    position: relative;
+    margin: ${css_vh(0.65)} ${css_vh(0.00)} ${css_vh(0.65)};
+    height: ${css_vh(25.00)};
+}
+
+*.paintpalette.single {
+    display: inline-block;
+    position: relative;
+    margin: ${css_vh(0.65)} ${css_vh(0.00)} ${css_vh(0.65)};
+    height: ${css_vh(8.33)};
+}
+
+/* left tools */
+
+*.paintpalette .element{
+    margin: ${css_vh(0.00)} ${css_vh(1.30)} ${css_vh(1.0)};
+    padding: ${css_vh(0.00)};
+    width: ${css_vh(7.81)};
+    height: ${css_vh(7.16)};
+}
+
+*.paintpalette .element.first{}
+
+*.paintpalette .element.last{}
+
+*.paintpalette .element.single{}
+
+*.paintpalette .element.off{}
+
+*.paintpalette .element.on {}
+
+*.tool {
+    position: absolute;
+    width: ${css_vh(8.33)};
+    height: ${css_vh(8.33)};
+}
+
+*.tool.path.on {
+    background: url('../assets/paint/pathOn.svg') no-repeat center top;
+    background-size: 100%;
+}
+*.tool.path.off {
+    background: url('../assets/paint/pathOff.svg') no-repeat center top;
+    background-size: 100%;
+}
+*.tool.tri.on {
+    background: url('../assets/paint/triOn.svg') no-repeat center top;
+    background-size: 100%;
+}
+*.tool.tri.off {
+    background: url('../assets/paint/triOff.svg') no-repeat center top;
+    background-size: 100%;
+}
+*.tool.rect.on {
+    background: url('../assets/paint/rectOn.svg') no-repeat center top;
+    background-size: 100%;
+}
+*.tool.rect.off {
+    background: url('../assets/paint/rectOff.svg') no-repeat center top;
+    background-size: 100%;
+}
+*.tool.ellipse.on {
+    background: url('../assets/paint/ellipseOn.svg') no-repeat center top;
+    background-size: 100%;
+}
+*.tool.ellipse.off {
+    background: url('../assets/paint/ellipseOff.svg') no-repeat center top;
+    background-size: 100%;
+}
+
+*.tool.paintbucket.off {
+    background: url('../assets/paint/paintbucketOff.svg') no-repeat center top;
+    background-size: 100%;
+}
+*.tool.paintbucket.on {
+    background: url('../assets/paint/paintbucketOn.svg') no-repeat center top;
+    background-size: 100%;
+}
+*.tool.select.on {
+    background: url('../assets/paint/selectOn.svg') no-repeat center top;
+    background-size: 100%;
+}
+*.tool.select.off {
+    background: url('../assets/paint/selectOff.svg') no-repeat center top;
+    background-size: 100%;
+}
+*.tool.rotate.on {
+    background: url('../assets/paint/rotateOn.svg') no-repeat center top;
+    background-size: 100%;
+}
+*.tool.rotate.off {
+    background: url('../assets/paint/rotateOff.svg') no-repeat center top;
+    background-size: 100%;
+}
+*.tool.stamper.on {
+    background: url('../assets/paint/stamperOn.svg')no-repeat center top;
+    background-size: 100%;
+}
+*.tool.stamper.off {
+    background: url('../assets/paint/stamperOff.svg') no-repeat center top;
+    background-size: 100%;
+}
+*.tool.scissors.off {
+    background: url('../assets/paint/scissorsOff.svg')no-repeat center top;
+    background-size: 100%;
+}
+*.tool.scissors.on {
+    background: url('../assets/paint/scissorsOn.svg') no-repeat center top;
+    background-size: 100%;
+}
+*.tool.camera.off {
+    background: url('../assets/paint/snapOff.svg') no-repeat center top;
+    background-size: 100%;
+}
+*.tool.camera.on {
+    background: url('../assets/paint/snapOn.svg') no-repeat center top;
+    background-size: 100%;
+}
+
+
+*.paintpalette   hr{
+    position: relative;
+    margin: 0 auto;
+    height: ${css_vh(0.26)};
+    border: 0;
+    box-shadow: inset 0 ${4 * scaleMultiplier}px ${4 * scaleMultiplier}px -${4 * scaleMultiplier}px rgba(166, 168, 171, 0.7);
+}
+
+*.paintpalette .pensizeholder {
+    display: inline-block;
+    position: relative;
+    margin: ${css_vh(0.00)};
+    padding: ${css_vh(0.00)};
+    width: ${css_vh(10.42)};
+    height: ${css_vh(5.86)};
+}
+
+*.paintpalette .pensizeholder.off {background: none;}
+
+*.paintpalette .pensizeholder.on {
+    background:  url('../assets/paint/pensizeselect.svg');
+    background-size: 100%;
+}
+
+*.paintpalette .pensizeholder .line {
+    position: absoulte;
+    margin: ${css_vh(2.60)} ${css_vh(1.56)} ${css_vh(0.00)};
+    width: ${css_vh(7.03)};
+    height: ${css_vh(0.13)};
+    background: #080808;
+    -webkit-box-shadow: ${2 * scaleMultiplier}px ${2 * scaleMultiplier}px ${5 * scaleMultiplier}px rgba(0, 0, 0, 0.3);
+}
+
+*.paintpalette .pensizeholder .line.t0 {
+    margin: ${css_vh(2.60)} ${css_vh(1.56)} ${css_vh(0.00)};
+    height: ${css_vh(0.26)};
+}
+
+*.paintpalette .pensizeholder .line.t1 {
+    margin: ${css_vh(2.60)} ${css_vh(1.56)} ${css_vh(0.00)};
+    height: ${css_vh(0.26)};
+}
+
+*.paintpalette .pensizeholder .line.t2 {
+    margin: ${css_vh(2.47)} ${css_vh(1.56)} ${css_vh(0.00)};
+    height: ${css_vh(0.52)};
+}
+
+*.paintpalette .pensizeholder .line.t3 {
+    margin: ${css_vh(2.08)} ${css_vh(1.56)} ${css_vh(0.00)};
+    height: ${css_vh(1.04)};
+}
+
+*.paintpalette .pensizeholder .line.t4 {
+    margin: ${css_vh(1.82)} ${css_vh(1.56)} ${css_vh(0.00)};
+    height: ${css_vh(2.08)};
+}
+
+.swatchpalette-container {
+    position: absolute;
+    top: ${css_vh(84.90)};
+    width: 100%;
+    pointer-events: auto;
+}
+
+*.swatchpalette {
+    margin-left: auto;
+    margin-right: auto;
+    width: ${css_vh(130.21)};
+    height: ${css_vh(13.54)};
+}
+
+/*swatches */
+
+*.swatchbucket {
+    display: inline-block;
+    position: relative;
+    margin: ${css_vh(-0.52)} ${css_vh(0.00)} ${css_vh(0.00)};
+    padding: ${css_vh(0.00)};
+    width: ${css_vh(6.51)};
+    height: ${css_vh(7.03)};
+    -webkit-user-select: none;
+}
+
+*.swatchframe {
+    position: absolute;
+    margin: ${5 * scaleMultiplier}px ${5 * scaleMultiplier}px 0px;
+    padding: 0px;
+    width: ${css_vh(5.21)};
+    height: ${css_vh(5.21)};
+    background-image: -webkit-linear-gradient(top,#666,#fff);
+    -webkit-box-shadow: 0px ${3 * scaleMultiplier}px ${5 * scaleMultiplier}px #333;
+    -webkit-border-radius: ${css_vh(3.13)};
+    -webkit-user-select: none;
+}
+
+*.splasharea {
+    position: absolute;
+    margin:  ${css_vh(0.00)};
+    padding: ${css_vh(0.00)};
+    width: ${css_vh(6.51)};
+    height: ${css_vh(7.03)};
+}
+
+*.splasharea img {
+    height: ${css_vh(7.03)};
+}
+
+*.splasharea.off {display: none;}
+*.splasharea.on {display: block;}
+
+.swatchcolor {
+    position: absolute;
+    top: ${css_vh(0.26)};
+    left: ${css_vh(0.26)};
+    width: ${css_vh(4.69)};
+    height: ${css_vh(4.69)};
+    background: yellow;
+    -webkit-border-radius: ${css_vh(3.13)};
+}
+
+/* Workspace */
+
+.workspacebkg-container {
+    position: absolute;
+    top: ${css_vh(0.65)};
+    left: ${css_vh(0)};
+    width: 100%;
+    pointer-events: auto;
+}
+
+.workspacebkg {
+    margin-left: auto;
+    margin-right: auto;
+    background: #ffffff;
+    border: ${css_vh(0.13)} solid #b0b1b1;
+    width: 78%;
+    height: ${css_vh(74.48)};
+    overflow: hidden;
+    -webkit-border-radius: ${4 * scaleMultiplier}px;
+    -webkit-box-shadow: inset 0 0 ${4 * scaleMultiplier}px #b0b1b1;
+}
+
+.canvasbkg {
+    width: ${css_vh(62.50)};
+    height: ${css_vh(46.88)};
+    background-color: #F5F2F7;
+    position: absolute;
+    border: ${css_vh(0.13)} solid #b0b1b1;
+}
+
+div.toolbox{
+    position: absolute;
+    background: #f1f1f2;
+    border: ${css_vh(0.26)} groove #B9BBBD;
+    opacity: 0.5;
+}
+
+div.boxbkg{
+    background-color: #f1f1f2;
+    display: inline-block;
+    vertical-align: top;
+    margin: ${css_vh(0.13)};
+    padding: ${css_vh(0.00)};
+};

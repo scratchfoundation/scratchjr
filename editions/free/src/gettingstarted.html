@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xlink="http://www.w3.org/1999/xlink">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="cache-control" content="no-cache">
+<meta charset="utf-8">
+
+<head>
+<title>Junior</title>
+<script type="text/javascript" src="./Settings.js"></script>
+<script type="text/javascript" src="jssource/utils/Cookie.js"></script>
+<script type="text/javascript" src="jssource/utils/lib.js"></script>
+
+<!-- Localization includes -->
+<script type="text/javascript" src="jssource/external/Intl/Intl.min.js"></script>
+<script type="text/javascript" src="jssource/external/intl-messageformat/intl-messageformat.min.js"></script>
+<script type="text/javascript" src="jssource/utils/Localization.js"></script>
+<script>
+    Localization.includeLocales();
+</script>
+<!-- End localization includes -->
+
+<!-- In case we receive a project on this page -->
+<script type="text/javascript" src="jssource/utils/DrawPath.js"></script>
+<script type="text/javascript" src="jssource/editor/ui/Alert.js"></script>
+<script type="text/javascript" src="jssource/iPad/iOS.js"></script>
+<script type="text/javascript" src="jssource/iPad/IO.js"></script>
+<script type="text/javascript" src="./MediaLib.js"></script>
+<script type="text/javascript" src="jssource/external/jszip.js"></script>
+
+<script>
+    preprocessAndLoadCss("css", "css/font.css");
+    preprocessAndLoadCss("css", "css/base.css");
+    preprocessAndLoadCss("css", "css/gs.css");
+</script>
+
+<script language="javascript">
+
+	var place;
+	function tutorialScratchJr(){
+ 		var urlvars = getUrlVars();
+		place = urlvars['place'];
+		document.ontouchmove = function(e){e.preventDefault()};
+	}
+
+
+function closeme (){
+	window.location.href = "home.html?place=" + place;
+}
+
+</script>
+
+</head>
+<body onload="iOS.waitForInterface(tutorialScratchJr);">
+<div class="tutorial" id="tutorialmode">
+  <div class="closehelp" onclick="closeme()" ontouchstart="closeme()"></div>
+  <div class="introvideocontainer">
+      <video class="introvideo" id="myVideo" controls></video>
+  </div>
+</div>
+<script>
+  var videoObj = document.getElementById("myVideo");
+  if (isiOS) {
+    // On iOS we can load from server
+    videoObj.src = "assets/lobby/intro.mp4";
+  } else {
+    // On Android we need to copy to a temporary directory first:
+    setTimeout(function() {
+        videoObj.type = "video/mp4";
+        videoObj.src = AndroidInterface.scratchjr_getgettingstartedvideopath();
+    }, 1000);
+  }
+  videoObj.poster = "assets/lobby/poster.png";
+</script>
+</body>
+</html>

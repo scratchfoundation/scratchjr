@@ -1,0 +1,429 @@
+@import url('../../css/font.css');
+
+html {
+    -webkit-user-select: none;
+    height: 100%;
+}
+
+body {
+    margin-top: ${css_vh(6)};
+}
+
+#content {
+    width: ${css_vh(164)};
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#content-buffer {
+    color: #808080;
+    margin-left: ${css_vh(14.31)};
+    height: ${css_vh(7.24)};
+    font-size: ${css_vh(2.30)};
+}
+
+.paint-button {
+    font-family: Roboto, arial, sans-serif;
+    border-radius: 50%;
+    position: absolute;
+    border: 1px solid #808080;
+    width: ${css_vh(5.26)};
+    height: ${css_vh(5.26)};
+    text-align: center;
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.paint-dot {
+    height: ${css_vh(0.82)};
+    width: ${css_vh(0.82)};
+    border-radius: 50%;
+    background-color: #333333;
+    position: absolute;
+}
+
+.paint-vertical-line {
+    border-left: 1px solid black;
+    position: absolute;
+}
+
+.paint-horizontal-line {
+    border-top: 1px solid black;
+    position: absolute;
+}
+
+.paint-button-text {
+    padding: ${css_vh(1.15)};
+    font-size: ${css_vh(2.3)};
+}
+
+.paint-button-selected {
+    border: 1px solid #2898CD;
+    color: #2898CD;
+}
+
+/* 1. Undo */
+
+#paint-button-undo {
+    left: ${css_vh(15.79)};
+    top: ${css_vh(-6.25)};
+}
+
+#paint-vertical-line-undo {
+    height: ${css_vh(1.97)};
+    top: ${css_vh(-0.66)};
+    left: ${css_vh(18.42)};
+}
+
+#paint-dot-undo {
+    top: ${css_vh(1.15)};
+    left: ${css_vh(18.09)};
+}
+
+/* 2. Redo */
+
+#paint-button-redo {
+    left: ${css_vh(23.68)};
+    top: ${css_vh(-6.25)};
+}
+
+#paint-vertical-line-redo {
+    height: ${css_vh(1.97)};
+    top: ${css_vh(-0.66)};
+    left: ${css_vh(26.32)};
+}
+
+#paint-dot-redo {
+    top: ${css_vh(1.15)};
+    left: ${css_vh(25.99)};
+}
+
+/* 3. Select Shape */
+
+#paint-button-select-shape {
+    left: ${css_vh(31.58)};
+    top: ${css_vh(-6.25)};
+}
+
+#paint-vertical-line-select-shape-1 {
+    height: ${css_vh(24.9)};
+    top: ${css_vh(-0.66)};
+    left: ${css_vh(34.21)};
+}
+
+#paint-horizontal-line-select-shape-1 {
+    width: ${css_vh(12.34)};
+    top: ${css_vh(23.85)};
+    left: ${css_vh(22.04)};
+}
+
+#paint-vertical-line-select-shape-2 {
+    height: ${css_vh(23.5)};
+    top: ${css_vh(10.20)};
+    left: ${css_vh(22.04)};
+}
+
+#paint-horizontal-line-select-shape-2 {
+    width: ${css_vh(1.64)};
+    top: ${css_vh(10.20)};
+    left: ${css_vh(20.39)};
+}
+
+#paint-horizontal-line-select-shape-3 {
+    width: ${css_vh(1.81)};
+    top: ${css_vh(33.55)};
+    left: ${css_vh(20.39)};
+}
+
+/* 4. Character Name */
+
+#paint-button-character-name {
+    top: ${css_vh(-6.25)};
+    left: ${css_vh(60.20)};
+}
+
+#paint-vertical-line-character-name {
+    height: ${css_vh(1.97)};
+    top: ${css_vh(-0.66)};
+    left: ${css_vh(62.83)};
+}
+
+#paint-dot-character-name {
+    top: ${css_vh(1.15)};
+    left: ${css_vh(62.50)};
+}
+
+/* 5. Cut */
+
+#paint-button-cut {
+    left: ${css_vh(75.33)};
+    top: ${css_vh(-6.25)};
+}
+
+#paint-vertical-line-cut {
+    height: ${css_vh(45.23)};
+    top: ${css_vh(-0.66)};
+    left: ${css_vh(77.96)};
+}
+
+#paint-horizontal-line-cut {
+    width: ${css_vh(25.16)};
+    top: ${css_vh(44.41)};
+    left: ${css_vh(77.96)};
+}
+
+#paint-dot-cut {
+    left: ${css_vh(102.96)};
+    top: ${css_vh(44.08)};
+}
+
+/* 6. Duplicate */
+
+#paint-button-duplicate {
+    left: ${css_vh(82.57)};
+    top: ${css_vh(-6.25)};
+}
+
+#paint-vertical-line-duplicate {
+    height: ${css_vh(38.98)};
+    top: ${css_vh(-0.66)};
+    left: ${css_vh(85.20)};
+}
+
+#paint-horizontal-line-duplicate {
+    width: ${css_vh(17.76)};
+    top: ${css_vh(38.16)};
+    left: ${css_vh(85.20)};
+}
+
+#paint-dot-duplicate {
+    left: ${css_vh(102.96)};
+    top: ${css_vh(37.83)};
+}
+
+/* 7. Rotate */
+
+#paint-button-rotate {
+    left: ${css_vh(89.80)};
+    top: ${css_vh(-6.25)};
+}
+
+#paint-vertical-line-rotate {
+    height: ${css_vh(31.8)};
+    top: ${css_vh(-0.66)};
+    left: ${css_vh(92.43)};
+}
+
+#paint-horizontal-line-rotate {
+    width: ${css_vh(11.02)};
+    top: ${css_vh(30.92)};
+    left: ${css_vh(92.60)};
+}
+
+#paint-dot-rotate {
+    left: ${css_vh(102.96)};
+    top: ${css_vh(30.59)};
+}
+
+/* 8. Drag */
+
+#paint-button-drag {
+    left: ${css_vh(97.04)};
+    top: ${css_vh(-6.25)};
+}
+
+#paint-vertical-line-drag {
+    height: ${css_vh(25.66)};
+    top: ${css_vh(-0.66)};
+    left: ${css_vh(99.67)};
+}
+
+#paint-horizontal-line-drag {
+    width: ${css_vh(3.62)};
+    top: ${css_vh(25.00)};
+    left: ${css_vh(99.67)};
+}
+
+#paint-dot-drag {
+    left: ${css_vh(102.96)};
+    top: ${css_vh(24.67)};
+}
+
+/* 9. Save */
+
+#paint-button-save {
+    left: ${css_vh(104.28)};
+    top: ${css_vh(-6.25)};
+}
+
+#paint-vertical-line-save {
+    height: ${css_vh(1.97)};
+    top: ${css_vh(-0.66)};
+    left: ${css_vh(107.07)};
+}
+
+#paint-dot-save {
+    top: ${css_vh(1.15)};
+    left: ${css_vh(106.74)};
+}
+
+/* 10. Fill */
+
+#paint-button-fill {
+    left: ${css_vh(97.53)};
+    top: ${css_vh(73.03)};
+}
+
+#paint-vertical-line-fill {
+    height: ${css_vh(15.30)};
+    top: ${css_vh(57.89)};
+    left: ${css_vh(100.16)};
+}
+
+#paint-horizontal-line-fill {
+    width: ${css_vh(2.80)};
+    top: ${css_vh(57.89)};
+    left: ${css_vh(100.16)};
+}
+
+#paint-dot-fill {
+    left: ${css_vh(102.96)};
+    top: ${css_vh(57.57)};
+}
+
+/* 11. Camera */
+
+#paint-button-camera {
+    left: ${css_vh(90.46)};
+    top: ${css_vh(73.03)};
+}
+
+#paint-vertical-line-camera {
+    height: ${css_vh(20.72)};
+    top: ${css_vh(52.30)};
+    left: ${css_vh(93.09)};
+}
+
+#paint-horizontal-line-camera {
+    width: ${css_vh(9.87)};
+    top: ${css_vh(52.30)};
+    left: ${css_vh(93.09)};
+}
+
+#paint-dot-camera {
+    left: ${css_vh(102.96)};
+    top: ${css_vh(51.81)};
+}
+
+/* 12. Select Color */
+
+#paint-button-select-color {
+    left: ${css_vh(59.70)};
+    top: ${css_vh(73.03)};
+}
+
+#paint-vertical-line-select-color-1 {
+    height: ${css_vh(1.64)};
+    top: ${css_vh(71.38)};
+    left: ${css_vh(62.34)};
+}
+
+#paint-horizontal-line-select-color-1 {
+    width: ${css_vh(95)};
+    top: ${css_vh(71.38)};
+    left: ${css_vh(14.97)};
+}
+
+#paint-vertical-line-select-color-2 {
+    height: ${css_vh(1.81)};
+    top: ${css_vh(69.57)};
+    left: ${css_vh(14.97)};
+}
+
+#paint-vertical-line-select-color-3 {
+    height: ${css_vh(1.81)};
+    top: ${css_vh(69.57)};
+    left: ${css_vh(109.70)};
+}
+
+/* 13. Line Size */
+
+#paint-button-select-line-size {
+    left: ${css_vh(32.89)};
+    top: ${css_vh(73.03)};
+}
+
+#paint-vertical-line-select-line-size-1 {
+    height: ${css_vh(24.34)};
+    top: ${css_vh(48.68)};
+    left: ${css_vh(35.53)};
+}
+
+#paint-horizontal-line-select-line-size-1 {
+    width: ${css_vh(13.32)};
+    top: ${css_vh(48.68)};
+    left: ${css_vh(22.37)};
+}
+
+#paint-vertical-line-select-line-size-2 {
+    height: ${css_vh(21.38)};
+    top: ${css_vh(37.01)};
+    left: ${css_vh(22.20)};
+}
+
+#paint-horizontal-line-select-line-size-2 {
+    width: ${css_vh(1.64)};
+    top: ${css_vh(37.01)};
+    left: ${css_vh(20.56)};
+}
+
+#paint-horizontal-line-select-line-size-3 {
+    width: ${css_vh(1.81)};
+    top: ${css_vh(58.39)};
+    left: ${css_vh(20.56)};
+}
+
+#paint-key {
+    width: ${css_vh(36.35)};
+    float: left;
+    margin-left: ${css_vh(9.05)};
+    background-image: url("../images/keybackground.png");
+    background-repeat: none;
+    background-size: 100%;
+}
+
+#paint-key-header {
+    font-size: ${css_vh(3)};
+    padding-top: ${css_vh(1.64)};
+    padding-left: ${css_vh(1.64)};
+    height: ${css_vh(5.10)};
+    color: #2898CD;
+}
+
+#paint-key-description {
+    color: #808080;
+    line-height: ${css_vh(3.62)};
+    padding-top: ${css_vh(0.82)};
+    padding-right: ${css_vh(2.47)};
+    font-size: ${css_vh(2.3)};
+    margin-right: ${css_vh(0.82)};
+    margin-left: ${css_vh(3.29)};
+}
+
+#ipad-project-view-wrapper {
+    position: relative;
+}
+
+.learn-tab {
+    display: none;
+}
+
+.learn-tab-selected {
+    display: inline;
+}
+
+.ipad-project-view {
+    margin-left: ${css_vh(14.31)};
+    width: ${css_vh(96.55)};
+    float: left;
+}

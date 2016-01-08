@@ -1,0 +1,204 @@
+.projectthumb {
+    display: inline-block;
+    position: relative;
+    margin: 0px;
+    padding: 0px;
+    width: ${css_vw(21.68)};
+    height: ${css_vh(26.04)};
+    vertical-align: top;
+}
+
+.aproject {
+    margin: 0px;
+    padding: 0px;
+    position: relative;
+    width: ${css_vh(28.91)};
+    height: ${css_vh(21.48)};
+    overflow: hidden;
+}
+
+.aproject img {
+    position: absolute;
+    margin: 0px;
+    padding: 0px;
+    top: ${14 * scaleMultiplier}px;
+    left: ${5 * scaleMultiplier}px;
+    width: ${css_vh(25)};
+    height: ${css_vh(18.75)};
+}
+
+.aproject.empty {
+    background:  url('../assets/lobby/newproject.png');
+    background-size: 100%;
+}
+.aproject.p1 {
+    background:  url('../assets/lobby/project1.png');
+    background-size: 100%;
+}
+.aproject.p2 {
+    background:  url('../assets/lobby/project2.png');
+    background-size: 100%;
+}
+.aproject.p3 {
+    background:  url('../assets/lobby/project3.png');
+    background-size: 100%;
+}
+.aproject.p4 {
+    background:  url('../assets/lobby/project4.png');
+    background-size: 100%;
+}
+
+.projecttitle {
+    height: ${30 * scaleMultiplier}px;
+    width: ${css_vh(25)};
+    line-height: ${15 * scaleMultiplier}px;
+}
+
+.projecttitle h4 {
+    font-weight: bold;
+    text-align: center;
+    color: #355E7C;
+    font-size: ${13 * scaleMultiplier}px;
+    width: ${css_vh(25)};
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align:middle;
+}
+
+.samplethumb {
+    display: inline-block;
+    position: absolute;
+    margin: ${8 * scaleMultiplier}px ${2 * scaleMultiplier}px 0;
+    padding: 0px;
+    width: 23.2%;
+    height: 46.7%;
+    vertical-align: top;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.samplethumb > p {
+    font-weight: bold;
+    text-align: center;
+    color: #C18134;
+    width: 100%;
+    margin: ${5 * scaleMultiplier}px auto;
+    overflow: hidden;
+    font-size: ${css_vh(2.5)};
+    font-weight: bold;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+}
+
+.samplethumb .thumb {
+    position: relative;
+    margin: 0 auto;
+    width: 84.8%;
+    height: 78%;
+    -webkit-transform-style: preserve-3d;
+    -webkit-backface-visibility: hidden;
+        -webkit-tap-highlight-color: transparent;
+}
+
+.samplethumb .thumb > div.woodframe {
+    width: 100%;
+    height: 100%;
+    outline: 1px solid transparent;
+    background:  url('../assets/lobby/woodframe.svg') no-repeat;
+	background-size: auto 100%;
+    background-position-x: center;
+    background-position-y: center;
+}
+
+.samplethumb .thumb > div.sampleicon {
+    position: absolute;
+    margin: 0px;
+    padding: 0px;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    outline: 1px solid transparent;
+    background:  url('../assets/lobby/woodframe.svg') no-repeat;
+    background-size: auto 89%;
+    background-position-x: center;
+    background-position-y: center;
+}
+
+.samplethumb#sample-0 { left:    ${css_vw(0)}; top:   ${css_vh(0)}; }
+.samplethumb#sample-1 { left: ${css_vw(23.2)}; top:   ${css_vh(0)}; }
+.samplethumb#sample-2 { left: ${css_vw(46.4)}; top:   ${css_vh(0)}; }
+.samplethumb#sample-3 { left: ${css_vw(68.6)}; top:   ${css_vh(0)}; }
+.samplethumb#sample-4 { left:    ${css_vw(0)}; top:  ${css_vh(28)}; }
+.samplethumb#sample-5 { left: ${css_vw(23.2)}; top:  ${css_vh(28)}; }
+.samplethumb#sample-6 { left: ${css_vw(46.4)}; top:  ${css_vh(28)}; }
+.samplethumb#sample-7 { left: ${css_vw(68.6)}; top:  ${css_vh(28)}; }
+
+.samplethumb .thumb.pos0 { -webkit-transform: rotateZ(-1deg);}
+.samplethumb .thumb.pos1 { -webkit-transform: rotateZ(0.5deg);}
+.samplethumb .thumb.pos2 { -webkit-transform: rotateZ(-0.7deg);}
+.samplethumb .thumb.pos3 { -webkit-transform: rotateZ(0.2deg);}
+.samplethumb .thumb.pos4 { -webkit-transform: rotateZ(-1deg);}
+.samplethumb .thumb.pos5 { -webkit-transform: rotateZ(0.6deg);}
+.samplethumb .thumb.pos6 { -webkit-transform: rotateZ(-0.3deg);}
+.samplethumb .thumb.pos7 { -webkit-transform: rotateZ(1deg);}
+
+.closex {
+    position: relative;
+    float: left;
+    top: ${css_vh(-54.17)};
+    z-index: 5;
+    visibility: hidden;
+    width: ${css_vh(5.86)};
+    height: ${css_vh(5.73)};
+    background:  url('../assets/ui/closeit.svg');
+    background-size: 101%;
+}
+
+.share {
+    position: relative;
+    top: ${css_vh(-22.14)};
+    right: ${css_vw(-12.7)};
+    z-index: 5;
+    width: ${css_vw(5.47)};
+    height: ${css_vh(6.51)};
+    background: url('../assets/ui/share-bow.svg');
+    background-size: 101%;
+    visibility: hidden;
+}
+
+.ribbonHorizontal {
+    background-color: #1dafed;
+    border: 3px solid #fff;
+    height: ${css_vh(1.57)};
+    width: ${css_vw(18.75)};
+    position: relative;
+    top: ${css_vh(-27.34)};
+    z-index: 4;
+    visibility: hidden;
+}
+
+.ribbonVertical {
+    background-color: #1dafed;
+    border: 3px solid #fff;
+    width: ${css_vw(1.17)};
+    height: ${css_vh(19)};
+    position: relative;
+    top: ${css_vh(-32.81)};
+    right: ${css_vw(-14.65)};
+    z-index: 4;
+    visibility: hidden;
+}
+
+*.inner {
+    padding: 0px;
+    margin: 0px 6.05%;
+    width: 87.9%;
+}
+
+*.scrollarea{
+    position: relative;
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+}

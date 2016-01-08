@@ -1,0 +1,86 @@
+html {
+    color: #4c4d4f;
+    direction: ltr;
+    font: 81.25% Roboto, arial, sans-serif;
+    -webkit-user-select: none;
+    height: 100%;
+}
+
+*.tutorial {
+    position: absoulte;
+    width: 100%;
+    height:  100%;
+    overflow: hidden;
+    background-color: #333;
+    -webkit-overflow-scrolling: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+*.introvideo {
+    position: absolute;
+    top: ${css_vh(10.9)};
+    width: ${css_vh(104.17)};
+    height: ${css_vh(78.125)};
+    -webkit-overflow-scrolling: none;
+    -webkit-user-select: none;
+}
+
+.introvideocontainer {
+    width: ${css_vh(104.17)};
+    height: ${css_vh(78.125)};
+    margin-left: auto;
+    margin-right: auto;
+}
+
+video::-webkit-media-controls-fullscreen-button {
+    display: none;
+}
+
+/* close help */
+
+.closehelp {
+    float: right;
+    position: relative;
+    display: block;
+    margin: 0px;
+    width: ${79 * scaleMultiplier}px;
+    height: ${79 * scaleMultiplier}px;
+    z-index: 1000;
+    background: url('../assets/paint/cameraExit.svg');
+    background-size: 100%;
+}
+
+/* reload help */
+
+.reloadicon {
+    position: absolute;
+    left: ${5 * scaleMultiplier}px;
+    top: ${350 * scaleMultiplier}px;
+    margin: 0px;
+    width: ${79 * scaleMultiplier}px;
+    height: ${79 * scaleMultiplier}px;
+    background: url('../assets/start/reload.svg');
+}
+
+.reloadicon.show {display: block;}
+.reloadicon.hide {display: none;}
+
+.reloadicon:active {background: url('../assets/start/reloadOn.svg');}
+
+/* next help */
+
+.nexticon {
+    position: absolute;
+    right: ${5 * scaleMultiplier}px;
+    top: ${350 * scaleMultiplier}px;
+    margin: 0px;
+    width: ${79 * scaleMultiplier}px;
+    height: ${79 * scaleMultiplier}px;
+    background: url('../assets/start/next.svg');
+}
+
+.nexticon.show {display: block;}
+.nexticon.hide {display: none;}
+
+.nexticon:active {background: url('../assets/start/nextOn.svg');}

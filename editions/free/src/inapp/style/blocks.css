@@ -1,0 +1,137 @@
+@import url('../../css/font.css');
+
+html {
+    -webkit-user-select: none;
+}
+
+body {
+    background: #F7F6EE;
+    margin-top: ${css_vh(6)};
+    margin-bottom: ${css_vh(22.20)};
+}
+
+.block-category-header {
+    color: white;
+    text-transform: uppercase;
+    padding-left: ${css_vh(2.47)};
+    padding-top: ${css_vh(1.64)};
+    padding-bottom: ${css_vh(1.64)};
+    margin-left: ${css_vh(15.95)};
+    margin-top: ${css_vh(9.87)};
+    width: ${css_vh(36.18)};
+    font-size: ${css_vh(2.75)};
+}
+
+#yellow-block-category-header {
+    background-color: #F4E025;
+}
+
+#blue-block-category-header {
+    background-color: #4A8CE3;
+}
+
+#purple-block-category-header {
+    background-color: #CD7CD1;
+}
+
+#green-block-category-header {
+    background-color: #48CC7E;
+}
+
+#orange-block-category-header {
+    background-color: #FFB254;
+}
+
+#red-block-category-header {
+    background-color: #EA2424;
+}
+
+.block-category-header-line {
+    margin-left: ${css_vh(15.95)};
+    margin-right: ${css_vh(15.95)};
+    height: ${css_vh(0.33)};
+}
+
+#yellow-block-category-header-line {
+    background-color: #F4E025;
+}
+
+#blue-block-category-header-line {
+    background-color: #4A8CE3;
+}
+
+#purple-block-category-header-line {
+    background-color: #CD7CD1;
+}
+
+#green-block-category-header-line {
+    background-color: #48CC7E;
+}
+
+#orange-block-category-header-line {
+    background-color: #FFB254;
+}
+
+#red-block-category-header-line {
+    background-color: #EA2424;
+}
+
+.block-wrapper {
+    margin-top: ${css_vh(2.96)};
+    margin-left: ${css_vh(15.95)};
+    margin-right: ${css_vh(15.95)};
+    height: ${css_vh(23.03)};
+    color: #808080;
+    margin-bottom: ${css_vh(3.29)};
+}
+
+.block-wrapper-left{
+    float: left;
+    width: 40%;
+    padding-bottom: ${css_vh(1.64)};
+}
+
+.block-wrapper-right {
+    float: right;
+    width: 40%;
+    padding-bottom: ${css_vh(1.64)};
+}
+
+.block-image-wrapper {
+    float: left;
+}
+
+.block-title {
+    font-size: ${css_vh(2.5)};
+    border-bottom: 1px solid #BFBFBF;
+    padding-bottom: ${css_vh(0.99)};
+}
+
+.block-image {
+    margin-top: ${css_vh(3.29)};
+    margin-left: ${css_vh(1.64)};
+    width: ${css_vh(12.34)};
+}
+
+.block-image-repeat {
+    margin-top: ${css_vh(3.29)};
+    margin-left: ${css_vh(1.64)};
+    width: ${css_vh(23.03)};
+}
+
+.block-description {
+    float: right;
+    margin-top: ${css_vh(3.29)};
+    width: ${css_vh(34.54)};
+    font-size: ${css_vh(2.30)};
+    color: #6F6F6E;
+    line-height: ${css_vh(3.62)};
+}
+
+.block-description-repeat {
+    float: right;
+    margin-top: ${css_vh(3.29)};
+    width: ${css_vh(23.85)};
+    font-size: ${css_vh(2.30)};
+    line-height: ${css_vh(3.62)};
+}

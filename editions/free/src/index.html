@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0,
+      maximum-scale=1.0, user-scalable=no"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta http-equiv="cache-control" content="no-cache">
+<meta charset="utf-8">
+
+<html>
+
+<head>
+<title>ScratchJr Intro</title>
+<script type="text/javascript" src="./Settings.js"></script>
+<script type="text/javascript" src="jssource/utils/Cookie.js"></script>
+<script type="text/javascript" src="jssource/utils/lib.js"></script>
+
+<!-- Localization includes -->
+<script type="text/javascript" src="jssource/external/Intl/Intl.min.js"></script>
+<script type="text/javascript" src="jssource/external/intl-messageformat/intl-messageformat.min.js"></script>
+<script type="text/javascript" src="jssource/utils/Localization.js"></script>
+<script>
+    Localization.includeLocales();
+</script>
+<!-- End localization includes -->
+
+<script type="text/javascript">
+    preprocessAndLoadCss("css", "css/font.css");
+    preprocessAndLoadCss("css", "css/base.css");
+    preprocessAndLoadCss("css", "css/start.css");
+    preprocessAndLoadCss("css", "css/thumbs.css");
+</script>
+<script type="text/javascript" src="jssource/utils/DrawPath.js"></script>
+<script type="text/javascript" src="jssource/editor/ui/Alert.js"></script>
+<script type="text/javascript" src="jssource/iPad/iOS.js"></script>
+<script type="text/javascript" src="jssource/iPad/IO.js"></script>
+<script type="text/javascript" src="./MediaLib.js"></script>
+<script type="text/javascript" src="jssource/utils/ScratchAudio.js"></script>
+<script type="text/javascript" src="jssource/utils/Sound.js"></script>
+<script type="text/javascript" src="jssource/utils/SVG2Canvas.js"></script>
+<script type="text/javascript" src="jssource/external/jszip.js"></script>
+<script type="text/javascript" src="jssource/painteditor/SVGImage.js"></script>
+<script type="text/javascript" src="jssource/painteditor/Transform.js"></script>
+<script type="text/javascript" src="jssource/painteditor/SVGTools.js"></script>
+<script type="text/javascript" src="jssource/geom/Rectangle.js"></script>
+
+<script language="javascript">
+
+function startup(){
+	ScratchAudio.init();
+	var urlvars = getUrlVars();
+	if (urlvars["back"]) loadOptions();
+	else firstTime();
+	setTimeout(function(){gn('rays').className = "rays spinme";}, 250);
+}
+
+function firstTime() {
+	gn('authors').className = "credits show";
+	gn('authorsText').className = "creditsText show";
+	gn('purpleguy').className = "purple show";
+	gn('blueguy').className = "blue show";
+	gn('redguy').className = "red show";
+	iOS.askpermission(); // ask for sound recording
+	setTimeout(function(){iOS.hidesplash(doit);}, 500);
+	function doit (str){
+		ScratchAudio.sndFX("tap.wav");
+		window.ontouchend = function () {loadOptions();};
+	}
+	setTimeout(function(){loadOptions();}, 2000);
+}
+
+function loadOptions(){
+	gn('authors').className = "credits hide";
+	gn('authorsText').className = "creditsText hide";
+	gn('purpleguy').className = "purple hide";
+	gn('blueguy').className = "blue hide";
+	gn('redguy').className = "red hide";
+	gn('gettings').className = "gettings show";
+	gn('startcode').className = "startcode show";
+	document.ontouchmove = function(e){e.preventDefault()};
+	if (isAndroid) AndroidInterface.notifySplashDone();
+}
+
+function gohome(){
+	rays.className = 'rays';
+    // On iOS, sounds are loaded async, but the code as written expects to play tap.wav when we enter home.html
+    // (but since it isn't loaded yet, no sound is played).
+    // On Android, sync sounds means both calls to tap.wav result in a sound play.
+    // XXX: we should re-write the lobby loading to wait for the sounds to load, and not play a sound here.
+    if (isiOS) {
+        ScratchAudio.sndFX("tap.wav");
+    }
+	iOS.setfile("homescroll.sjr", 0, function (str) {doNext()});
+	function doNext() {window.location.href = "home.html";}
+	}
+
+function gettingstarted(){
+	rays.className = 'rays';
+	ScratchAudio.sndFX("tap.wav");
+	window.location.href = "gettingstarted.html?place=home";
+	}
+
+</script>
+
+</head>
+<body onload="iOS.waitForInterface(startup);" style="margin:0px; background: black;">
+<div class="frame" id="frame">
+<div class="credits hide" id="authors"></div>
+<div class="creditsText hide" id="authorsText"></div>
+<div class="rays" id="rays"></div>
+<div class="catface"></div>
+<div class="jrlogo"></div>
+<div class="purple hide" id="purpleguy"></div>
+<div class="red hide" id="redguy"></div>
+<div class="blue hide" id="blueguy"></div>
+<div class="gettings hide" id="gettings" ontouchend="gettingstarted()"></div>
+<div class="startcode hide" id="startcode" ontouchend="gohome()"></div>
+</div>
+</div>
+</body>
+</html>

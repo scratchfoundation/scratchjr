@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="sql_create_projects">CREATE TABLE IF NOT EXISTS PROJECTS (
+        ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        CTIME DATETIME DEFAULT CURRENT_TIMESTAMP,
+        MTIME DATETIME,
+        ALTMD5 TEXT,
+        POS INTEGER,
+        NAME TEXT,
+        JSON TEXT,
+        THUMBNAIL TEXT,
+        OWNER TEXT,
+        GALLERY TEXT,
+        DELETED TEXT,
+        VERSION TEXT
+    )</string>
+    <string name="sql_create_usershapes">CREATE TABLE IF NOT EXISTS USERSHAPES (
+        ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        CTIME DATETIME DEFAULT CURRENT_TIMESTAMP,
+        MD5 TEXT,
+        ALTMD5 TEXT,
+        WIDTH TEXT,
+        HEIGHT TEXT,
+        EXT TEXT,
+        NAME TEXT,
+        OWNER TEXT,
+        SCALE TEXT,
+        VERSION TEXT
+    )</string>
+    <string name="sql_create_userbkgs">CREATE TABLE IF NOT EXISTS USERBKGS (
+        ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        CTIME DATETIME DEFAULT CURRENT_TIMESTAMP,
+        MD5 TEXT,
+        ALTMD5 TEXT,
+        WIDTH TEXT,
+        HEIGHT TEXT,
+        EXT TEXT,
+        OWNER TEXT,
+        VERSION TEXT
+    )</string>
+    <string name="sql_add_gift">
+        ALTER TABLE PROJECTS ADD COLUMN ISGIFT INTEGER DEFAULT 0;
+    </string>
+</resources>

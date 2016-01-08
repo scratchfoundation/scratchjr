@@ -1,0 +1,202 @@
+html, body, {
+    color: #4c4d4f;
+    direction: ltr;
+    background: #35A8E0;
+    font: 81.25% Roboto, arial, sans-serif;
+    -webkit-user-select: none;
+    height: 100%;
+}
+
+div.frame {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: #35A8E0;
+    overflow: hidden;
+    -webkit-overflow-scrolling: none;
+}
+
+*.catlogo {
+    position: absolute;
+    top: 127px;
+    left: 284px;
+    margin: 0px;
+    width: 468px;
+    height: 300px;
+    z-index: 10;
+    background: url('../assets/start/catlogo.png');
+}
+
+*.credits {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    height: 45%;
+    background: url('../assets/start/bottom.png');
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    z-index: 20;
+}
+
+*.creditsText {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    height: 45%;
+    background: url('../assets/start/creditsText.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: auto 45%;
+    z-index: 21;
+}
+
+.credits.hide, .creditsText.hide {display: none;}
+.credits.show, .creditsText.show {display: block;}
+
+*.catface {
+    position: absolute;
+    top: 18%;
+    margin: 0px;
+    height: 22%;
+    z-index: 5;
+    background: url('../assets/start/Cat.svg');
+    width: 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+}
+
+*.jrlogo {
+    position: absolute;
+    top: 39%;
+    width: 100%;
+    margin: 0px;
+    height: 16%;
+    z-index: 10;
+    background: url('../assets/start/ScratchJrLogo.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+}
+
+*.purple {
+    position: absolute;
+    top: 7%;
+    left: 15%;
+    margin: 0px;
+    width: 100%;
+    height: 26%;
+    background: url('../assets/start/FunkyPurple.svg');
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+}
+
+.purple.hide {display: none;}
+.purple.show {display: block;}
+
+*.red {
+    position: absolute;
+    top: -18%;
+    left: 65%;
+    margin: 0px;
+    width: 100%;
+    height: 54%;
+    z-index: 2;
+    background: url('../assets/start/FunkyRed.svg');
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+}
+
+.red.hide {display: none;}
+.red.show {display: block;}
+
+*.blue {
+    position: absolute;
+    top: 46%;
+    left: 87%;
+    margin: 0px;
+    width: 100%;
+    height: 23%;
+    background: url('../assets/start/FunkyBlue.svg');
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    z-index: 21;
+}
+
+.blue.hide {display: none;}
+.blue.show {display: block;}
+
+.gettings {
+    position: absolute;
+    top: 65%;
+    left: 59%;
+    margin: 0px;
+    width: 17%;
+    height: 22%;
+    background: url('../assets/start/helpOn.svg');
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    background-position-x: center;
+    -webkit-tap-highlight-color: transparent;
+    z-index: 1000;
+}
+
+.gettings:active {
+    background: url('../assets/start/helpOff.svg');
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    background-position-x: center;
+}
+
+.gettings.hide {display: none;}
+.gettings.show {display: block;}
+
+.startcode {
+    position: absolute;
+    top: 65%;
+    left: 24%;
+    margin: 0px;
+    width: 17%;
+    height: 22%;
+    background: url('../assets/start/houseOn.svg');
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    background-position-x: center;
+    -webkit-tap-highlight-color: transparent;
+    z-index: 1000;
+}
+
+.startcode.hide {display: none;}
+.startcode.show {display: block;}
+
+.startcode:active {
+    background: url('../assets/start/houseOff.svg');
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    background-position-x: center;
+}
+
+.rays.hide, .catface.hide, .jrlogo.hide, .frame.hide {display: none;}
+
+.rays {
+    position: absolute;
+    top: -48%;
+    width: 100%;
+    margin: 0px;
+    height: 160%;
+    background: url('../assets/start/rays.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+}
+
+.rays.spinme{
+    -webkit-animation:spin 8s infinite linear;
+    -webkit-transform-origin: 50% 50%;
+}
+
+@-webkit-keyframes spin {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(36deg); }
+}

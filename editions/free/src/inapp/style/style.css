@@ -1,0 +1,105 @@
+@import url('../../css/font.css');
+
+body {
+	margin: 0;
+	font-family: Roboto, arial, sans-serif;
+}
+
+#header {
+	width: 900px;
+	height: 58px;
+	margin: auto;
+}
+
+#header-logo {
+	margin-top: 5.5px;
+	margin-bottom: 5.5px;
+	margin-left: 28px;
+	height: 47px;
+	width: 163px;
+	float: left;
+}
+
+#header-nav {
+	float: right;
+	width: 446px;
+	position: relative;
+}
+
+.header-nav-item-wrapper {
+	float: left;
+}
+
+.header-nav-item {
+	font-family: Roboto, arial, sans-serif;
+	letter-spacing: 1px;
+	color: white;
+	float: left;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-top: 23px;
+	height: 35px;
+}
+
+.header-nav-item-selected {
+	background-color: #0A7199;
+}
+
+.header-nav-divider-wrapper {
+	float: left;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 23px;
+	height: 35px;
+	width: 1px;
+}
+
+.header-nav-divider-1 {
+	background-color: white;
+	height: 22px;
+	width: 2px;
+	float: right;
+	top: 21px;
+	left: 100px;
+	position: absolute;
+}
+
+.header-nav-divider-2 {
+	background-color: white;
+	height: 22px;
+	width: 2px;
+	float: right;
+	top: 21px;
+	left: 220px;
+	position: absolute;
+}
+
+.header-nav-divider-3 {
+	background-color: white;
+	height: 22px;
+	width: 2px;
+	float: right;
+	top: 21px;
+	left: 336px;
+	position: absolute;
+}
+
+#footer {
+	width: 900px;
+	height: 58px;
+	margin: auto;
+	background-color: white;
+}
+
+#footer-nav {
+	float: right;
+}
+
+.footer-nav-item {
+	color: #808080;
+	float: left;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-top: 23px;
+	padding-bottom: 23px;
+}

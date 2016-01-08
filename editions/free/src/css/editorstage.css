@@ -1,0 +1,434 @@
+/* toolbar */
+
+.fullscreen#full {
+    position: absolute;
+    margin: 0px;
+    padding: 0px;
+    top: ${css_vh(0.65)};
+    left: ${css_vh(4.95)};
+    width: ${css_vh(8.33)};
+    height: ${css_vh(8.33)};
+    background:  url('../assets/ui/fullOff2.svg');
+    background-size: 100%;
+}
+
+.fullscreen.presentationmode#full {
+    left: 0px;
+    top: 0px;
+    background:  url('../assets/ui/fullOn2.svg');
+    background-size: 100%;
+}
+
+.gridToggle {
+    position: absolute;
+    margin: 0px;
+    padding: 0px;
+    top: ${css_vh(0.65)};
+    left: ${css_vh(13.54)};
+    width: ${css_vh(8.33)};
+    height: ${css_vh(8.33)};
+}
+
+.gridToggle.off {background:  url('../assets/ui/gridOn.svg'); background-size: 100%; }
+.gridToggle.on {background:  url('../assets/ui/gridOff.svg'); background-size: 100%; }
+
+.addText {
+    position: absolute;
+    margin: 0px;
+    padding: 0px;
+    top: ${css_vh(0.65)};
+    left: ${css_vh(37.89)};
+
+    width: ${css_vh(8.33)};
+    height: ${css_vh(8.33)};
+    background:  url('../assets/ui/addText.svg');
+    background-size: 100.5%; /* webview pixelates the image unless we do this */
+}
+
+.addText:active {
+    background:  url('../assets/ui/addTextPressed.svg');
+    background-size: 100.5%; /* webview pixelates the image unless we do this */
+}
+
+.changeBkg {
+    position: absolute;
+    margin: 0px;
+    padding: 0px;
+    top: ${css_vh(0.65)};
+    left: ${css_vh(29.30)};
+
+    width: ${css_vh(8.33)};
+    height: ${css_vh(8.33)};
+    background:  url('../assets/ui/scene1.svg');
+    background-size: 100%;
+}
+
+.changeBkg:active {background:  url('../assets/ui/scenePressed1.svg'); background-size: 100%; }
+
+
+.resetall {
+    position: absolute;
+    margin: 0px;
+    padding: 0px;
+    top: ${css_vh(0.65)};
+    left: ${css_vh(53.13)};
+    background:  url('../assets/ui/resetAll.svg');
+    background-size: 100.5%; /* webview pixelates the image unless we do this */
+    width: ${css_vh(8.33)};
+    height: ${css_vh(8.33)};
+}
+
+.resetall:active {
+    background:  url('../assets/ui/resetAllPressed.svg');
+    background-size: 100.5%; /* webview pixelates the image unless we do this */
+}
+
+.resetall.presentationmode {
+    position: absolute;
+    left: ${css_vh(126.17)};
+    top: ${css_vh(15.63)};
+}
+
+.resetall.nopresent {
+    top: ${css_vh(0.65)};
+    left: ${css_vh(53.13)};
+}
+
+.go {
+    position: absolute;
+    margin: 0px;
+    padding: 0px;
+    top: ${css_vh(0.65)};
+    left: ${css_vh(61.72)};
+    width: ${css_vh(8.33)};
+    height: ${css_vh(8.33)};
+    background:  url('../assets/ui/go.svg');
+    background-size: 100%;
+}
+
+.go.on {background:  url('../assets/ui/go.svg'); background-size: 100%; }
+
+.go.off:active {background:  url('../assets/ui/goPressed.svg'); background-size: 100%; }
+
+.go.off {background:  url('../assets/ui/stop1.svg'); background-size: 100%; }
+
+.go.on:active {background:  url('../assets/ui/stopPressed1.svg'); background-size: 100%; }
+
+.go.on.presentationmode, .go.off.presentationmode {
+    position: absolute;
+    right: ${css_vh(0)};
+    left: initial;
+    top: 0px;
+}
+
+.go.on.nopresent, .go.off.nopresent {
+    position: absolute;
+    top: ${css_vh(0.65)};
+    left: ${css_vh(61.72)};
+    background: blue;
+}
+
+
+/* stage text edit */
+
+.pagetext {
+    background: #4682B5;
+    border: 1px solid #355E7C;
+    position: absolute;
+    overflow: hidden;
+    width: ${css_vh(63.28)};
+    height: auto;
+    min-height: ${css_vh(10.42)};
+    margin: 0px;
+    padding: 0px;
+    -webkit-box-shadow: inset 0 ${2 * scaleMultiplier}px 0 rgba(255, 255, 255, 0.5), 0 ${1 * scaleMultiplier}px ${2 * scaleMultiplier}px rgba(0, 0, 0,0);
+    -webkit-border-bottom-left-radius: ${10 * scaleMultiplier}px;
+    -webkit-border-bottom-right-radius: ${10 * scaleMultiplier}px;
+    z-index: 20;
+}
+
+.pageform {
+    position: relative;
+    left: 0px;
+    margin: ${css_vh(0.65)} 0px ${css_vh(0.65)};
+    padding: 0px;
+    width: ${css_vh(62.50)};
+    height: auto;
+}
+
+*.edittext{
+    position: absolute;
+    margin: 0px;
+    padding: 0px;
+    text-align: center;
+    font-family: Helvetica;
+    font-weight: bold;
+    border: 2px solid #355E7C;
+    -webkit-border-radius: ${8 * scaleMultiplier}px;
+    cursor: default;
+    background: white;
+    width: ${css_vh(62.50)};
+    outline: 0px;
+}
+
+.pagetextactions {
+    position: relative;
+    left: 0px;
+    margin: ${css_vh(0.65)} 0px ${css_vh(0.65)};
+    padding: 0px;
+    width: ${css_vh(63.28)};
+    height: ${css_vh(8.59)};
+    z-index: 50;
+}
+
+.pagetext.on {display: block;}
+.pagetext.off {display: none;}
+
+
+*.textuicolormenu {
+    position: relative;
+    background: #4682B5;
+    display: inline-block;
+    position: relative;
+    margin: ${css_vh(-0.65)} 0px ${css_vh(0.65)};
+    padding: 0px;
+    width: ${css_vh(66.41)};
+    height: ${css_vh(7.03)};
+}
+
+*.textuifont {
+    position: relative;
+    background: #4682B5;
+    display: inline-block;
+    position: relative;
+    margin: ${css_vh(-5.21)} 0px 0px;
+    padding: 0px;
+    width: ${css_vh(66.41)};
+    height: ${css_vh(10.42)};
+    z-index: 2;
+}
+
+*.textuicolormenu.on, *.textuifont.on {display: inline-block;}
+*.textuicolormenu.off, *.textuifont.off {display: none;}
+
+*.textcolorbucket {
+    display: inline-block;
+    position: relative;
+    margin: 0px;
+    padding: 0px;
+    width: ${css_vh(6.25)};
+    height: ${css_vh(7.03)};
+    -webkit-user-select: none;
+}
+
+.fontsizeText {
+    position: absolute;
+    margin: 0px;
+    padding: 0px;
+    left: ${css_vh(1.30)};
+    width: ${css_vh(13.02)};
+    height: ${css_vh(8.59)};
+}
+
+.fontsizeText.off {	background:  url('../assets/ui/WordSizeOff.svg'); background-size: 102%; }
+.fontsizeText.on {	background:  url('../assets/ui/WordSizeOn.svg'); background-size: 102%; }
+
+.changecolorText {
+    position: absolute;
+    margin: 0px;
+    padding: 0px;
+    left: ${css_vh(52.08)};
+    width: ${css_vh(10.94)};
+    height: ${css_vh(8.59)};
+}
+
+.changecolorText.off {	background:  url('../assets/ui/PaintcanOff.svg'); background-size: 103%; }
+.changecolorText.on {	background:  url('../assets/ui/PaintcanOn.svg'); background-size: 103%; }
+
+.textuisize {
+    display: inline-block;
+    position: relative;
+    margin: 0px ${css_vh(1.95)} 0px;
+    padding: 0px;
+    padding: 0px;
+    height: ${css_vh(10.42)};
+    color: #ffffff;
+    text-shadow: 0 ${css_vh(0.26)} #000;
+    line-height: ${css_vh(13.02)};
+    font-weight: bold;
+    font-family: Roboto;
+}
+
+.textuisize.t1{ font-size: ${css_vh(1.56)};}
+.textuisize.t2{ font-size: ${css_vh(2.08)};}
+.textuisize.t3{ font-size: ${css_vh(3.13)};}
+.textuisize.t4{ font-size: ${css_vh(4.69)};}
+.textuisize.t5{ font-size: ${css_vh(6.25)};}
+.textuisize.t6{ font-size: ${css_vh(7.29)};}
+.textuisize.t7{ font-size: ${css_vh(9.38)};}
+
+.textuisize.t1.on, .textuisize.t2.on, .textuisize.t3.on, .textuisize.t4.on,
+.textuisize.t5.on, .textuisize.t6.on, .textuisize.t7.on { color: #ffcc00;}
+
+.textuisize.t1.off, .textuisize.t2.off, .textuisize.t3.off, .textuisize.t4.off,
+.textuisize.t5.off, .textuisize.t6.off, .textuisize.t7.off { color: #ffffff;}
+
+
+/* stage */
+
+#stageframe {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width: ${css_vh(70.57)};
+    height: ${css_vh(61.20)};
+}
+
+#stageframe .stage {
+    background: #ffffff;
+    position: absolute;
+    margin: 0px;
+    margin-bottom: ${5 * scaleMultiplier}px;
+    overflow: hidden;
+    width: 480px;
+    height: 360px;
+    border: 1px solid #B3B3B3;
+
+    /*-webkit-box-shadow: 1px 1px 3px #D0D1D2;*/
+}
+
+*.stage.fullscreen {
+    position: absolute;
+    border: 0px solid #4d4e4e;
+    width: 480px;
+    height: 360px;
+    overflow: hidden;
+    background: none;
+    /* -webkit-box-shadow: 1px 1px 1px #4d4e4e; */
+}
+
+
+
+*.stage.normal {
+    position: absolute;
+    width: 480px;
+    height: 360px;
+    border: 1px solid #D0D1D2;
+    overflow: hidden;
+    -webkit-box-shadow: ${1 * scaleMultiplier}px ${1 * scaleMultiplier}px ${3 * scaleMultiplier}px #D0D1D2;
+}
+
+*.stagepage {
+    position: absolute;
+    width: 480px;
+    height: 360px;
+    -webkit-transform-style: preserve-3d;
+    -webkit-text-size-adjust: auto;
+}
+
+#stageframe .stage.editable { left: 92px;}
+
+#stageframe .stage.noteditable { left: 26px;}
+
+#stageframe .grid {
+    position: absolute;
+    left: 93px;
+    top: 2px;
+    width: 482px;
+    height: 362px;
+    z-index: 10;
+    background: yellow;
+}
+
+#stageframe .rownum{
+    position: absolute;
+    left: 68px;
+    top: 364px;
+    width: 512px;
+    height: 24px;
+    z-index: 10;
+    background: lime;
+}
+
+#stageframe .colnum{
+    position: absolute;
+    left: 68px;
+    top: 2px;
+    height: 380px;
+    width: 24px;
+    z-index: 10;
+    background: lime;
+}
+
+.nextpage {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: 0px ${css_vh(1.04)} ${css_vh(1.30)};
+    width: ${css_vh(6.51)};
+    height: ${css_vh(6.51)};
+    z-index: 10;
+    background: url('../assets/ui/nextpage.svg');
+    background-size: 100%;
+    -webkit-user-select: none;
+}
+
+.nextpage:active {background: url('../assets/ui/nextpagePressed.svg'); background-size: 100%; }
+
+.nextpage.on {display: block;}
+
+.nextpage.off {display: none;}
+
+.prevpage {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    margin: 0px ${css_vh(1.30)} ${css_vh(1.30)};
+    width: ${css_vh(6.51)};
+    height: ${css_vh(6.51)};
+    z-index: 10;
+    background: url('../assets/ui/prevpage.svg');
+    background-size: 100%;
+    -webkit-user-select: none;
+}
+
+.prevpage:active {background: url('../assets/ui/prevpagePressed.svg'); background-size: 100%; }
+
+.prevpage.on {display: block;}
+
+.prevpage.off {display: none;}
+
+
+/* Grid */
+
+
+p.stylelabel {
+    position: relative; text-align: center;
+    margin-top: 5px;
+    color: #C9C9C9;
+    font-family: Roboto;
+    font-weight: bold;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 1;
+    width: 24;
+    font-size: 11px;
+    top: 0px;
+    margin-bottom: 0px;
+    cursor: default;
+}
+
+*.circlenum{
+    position: relative;
+    text-align: center;
+    margin-top: 5px;
+    color: #ffffff;
+    font-family: Roboto;
+    font-weight: bold;
+    margin-left: auto; margin-right: auto;
+    width: 24;
+    font-size: 11px;
+    top: 0px;
+    margin-bottom: 0px;
+    cursor: default;
+}

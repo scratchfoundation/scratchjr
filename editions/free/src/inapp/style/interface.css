@@ -1,0 +1,501 @@
+@import url('../../css/font.css');
+
+html {
+	-webkit-user-select: none;
+	height: 100%;
+}
+
+body {
+    margin-top: ${css_vh(6)};
+    padding: ${css_vh(2)} ${css_vw(6.05)} ${css_vh(2)};
+    margin: ${css_vh(2.6)} auto;
+}
+
+#content {
+    width: ${css_vh(164)};
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#content-buffer {
+	color: #808080;
+	margin-left: ${css_vh(14.31)};
+	height: ${css_vh(7.24)};
+	font-size: ${css_vh(2.3)};
+}
+
+/* Guide Elements */
+
+.interface-dot {
+	height: ${Math.max(1, Math.ceil(5 * scaleMultiplier))}px;
+	width: ${Math.max(1, Math.ceil(5 * scaleMultiplier))}px;
+	border-radius: 50%;
+	background-color: #333333;
+	position: absolute;
+}
+
+.interface-vertical-line {
+	border-left: 1px solid black;
+	position: absolute;
+}
+
+.interface-horizontal-line {
+	border-top: 1px solid black;
+	position: absolute;
+}
+
+.interface-button {
+	font-family: Roboto, arial, sans-serif;
+	border-radius: 50%;
+	position: absolute;
+	border: 1px solid #808080;
+	width: ${css_vh(5.26)};
+	height: ${css_vh(5.26)};
+	text-align: center;
+	cursor: pointer;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.interface-button-text {
+	padding: ${css_vh(1.15)};
+    font-size: ${css_vh(2.3)};
+}
+
+.interface-button-selected {
+	border: 1px solid #2898CD;
+	color: #2898CD;
+}
+
+/* Guide 1 - Interface Guide */
+
+/* 1. Save */
+
+#interface-button-save {
+	left: ${css_vh(30.59)};
+	top: ${css_vh(-6.25)};
+}
+
+#interface-vertical-line-save {
+	height: ${css_vh(2.47)};
+	top: ${css_vh(-0.82)};
+	left: ${css_vh(33.55)};
+}
+
+#interface-dot-save {
+	top: ${css_vh(1.15)};
+	left: ${css_vh(33.22)};
+}
+
+/* 2. Stage */
+
+#interface-button-stage {
+	left: ${css_vh(37.34)};
+	top: ${css_vh(-6.25)};
+}
+
+#interface-vertical-line-stage-1 {
+	height: ${css_vh(26.4)};
+	top: ${css_vh(-0.82)};
+	left: ${css_vh(39.97)};
+}
+
+#interface-horizontal-line-stage-1 {
+	width: ${css_vh(1.81)};
+	top: ${css_vh(25.59)};
+	left: ${css_vh(39.97)};
+}
+
+#interface-vertical-line-stage-2 {
+	height: ${css_vh(34.05)};
+	top: ${css_vh(7.07)};
+	left: ${css_vh(41.61)};
+}
+
+#interface-horizontal-line-stage-2 {
+	width: ${css_vh(1.32)};
+	top: ${css_vh(7.07)};
+	left: ${css_vh(41.61)};
+}
+
+#interface-horizontal-line-stage-3 {
+	width: ${css_vh(1.32)};
+	top: ${css_vh(41.12)};
+	left: ${css_vh(41.61)};
+}
+
+/* 3. Presentation Mode */
+
+#interface-button-presentation-mode {
+    left: ${css_vh(43.09)};
+    top: ${css_vh(-6.25)};
+}
+
+#interface-vertical-line-presentation-mode {
+    height: ${css_vh(2.47)};
+    top: ${css_vh(-0.82)};
+    left: ${css_vh(45.72)};
+}
+
+#interface-dot-presentation-mode {
+    top: ${css_vh(1.32)};
+    left: ${css_vh(45.39)};
+}
+
+/* 4. Grid */
+
+#interface-button-grid {
+    left: ${css_vh(48.85)};
+    top: ${css_vh(-6.25)};
+}
+
+#interface-vertical-line-grid {
+    height: ${css_vh(2.14)};
+    top: ${css_vh(-0.82)};
+    left: ${css_vh(51.64)};
+}
+
+#interface-dot-grid {
+    top: ${css_vh(1.32)};
+    left: ${css_vh(51.32)};
+}
+
+/* 5. Change Background */
+
+#interface-button-add-text {
+    left: ${css_vh(60.69)};
+    top: ${css_vh(-6.25)};
+}
+
+#interface-vertical-line-add-text {
+    height: ${css_vh(1.97)};
+    top: ${css_vh(-0.82)};
+    left: ${css_vh(63.32)};
+}
+
+#interface-dot-add-text {
+    top: ${css_vh(1.15)};
+    left: ${css_vh(62.99)};
+}
+
+/* 6. Add Text */
+
+#interface-button-change-background {
+    left: ${css_vh(66.78)};
+    top: ${css_vh(-6.25)};
+}
+
+#interface-vertical-line-change-background {
+    height: ${css_vh(2.14)};
+    top: ${css_vh(-0.82)};
+    left: ${css_vh(69.41)};
+}
+
+#interface-dot-change-background {
+    top: ${css_vh(1.32)};
+    left: ${css_vh(69.08)};
+}
+
+/* 7. Reset Characters */
+
+#interface-button-reset-characters {
+    left: ${css_vh(77.47)};
+    top: ${css_vh(-6.25)};
+}
+
+#interface-vertical-line-reset-characters {
+    height: ${css_vh(1.81)};
+    top: ${css_vh(-0.82)};
+    left: ${css_vh(80.10)};
+}
+
+#interface-dot-reset-characters {
+    top: ${css_vh(0.99)};
+    left: ${css_vh(79.77)};
+}
+
+/* 8. Green Flag */
+
+#interface-button-green-flag {
+    left: ${css_vh(83.39)};
+    top: ${css_vh(-6.25)};
+}
+
+#interface-vertical-line-green-flag {
+    height: ${css_vh(1.81)};
+    top: ${css_vh(-0.82)};
+    left: ${css_vh(86.18)};
+}
+
+#interface-dot-green-flag {
+    top: ${css_vh(0.99)};
+    left: ${css_vh(85.86)};
+}
+
+/* 9. Pages */
+
+#interface-button-pages {
+    left: ${css_vh(96.22)};
+    top: ${css_vh(-6.25)};
+}
+
+#interface-vertical-line-pages {
+    height: ${css_vh(2.47)};
+    top: ${css_vh(-0.82)};
+    left: ${css_vh(99.01)};
+}
+
+#interface-dot-pages {
+    top: ${css_vh(1.64)};
+    left: ${css_vh(98.68)};
+}
+
+/* 10. Project Information */
+
+#interface-button-project-information {
+    left: ${css_vh(106.09)};
+    top: ${css_vh(-6.25)};
+}
+
+#interface-vertical-line-project-information {
+    height: ${css_vh(2.14)};
+    top: ${css_vh(-0.82)};
+    left: ${css_vh(108.88)};
+}
+
+#interface-dot-project-information {
+    top: ${css_vh(1.32)};
+    left: ${css_vh(108.55)};
+}
+
+/* 16. Characters */
+
+#interface-button-characters {
+    left: ${css_vh(18.91)};
+    top: ${css_vh(73.68)};
+}
+
+#interface-vertical-line-characters-1 {
+    height: ${css_vh(1.32)};
+    top: ${css_vh(36.18)};
+    left: ${css_vh(15.95)};
+}
+
+#interface-vertical-line-characters-3 {
+    height: ${css_vh(1.32)};
+    top: ${css_vh(36.18)};
+    left: ${css_vh(37.17)};
+}
+
+#interface-horizontal-line-characters {
+    width: ${css_vh(21.5)};
+    top: ${css_vh(37.50)};
+    left: ${css_vh(15.95)};
+}
+
+#interface-vertical-line-characters-2 {
+    height: ${css_vh(36.18)};
+    top: ${css_vh(37.50)};
+    left: ${css_vh(21.71)};
+}
+
+/* 15. Block Categories */
+
+#interface-button-block-categories {
+    left: ${css_vh(29.61)};
+    top: ${css_vh(73.68)};
+}
+
+#interface-vertical-line-block-categories-1 {
+    height: ${css_vh(0.99)};
+    top: ${css_vh(50.00)};
+    left: ${css_vh(15.63)};
+}
+
+#interface-vertical-line-block-categories-3 {
+    height: ${css_vh(0.99)};
+    top: ${css_vh(50.00)};
+    left: ${css_vh(46.05)};
+}
+
+#interface-horizontal-line-block-categories {
+    width: ${css_vh(30.59)};
+    top: ${css_vh(50.99)};
+    left: ${css_vh(15.63)};
+}
+
+#interface-vertical-line-block-categories-2 {
+    height: ${css_vh(22.70)};
+    top: ${css_vh(50.99)};
+    left: ${css_vh(32.40)};
+}
+
+/* 14. Block Palette */
+
+#interface-button-block-palette {
+    left: ${css_vh(59.70)};
+    top: ${css_vh(73.68)};
+}
+
+#interface-vertical-line-blocks-palette-1 {
+    height: ${css_vh(1.32)};
+    top: ${css_vh(50.66)};
+    left: ${css_vh(48.36)};
+}
+
+#interface-vertical-line-blocks-palette-3 {
+    height: ${css_vh(1.32)};
+    top: ${css_vh(50.66)};
+    left: ${css_vh(98.1)};
+}
+
+#interface-horizontal-line-blocks-palette {
+    width: ${css_vh(50.16)};
+    top: ${css_vh(51.97)};
+    left: ${css_vh(48.36)};
+}
+
+#interface-vertical-line-blocks-palette-2 {
+    height: ${css_vh(21.71)};
+    top: ${css_vh(51.97)};
+    left: ${css_vh(62.50)};
+}
+
+/* 13. Programming Area */
+
+#interface-button-programming-area {
+    left: ${css_vh(68.09)};
+    top: ${css_vh(73.68)};
+}
+
+#interface-vertical-line-programming-area {
+    height: ${css_vh(4.11)};
+    top: ${css_vh(69.74)};
+    left: ${css_vh(70.72)};
+}
+
+#interface-dot-programming-area {
+    top: ${css_vh(69.08)};
+    left: ${css_vh(70.39)};
+}
+
+/* 12. Programming Script */
+
+#interface-button-programming-script {
+    left: ${css_vh(76.48)};
+    top: ${css_vh(73.68)};
+}
+
+#interface-vertical-line-programming-script-1 {
+    height: ${css_vh(1.64)};
+    top: ${css_vh(63.32)};
+    left: ${css_vh(65.79)};
+}
+
+#interface-vertical-line-programming-script-3 {
+    height: ${css_vh(1.64)};
+    top: ${css_vh(63.32)};
+    left: ${css_vh(93.09)};
+}
+
+#interface-horizontal-line-programming-script {
+    width: ${css_vh(27.47)};
+    top: ${css_vh(64.97)};
+    left: ${css_vh(65.79)};
+}
+
+#interface-vertical-line-programming-script-2 {
+    height: ${css_vh(8.55)};
+    top: ${css_vh(65.13)};
+    left: ${css_vh(79.11)};
+}
+
+/* 11. Undo Redo */
+
+#interface-button-undo-redo {
+    left: ${css_vh(102.80)};
+    top: ${css_vh(73.68)};
+}
+
+#interface-vertical-line-undo-redo-1 {
+    height: ${css_vh(1.32)};
+    top: ${css_vh(50.66)};
+    left: ${css_vh(100.66)};
+}
+
+#interface-vertical-line-undo-redo-3 {
+    height: ${css_vh(1.32)};
+    top: ${css_vh(50.66)};
+    left: ${css_vh(110.20)};
+}
+
+#interface-horizontal-line-undo-redo {
+    width: ${css_vh(9.70)};
+    top: ${css_vh(51.97)};
+    left: ${css_vh(100.66)};
+}
+
+#interface-vertical-line-undo-redo-2 {
+    height: ${css_vh(21.88)};
+    top: ${css_vh(51.97)};
+    left: ${css_vh(105.43)};
+}
+
+#right-column {
+	display: block;
+	overflow: auto;
+	width: ${css_vh(45.39)};
+}
+
+#interface-key {
+	width: ${css_vh(36.35)};
+	height: ${css_vh(72.53)};
+	float: left;
+	margin-left: ${css_vh(9.05)};
+	background-image: url("../images/keybackground.png");
+	background-size: 100%;
+	background-repeat: no-repeat;
+}
+
+#interface-key-header {
+	font-size: ${css_vh(3)};
+	padding-top: ${css_vh(1.64)};
+	padding-left: ${css_vh(1.64)};
+	color: #2898CD;
+}
+
+#interface-key-description {
+    color: #808080;
+    line-height: ${css_vh(3.62)};
+    padding-top: ${css_vh(0.82)};
+    padding-right: ${css_vh(2.47)};
+    font-size: ${css_vh(2.3)};
+    margin-right: ${css_vh(0.82)};
+    margin-left: ${css_vh(3.29)};
+}
+
+#video-wrapper {
+    margin-top: ${css_vh(1.97)};
+    float: left;
+    margin-left: ${css_vh(9.05)};
+}
+
+#ipad-project-view-wrapper {
+	position: relative;
+}
+
+.learn-tab {
+	display: none;
+}
+
+.learn-tab-selected {
+	display: inline;
+}
+
+.ipad-project-view {
+	margin-left: ${css_vh(14.31)};
+	float: left;
+	height: ${css_vh(72.70)};
+}
+
+
+/* End Guide 3 - Block Descriptions */

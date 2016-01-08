@@ -1,0 +1,41 @@
+@import url('../../css/font.css');
+
+html {
+  -webkit-user-select: none;
+}
+
+body {
+  color: #595959;
+  font-family: Roboto;
+  padding: ${css_vh(2)} 6.05vw ${css_vh(2)};
+  margin: ${css_vh(2.6)} auto;
+  width: ${css_vw(87.89)};
+  height: auto;
+  margin-bottom: ${css_vh(10.4)};
+}
+
+h1 {
+  font-size: ${css_vh(5.3)};
+  margin-bottom: ${css_vh(0.65)};
+  color: #f5a322;
+}
+
+h2 {
+  font-size: ${css_vh(3.78)};
+}
+
+.about-section-wrapper {
+  display: block;
+  margin-bottom: ${css_vh(1.3)};
+}
+
+.title {
+  font-weight: bold;
+  margin-bottom: ${css_vh(1.3)};
+  color: #2898cd;
+}
+
+.description {
+  font-size: ${css_vh(2.85)};
+  margin-bottom: ${css_vh(1.3)};
+}

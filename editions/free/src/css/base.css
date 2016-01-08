@@ -1,0 +1,56 @@
+html, body, div, h1, h2, h3, h4, h5, h6, p, pre, blockquote, address, img, dl,
+dt, dd, ol, ul, li, table, caption, tbody, tfoot, thead, tr, th, td, form, input,
+fieldset, legend, object, embed {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    color: #4c4d4f;
+    direction: ltr;
+    font: 81.25% Roboto, arial, sans-serif;
+    -webkit-user-select: none;
+    height: 100%;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+}
+
+/* Set default, padding, margin and font-size on block elements */
+h1 {
+    font-size: 1.23em;
+    margin: 0 0 .77em;
+}
+
+h2,
+h3 {
+    font-size: 1.08em;
+}
+
+h1, h2, h3, h4 {
+    font-weight: 700;
+    line-height: 32px;
+    color: #554747;
+}
+
+h1 {
+    font-size: 2em; /* 26px */
+    line-height: 1.3077em; /* 34px */
+}
+
+h2 {
+    font-size: 1.6923em; /* 22px */
+    line-height: 1.1818em; /* 26px */
+}
+
+h3 {
+    font-size: 1.3846em; /* 18px */
+}
+
+h4 {
+    font-size: 1.2308em; /* 16px */
+    line-height: 1.25em; /* 20px */
+}

@@ -1,0 +1,501 @@
+html {
+    color: #4c4d4f;
+    direction: ltr;
+    font: 81.25% Roboto, arial, sans-serif;
+    -webkit-user-select: none;
+}
+
+div.frame {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #E8E3CA;
+    overflow: hidden;
+    -webkit-overflow-scrolling: none;
+    -webkit-user-select: none;
+    background-image: -webkit-linear-gradient(top,rgba(255, 255, 255, 0.70), rgba(255, 255, 255, 0.70) 10%, rgba(255, 255, 255, 0.70) 90%, rgba(255, 255, 255, 0));
+}
+
+/* top bar */
+
+#topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: ${css_vh(10.42)};
+    text-shadow: none;
+    z-index: 100;
+    background-color: #E8E3CA;
+    background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0));
+    border-bottom: 1px solid #ADACA6;
+    border-top: 1px solid #E8E3CA;
+    -webkit-box-shadow: 0px ${1 * scaleMultiplier}px ${1 * scaleMultiplier}px #fff;
+    width: 100%;
+}
+
+#topbar ul.topbar-nav {
+    display: inline-block;
+    list-style-type: none;
+    margin: 0px;
+    width: ${css_vh(78.13)};
+    position: absolute;
+    left: 0px;
+}
+
+#topbar ul.topbar-nav>li {
+    display: inline-block;
+    margin: 1px 0px 0px;
+    padding: 0px;
+    vertical-align: top;
+    line-height:  ${css_vh(10.29)};
+    border-right: 1px solid #ADACA6;
+}
+
+#topbar ul.topbar-nav>div {
+    display: inline-block;
+    margin: 1px -3px 0px;
+    padding: 0px;
+    width: 1px;
+    height: ${css_vh(10.42)};
+    background: white;
+}
+
+#topbar ul.topbar-nav li.logo {
+    width: ${css_vh(32)};
+}
+
+#topbar ul.topbar-nav .logo .logo-icon {
+    display: block;
+    width: ${css_vh(28.65)};
+    height: ${css_vh(10.03)};
+    background: url('../assets/lobby/scratchJrlogo.svg');
+    background-size: 101%;
+    padding: 0;
+    margin: auto auto;
+}
+
+#topbar ul.topbar-nav li.home {
+    width: ${css_vh(16)};
+}
+
+#topbar ul.topbar-nav .home .home-icon {
+    display: block;
+    width: ${css_vh(12.63)};
+    height: ${css_vh(10.03)};
+    background: url('../assets/lobby/house.svg');
+    background-size: 101%;
+    padding: 0;
+    margin: auto auto;
+}
+
+#topbar ul.topbar-nav li.help {
+    width: ${css_vh(16)};
+}
+
+#topbar ul.topbar-nav .help .help-icon {
+    display: block;
+    width: ${css_vh(12.63)};
+    height: ${css_vh(10.03)};
+    background: url('../assets/lobby/help.svg');
+    background-size: 101%;
+    padding: 0;
+    margin: auto auto;
+}
+
+#topbar ul.topbar-nav .home.on{background: #F9A737; height: ${css_vh(10.81)};}
+#topbar ul.topbar-nav .home.off{background: none; height: auto;}
+
+#topbar ul.topbar-nav .help.on{background: #35A8E0; height: ${css_vh(10.81)};}
+#topbar ul.topbar-nav .help.off{background: none; height: auto;}
+
+
+#topbar ul.reference {
+    width: ${css_vh(16)};
+    display: inline-block;
+    list-style-type: none;
+    margin: 0px;
+    position: absolute;
+    right: -5px;
+
+    /* on initial page load, the element isn't floated all the way to the right */
+    float: right;
+}
+
+#topbar ul.reference>li {
+    width: ${css_vh(16)};
+    display: inline-block;
+    margin: 1px 0px 0px;
+    padding: 0px;
+    vertical-align: top;
+    line-height:  ${css_vh(10.29)};
+    border-left: 1px solid white;
+}
+
+#topbar ul.reference .book .book-icon {
+    display: block;
+    width: ${css_vh(12.63)};
+    height: ${css_vh(10.03)};
+    background: url('../assets/lobby/bookOff.svg');
+    background-size: 101%;
+    padding: 0;
+    margin: auto auto;
+}
+
+#topbar ul.reference .book.off>span {background: url('../assets/lobby/bookOff.svg'); background-size: 101%;}
+#topbar ul.reference .book.on>span {background: url('../assets/lobby/bookOn.svg'); background-size: 101%; margin: 0px ${css_vh(0.8)};}
+
+#topbar ul.reference .book.off {background: none; height: auto;}
+#topbar ul.reference .book.on {
+    background-color: #E8E3CA;
+    background-image: -webkit-linear-gradient(top,rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.80));
+    height: ${css_vh(10.81)};
+}
+
+ul#settings.reference {
+    right: ${css_vh(15.5)};
+}
+
+#topbar ul.reference .gear .gear-icon {
+    display: block;
+    width: ${css_vh(12.63)};
+    height: ${css_vh(10.03)};
+    background: url('../assets/lobby/gearOff.svg');
+    background-size: 101%;
+    padding: 0;
+    margin: auto auto;
+}
+
+#topbar ul.reference .gear.off>span {background: url('../assets/lobby/gearOff.svg'); background-size: 101%; margin: auto;}
+#topbar ul.reference .gear.on>span {background: url('../assets/lobby/gearOn.svg'); background-size: 101%; margin: auto;}
+
+#topbar ul.reference .gear.off {background: none; height: auto;}
+#topbar ul.reference .gear.on {
+    background-color: #E8E3CA;
+    background-image: -webkit-linear-gradient(top,rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.80));
+    height: ${css_vh(10.81)};
+}
+
+
+/*contents*/
+
+.topsection {
+    position: fixed;
+    left: 0;
+    right: 0;
+    margin: ${css_vh(10.81)} auto 0px;
+    height: 0px;
+    border: 0;
+    display: inline-block;
+    background: none;
+    z-index: 11000;
+}
+
+.topsection.book {display: none;}
+
+.topsection>div{
+    color: #fff;
+    font-size: ${css_vh(3.5)};
+    font-weight: bold;
+    text-align: left;
+}
+
+.topsection.home {
+    display: block;
+}
+
+.topsection.home > div.tabtitle {
+    height: ${css_vh(5.86)};
+    background: #F9A737;
+    margin: 0;
+    padding: 0;
+    padding-left: 2%;
+    text-shadow: 0 2px #C18134;
+    line-height: ${css_vh(5.86)};
+    vertical-align: middle;
+    border-bottom: 1px solid #ADACA6;
+    width: 100%;
+}
+
+.topsection.help > div.tabtitle {
+    height: ${css_vh(5.86)};
+    background: #35A8E0;
+    border-bottom: 1px solid #ADACA6;
+    margin: 0;
+    padding: 0;
+    padding-left: 2%;
+    text-shadow: 0 2px #0F86B5;
+    line-height: ${css_vh(5.86)};
+    vertical-align: middle;
+}
+
+.topsection.home >div.tabicon {
+    display: none;
+}
+
+.topsection.home >div.blueband {
+    display: none;
+}
+
+.topsection.help >div.tabline {
+    display: none;
+}
+.topsection.help >div.blueband {
+    display: block;
+    height: ${css_vh(5.86)};
+    background: #35A8E0;
+    border: 0px solid #ADACA6;
+    border-top: 1px solid #ffffff;
+    border-bottom: 1px solid #ADACA6;
+}
+
+.topsection.help >div.blueband >span {
+    color: #fff;
+    font-size: ${css_vh(3.5)};
+    font-weight: bold;
+    text-align: left;
+    margin: 0;
+    padding-left: 2%;
+    padding-top: ${css_vh(1)};
+    text-shadow: 0 2px #0F86B5;
+    line-height: ${css_vh(5.86)};
+    vertical-align: top;
+}
+
+.topsection.help >div.tabline {
+    display: block;
+    width: auto;
+    height: 1px;
+    border: 0px solid #E8E3CA;
+    border-bottom: 1px solid #E8E3CA;
+}
+
+.topsection.help >div.tabicon {
+    display: block;
+    margin: 0px auto ${css_vh(1.3)};
+    width: ${css_vh(39)};
+    height: ${css_vh(19.5)};
+    background: url('../assets/lobby/movielaunch.svg') no-repeat left top;
+    background-size: 100%;
+}
+
+/* Localization menu */
+h1.localizationtitle {
+    font-family: Roboto;
+    font-size: ${css_vh(4.5)};
+    color: #f5a322;
+    text-align: center;
+}
+
+div.languagebuttons {
+    margin: auto;
+    margin-top: ${css_vh(4)};
+    width: 70%;
+}
+
+div.localizationselect {
+    border-radius: 15px;
+    width: ${css_vw(27)};
+    height: 47pt;
+    float: left;
+    background-color: #35A8E0;
+    color: #fff;
+    font-size: ${css_vh(4.5)};
+    text-align: center;
+    margin-left: ${css_vw(3)};
+    padding-top: 2%;
+    background-image: linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.2) 51%);
+}
+
+div.localizationselect.selected {
+    background-color: #F9A737;
+}
+
+/* footer */
+
+#footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: ${css_vh(10.4)};
+    border: 0 solid #ADACA6;
+    border-bottom: 1px solid #ADACA6;
+    border-top: 1px solid #ADACA6;
+    z-index: 11000;
+    background: #E8E3CA;
+    -webkit-user-select: none;
+}
+
+#footer.on {display: block;}
+#footer.off {display: none;}
+
+
+#footer ul.footer-nav {
+    position: absolute;
+    display: flex;
+    list-style-type: none;
+    left: 0;
+    right: 0;
+    margin: 0px;
+}
+
+#footer ul.footer-nav>li {
+    display: inline-block;
+    word-spacing: -1;
+    margin: 0px;
+    padding: 0px;
+    vertical-align: middle;
+    line-height:  ${css_vh(10.15)};
+    border-right: 1px solid #ADACA6;
+}
+
+#footer ul.footer-nav .tab,.tab2  {
+    position: absolute;
+    width: ${css_vw(25)};
+    height: ${css_vh(10.15)};
+}
+
+#footer ul.footer-nav .tab  {
+    border-right: 1px solid #ADACA6;
+}
+
+#abouttab       { left: ${css_vw( 0)}; }
+#interfacetab   { left: ${css_vw(25)}; }
+#painttab       { left: ${css_vw(50)}; }
+#blockstab      { left: ${css_vw(75)}; }
+
+#footer ul.footer-nav .tab.off, ul.footer-nav .tab2.off   {background-image: none; top:0px;}
+
+#footer ul.footer-nav .tab.on,.tab2.on {
+    background-image: -webkit-linear-gradient(top, rgba(249, 248, 242, 1), rgba(249, 248, 242, 0));
+    top: ${css_vh(-0.13)};
+}
+
+#footer ul.footer-nav .tab>div, ul.footer-nav .tab2>div {
+    position: relative;
+    margin: ${css_vh(0.65)};
+    left: ${css_vh(0.65)};
+    width: ${css_vh(8.3)};
+    height: ${css_vh(8.3)};
+}
+
+#footer ul.footer-nav .tab>span , ul.footer-nav .tab2>span{
+    position: relative;
+    top: ${css_vh(-6)};
+    left: ${css_vw(5)};
+    padding: 0px;
+    height: ${css_vh(2.86)};
+    line-height: ${css_vh(2.86)};
+    cursor: pointer;
+    width: ${css_vw(17.58)};
+    overflow: visible;
+    font-size: ${css_vh(2.34)};
+    margin: auto;
+    vertical-align: middle;
+    text-shadow: none;
+    display: block;
+    word-wrap: break-word;
+}
+
+#footer ul.footer-nav .tab .about-icon {background: url('../assets/lobby/aboutOff.svg'); background-size: 100.5%;}
+#footer ul.footer-nav .tab .interface-icon { background: url('../assets/lobby/interfaceOff.svg'); background-size: 100.5%;}
+#footer ul.footer-nav .tab2 .blocks-icon {background: url('../assets/lobby/blocksOff.svg'); background-size: 100.5%;}
+#footer ul.footer-nav .tab .paint-icon {background: url('../assets/lobby/paintOff.svg'); background-size: 100.5%;}
+
+#footer ul.footer-nav .tab.on .about-icon {background: url('../assets/lobby/aboutOn.svg'); background-size: 100.5%;}
+#footer ul.footer-nav .tab.on .interface-icon { background: url('../assets/lobby/interfaceOn.svg'); background-size: 100.5%;}
+#footer ul.footer-nav .tab2.on .blocks-icon {background: url('../assets/lobby/blocksOn.svg'); background-size: 100.5%;}
+#footer ul.footer-nav .tab.on .paint-icon {background: url('../assets/lobby/paintOn.svg'); background-size: 100.5%;}
+
+
+*.contentwrap {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+*.contentwrap.scroll {overflow-x: hidden; overflow-y: auto; }
+*.contentwrap.noscroll {
+    top: 0px;
+    left: 0px;
+    overflow: hidden;
+    -webkit-overflow-scrolling: none;
+}
+
+.contentwrap::-webkit-scrollbar {
+    width: 0 !important;
+}
+
+.htmlcontents {
+    margin: 0px auto;
+    width: 100%;
+    border: 0;
+    padding: ${80 * scaleMultiplier}px 0px ${50 * scaleMultiplier}px;
+    height: auto;
+}
+
+.htmlcontents.home {
+    padding: ${css_vh(17)} 0px ${css_vh(6.5)};
+    height: auto;
+}
+
+.htmlcontents.settings {
+    padding: ${css_vh(14.5)} 0px ${css_vh(2)};
+    margin: ${css_vh(2.6)} auto;
+    width: ${css_vw(87.89)};
+    height: auto;
+}
+
+
+.htmlcontents.help {
+    padding: ${css_vh(10.8)} 0px ${css_vw(0.97)};
+    height: 89.1%;
+}
+
+.htmlcontents.help .samples {
+    position: relative;
+    padding: 0px;
+    top: 37%;
+    left: 3.6%;
+    margin: 0px auto;
+    padding: 10px 0 0;
+    width: 100%;
+    height: 62.4%;
+    overflow: hidden;
+}
+
+.htmlcontents.help .samples.off {display: none;}
+.htmlcontents.help .samples.on {display: block;}
+
+.htmlcontents.scrolled {
+    position: absolute;
+    padding: 0px;
+    height: ${css_vh(79.18)};
+    top: ${css_vh(10.42)};
+}
+
+.htmlcontents.fixed {
+    position: absolute;
+    padding: 0px;
+    height: ${css_vh(79.18)};
+    top: ${css_vh(10.42)};
+}
+
+.errormsg {
+    margin: ${20 * scaleMultiplier}px ${70 * scaleMultiplier}px 0px;
+    padding: 0px;
+}
+
+.errormsg h1 {
+    text-align: left;
+    text-shadow: 0 ${2 * scaleMultiplier}px #fff;
+    color: #C18134;
+    vertical-align: middle;
+    font-size: ${18 * scaleMultiplier}px;
+    font-weight: bold;
+}
