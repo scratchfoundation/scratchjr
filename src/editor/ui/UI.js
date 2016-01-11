@@ -93,43 +93,45 @@ UI.addProjectInfo = function () {
     var author = newHTML('div', 'infolabel', staticinfo);
     author.setAttribute('id', 'deviceName');
 
-    // Sharing
-    var shareButtons = newHTML('div', 'infoboxShareButtons', infobox);
+    if (!Settings.shareEnabled) {
+        // Sharing
+        var shareButtons = newHTML('div', 'infoboxShareButtons', infobox);
 
-    var shareEmail = newHTML('div', 'infoboxShareButton', shareButtons);
-    shareEmail.id = 'infoboxShareButtonEmail';
-    shareEmail.textContent = Localization.localize('SHARING_BY_EMAIL');
+        var shareEmail = newHTML('div', 'infoboxShareButton', shareButtons);
+        shareEmail.id = 'infoboxShareButtonEmail';
+        shareEmail.textContent = Localization.localize('SHARING_BY_EMAIL');
 
-    if (UI.isAndroid) {
-        shareEmail.style.margin = 'auto';
-    } else {
-        shareEmail.style.float = 'left';
-    }
+        if (UI.isAndroid) {
+            shareEmail.style.margin = 'auto';
+        } else {
+            shareEmail.style.float = 'left';
+        }
 
-    if (!UI.isAndroid) {
-        var shareAirdrop = newHTML('div', 'infoboxShareButton', shareButtons);
-        shareAirdrop.id = 'infoboxShareButtonAirdrop';
-        shareAirdrop.textContent = Localization.localize('SHARING_BY_AIRDROP');
-        shareAirdrop.style.float = 'right';
-        shareAirdrop.ontouchstart = function (e) {
+        if (!UI.isAndroid) {
+            var shareAirdrop = newHTML('div', 'infoboxShareButton', shareButtons);
+            shareAirdrop.id = 'infoboxShareButtonAirdrop';
+            shareAirdrop.textContent = Localization.localize('SHARING_BY_AIRDROP');
+            shareAirdrop.style.float = 'right';
+            shareAirdrop.ontouchstart = function (e) {
+                UI.parentalGate(e, function (e) {
+                    UI.infoDoShare(e, nameField, shareLoadingGif, 1);
+                });
+            };
+        }
+
+        iOS.deviceName(function (name) {
+            gn('deviceName').textContent = name;
+        });
+
+        var shareLoadingGif = newHTML('img', 'infoboxShareLoading', shareButtons);
+        shareLoadingGif.src = './assets/ui/loader.png';
+
+        shareEmail.ontouchstart = function (e) {
             UI.parentalGate(e, function (e) {
-                UI.infoDoShare(e, nameField, shareLoadingGif, 1);
+                UI.infoDoShare(e, nameField, shareLoadingGif, 0);
             });
         };
     }
-
-    iOS.deviceName(function (name) {
-        gn('deviceName').textContent = name;
-    });
-
-    var shareLoadingGif = newHTML('img', 'infoboxShareLoading', shareButtons);
-    shareLoadingGif.src = './assets/ui/loader.png';
-
-    shareEmail.ontouchstart = function (e) {
-        UI.parentalGate(e, function (e) {
-            UI.infoDoShare(e, nameField, shareLoadingGif, 0);
-        });
-    };
 
     UI.info.ontouchend = UI.showInfoBox;
     UI.okclicky.ontouchstart = UI.hideInfoBox;
