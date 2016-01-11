@@ -2,6 +2,7 @@ window.Settings = {
     edition: 'free',
     scratchJrVersion: 'iOSv01',
     useStoryStarters: false,
+    shareEnabled: true,
     defaultSprite: 'Star.svg',
     spriteOutlineColor: 'white',
     stageColor: '#F5F2F7',
