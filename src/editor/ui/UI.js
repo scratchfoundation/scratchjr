@@ -93,7 +93,7 @@ UI.addProjectInfo = function () {
     var author = newHTML('div', 'infolabel', staticinfo);
     author.setAttribute('id', 'deviceName');
 
-    if (!Settings.shareEnabled) {
+    if (Settings.shareEnabled) {
         // Sharing
         var shareButtons = newHTML('div', 'infoboxShareButtons', infobox);
 
