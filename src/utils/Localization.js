@@ -46,12 +46,13 @@ Localization.includeLocales = function () {
     } else {
         Localization.currentLocale = localizationCookie;
     }
+
+    var topLevel = Localization.currentLocale.split('-')[0];
     // Intl locale-data
     document.write('<script src="' + Localization.root +
-        'jssource/external/Intl/locale-data/jsonp/' + Localization.currentLocale + '.js"><\/script>');
+        'jssource/external/Intl/locale-data/jsonp/' + topLevel + '.js"><\/script>');
 
     // MessageFormat locale-data
-    var topLevel = Localization.currentLocale.split('-')[0];
     document.write('<script src="' + Localization.root +
         'jssource/external/intl-messageformat/locale-data/' + topLevel + '.js"><\/script>');
 
@@ -63,7 +64,7 @@ Localization.includeLocales = function () {
 
     // Get messages synchronously
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', Localization.root + 'localizations/' + Localization.currentLocale + '.json', false);
+    xhr.open('GET', Localization.root + 'localizations/' + topLevel + '.json', false);
     xhr.send(null);
     Localization.localizationMessages = JSON.parse(xhr.responseText);
 
