@@ -11,23 +11,13 @@
 <script type="text/javascript" src="jssource/utils/Cookie.js"></script>
 <script type="text/javascript" src="jssource/utils/lib.js"></script>
 <script>
-    preprocessAndLoadCss("css", "css/font.css");
-    preprocessAndLoadCss("css", "css/base.css");
-    preprocessAndLoadCss("css", "css/editor.css");
-    preprocessAndLoadCss("css", "css/editorleftpanel.css");
-    preprocessAndLoadCss("css", "css/editorstage.css");
-    preprocessAndLoadCss("css", "css/editormodal.css");
-    preprocessAndLoadCss("css", "css/librarymodal.css");
-    preprocessAndLoadCss("css", "css/paintlook.css");
+
 </script>
 
 <!-- Localization includes -->
 <script type="text/javascript" src="jssource/external/Intl/Intl.min.js"></script>
 <script type="text/javascript" src="jssource/external/intl-messageformat/intl-messageformat.min.js"></script>
 <script type="text/javascript" src="jssource/utils/Localization.js"></script>
-<script>
-    Localization.includeLocales();
-</script>
 <!-- End localization includes -->
 
 <script type="text/javascript" src="jssource/external/snap.svg-min.js"></script>
@@ -91,23 +81,8 @@
 <script type="text/javascript" src="jssource/painteditor/Layers.js"></script>
 <script type="text/javascript" src="jssource/painteditor/Ghost.js"></script>
 
-<script language="javascript">
-
-function createScratchJr(){
-	iOS.getsettings(doNext);
-	function doNext (str){
-		var list = str.split(",");
-		iOS.path =list[1] == "0" ?  list[0] + "/" : undefined ;
-		if (list.length > 2) Record.available = list[2] == "YES" ? true : false;
-		if (list.length > 3) Camera.available = list[3] == "YES" ? true : false;
-		ScratchJr.appinit(Settings.scratchJrVersion);
-		}
-	}
-
-</script>
-
 </head>
-<body onload="iOS.waitForInterface(createScratchJr);" style="background: white;">
+<body style="background: white;">
 <div class="frame" id="frame"></div>
 <div class="libframe" id="libframe"></div>
 <div class="paintframe" id="paintframe"></div>
