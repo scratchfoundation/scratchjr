@@ -17,10 +17,10 @@ window.Settings = {
     categoryStopColor: '#D62222',
     paletteBlockShadowOpacity: 0.8,
     autoSaveInterval: 30 * 1000,
-    defaultLocale: 'en-US',
+    defaultLocale: 'en',
     defaultLocaleShort: 'en',
     supportedLocales: {
-        'English': 'en-US',
-        'Español': 'es-AR'
+        'English': 'en',
+        'Español': 'es'
     }
 };
