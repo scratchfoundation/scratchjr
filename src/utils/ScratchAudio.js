@@ -59,7 +59,6 @@ export default class ScratchAudio {
                 }
             };
         }
-        context.sampleRate = 44100;
         uiSounds = {};
         for (var i = 0; i < defaultSounds.length; i++) {
             ScratchAudio.addSound(prefix + 'sounds/', defaultSounds[i], uiSounds);
