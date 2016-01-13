@@ -12,7 +12,7 @@ import SVG2Canvas from '../utils/SVG2Canvas';
 import SVGImage from './SVGImage';
 import Camera from './Camera';
 import Events from '../utils/Events';
-import Rectangle from './geom/Rectangle';
+import Rectangle from '../geom/Rectangle';
 import {gn, isTablet, getIdFor} from '../utils/lib';
 /*
 Type of objects:

@@ -1,4 +1,4 @@
-import Snap from 'snap';
+import Snap from 'snapsvg';
 
 import ScratchJr from '../editor/ScratchJr';
 import SVGTools from './SVGTools';

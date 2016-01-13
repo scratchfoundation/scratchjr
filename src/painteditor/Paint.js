@@ -1,4 +1,4 @@
-import ScratchJr from '../editor/ui/ScratchJr';
+import ScratchJr from '../editor/ScratchJr';
 import BlockSpecs from '../editor/blocks/BlockSpecs';
 import Project from '../editor/ui/Project';
 import Undo from '../editor/ui/Undo';

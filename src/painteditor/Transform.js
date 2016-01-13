@@ -3,7 +3,7 @@
 //////////////////////////////////
 
 import SVGTools from './SVGTools';
-import SVG2Canvas from './SVG2Canvas';
+import SVG2Canvas from '../utils/SVG2Canvas';
 import Paint from './Paint';
 import Vector from '../geom/Vector';
 import {gn, DEGTOR} from '../utils/lib';

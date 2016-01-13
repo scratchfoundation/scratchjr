@@ -6,7 +6,7 @@
 // data needs to be moved, etc. -TM
 
 import ScratchJr from '../editor/ScratchJr';
-import SVG2Canvas from './SVG2Canvas';
+import SVG2Canvas from '../utils/SVG2Canvas';
 import SVGImage from './SVGImage';
 import SVGTools from './SVGTools';
 import Layer from './Layer';
