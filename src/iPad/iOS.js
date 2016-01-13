@@ -8,9 +8,10 @@ import {isiOS, gn} from '../utils/lib';
 // But, it is also used for the AndroidInterface. All function calls here
 // are mapped to Android/iOS native calls.
 
-let path;
-let camera;
-let database = 'projects';
+/* eslint-disable no-unused-vars */
+export let path;
+export let camera;
+export let database = 'projects';
 let mediacounter = 0;
 let tabletInterface = null;
 
