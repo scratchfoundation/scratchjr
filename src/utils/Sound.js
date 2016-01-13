@@ -1,77 +1,83 @@
-var Sound = function (buffer) {
-    if (isAndroid) {
-        this.url = buffer;
-        this.soundPlayId = null;
-    } else {
-        this.buffer = buffer;
-        this.source = null;
-    }
-};
+import {isAndroid} from './lib';
+import {context} from './ScratchAudio';
 
-Sound.prototype.play = function () {
-    if (isAndroid) {
-        if (this.soundPlayId) {
-            this.stop();
+export default class Sound {
+    constructor (buffer) {
+        if (isAndroid) {
+            this.url = buffer;
+            this.soundPlayId = null;
+        } else {
+            this.buffer = buffer;
+            this.source = null;
         }
-        this.soundPlayId = AndroidInterface.audio_play(this.url, 1.0);
-    } else {
-        if (this.source) {
-            this.stop();
-        }
-        this.source = ScratchAudio.context.createBufferSource();
-        this.source.buffer = this.buffer;
-        this.source.connect(ScratchAudio.context.destination);
-        this.source.noteOn(0);
     }
-};
 
-Sound.prototype.playWithVolume = function (n) {
-    if (isAndroid) {
-        if (this.soundPlayId) {
-            this.stop();
+    play () {
+        if (isAndroid) {
+            if (this.soundPlayId) {
+                this.stop();
+            }
+            this.soundPlayId = AndroidInterface.audio_play(this.url, 1.0);
+        } else {
+            if (this.source) {
+                this.stop();
+            }
+            this.source = context.createBufferSource();
+            this.source.buffer = this.buffer;
+            this.source.connect(context.destination);
+            this.source.noteOn(0);
         }
+    }
 
-        if (n > 0) {
-            // This method is not currently called with any value other than 0. If 0, don't play the sound.
-            this.soundPlayId = AndroidInterface.audio_play(this.url, n);
-        }
-    } else {
-        if (this.source) {
-            this.stop();
-        }
-        this.gainNode = ScratchAudio.context.createGainNode();
-        this.source = ScratchAudio.context.createBufferSource();
-        this.source.buffer = this.buffer;
-        this.source.connect(this.gainNode);
-        this.gainNode.connect(ScratchAudio.context.destination);
-        this.source.noteOn(0);
-        this.gainNode.gain.value = n;
-    }
-};
+    playWithVolume (n) {
+        if (isAndroid) {
+            if (this.soundPlayId) {
+                this.stop();
+            }
 
-Sound.prototype.done = function () {
-    if (isAndroid) {
-        return (this.soundPlayId == null) || !AndroidInterface.audio_isplaying(this.soundPlayId);
-    } else {
-        return (this.source == null) || (this.source.playbackState == 3);
-    }
-};
-Sound.prototype.clear = function () {
-    if (isAndroid) {
-        this.soundPlayId = null;
-    } else {
-        this.source = null;
-    }
-};
-
-Sound.prototype.stop = function () {
-    if (isAndroid) {
-        if (this.soundPlayId) {
-            AndroidInterface.audio_stop(this.soundPlayId);
+            if (n > 0) {
+                // This method is not currently called with any value other than 0. If 0, don't play the sound.
+                this.soundPlayId = AndroidInterface.audio_play(this.url, n);
+            }
+        } else {
+            if (this.source) {
+                this.stop();
+            }
+            this.gainNode = context.createGainNode();
+            this.source = context.createBufferSource();
+            this.source.buffer = this.buffer;
+            this.source.connect(this.gainNode);
+            this.gainNode.connect(context.destination);
+            this.source.noteOn(0);
+            this.gainNode.gain.value = n;
         }
-        this.soundPlayId = null;
-    } else {
-        this.source.noteOff(0);
-        this.source = null;
     }
-};
+
+    done () {
+        if (isAndroid) {
+            return (this.soundPlayId == null) || !AndroidInterface.audio_isplaying(this.soundPlayId);
+        } else {
+            return (this.source == null) || (this.source.playbackState == 3);
+        }
+    }
+
+    clear () {
+        if (isAndroid) {
+            this.soundPlayId = null;
+        } else {
+            this.source = null;
+        }
+    }
+
+    stop () {
+        if (isAndroid) {
+            if (this.soundPlayId) {
+                AndroidInterface.audio_stop(this.soundPlayId);
+            }
+            this.soundPlayId = null;
+        } else {
+            this.source.noteOff(0);
+            this.source = null;
+        }
+    }
+}

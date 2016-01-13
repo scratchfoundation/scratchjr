@@ -1,4 +1,6 @@
 import {isAndroid} from './lib';
+import {Sound} from './Sound';
+import {iOS} from '../iPad/iOS';
 
 ////////////////////////////////////////////////////
 /// Sound Playing
