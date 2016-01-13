@@ -22,52 +22,6 @@ export let strokevalues = {
     'stroke-opacity': 1
 };
 
-//////////////////////////////////////
-// Dispatch tables
-//////////////////////////////////////
-
-let dispatchDrawCmd = {
-    'M': SVG2Canvas.absoulteMove,
-    'm': SVG2Canvas.relativeMove,
-    'L': SVG2Canvas.absoluteLine,
-    'l': SVG2Canvas.relativeLine,
-    'H': SVG2Canvas.absoluteHLine,
-    'h': SVG2Canvas.relativeHLine,
-    'V': SVG2Canvas.absoluteVLine,
-    'v': SVG2Canvas.relativeVLine,
-    'C': SVG2Canvas.absoluteCurve,
-    'c': SVG2Canvas.relativeCurve,
-    'S': SVG2Canvas.absoluteSmooth,
-    's': SVG2Canvas.relativeSmooth,
-    'Q': SVG2Canvas.absoluteQCurve,
-    'q': SVG2Canvas.relativeQCurve,
-    'T': SVG2Canvas.absoluteQSmooth,
-    't': SVG2Canvas.relativeQSmooth,
-    'Z': SVG2Canvas.closePath,
-    'z': SVG2Canvas.closePath
-};
-
-let dispatchAbsouluteCmd = {
-    'M': SVG2Canvas.setAbsoluteMove,
-    'm': SVG2Canvas.setRelativeMove,
-    'L': SVG2Canvas.setAbsoluteLine,
-    'l': SVG2Canvas.setRelativeLine,
-    'H': SVG2Canvas.setAbsoluteHLine,
-    'h': SVG2Canvas.setRelativeHLine,
-    'V': SVG2Canvas.setAbsoluteVLine,
-    'v': SVG2Canvas.setRelativeVLine,
-    'C': SVG2Canvas.setAbsoluteCurve,
-    'c': SVG2Canvas.setRelativeCurve,
-    'S': SVG2Canvas.setAbsoluteSmooth,
-    's': SVG2Canvas.setRelativeSmooth,
-    'Q': SVG2Canvas.setAbsoluteQCurve,
-    'q': SVG2Canvas.setRelativeQCurve,
-    'T': SVG2Canvas.setAbsoluteQSmooth,
-    't': SVG2Canvas.setRelativeQSmooth,
-    'Z': SVG2Canvas.setClosePath,
-    'z': SVG2Canvas.setClosePath
-};
-
 
 ////////////////////////////////////////////////////////
 //  Drawing  Mask and Objects
@@ -1009,3 +963,49 @@ export default class SVG2Canvas {
         return ['T', endp.x, endp.y];
     }
 }
+
+//////////////////////////////////////
+// Dispatch tables
+//////////////////////////////////////
+
+let dispatchDrawCmd = {
+    'M': SVG2Canvas.absoulteMove,
+    'm': SVG2Canvas.relativeMove,
+    'L': SVG2Canvas.absoluteLine,
+    'l': SVG2Canvas.relativeLine,
+    'H': SVG2Canvas.absoluteHLine,
+    'h': SVG2Canvas.relativeHLine,
+    'V': SVG2Canvas.absoluteVLine,
+    'v': SVG2Canvas.relativeVLine,
+    'C': SVG2Canvas.absoluteCurve,
+    'c': SVG2Canvas.relativeCurve,
+    'S': SVG2Canvas.absoluteSmooth,
+    's': SVG2Canvas.relativeSmooth,
+    'Q': SVG2Canvas.absoluteQCurve,
+    'q': SVG2Canvas.relativeQCurve,
+    'T': SVG2Canvas.absoluteQSmooth,
+    't': SVG2Canvas.relativeQSmooth,
+    'Z': SVG2Canvas.closePath,
+    'z': SVG2Canvas.closePath
+};
+
+let dispatchAbsouluteCmd = {
+    'M': SVG2Canvas.setAbsoluteMove,
+    'm': SVG2Canvas.setRelativeMove,
+    'L': SVG2Canvas.setAbsoluteLine,
+    'l': SVG2Canvas.setRelativeLine,
+    'H': SVG2Canvas.setAbsoluteHLine,
+    'h': SVG2Canvas.setRelativeHLine,
+    'V': SVG2Canvas.setAbsoluteVLine,
+    'v': SVG2Canvas.setRelativeVLine,
+    'C': SVG2Canvas.setAbsoluteCurve,
+    'c': SVG2Canvas.setRelativeCurve,
+    'S': SVG2Canvas.setAbsoluteSmooth,
+    's': SVG2Canvas.setRelativeSmooth,
+    'Q': SVG2Canvas.setAbsoluteQCurve,
+    'q': SVG2Canvas.setRelativeQCurve,
+    'T': SVG2Canvas.setAbsoluteQSmooth,
+    't': SVG2Canvas.setRelativeQSmooth,
+    'Z': SVG2Canvas.setClosePath,
+    'z': SVG2Canvas.setClosePath
+};
