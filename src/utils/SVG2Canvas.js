@@ -394,7 +394,7 @@ export default class SVG2Canvas {
         ctx.fillText(kid.textContent, 0, 0);
     }
 
-    static renderPath = function (spr, ctx) {
+    static renderPath (spr, ctx) {
         var d = spr.getAttribute('d');
         var commands = SVG2Canvas.getCommandList(d);
         if (!commands) {
@@ -856,7 +856,7 @@ export default class SVG2Canvas {
         return cmd;
     }
 
-    static setRelativeLine = function (cmd) {
+    static setRelativeLine (cmd) {
         endp = Vector.sum(endp, {
             x: cmd[1],
             y: cmd[2]

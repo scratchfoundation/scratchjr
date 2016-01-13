@@ -84,7 +84,7 @@ export default class Home {
         timeoutEvent = undefined;
     }
 
-    static getMouseTarget = function (e) {
+    static getMouseTarget (e) {
         var t = e.target;
         if (t == frame) {
             return null;
@@ -98,7 +98,7 @@ export default class Home {
         return (!t.parentNode || (t.parentNode == frame)) ? null : t;
     }
 
-    static handleTouchEnd = function (e) {
+    static handleTouchEnd (e) {
         e.preventDefault();
         e.stopPropagation();
         if (e.touches && (e.touches.length > 1)) {
@@ -307,7 +307,7 @@ export default class Home {
 }
 
 class Events {
-    static getTargetPoint = function (e) {
+    static getTargetPoint (e) {
         if (isTablet) {
             if (e.touches && (e.touches.length > 0)) {
                 return {
