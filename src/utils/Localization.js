@@ -53,15 +53,11 @@ export default class Localization {
         } else {
             currentLocale = localizationCookie;
         }
+        var topLevel = currentLocale.split('-')[0];
+
         // Intl locale-data
         document.write('<script src="' + root +
-            'jssource/external/Intl/locale-data/jsonp/' + currentLocale + '.js"><\/script>');
-
-        // MessageFormat locale-data
-        var topLevel = currentLocale.split('-')[0];
-        document.write('<script src="' + root +
-            'jssource/external/intl-messageformat/locale-data/' + topLevel + '.js"><\/script>');
-
+            'jssource/external/Intl/locale-data/jsonp/' + topLevel + '.js"><\/script>');
         // Always load default locale
         document.write('<script src="' + root +
             'jssource/external/Intl/locale-data/jsonp/' + defaultLocale + '.js"><\/script>');
@@ -70,7 +66,7 @@ export default class Localization {
 
         // Get messages synchronously
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', root + 'localizations/' + currentLocale + '.json', false);
+        xhr.open('GET', root + 'localizations/' + topLevel + '.json', false);
         xhr.send(null);
         localizationMessages = JSON.parse(xhr.responseText);
 
