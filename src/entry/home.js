@@ -1,5 +1,7 @@
 import {gn, preprocessAndLoadCss} from '../utils/lib';
 import iOS from '../iPad/iOS';
+import Localization from '../utils/Localization';
+import Lobby from '../lobby/Lobby.js';
 
 function startup () {
     homeStrings();
