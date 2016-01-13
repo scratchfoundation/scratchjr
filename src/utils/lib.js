@@ -59,13 +59,19 @@ export function preprocessAndLoad (url) {
  * Also rewrites all instances of url() with a different base
  */
 export function preprocessAndLoadCss (baseUrl, url) {
-    document.write('<!-- ' + url + '-->\n');
-    document.write('<style type=\'text/css\'>\n');
     var cssData = preprocessAndLoad(url);
     cssData = cssData.replace(/url\('/g, 'url(\'' + baseUrl + '/');
     cssData = cssData.replace(/url\(([^'])/g, 'url(' + baseUrl + '/$1');
-    document.write(cssData);
-    document.write('\n</style>\n');
+
+    const head = document.head;
+    let style = document.createElement('style');
+    style.type = 'text/css';
+    if (style.styleSheet){
+        style.styleSheet.cssText = cssData;
+    } else {
+        style.appendChild(document.createTextNode(cssData));
+    }
+    head.appendChild(style);
 }
 
 export function rl () {
