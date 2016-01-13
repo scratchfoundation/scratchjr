@@ -1,25 +1,27 @@
-import {Lib, isAndroid, isiOS} from '../utils/lib';
+import {isAndroid, isiOS, gn, getUrlVars, preprocessAndLoadCss} from '../utils/lib';
 import Localization from '../utils/Localization';
+import iOS from '../iPad/iOS';
+import ScratchAudio from '../utils/ScratchAudio';
 
 function startup () {
     ScratchAudio.init();
-    var urlvars = Lib.getUrlVars();
+    var urlvars = getUrlVars();
     if (urlvars.back) {
         loadOptions();
     } else {
         firstTime();
     }
     setTimeout(function () {
-        Lib.gn('rays').className = 'rays spinme';
+        gn('rays').className = 'rays spinme';
     }, 250);
 }
 
 function firstTime () {
-    Lib.gn('authors').className = 'credits show';
-    Lib.gn('authorsText').className = 'creditsText show';
-    Lib.gn('purpleguy').className = 'purple show';
-    Lib.gn('blueguy').className = 'blue show';
-    Lib.gn('redguy').className = 'red show';
+    gn('authors').className = 'credits show';
+    gn('authorsText').className = 'creditsText show';
+    gn('purpleguy').className = 'purple show';
+    gn('blueguy').className = 'blue show';
+    gn('redguy').className = 'red show';
     iOS.askpermission(); // ask for sound recording
     setTimeout(function () {
         iOS.hidesplash(doit);
@@ -36,13 +38,13 @@ function firstTime () {
 }
 
 function loadOptions () {
-    Lib.gn('authors').className = 'credits hide';
-    Lib.gn('authorsText').className = 'creditsText hide';
-    Lib.gn('purpleguy').className = 'purple hide';
-    Lib.gn('blueguy').className = 'blue hide';
-    Lib.gn('redguy').className = 'red hide';
-    Lib.gn('gettings').className = 'gettings show';
-    Lib.gn('startcode').className = 'startcode show';
+    gn('authors').className = 'credits hide';
+    gn('authorsText').className = 'creditsText hide';
+    gn('purpleguy').className = 'purple hide';
+    gn('blueguy').className = 'blue hide';
+    gn('redguy').className = 'red hide';
+    gn('gettings').className = 'gettings show';
+    gn('startcode').className = 'startcode show';
     document.ontouchmove = function (e) {
         e.preventDefault();
     };
@@ -74,12 +76,12 @@ function gettingstarted () {
 
 window.onload = () => {
     Localization.includeLocales();
-    Lib.preprocessAndLoadCss('css', 'css/font.css');
-    Lib.preprocessAndLoadCss('css', 'css/base.css');
-    Lib.preprocessAndLoadCss('css', 'css/start.css');
-    Lib.preprocessAndLoadCss('css', 'css/thumbs.css');
-    Lib.gn('gettings').ontouchend = gettingstarted;
-    Lib.gn('startcode').ontouchend = gohome;
+    preprocessAndLoadCss('css', 'css/font.css');
+    preprocessAndLoadCss('css', 'css/base.css');
+    preprocessAndLoadCss('css', 'css/start.css');
+    preprocessAndLoadCss('css', 'css/thumbs.css');
+    gn('gettings').ontouchend = gettingstarted;
+    gn('startcode').ontouchend = gohome;
 
     iOS.waitForInterface(startup);
 };
