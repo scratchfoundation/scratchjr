@@ -8,7 +8,6 @@ import {isiOS, gn} from '../utils/lib';
 // But, it is also used for the AndroidInterface. All function calls here
 // are mapped to Android/iOS native calls.
 
-/* eslint-disable no-unused-vars */
 export let path;
 export let camera;
 export let database = 'projects';
@@ -77,12 +76,12 @@ export default class iOS {
     }
 
     static getmedia (file, fcn) {
-        iOS.mediacounter++;
+        mediacounter++;
         var nextStep = function (file, key, whenDone) {
             var result = tabletInterface.io_getmedialen(file, key);
             iOS.processdata(key, 0, result, '', whenDone);
         };
-        nextStep(file, iOS.mediacounter, fcn);
+        nextStep(file, mediacounter, fcn);
     }
 
     static getmediadata (key, offset, len, fcn) {
