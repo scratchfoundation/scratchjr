@@ -6,7 +6,7 @@ import Transform from './Transform';
 import SVG2Canvas from '../utils/SVG2Canvas';
 import SVGImage from './SVGImage';
 import Rectangle from '../geom/Rectangle';
-import Layer from './Layers';
+import Layer from './Layer';
 import Path from './Path';
 
 export let attributeTable = {
