@@ -7,24 +7,24 @@
 
 <head>
 <title>Scratch Jr</title>
+
+<script type="text/javascript" src="./Settings.js"></script>
+<script type="text/javascript" src="jssource/build/bundles/home.bundle.js"></script>
+<!--
 <script type="text/javascript" src="./Settings.js"></script>
 <script type="text/javascript" src="jssource/utils/Cookie.js"></script>
 <script type="text/javascript" src="jssource/utils/lib.js"></script>
-
-<!-- Localization includes -->
+-->
+<!-- Localization includes --><!--
 <script type="text/javascript" src="jssource/external/Intl/Intl.min.js"></script>
 <script type="text/javascript" src="jssource/external/intl-messageformat/intl-messageformat.min.js"></script>
 <script type="text/javascript" src="jssource/utils/Localization.js"></script>
 <script>
     Localization.includeLocales();
-</script>
+</script>-->
 <!-- End localization includes -->
-
+<!--
 <script type="text/javascript">
-    preprocessAndLoadCss("css", "css/font.css");
-    preprocessAndLoadCss("css", "css/base.css");
-    preprocessAndLoadCss("css", "css/lobby.css");
-    preprocessAndLoadCss("css", "css/thumbs.css");
 </script>
 
 <script type="text/javascript" src="jssource/lobby/Lobby.js"></script>
@@ -52,28 +52,13 @@
 <script type="text/javascript" src="jssource/painteditor/Transform.js"></script>
 <script type="text/javascript" src="jssource/painteditor/SVGTools.js"></script>
 
-
-<script language="javascript">
-
-function startup(){
-	iOS.getsettings(doNext);
-	function doNext (str){
-		var list = str.split(",");
-		iOS.path =list[1] == "0" ?  list[0] + "/" : undefined ;
-		Lobby.appinit(Settings.scratchJrVersion);
-	}
-}
-
-function goBack(){window.location.href = "index.html?back=yes";}
-
-</script>
-
+-->
 </head>
-<body onload="iOS.waitForInterface(startup);">
+<body>
 <div class="frame" id="frame">
 	<div class="topbar" id="topbar">
 		<ul class="topbar-nav" id="nav">
-			<li class="logo" id="logotab" ontouchend="goBack();">
+			<li class="logo" id="logotab">
 				<span class="logo-icon"></span>
 			</li>
 			<div></div>
@@ -113,19 +98,19 @@ function goBack(){window.location.href = "index.html?back=yes";}
 		<ul class="footer-nav" id="footernav">
 			<li class="tab" id="abouttab" >
 				<div class="about-icon"></div>
-				<span><script>document.write(Localization.localize("ABOUT_SCRATCHJR"));</script></span>
+				<span id="abouttab-text"></span>
 			</li>
 			<li class="tab" id="interfacetab">
 				<div class="interface-icon"></div>
-				<span><script>document.write(Localization.localize("INTERFACE_GUIDE"));</script></span>
+				<span id="interfacetab-text"></span>
 			</li>
 			<li class="tab" id="painttab">
 				<div class="paint-icon"></div>
-                <span><script>document.write(Localization.localize("PAINT_EDITOR_GUIDE"));</script></span>
+                <span id="painttab-text"></span>
 			</li>
 			<li class="tab2" id="blockstab">
 				<div class="blocks-icon"></div>
-				<span><script>document.write(Localization.localize("BLOCKS_GUIDE"));</script></span>
+				<span id="blockstab-text"></span>
 			</li>
 			<div></div>
 		</ul>

@@ -2,7 +2,8 @@ module.exports = {
     devtool: 'source-map',
     entry: {
         index: './src/entry/index.js',
-        editor: './src/entry/editor.js'
+        editor: './src/entry/editor.js',
+        home: './src/entry/home.js'
     },
     output: {
         path: './src/build/bundles',
