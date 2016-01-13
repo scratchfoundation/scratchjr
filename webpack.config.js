@@ -1,4 +1,5 @@
 module.exports = {
+    devtool: 'source-map',
     entry: {
         index: './src/entry/index.js',
         editor: './src/entry/editor.js'
@@ -9,6 +10,11 @@ module.exports = {
     },
     module: {
         loaders: [
+            {
+                test: /\.js$/,
+                include: /node_modules/,
+                loaders: ['strip-sourcemap-loader']
+            },
             {
                 loader: 'babel-loader',
                 exclude: /node_modules/,
