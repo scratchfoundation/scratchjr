@@ -1,4 +1,5 @@
 /android/ScratchJr/app/src/main/gen/
 /node_modules
+/src/build/
 .DS_Store
 *.iml
