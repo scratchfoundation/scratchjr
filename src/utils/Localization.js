@@ -1,14 +1,15 @@
 import Cookie from './Cookie';
+import Intl from 'intl';
 import IntlMessageFormat from 'intl-messageformat';
+
+window.Intl = Intl;
 
 let currentLocale;
 let root = '';
 let localizationMessages = {};
-let defaultLocalizationMessages = {};
 
 // Configuration
 const defaultLocale = window.Settings.defaultLocale;
-const defaultLocaleShort = window.Settings.defaultLocaleShort;
 const supportedLocales = window.Settings.supportedLocales;
 const sampleKeyPrefix = 'key_';
 
@@ -48,6 +49,7 @@ export default class Localization {
     // Call this when the app is initialized
     static includeLocales () {
         var localizationCookie = Cookie.get('localization');
+
         if (localizationCookie === null) {
             currentLocale = this.determineLocaleFromBrowser();
         } else {
@@ -55,25 +57,11 @@ export default class Localization {
         }
         var topLevel = currentLocale.split('-')[0];
 
-        // Intl locale-data
-        document.write('<script src="' + root +
-            'jssource/external/Intl/locale-data/jsonp/' + topLevel + '.js"><\/script>');
-        // Always load default locale
-        document.write('<script src="' + root +
-            'jssource/external/Intl/locale-data/jsonp/' + defaultLocale + '.js"><\/script>');
-        document.write('<script src="' + root +
-            'jssource/external/intl-messageformat/locale-data/' + defaultLocaleShort + '.js"><\/script>');
-
         // Get messages synchronously
         var xhr = new XMLHttpRequest();
         xhr.open('GET', root + 'localizations/' + topLevel + '.json', false);
         xhr.send(null);
         localizationMessages = JSON.parse(xhr.responseText);
-
-        xhr = new XMLHttpRequest();
-        xhr.open('GET', this.root + 'localizations/' + this.defaultLocale + '.json', false);
-        xhr.send(null);
-        defaultLocalizationMessages = JSON.parse(xhr.responseText);
     }
 
     // Translate a particular message given the message key and info
@@ -81,9 +69,6 @@ export default class Localization {
         var message;
         if (key in localizationMessages) {
             message = new IntlMessageFormat(localizationMessages[key], currentLocale);
-            return message.format(formatting);
-        } else if (key in defaultLocalizationMessages) {
-            message = new IntlMessageFormat(defaultLocalizationMessages[key], defaultLocale);
             return message.format(formatting);
         }
         return 'String missing: ' + key;
