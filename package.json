@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "intl": "^1.0.1",
-    "intl-messageformat": "^1.2.0"
+    "intl-messageformat": "^1.2.0",
+    "jszip": "^2.5.0"
   }
 }
