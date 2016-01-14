@@ -66,7 +66,7 @@ Sprite.prototype.getAsset = function (whenDone) {
     function doNext (str) {
         str = str.replace(/>\s*</g, '><');
         spr.setSVG(str);
-        if ((str.indexOf('xlink:href') < 0) && iOS.path) {
+        if ((str.indexOf('xlink:href') < 0) && iOS.path {
             whenDone(url); // does not have embedded images
         } else {
             var base64 = IO.getImageDataURL(spr.md5, btoa(str));

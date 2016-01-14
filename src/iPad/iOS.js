@@ -1,4 +1,7 @@
 import {isiOS, gn} from '../utils/lib';
+import IO from './IO';
+import Lobby from '../lobby/Lobby';
+import Alert from '../editor/ui/Alert';
 
 //////////////////////////////////////////////////
 //  Tablet interface functions
@@ -8,13 +11,31 @@ import {isiOS, gn} from '../utils/lib';
 // But, it is also used for the AndroidInterface. All function calls here
 // are mapped to Android/iOS native calls.
 
-export let path;
-export let camera;
-export let database = 'projects';
+let path;
+let camera;
+let database = 'projects';
 let mediacounter = 0;
 let tabletInterface = null;
 
 export default class iOS {
+    // Getters/setters for properties used in other classes
+    static get path () {
+        return path;
+    }
+
+    static set path (newPath) {
+        path = newPath;
+    }
+
+    static get camera () {
+        return camera;
+    }
+
+    static get database () {
+        return database;
+    }
+
+    // Wait for the tablet interface to be injected into the webview
     static waitForInterface (fcn) {
         // Already loaded the interface
         if (tabletInterface != null) {
@@ -211,7 +232,7 @@ export default class iOS {
     // camera functions
 
     static hascamera () {
-        iOS.camera = tabletInterface.scratchjr_cameracheck();
+        camera = tabletInterface.scratchjr_cameracheck();
     }
 
     static startfeed (data, fcn) {
