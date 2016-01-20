@@ -1,4 +1,9 @@
-import Lib from '../utils/lib';
+import ScratchJr from '../editor/ScratchJr';
+import iOS from '../iPad/iOS';
+import Localization from '../utils/Localization';
+import Record from '../editor/ui/Record';
+import Camera from '../painteditor/Camera';
+import {preprocessAndLoadCss} from '../utils/lib';
 
 function createScratchJr () {
     iOS.getsettings(doNext);
@@ -16,14 +21,14 @@ function createScratchJr () {
 }
 
 window.onload = () => {
-    Lib.preprocessAndLoadCss('css', 'css/font.css');
-    Lib.preprocessAndLoadCss('css', 'css/base.css');
-    Lib.preprocessAndLoadCss('css', 'css/editor.css');
-    Lib.preprocessAndLoadCss('css', 'css/editorleftpanel.css');
-    Lib.preprocessAndLoadCss('css', 'css/editorstage.css');
-    Lib.preprocessAndLoadCss('css', 'css/editormodal.css');
-    Lib.preprocessAndLoadCss('css', 'css/librarymodal.css');
-    Lib.preprocessAndLoadCss('css', 'css/paintlook.css');
+    preprocessAndLoadCss('css', 'css/font.css');
+    preprocessAndLoadCss('css', 'css/base.css');
+    preprocessAndLoadCss('css', 'css/editor.css');
+    preprocessAndLoadCss('css', 'css/editorleftpanel.css');
+    preprocessAndLoadCss('css', 'css/editorstage.css');
+    preprocessAndLoadCss('css', 'css/editormodal.css');
+    preprocessAndLoadCss('css', 'css/librarymodal.css');
+    preprocessAndLoadCss('css', 'css/paintlook.css');
     Localization.includeLocales();
     iOS.waitForInterface(createScratchJr);
 };
