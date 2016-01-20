@@ -11,10 +11,18 @@ const collectLibraryAssets = false;
 let zipFile = null;
 let zipAssetsExpected = 0;
 let zipAssetsActual = 0;
-export let zipFileName = '';
-export let shareName = '';
+let zipFileName = '';
+let shareName = '';
 
 export default class IO {
+    static get zipFileName () {
+        return zipFileName;
+    }
+
+    static get shareName () {
+        return shareName;
+    }
+
     /**
      * Synchronous requests are normally not recommended, but in this case we're
      * going to file URLs so this should be okay.

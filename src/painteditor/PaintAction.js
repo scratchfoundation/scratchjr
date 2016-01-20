@@ -39,9 +39,9 @@ Rules:
 
  */
 
-export let currentShape = undefined;
-export let target = undefined;
-export let dragGroup = [];
+let currentShape = undefined;
+let target = undefined;
+let dragGroup = [];
 let startAngle = 0;
 let dragging = false;
 let timeoutEvent;
@@ -52,6 +52,15 @@ let mindist = 10;
 /////////////////////////////////
 
 export default class PaintAction {
+    // Getters/setters for globally used properties
+    static set target (newTarget) {
+        target = newTarget;
+    }
+
+    static get dragGroup () {
+        return dragGroup;
+    }
+
     static mouseDown (evt) {
         target = undefined;
         if (!gn('layer1')) {

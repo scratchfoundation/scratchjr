@@ -25,41 +25,118 @@ import {gn, newHTML, setCanvasSize, isTablet, getIdFor, isAndroid, setProps, hit
 // A nice refactor would be to split them back into the "modules," but that will likely involve
 // some serious code changes - determining where the relevant Paint.X are called, if any shared
 // data needs to be moved, etc. -TM
-export let xmlns = 'http://www.w3.org/2000/svg';
-export let xmlnslink = 'http://www.w3.org/1999/xlink';
-export let fillcolor = '#080808';
-export let workspaceWidth = 432;
-export let workspaceHeight = 384;
-export let mode = 'select';
+let xmlns = 'http://www.w3.org/2000/svg';
+let xmlnslink = 'http://www.w3.org/1999/xlink';
+let fillcolor = '#080808';
+let workspaceWidth = 432;
+let workspaceHeight = 384;
+let mode = 'select';
 let pensizes = [1, 2, 4, 8, 16];
 
-export let strokewidth = 2;
+let strokewidth = 2;
 let spriteId;
 let currentName;
 let costumeScale;
 let nativeJr;
 let isBkg = false;
 let currentMd5 = undefined;
-export let currentZoom = 1;
-export let root;
-export let saving = false;
-export let frame;
+let currentZoom = 1;
+let root;
+let saving = false;
+let frame;
 let saveMD5 = undefined;
 let svgdata;
-export let splash;
-export let splashshade;
+let splash;
+let splashshade;
 let maxZoom = 5;
 let minZoom = 1;
-export let initialPoint = {
+let initialPoint = {
     x: 0,
     y: 0
 };
-export let deltaPoint = {
+let deltaPoint = {
     x: 0,
     y: 0
 };
 
 export default class Paint {
+
+    static get xmlns () {
+        return xmlns;
+    }
+
+    static get xmlnslink () {
+        return xmlnslink;
+    }
+
+    static get fillcolor () {
+        return fillcolor;
+    }
+
+    static get workspaceWidth () {
+        return workspaceWidth;
+    }
+
+    static get workspaceHeight () {
+        return workspaceHeight;
+    }
+
+    static get mode () {
+        return mode;
+    }
+
+    static set mode (newMode) {
+        mode = newMode;
+    }
+
+    static get strokewidth () {
+        return strokewidth;
+    }
+
+    static get currentZoom () {
+        return currentZoom;
+    }
+
+    static set currentZoom (newCurrentZoom) {
+        currentZoom = newCurrentZoom;
+    }
+
+    static get root () {
+        return root;
+    }
+
+    static get saving () {
+        return saving;
+    }
+
+    static get frame () {
+        return frame;
+    }
+
+    static get splash () {
+        return splash;
+    }
+
+    static get splashshade () {
+        return splashshade;
+    }
+
+    static get initialPoint () {
+        return initialPoint;
+    }
+
+    static set initialPoint (newInitialPoint) {
+        initialPoint = newInitialPoint;
+    }
+
+    static get deltaPoint () {
+        return deltaPoint;
+    }
+
+    static set deltaPoint (newDeltaPoint) {
+        deltaPoint = newDeltaPoint;
+    }
+
     ///////////////////////////////////////////
     //Opening and Layout
     ///////////////////////////////////////////
@@ -185,7 +262,6 @@ export default class Paint {
         if (PaintAction.currentshape) {
             return;
         }
-        Events.mouseDownTime = new Date().getTime();
         window.ontouchmove = function () {
             Paint.gestureStart(e);
         };

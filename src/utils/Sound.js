@@ -1,5 +1,5 @@
 import {isAndroid} from './lib';
-import {context} from './ScratchAudio';
+import ScratchAudio from './ScratchAudio';
 
 export default class Sound {
     constructor (buffer) {
@@ -22,9 +22,9 @@ export default class Sound {
             if (this.source) {
                 this.stop();
             }
-            this.source = context.createBufferSource();
+            this.source = ScratchAudio.context.createBufferSource();
             this.source.buffer = this.buffer;
-            this.source.connect(context.destination);
+            this.source.connect(ScratchAudio.context.destination);
             this.source.noteOn(0);
         }
     }
@@ -43,11 +43,11 @@ export default class Sound {
             if (this.source) {
                 this.stop();
             }
-            this.gainNode = context.createGainNode();
-            this.source = context.createBufferSource();
+            this.gainNode = ScratchAudio.context.createGainNode();
+            this.source = ScratchAudio.context.createBufferSource();
             this.source.buffer = this.buffer;
             this.source.connect(this.gainNode);
-            this.gainNode.connect(context.destination);
+            this.gainNode.connect(ScratchAudio.context.destination);
             this.source.noteOn(0);
             this.gainNode.gain.value = n;
         }

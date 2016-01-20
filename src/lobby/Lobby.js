@@ -11,13 +11,26 @@ import Cookie from '../utils/Cookie';
 import Home from './Home';
 import Samples from './Samples';
 
-export let version = undefined;
-export let busy = false;
-export let errorTimer;
+let version = undefined;
+let busy = false;
+let errorTimer;
 const host = 'inapp/';
 let currentPage = null;
 
 export default class Lobby {
+    // Getters/setters for properties used in other classes
+    static get version () {
+        return version;
+    }
+
+    static set busy (newBusy) {
+        busy = newBusy;
+    }
+
+    static get errorTimer () {
+        return errorTimer;
+    }
+
     static appinit (v) {
         libInit();
         version = v;

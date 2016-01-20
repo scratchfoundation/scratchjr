@@ -22,9 +22,9 @@ import {gn, getIdFor, setCanvasSize, isTablet} from '../utils/lib';
 // Previous "PathEdit" globals
 let lineDotColor = 'white';
 let curveDotColor = '#009eff'; // "#0b72b5"
-export let endDotColor = '#ffaa00';
-export let selectedDotColor = 'lime';
-export let selector = undefined;
+let endDotColor = '#ffaa00';
+let selectedDotColor = 'lime';
+let selector = undefined;
 let dotsize = 6;
 let idotsize = 10;
 
@@ -35,6 +35,19 @@ let idotsize = 10;
 ////////////////////////////////////////////////////
 
 export default class Path {
+    // Getters/setters for globally used properties
+    static get endDotColor () {
+        return endDotColor;
+    }
+
+    static get selectedDotColor () {
+        return selectedDotColor;
+    }
+
+    static get selector () {
+        return selector;
+    }
+
     static process (shape) {
         var plist = Path.getPolyPoints(shape);
         var firstpoint = plist[0];

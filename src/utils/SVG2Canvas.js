@@ -2,16 +2,16 @@ import Vector from '../geom/Vector';
 import {setCanvasSize, rgb2hsb, colorToRGBA} from './lib';
 import SVGImage from '../painteditor/SVGImage';
 
-export let endp;
+let endp;
 let startp;
-export let curveoptions = ['C', 'c', 's', 'S'];
+let curveoptions = ['C', 'c', 's', 'S'];
 let qcurveoptions = ['Q', 'q', 'T', 't'];
 let acurve = false;
 let aqcurve = false;
-export let lastcxy;
-export let svgerror;
+let lastcxy;
+let svgerror;
 
-export let strokevalues = {
+let strokevalues = {
     'stroke-width': 1,
     'stroke-linecap': 'butt',
     'stroke': 'rgba(0, 0, 0,0)',
@@ -28,6 +28,31 @@ export let strokevalues = {
 ////////////////////////////////////////////////////////
 
 export default class SVG2Canvas {
+    // Getters/setters for globally used properties
+    static get endp () {
+        return endp;
+    }
+
+    static get curveoptions () {
+        return curveoptions;
+    }
+
+    static get lastcxy () {
+        return lastcxy;
+    }
+
+    static set lastcxy (newlastcxy) {
+        lastcxy = newlastcxy;
+    }
+
+    static get svgerror () {
+        return svgerror;
+    }
+
+    static get strokevalues () {
+        return strokevalues;
+    }
+
     static drawInCanvas (spr) {
         svgerror = false;
         setCanvasSize(spr.outline, spr.originalImg.width, spr.originalImg.height);

@@ -10,12 +10,28 @@ import Transform from './Transform';
 import SVG2Canvas from '../utils/SVG2Canvas';
 import {gn, setCanvasSize, newDiv} from '../utils/lib';
 
-export let maskCanvas = document.createElement('canvas');
-export let maskData = {};
-export let linemask = 16;
+let maskCanvas = document.createElement('canvas');
+let maskData = {};
+let linemask = 16;
 let maskColor = 16;
 
 export default class Ghost {
+    static get maskCanvas () {
+        return maskCanvas;
+    }
+
+    static get maskData () {
+        return maskData;
+    }
+
+    static set maskData (newMaskData) {
+        maskData = newMaskData;
+    }
+
+    static get linemask () {
+        return linemask;
+    }
+
     static highlight (group) {
         Ghost.clearLayer();
         var g = SVGTools.createGroup(gn('draglayer'), 'ghostgroup');

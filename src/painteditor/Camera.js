@@ -13,9 +13,17 @@ import {gn, globalx, globaly, DEGTOR, setCanvasSize, isAndroid} from '../utils/l
 
 let view = 'front';
 let target = undefined;
-export let available = false;
+let available = false;
 
 export default class Camera {
+    static get available () {
+        return available;
+    }
+
+    static set available (newAvailable) {
+        available = newAvailable;
+    }
+
     static startFeed (target) {
         ScratchAudio.sndFX('entertap.wav');
         if (!Paint.canvasFits()) {

@@ -4,21 +4,20 @@ the caller should define the window event and call startDrag with the appropiate
 
 import {gn, scaleMultiplier, isTablet} from './lib';
 
-export let dragged = false;
-export let dragthumbnail = undefined;
-export let dragmousex = 0;
-export let dragmousey = 0;
-export let timeoutEvent = undefined;
-export let dragcanvas = undefined;
-export let dragDiv = undefined;
+let dragged = false;
+let dragthumbnail = undefined;
+let dragmousex = 0;
+let dragmousey = 0;
+let timeoutEvent = undefined;
+let dragcanvas = undefined;
+let dragDiv = undefined;
 let fcnstart = undefined;
 let fcnend = undefined;
 let updatefcn = undefined;
 let fcnclick = undefined;
-export let mouseDownTime = 0;
-export let scaleStartsAt = 1;
+let scaleStartsAt = 1;
 let delta = 10;
-export let pinchcenter = {
+let pinchcenter = {
     x: 0,
     y: 0,
     distance: 0
@@ -26,6 +25,71 @@ export let pinchcenter = {
 let lastZoomScale = 1;
 
 export default class Events {
+    // Getters/setters for globally used properties
+    static get dragged () {
+        return dragged;
+    }
+
+    static set dragged (newDragged) {
+        dragged = newDragged;
+    }
+
+    static get dragthumbnail () {
+        return dragthumbnail;
+    }
+
+    static set dragthumbnail (newDragthumbnail) {
+        dragthumbnail = newDragthumbnail;
+    }
+
+    static get dragmousex () {
+        return dragmousex;
+    }
+
+    static set dragmousex (newDragmousex) {
+        dragmousex = newDragmousex;
+    }
+
+    static get dragmousey () {
+        return dragmousey;
+    }
+
+    static set dragmousey (newDragmousey) {
+        dragmousey = newDragmousey;
+    }
+
+    static get timeoutEvent () {
+        return timeoutEvent;
+    }
+
+    static set timeoutEvent (newTimeoutEvent) {
+        timeoutEvent = newTimeoutEvent;
+    }
+
+    static get dragcanvas () {
+        return dragcanvas;
+    }
+
+    static set dragcanvas (newDragcanvas) {
+        dragcanvas = newDragcanvas;
+    }
+
+    static get dragDiv () {
+        return dragDiv;
+    }
+
+    static get scaleStartsAt () {
+        return scaleStartsAt;
+    }
+
+    static set scaleStartsAt (newScaleStartsAt) {
+        scaleStartsAt = newScaleStartsAt;
+    }
+
+    static get pinchcenter () {
+        return pinchcenter;
+    }
+
     // Instead of popping the dragging block, etc to the outer-most frame,
     // which causes delays while the content is reflowed, we create a
     // small drag div that is a parent of frame that the dragging block
@@ -46,7 +110,6 @@ export default class Events {
         var pt = Events.getTargetPoint(e);
         dragmousex = pt.x;
         dragmousey = pt.y;
-        mouseDownTime = (new Date() - 0);
         dragthumbnail = c;
         fcnstart = atstart;
         fcnend = atend;

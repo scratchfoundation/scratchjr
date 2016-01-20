@@ -9,7 +9,7 @@ import Rectangle from '../geom/Rectangle';
 import Layer from './Layer';
 import Path from './Path';
 
-export let attributeTable = {
+let attributeTable = {
     'path': ['d'],
     'image': ['x', 'y', 'width', 'height'],
     'ellipse': ['cx', 'cy', 'rx', 'ry'],
@@ -22,9 +22,18 @@ export let attributeTable = {
     'polygon': ['points']
 };
 
-export let attributePenTable;
+let attributePenTable;
 
 export default class SVGTools {
+    // Getters/setters for globally used properties
+    static get attributeTable () {
+        return attributeTable;
+    }
+
+    static get attributePenTable () {
+        return attributePenTable;
+    }
+
     static init () {
         attributePenTable = SVGTools.getPenAttributes();
     }

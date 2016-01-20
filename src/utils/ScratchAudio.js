@@ -6,15 +6,35 @@ import {iOS} from '../iPad/iOS';
 /// Sound Playing
 ////////////////////////////////////////////////////
 
-export let uiSounds = {};
-export let context;
-export let firstTime = true;
+let uiSounds = {};
+let context;
+let firstTime = true;
 let defaultSounds = ['cut.wav', 'snap.wav', 'copy.wav', 'grab.wav', 'boing.wav', 'tap.wav',
     'keydown.wav', 'entertap.wav', 'exittap.wav', 'splash.wav'];
-export let projectSounds = {};
+let projectSounds = {};
 let path = '';
 
 export default class ScratchAudio {
+    static get uiSounds () {
+        return uiSounds;
+    }
+
+    static get firstTime () {
+        return firstTime;
+    }
+
+    static set firstTime (newFirstTime) {
+        firstTime = newFirstTime;
+    }
+
+    static get projectSounds () {
+        return projectSounds;
+    }
+
+    static get context () {
+        return context;
+    }
+
     static firstClick () { // trick to abilitate the Audio context in iOS 8+
         var res = true;
         if (uiSounds['keydown.wav']) {

@@ -9,10 +9,23 @@ import ScratchAudio from '../utils/ScratchAudio';
 // Undo / Redo Functions
 //////////////////////////////////
 
-export let buffer = [];
-export let index = 0;
+let buffer = [];
+let index = 0;
 
 export default class PaintUndo {
+    // Getters/setters for globally used properties
+    static set buffer (newBuffer) {
+        buffer = newBuffer;
+    }
+
+    static get index () {
+        return index;
+    }
+
+    static set index (newIndex) {
+        index = newIndex;
+    }
+
     ////////////////////////////////////////
     // Undo Controls Setup
     ///////////////////////////////////////
