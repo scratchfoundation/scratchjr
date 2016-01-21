@@ -7,7 +7,7 @@ import Events from '../../utils/Events';
 import Localization from '../../utils/Localization';
 import ScratchAudio from '../../utils/ScratchAudio';
 import {gn, newHTML, scaleMultiplier,
-    getDocumentWidth, getDocumentHeight, setProps, newCanvas} from '../../utils/lib';
+    getDocumentWidth, getDocumentHeight, setProps, newCanvas, frame} from '../../utils/lib';
 
 let selectedOne;
 let nativeJr = true;
@@ -15,13 +15,13 @@ let clickThumb;
 let shaking;
 let type;
 let timeoutEvent;
-let frame;
+let libFrame;
 
 export default class Library {
     static init () {
-        frame = document.getElementById('libframe');
-        frame.style.minHeight = Math.max(getDocumentHeight(), frame.offsetHeight) + 'px';
-        var topbar = newHTML('div', 'topbar', frame);
+        libFrame = document.getElementById('libframe');
+        libFrame.style.minHeight = Math.max(getDocumentHeight(), frame.offsetHeight) + 'px';
+        var topbar = newHTML('div', 'topbar', libFrame);
         topbar.setAttribute('id', 'topbar');
         var actions = newHTML('div', 'actions', topbar);
         actions.setAttribute('id', 'libactions');
@@ -34,19 +34,19 @@ export default class Library {
     }
 
     static createScrollPanel () {
-        var inner = newHTML('div', 'innerlibrary', frame);
+        var inner = newHTML('div', 'innerlibrary', libFrame);
         inner.setAttribute('id', 'asssetsview');
         var div = newHTML('div', 'scrollarea', inner);
         div.setAttribute('id', 'scrollarea');
     }
 
-    static open (type) {
-        type = type;
+    static open (libType) {
+        type = libType;
         gn('assetname').textContent = '';
         nativeJr = true;
         frame.style.display = 'none';
-        frame.className = 'libframe appear';
-        frame.focus();
+        libFrame.className = 'libframe appear';
+        libFrame.focus();
         selectedOne = undefined;
         gn('okbut').ontouchstart = (type == 'costumes') ? Library.closeSpriteSelection : Library.closeBkgSelection;
         Library.clean();
@@ -71,7 +71,7 @@ export default class Library {
     static clean () {
         if (gn('scrollarea')) {
             var div = gn('scrollarea').parentNode;
-            frame.removeChild(div);
+            libFrame.removeChild(div);
         }
     }
 
@@ -80,7 +80,7 @@ export default class Library {
         e.stopPropagation();
         ScratchAudio.sndFX('tap.wav');
         ScratchJr.blur();
-        frame.className = 'libframe disappear';
+        libFrame.className = 'libframe disappear';
         document.body.scrollTop = 0;
         frame.style.display = 'block';
         ScratchJr.editorEvents();
@@ -130,7 +130,7 @@ export default class Library {
     }
 
     static getpadding (div) {
-        var w = Math.min(getDocumentWidth(), frame.offsetWidth);
+        var w = Math.min(getDocumentWidth(), libFrame.offsetWidth);
         var dw = div.childNodes[1].offsetLeft - div.childNodes[0].offsetLeft;
         var qty = Math.floor(w / dw);
         var pad = Math.floor((w - (qty * dw)) / 2);
