@@ -58,7 +58,7 @@ export default class UI {
 
     /** Tweak some elements depending on aspect ratio */
     static aspectRatioAdjustment () {
-        var aspect = window.getDocumentWidth() / window.getDocumentHeight();
+        var aspect = getDocumentWidth() / getDocumentHeight();
         if (aspect > 1.45) {
             // Nudge sprite list right a bit and the pages list left a bit
             gn('library').style.left = '3vw';
@@ -282,8 +282,8 @@ export default class UI {
             ti.oldvalue = ti.value;
             if (isAndroid) {
                 AndroidInterface.scratchjr_setsoftkeyboardscrolllocation(
-                    ti.getBoundingClientRect().top * window.devicePixelRatio,
-                    ti.getBoundingClientRect().bottom * window.devicePixelRatio
+                    ti.getBoundingClientRect().top * devicePixelRatio,
+                    ti.getBoundingClientRect().bottom * devicePixelRatio
                 );
                 AndroidInterface.scratchjr_forceShowKeyboard();
             }
