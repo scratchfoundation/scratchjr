@@ -43,6 +43,10 @@ export default class Project {
         loadIcon = newLoadIcon;
     }
 
+    static get loadIcon () {
+        return loadIcon;
+    }
+
     static get error () {
         return error;
     }
