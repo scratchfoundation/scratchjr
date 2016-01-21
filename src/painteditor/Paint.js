@@ -15,7 +15,7 @@ import Camera from './Camera';
 import Events from '../utils/Events';
 import Transform from './Transform';
 import Vector from '../geom/Vector';
-import {gn, newHTML, setCanvasSize, isTablet, getIdFor, isAndroid, setProps, hitRect} from '../utils/lib';
+import {gn, newHTML, setCanvasSize, isTablet, getIdFor, isAndroid, setProps, hitRect, frame} from '../utils/lib';
 
 // Originally several files (Paint.js, PaintIO.js, PaintLayout.js)
 // were all contributing utility functions to the Paint object.
@@ -41,7 +41,7 @@ let currentMd5 = undefined;
 let currentZoom = 1;
 let root;
 let saving = false;
-let frame;
+let paintFrame;
 let saveMD5 = undefined;
 let svgdata;
 let splash;
@@ -108,7 +108,7 @@ export default class Paint {
     }
 
     static get frame () {
-        return frame;
+        return paintFrame;
     }
 
     static get splash () {
@@ -140,9 +140,9 @@ export default class Paint {
     ///////////////////////////////////////////
 
     static init (w, h) {
-        frame = document.getElementById('paintframe');
-        frame.style.width = w + 'px';
-        frame.style.height = h + 'px';
+        paintFrame = document.getElementById('paintframe');
+        paintFrame.style.width = w + 'px';
+        paintFrame.style.height = h + 'px';
         BlockSpecs.loadCount++;
         IO.requestFromServer('assets/splash.svg', Paint.setSplash);
         BlockSpecs.loadCount++;
@@ -169,7 +169,7 @@ export default class Paint {
         workspaceHeight = 384;
         Paint.clearWorkspace();
         frame.style.display = 'none';
-        frame.className = 'paintframe appear';
+        paintFrame.className = 'paintframe appear';
         currentMd5 = md5;
         isBkg = bkg;
         spriteId = sname;
@@ -340,7 +340,7 @@ export default class Paint {
 
     static close () {
         saving = true;
-        frame.className = 'paintframe disappear';
+        paintFrame.className = 'paintframe disappear';
         frame.style.display = 'block';
         ScratchJr.editorEvents();
         window.ontouchmove = undefined;
@@ -557,13 +557,13 @@ export default class Paint {
 
     static layout () {
         Paint.topbar();
-        var div = newHTML('div', 'innerpaint', frame);
+        var div = newHTML('div', 'innerpaint', paintFrame);
         Paint.leftPalette(div);
         var workspaceContainer = newHTML('div', 'workspacebkg-container', div);
         var workspace = newHTML('div', 'workspacebkg', workspaceContainer);
         workspace.setAttribute('id', 'workspacebkg');
         Paint.rightPalette(div);
-        Paint.colorPalette(frame);
+        Paint.colorPalette(paintFrame);
         Paint.selectButton('path');
         Paint.createSVGeditor(workspace);
     }
@@ -573,7 +573,7 @@ export default class Paint {
     /////////////////////////////////
 
     static topbar () {
-        var pt = newHTML('div', 'paintop', frame);
+        var pt = newHTML('div', 'paintop', paintFrame);
         Paint.checkMark(pt);
         PaintUndo.setup(pt); // plug here the undo
         Paint.nameOfcostume(pt);
@@ -1211,7 +1211,7 @@ export default class Paint {
         } else {
             saving = true;
             if (fcn) {
-                Alert.open(frame, gn('donecheck'), Localization.localize('ALERT_SAVING'), '#28A5DA');
+                Alert.open(paintFrame, gn('donecheck'), Localization.localize('ALERT_SAVING'), '#28A5DA');
                 Alert.balloon.style.zIndex = 12000;
             }
             svgdata = SVGTools.saveBackground(gn('layer1'), workspaceWidth, workspaceHeight);
@@ -1281,7 +1281,7 @@ export default class Paint {
         if (worthsaving) {
             saving = true;
             if (fcn) {
-                Alert.open(frame, gn('donecheck'), 'Saving...', '#28A5DA');
+                Alert.open(paintFrame, gn('donecheck'), 'Saving...', '#28A5DA');
                 Alert.balloon.style.zIndex = 12000;
             }
             svgdata = SVGTools.saveShape(gn('layer1'), workspaceWidth, workspaceHeight);
