@@ -863,7 +863,6 @@ Sprite.prototype.activateInput = function () {
     var ti = document.forms.activetextbox.typing;
     gn('textbox').style.visibility = 'visible';
     var me = this;
-    Undo.aux = Project.getProject(ScratchJr.stage.currentPage.id);
     ti.onblur = function () {
         me.unfocusText();
     };

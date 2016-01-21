@@ -1,349 +1,367 @@
-var Record = function () {};
+import ScratchJr from '../ScratchJr';
+import Palette from './Palette';
+import Undo from './Undo';
+import iOS from '../../iPad/iOS';
+import ScratchAudio from '../../utils/ScratchAudio';
+import {frame, gn, newHTML, isTablet, isAndroid, setProps} from '../../utils/lib';
 
-Record.isAndroid = isAndroid;
-Record.interval = null;
-Record.recordedSound = null;
-Record.isRecording = false;
-Record.isPlaying = false;
-Record.available = true;
-Record.error = false;
-Record.dialogOpen = false;
-Record.timeLimit = null;
-Record.playTimeLimit = null;
+let interval = null;
+let recordedSound = null;
+let isRecording = false;
+let isPlaying = false;
+let available = true;
+let error = false;
+let dialogOpen = false;
+let timeLimit = null;
+let playTimeLimit = null;
 
-// Create the recording window, including buttons and volume indicators
-Record.init = function () {
-    var modal = newHTML('div', 'record fade', frame);
-    modal.setAttribute('id', 'recorddialog');
-    var topbar = newHTML('div', 'toolbar', modal);
-    var actions = newHTML('div', 'actions', topbar);
-    newHTML('div', 'microphone', actions);
-    var buttons = newHTML('div', 'recordbuttons', actions);
-    var okbut = newHTML('div', 'recorddone', buttons);
-    if (isTablet) {
-        okbut.ontouchstart = Record.saveSoundAndClose;
-    } else {
-        okbut.onmousedown = Record.saveSoundAndClose;
+export default class Record {
+    static get available () {
+        return available;
     }
-    var sc = newHTML('div', 'soundbox', modal);
-    sc.setAttribute('id', 'soundbox');
-    var sv = newHTML('div', 'soundvolume', sc);
-    sv.setAttribute('id', 'soundvolume');
-    for (var i = 0; i < 13; i++) {
-        var si = newHTML('div', 'indicator', sv);
-        newHTML('div', 'soundlevel', si);
+
+    static set available (newAvailable) {
+        available = newAvailable;
     }
-    var ctrol = newHTML('div', 'soundcontrols', sc);
-    ctrol.setAttribute('id', 'soundcontrols');
-    var lib = [['record', Record.record], ['stop', Record.stopSnd], ['play', Record.playSnd]];
-    for (var j = 0; j < lib.length; j++) {
-        Record.newToggleClicky(ctrol, 'id_', lib[j][0], lib[j][1]);
+
+    static get dialogOpen () {
+        return dialogOpen;
     }
-};
 
-// Dialog box hide/show
-Record.appear = function () {
-    gn('backdrop').setAttribute('class', 'modal-backdrop fade in');
-    setProps(gn('backdrop').style, {
-        display: 'block'
-    });
-    gn('recorddialog').setAttribute('class', 'record fade in');
-    ScratchJr.stopStrips();
-    Record.dialogOpen = true;
-    ScratchJr.onBackButtonCallback.push(Record.saveSoundandClose);
-};
-
-Record.disappear = function () {
-    setTimeout(function () {
-        gn('backdrop').setAttribute('class', 'modal-backdrop fade');
-        setProps(gn('backdrop').style, {
-            display: 'none'
-        });
-        gn('recorddialog').setAttribute('class', 'record fade');
-    }, 333);
-    Record.dialogOpen = false;
-    ScratchJr.onBackButtonCallback.pop();
-};
-
-// Register toggle buttons and handlers
-Record.newToggleClicky = function (p, prefix, key, fcn) {
-    var button = newHTML('div', 'controlwrap', p);
-    newHTML('div', key + 'snd off', button);
-    button.setAttribute('type', 'toggleclicky');
-    button.setAttribute('id', prefix + key);
-    if (fcn) {
+    // Create the recording window, including buttons and volume indicators
+    static init () {
+        var modal = newHTML('div', 'record fade', frame);
+        modal.setAttribute('id', 'recorddialog');
+        var topbar = newHTML('div', 'toolbar', modal);
+        var actions = newHTML('div', 'actions', topbar);
+        newHTML('div', 'microphone', actions);
+        var buttons = newHTML('div', 'recordbuttons', actions);
+        var okbut = newHTML('div', 'recorddone', buttons);
         if (isTablet) {
-            button.ontouchstart = function (evt) {
-                fcn(evt);
-            };
+            okbut.ontouchstart = Record.saveSoundAndClose;
         } else {
-            button.onmousedown = function (evt) {
-                fcn(evt);
-            };
+            okbut.onmousedown = Record.saveSoundAndClose;
+        }
+        var sc = newHTML('div', 'soundbox', modal);
+        sc.setAttribute('id', 'soundbox');
+        var sv = newHTML('div', 'soundvolume', sc);
+        sv.setAttribute('id', 'soundvolume');
+        for (var i = 0; i < 13; i++) {
+            var si = newHTML('div', 'indicator', sv);
+            newHTML('div', 'soundlevel', si);
+        }
+        var ctrol = newHTML('div', 'soundcontrols', sc);
+        ctrol.setAttribute('id', 'soundcontrols');
+        var lib = [['record', Record.record], ['stop', Record.stopSnd], ['play', Record.playSnd]];
+        for (var j = 0; j < lib.length; j++) {
+            Record.newToggleClicky(ctrol, 'id_', lib[j][0], lib[j][1]);
         }
     }
-    return button;
-};
 
-// Toggle button appearance on/off
-Record.toggleButtonUI = function (button, newState) {
-    var element = 'id_' + button;
-    var newStateStr = (newState) ? 'on' : 'off';
-    var attrclass = button + 'snd';
-    gn(element).childNodes[0].setAttribute('class', attrclass + ' ' + newStateStr);
-};
+    // Dialog box hide/show
+    static appear () {
+        gn('backdrop').setAttribute('class', 'modal-backdrop fade in');
+        setProps(gn('backdrop').style, {
+            display: 'block'
+        });
+        gn('recorddialog').setAttribute('class', 'record fade in');
+        ScratchJr.stopStrips();
+        dialogOpen = true;
+        ScratchJr.onBackButtonCallback.push(Record.saveSoundandClose);
+    }
 
-// Volume UI updater
-Record.updateVolume = function (f) {
-    var num = Math.round(f * 13);
-    var div = gn('soundvolume');
-    if (!Record.isRecording) {
-        num = 0;
-    }
-    for (var i = 0; i < 13; i++) {
-        div.childNodes[i].childNodes[0].setAttribute('class', ((i > num) ? 'soundlevel off' : 'soundlevel on'));
-    }
-};
-
-// Stop recording UI and turn off volume levels
-Record.recordUIoff = function () {
-    Record.toggleButtonUI('record', false);
-    var div = gn('soundvolume');
-    for (var i = 0; i < gn('soundvolume').childElementCount; i++) {
-        div.childNodes[i].childNodes[0].setAttribute('class', 'soundlevel off');
-    }
-};
-
-// On press record button
-Record.record = function (e) {
-    if (Record.error) {
-        Record.killRecorder(e);
-        return;
-    }
-    if (Record.isPlaying) {
-        Record.stopPlayingSound(doRecord);
-    } else {
-        doRecord();
-    }
-    function doRecord () {
-        if (Record.isRecording) {
-            Record.stopRecording(); // Stop if we're already recording
-        } else {
-            iOS.sndrecord(Record.startRecording); // Start a recording
-        }
-    }
-};
-
-Record.startRecording = function (filename) {
-    if (parseInt(filename) < 0) {
-        // Error in getting record filename - go back to editor
-        Record.recordedSound = undefined;
-        Record.isRecording = false;
-        Record.killRecorder();
-        Palette.selectCategory(3);
-    } else {
-        // Save recording's filename for later
-        Record.recordedSound = filename;
-        Record.isRecording = true;
-        Record.error = false;
-        Record.soundname = filename;
-        Record.toggleButtonUI('record', true);
-        var poll = function () {
-            iOS.volume(Record.updateVolume, Record.recordError);
-        };
-        Record.interval = setInterval(poll, 33);
-        Record.timeLimit = setTimeout(function () {
-            if (Record.isRecording) {
-                Record.stopRecording();
-            }
-        }, 60000);
-    }
-};
-
-// Press the play button
-Record.playSnd = function (e) {
-    if (Record.error) {
-        Record.killRecorder(e);
-        return;
-    }
-    if (!Record.recordedSound) {
-        return;
-    }
-    if (Record.isPlaying) {
-        Record.stopPlayingSound();
-    } else {
-        if (Record.isRecording) {
-            Record.stopRecording(Record.startPlaying);
-        } else {
-            Record.startPlaying();
-        }
-    }
-};
-
-// Start playing the sound and switch UI appropriately
-Record.startPlaying = function () {
-    iOS.startplay(Record.timeOutPlay);
-    Record.toggleButtonUI('play', true);
-    Record.isPlaying = true;
-};
-
-// Gets the sound duration from iOS and changes play UI state after time
-Record.timeOutPlay = function (timeout) {
-    if (parseInt(timeout) < 0) {
-        timeout = 0.1; // Error - stop playing immediately
-    }
-    Record.playTimeLimit = setTimeout(function () {
-        Record.toggleButtonUI('play', false);
-        Record.isPlaying = false;
-    }, timeout * 1000);
-};
-
-// Press on stop
-Record.stopSnd = function (e) {
-    if (Record.error) {
-        Record.killRecorder(e);
-        return;
-    }
-    if (!Record.recordedSound) {
-        return;
-    }
-    Record.flashStopButton();
-    if (Record.isRecording) {
-        Record.stopRecording();
-    } else if (Record.isPlaying) {
-        Record.stopPlayingSound();
-    }
-};
-
-Record.flashStopButton = function () {
-    Record.toggleButtonUI('stop', true);
-    setTimeout(function () {
-        Record.toggleButtonUI('stop', false);
-    }, 200);
-};
-
-// Stop playing the sound and switch UI appropriately
-Record.stopPlayingSound = function (fcn) {
-    iOS.stopplay(fcn);
-    Record.toggleButtonUI('play', false);
-    Record.isPlaying = false;
-    window.clearTimeout(Record.playTimeLimit);
-    Record.playTimeLimit = null;
-};
-
-// Stop the volume monitor and recording
-Record.stopRecording = function (fcn) {
-    if (Record.timeLimit != null) {
-        clearTimeout(Record.timeLimit);
-        Record.timeLimit = null;
-    }
-    if (Record.interval != null) {
-        window.clearInterval(Record.interval);
-        Record.interval = null;
+    static disappear () {
         setTimeout(function () {
-            Record.volumeCheckStopped(fcn);
-        }, 33);
-    } else {
-        Record.volumeCheckStopped(fcn);
+            gn('backdrop').setAttribute('class', 'modal-backdrop fade');
+            setProps(gn('backdrop').style, {
+                display: 'none'
+            });
+            gn('recorddialog').setAttribute('class', 'record fade');
+        }, 333);
+        dialogOpen = false;
+        ScratchJr.onBackButtonCallback.pop();
     }
-};
 
-Record.volumeCheckStopped = function (fcn) {
-    Record.isRecording = false;
-    Record.recordUIoff();
-    iOS.recordstop(fcn);
-};
-
-// Press OK (check)
-Record.saveSoundAndClose = function () {
-    if (Record.error || !Record.recordedSound) {
-        Record.killRecorder();
-    } else {
-        if (Record.isPlaying) {
-            Record.stopPlayingSound(Record.closeContinueSave);
-        } else {
-            if (Record.isRecording) {
-                Record.stopRecording(Record.closeContinueSave);
+    // Register toggle buttons and handlers
+    static newToggleClicky (p, prefix, key, fcn) {
+        var button = newHTML('div', 'controlwrap', p);
+        newHTML('div', key + 'snd off', button);
+        button.setAttribute('type', 'toggleclicky');
+        button.setAttribute('id', prefix + key);
+        if (fcn) {
+            if (isTablet) {
+                button.ontouchstart = function (evt) {
+                    fcn(evt);
+                };
             } else {
-                Record.closeContinueSave();
+                button.onmousedown = function (evt) {
+                    fcn(evt);
+                };
+            }
+        }
+        return button;
+    }
+
+    // Toggle button appearance on/off
+    static toggleButtonUI (button, newState) {
+        var element = 'id_' + button;
+        var newStateStr = (newState) ? 'on' : 'off';
+        var attrclass = button + 'snd';
+        gn(element).childNodes[0].setAttribute('class', attrclass + ' ' + newStateStr);
+    }
+
+    // Volume UI updater
+    static updateVolume (f) {
+        var num = Math.round(f * 13);
+        var div = gn('soundvolume');
+        if (!isRecording) {
+            num = 0;
+        }
+        for (var i = 0; i < 13; i++) {
+            div.childNodes[i].childNodes[0].setAttribute('class', ((i > num) ? 'soundlevel off' : 'soundlevel on'));
+        }
+    }
+
+    // Stop recording UI and turn off volume levels
+    static recordUIoff () {
+        Record.toggleButtonUI('record', false);
+        var div = gn('soundvolume');
+        for (var i = 0; i < gn('soundvolume').childElementCount; i++) {
+            div.childNodes[i].childNodes[0].setAttribute('class', 'soundlevel off');
+        }
+    }
+
+    // On press record button
+    static record (e) {
+        if (error) {
+            Record.killRecorder(e);
+            return;
+        }
+        if (isPlaying) {
+            Record.stopPlayingSound(doRecord);
+        } else {
+            doRecord();
+        }
+        function doRecord () {
+            if (isRecording) {
+                Record.stopRecording(); // Stop if we're already recording
+            } else {
+                iOS.sndrecord(Record.startRecording); // Start a recording
             }
         }
     }
-};
 
-Record.closeContinueSave = function () {
-    iOS.recorddisappear('YES', Record.getUserSound);
-};
-
-Record.closeContinueRemove = function () {
-    // don't get the sound - proceed right to tearDown
-    iOS.recorddisappear('NO', Record.tearDownRecorder);
-};
-
-Record.getUserSound = function () {
-    Record.isRecording = false;
-    if (!Record.isAndroid) {
-        iOS.getmedia(Record.recordedSound, Record.registerProjectSound);
-    } else {
-        // On Android, just pass URL
-        Record.registerProjectSound(null);
-    }
-};
-
-Record.registerProjectSound = function (data) {
-    function loadingDone (snd) {
-        if (snd != 'error') {
-            var spr = ScratchJr.getSprite();
-            var page = spr.div.parentNode.owner;
-            spr.sounds.push(Record.recordedSound);
-            Undo.record({
-                action: 'recordsound',
-                who: spr.id,
-                where: page.id,
-                sound: Record.recordedSound
-            });
-            ScratchJr.storyStart('Record.registerProjectSound');
-        }
-        Record.tearDownRecorder();
-        Palette.selectCategory(3);
-    }
-    if (!Record.isAndroid) {
-        ScratchAudio.loadFromData(Record.recordedSound, data, loadingDone);
-    } else {
-        // On Android, just pass URL
-        ScratchAudio.loadFromLocal(Record.recordedSound, loadingDone);
-    }
-};
-
-// Called on error - remove everything and hide the recorder
-Record.killRecorder = function () {
-    // Inform iOS and then tear-down
-    if (Record.isPlaying) {
-        Record.stopPlayingSound(Record.closeContinueRemove); // stop playing and tear-down
-    } else {
-        if (Record.isRecording) {
-            Record.stopRecording(Record.closeContinueRemove); // stop recording and tear-down
+    static startRecording (filename) {
+        if (parseInt(filename) < 0) {
+            // Error in getting record filename - go back to editor
+            recordedSound = undefined;
+            isRecording = false;
+            Record.killRecorder();
+            Palette.selectCategory(3);
         } else {
-            Record.closeContinueRemove();
+            // Save recording's filename for later
+            recordedSound = filename;
+            isRecording = true;
+            error = false;
+            Record.soundname = filename;
+            Record.toggleButtonUI('record', true);
+            var poll = function () {
+                iOS.volume(Record.updateVolume, Record.recordError);
+            };
+            interval = setInterval(poll, 33);
+            timeLimit = setTimeout(function () {
+                if (isRecording) {
+                    Record.stopRecording();
+                }
+            }, 60000);
         }
     }
-};
 
-Record.tearDownRecorder = function () {
-    // Clear errors
-    if (Record.error) {
-        Record.error = false;
+    // Press the play button
+    static playSnd (e) {
+        if (error) {
+            Record.killRecorder(e);
+            return;
+        }
+        if (!recordedSound) {
+            return;
+        }
+        if (isPlaying) {
+            Record.stopPlayingSound();
+        } else {
+            if (isRecording) {
+                Record.stopRecording(Record.startPlaying);
+            } else {
+                Record.startPlaying();
+            }
+        }
     }
-    // Refresh audio context
-    ScratchAudio.firstTime = true;
-    Record.isRecording = false;
-    Record.recordedSound = null;
-    // Hide the dialog
-    Record.disappear();
-};
 
-// Called when the app is put into the background
-Record.recordError = function () {
-    Record.error = true;
-    Record.killRecorder();
-};
+    // Start playing the sound and switch UI appropriately
+    static startPlaying () {
+        iOS.startplay(Record.timeOutPlay);
+        Record.toggleButtonUI('play', true);
+        isPlaying = true;
+    }
+
+    // Gets the sound duration from iOS and changes play UI state after time
+    static timeOutPlay (timeout) {
+        if (parseInt(timeout) < 0) {
+            timeout = 0.1; // Error - stop playing immediately
+        }
+        playTimeLimit = setTimeout(function () {
+            Record.toggleButtonUI('play', false);
+            isPlaying = false;
+        }, timeout * 1000);
+    }
+
+    // Press on stop
+    static stopSnd (e) {
+        if (error) {
+            Record.killRecorder(e);
+            return;
+        }
+        if (!recordedSound) {
+            return;
+        }
+        Record.flashStopButton();
+        if (isRecording) {
+            Record.stopRecording();
+        } else if (isPlaying) {
+            Record.stopPlayingSound();
+        }
+    }
+
+    static flashStopButton () {
+        Record.toggleButtonUI('stop', true);
+        setTimeout(function () {
+            Record.toggleButtonUI('stop', false);
+        }, 200);
+    }
+
+    // Stop playing the sound and switch UI appropriately
+    static stopPlayingSound (fcn) {
+        iOS.stopplay(fcn);
+        Record.toggleButtonUI('play', false);
+        isPlaying = false;
+        window.clearTimeout(playTimeLimit);
+        playTimeLimit = null;
+    }
+
+    // Stop the volume monitor and recording
+    static stopRecording (fcn) {
+        if (timeLimit != null) {
+            clearTimeout(timeLimit);
+            timeLimit = null;
+        }
+        if (interval != null) {
+            window.clearInterval(interval);
+            interval = null;
+            setTimeout(function () {
+                Record.volumeCheckStopped(fcn);
+            }, 33);
+        } else {
+            Record.volumeCheckStopped(fcn);
+        }
+    }
+
+    static volumeCheckStopped (fcn) {
+        isRecording = false;
+        Record.recordUIoff();
+        iOS.recordstop(fcn);
+    }
+
+    // Press OK (check)
+    static saveSoundAndClose () {
+        if (error || !recordedSound) {
+            Record.killRecorder();
+        } else {
+            if (isPlaying) {
+                Record.stopPlayingSound(Record.closeContinueSave);
+            } else {
+                if (isRecording) {
+                    Record.stopRecording(Record.closeContinueSave);
+                } else {
+                    Record.closeContinueSave();
+                }
+            }
+        }
+    }
+
+    static closeContinueSave () {
+        iOS.recorddisappear('YES', Record.getUserSound);
+    }
+
+    static closeContinueRemove () {
+        // don't get the sound - proceed right to tearDown
+        iOS.recorddisappear('NO', Record.tearDownRecorder);
+    }
+
+    static getUserSound () {
+        isRecording = false;
+        if (!isAndroid) {
+            iOS.getmedia(recordedSound, Record.registerProjectSound);
+        } else {
+            // On Android, just pass URL
+            Record.registerProjectSound(null);
+        }
+    }
+
+    static registerProjectSound (data) {
+        function loadingDone (snd) {
+            if (snd != 'error') {
+                var spr = ScratchJr.getSprite();
+                var page = spr.div.parentNode.owner;
+                spr.sounds.push(recordedSound);
+                Undo.record({
+                    action: 'recordsound',
+                    who: spr.id,
+                    where: page.id,
+                    sound: recordedSound
+                });
+                ScratchJr.storyStart('Record.registerProjectSound');
+            }
+            Record.tearDownRecorder();
+            Palette.selectCategory(3);
+        }
+        if (!isAndroid) {
+            ScratchAudio.loadFromData(recordedSound, data, loadingDone);
+        } else {
+            // On Android, just pass URL
+            ScratchAudio.loadFromLocal(recordedSound, loadingDone);
+        }
+    }
+
+    // Called on error - remove everything and hide the recorder
+    static killRecorder () {
+        // Inform iOS and then tear-down
+        if (isPlaying) {
+            Record.stopPlayingSound(Record.closeContinueRemove); // stop playing and tear-down
+        } else {
+            if (isRecording) {
+                Record.stopRecording(Record.closeContinueRemove); // stop recording and tear-down
+            } else {
+                Record.closeContinueRemove();
+            }
+        }
+    }
+
+    static tearDownRecorder () {
+        // Clear errors
+        if (error) {
+            error = false;
+        }
+        // Refresh audio context
+        ScratchAudio.firstTime = true;
+        isRecording = false;
+        recordedSound = null;
+        // Hide the dialog
+        Record.disappear();
+    }
+
+    // Called when the app is put into the background
+    static recordError () {
+        error = true;
+        Record.killRecorder();
+    }
+}

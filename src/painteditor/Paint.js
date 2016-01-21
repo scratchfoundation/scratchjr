@@ -626,7 +626,6 @@ export default class Paint {
                 ti.getBoundingClientRect().bottom * window.devicePixelRatio
             );
         }
-        Undo.aux = Project.getProject(ScratchJr.stage.currentPage.id);
         setTimeout(function () {
             ti.setSelectionRange(ti.value.length, ti.value.length);
         }, 1);
