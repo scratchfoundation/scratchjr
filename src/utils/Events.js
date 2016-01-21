@@ -95,7 +95,7 @@ export default class Events {
     // small drag div that is a parent of frame that the dragging block
     // can be a child of. This improves dragging performance.
     static init () {
-        var dragDiv = document.createElement('div');
+        dragDiv = document.createElement('div');
         dragDiv.id = 'dragDiv';
         dragDiv.style.position = 'absolute';
         dragDiv.style.width = '0px'; // size doesn't matter since children float
@@ -103,7 +103,6 @@ export default class Events {
         dragDiv.style.zIndex = 7001; // slightly higher than ScratchJr.dragginLayer
         var frameDiv = gn('frame');
         frameDiv.appendChild(dragDiv);
-        dragDiv = dragDiv;
     }
     static startDrag (e, c, atstart, atend, atdrag, atclick, athold) {
         dragged = false;
