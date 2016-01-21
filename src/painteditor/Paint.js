@@ -1,7 +1,5 @@
 import ScratchJr from '../editor/ScratchJr';
 import BlockSpecs from '../editor/blocks/BlockSpecs';
-import Project from '../editor/ui/Project';
-import Undo from '../editor/ui/Undo';
 import SVGTools from './SVGTools';
 import SVG2Canvas from '../utils/SVG2Canvas';
 import Ghost from './Ghost';
