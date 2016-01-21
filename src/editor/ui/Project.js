@@ -3,7 +3,7 @@ import BlockSpecs from '../blocks/BlockSpecs';
 import Alert from './Alert';
 import Palette from './Palette';
 import UI from './UI';
-import Page from './Page';
+import Page from '../engine/Page';
 import Sprite from '../engine/Sprite';
 import iOS from '../../iPad/iOS';
 import IO from '../../iPad/IO';

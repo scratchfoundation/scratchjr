@@ -4,7 +4,7 @@
 
 import ScratchJr from '../ScratchJr';
 import Palette from './Palette';
-import Page from './Page';
+import Page from '../engine/Page';
 import ScriptsPane from './ScriptsPane';
 import Undo from './Undo';
 import UI from './UI';

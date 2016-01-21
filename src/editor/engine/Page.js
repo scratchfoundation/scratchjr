@@ -1,15 +1,15 @@
 import ScratchJr from '../ScratchJr';
-import Project from '../../ui/Project';
-import Thumbs from '../../ui/Thumbs';
-import UI from '../../ui/UI';
+import Project from '../ui/Project';
+import Thumbs from '../ui/Thumbs';
+import UI from '../ui/UI';
 import Sprite from './Sprite';
-import Palette from './Palette';
+import Palette from '../ui/Palette';
 import BlockSpecs from '../blocks/BlockSpecs';
 import iOS from '../../iPad/iOS';
 import IO from '../../iPad/IO';
 import Undo from '../ui/Undo';
-import Matrix from '../geom/Matrix';
-import Vector from '../geom/Vector';
+import Matrix from '../../geom/Matrix';
+import Vector from '../../geom/Vector';
 import {newHTML, newDiv, gn,
     setCanvasSizeScaledToWindowDocumentHeight,
     DEGTOR, getIdFor, setProps, isTablet} from '../../utils/lib';

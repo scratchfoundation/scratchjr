@@ -6,7 +6,7 @@ import Paint from '../../painteditor/Paint';
 import Events from '../../utils/Events';
 import Localization from '../../utils/Localization';
 import ScratchAudio from '../../utils/ScratchAudio';
-import {frame, gn, newHTML, scaleMultiplier,
+import {gn, newHTML, scaleMultiplier,
     getDocumentWidth, getDocumentHeight, setProps, newCanvas} from '../../utils/lib';
 
 let selectedOne;

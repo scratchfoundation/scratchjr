@@ -9,7 +9,7 @@ import Project from './Project';
 import Thumbs from './Thumbs';
 import Palette from './Palette';
 import Grid from './Grid';
-import Stage from './Stage';
+import Stage from '../engine/Stage';
 import ScriptsPane from './ScriptsPane';
 import Undo from './Undo';
 import Library from './Library';

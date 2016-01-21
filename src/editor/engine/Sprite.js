@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////
 
 import ScratchJr from '../ScratchJr';
-import Project from '../../ui/Project';
-import Thumbs from '../../ui/Thumbs';
-import UI from '../../ui/UI';
+import Project from '../ui/Project';
+import Thumbs from '../ui/Thumbs';
+import UI from '../ui/UI';
 import BlockSpecs from '../blocks/BlockSpecs';
 import iOS from '../../iPad/iOS';
 import IO from '../../iPad/IO';

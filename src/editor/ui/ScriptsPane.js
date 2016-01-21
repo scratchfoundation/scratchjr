@@ -6,9 +6,9 @@ import Palette from './Palette';
 import Undo from './Undo';
 import Events from '../../utils/Events';
 import Scroll from './Scroll';
-import Menu from './Menu';
+import Menu from '../blocks/Menu';
 import ScratchAudio from '../../utils/ScratchAudio';
-import {frame, gn, localx, localy, newHTML, isTablet,
+import {gn, localx, localy, newHTML, isTablet,
     globalx, globaly, setCanvasSize, getDocumentHeight, frame} from '../../utils/lib';
 
 let scroll = undefined;
