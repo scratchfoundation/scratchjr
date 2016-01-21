@@ -20,6 +20,7 @@
     "esformatter-quotes": "^1.0.3",
     "esformatter-semicolons": "^1.1.2",
     "eslint": "^1.10.3",
+    "expose-loader": "^0.7.1",
     "strip-sourcemap-loader": "0.0.1",
     "webpack": "^1.12.11"
   },

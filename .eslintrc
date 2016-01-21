@@ -24,7 +24,8 @@
         "WebKitCSSMatrix": true,
         "Settings": true,
         "MediaLib": true,
-        "webkitAudioContext": true
+        "webkitAudioContext": true,
+        "require": true
     },
     "extends": "eslint:recommended"
 }

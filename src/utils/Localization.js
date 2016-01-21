@@ -1,8 +1,13 @@
 import Cookie from './Cookie';
 import Intl from 'intl';
-import IntlMessageFormat from 'intl-messageformat';
-
 window.Intl = Intl;
+
+require('intl/locale-data/jsonp/en.js');
+require('intl/locale-data/jsonp/es.js');
+
+require('expose?IntlMessageFormat!intl-messageformat');
+require('intl-messageformat/dist/locale-data/en');
+require('intl-messageformat/dist/locale-data/es');
 
 let currentLocale;
 let root = '';
@@ -68,7 +73,7 @@ export default class Localization {
     static localize (key, formatting) {
         var message;
         if (key in localizationMessages) {
-            message = new IntlMessageFormat(localizationMessages[key], currentLocale);
+            message = new window.IntlMessageFormat(localizationMessages[key], currentLocale);
             return message.format(formatting);
         }
         return 'String missing: ' + key;
