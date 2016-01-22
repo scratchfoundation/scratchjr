@@ -144,9 +144,9 @@ export default class Paint {
         paintFrame.style.width = w + 'px';
         paintFrame.style.height = h + 'px';
         BlockSpecs.loadCount++;
-        IO.requestFromServer('assets/splash.svg', Paint.setSplash);
+        IO.requestFromServer('assets/paint/splash.svg', Paint.setSplash);
         BlockSpecs.loadCount++;
-        IO.requestFromServer('assets/splashshade.svg', Paint.setSplashShade);
+        IO.requestFromServer('assets/paint/splashshade.svg', Paint.setSplashShade);
     }
 
     static setSplash (str) {
