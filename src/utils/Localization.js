@@ -1,5 +1,6 @@
 import Cookie from './Cookie';
 import Intl from 'intl';
+import IO from '../iPad/IO';
 window.Intl = Intl;
 
 require('intl/locale-data/jsonp/en.js');
@@ -52,7 +53,7 @@ export default class Localization {
 
     // Include locale support files and load the messages
     // Call this when the app is initialized
-    static includeLocales () {
+    static includeLocales (whenDone) {
         var localizationCookie = Cookie.get('localization');
 
         if (localizationCookie === null) {
@@ -62,11 +63,11 @@ export default class Localization {
         }
         var topLevel = currentLocale.split('-')[0];
 
-        // Get messages synchronously
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', root + 'localizations/' + topLevel + '.json', false);
-        xhr.send(null);
-        localizationMessages = JSON.parse(xhr.responseText);
+        // Get messages
+        IO.requestFromServer(root + 'localizations/' + topLevel + '.json', (result) => {
+            localizationMessages = JSON.parse(result);
+            whenDone();
+        });
     }
 
     // Translate a particular message given the message key and info
