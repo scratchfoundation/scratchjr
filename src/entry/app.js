@@ -128,6 +128,35 @@ function loadSettings (whenDone) {
     });
 }
 
+// Previously gettingstarted.html
+
+let place;
+function gettingStartedVideo () {
+    var videoObj = gn('myVideo');
+    if (isiOS) {
+        // On iOS we can load from server
+        videoObj.src = 'assets/lobby/intro.mp4';
+    } else {
+        // On Android we need to copy to a temporary directory first:
+        setTimeout(function () {
+            videoObj.type = 'video/mp4';
+            videoObj.src = AndroidInterface.scratchjr_getgettingstartedvideopath();
+        }, 1000);
+    }
+    videoObj.poster = 'assets/lobby/poster.png';
+
+    var urlvars = getUrlVars();
+    place = urlvars['place'];
+    document.ontouchmove = function (e){
+        e.preventDefault();
+    };
+}
+
+
+function gettingStartedCloseMe () {
+    window.location.href = 'home.html?place=' + place;
+}
+
 // App-wide entry-point
 window.onload = () => {
     // Load settings from JSON
@@ -163,6 +192,13 @@ window.onload = () => {
                     preprocessAndLoadCss('css', 'css/librarymodal.css');
                     preprocessAndLoadCss('css', 'css/paintlook.css');
                     iOS.waitForInterface(editorCreateScratchJr);
+                } else if (page == 'gettingStarted') {
+                    preprocessAndLoadCss('css', 'css/font.css');
+                    preprocessAndLoadCss('css', 'css/base.css');
+                    preprocessAndLoadCss('css', 'css/gs.css');
+                    gn('closeHelp').onclick = gettingStartedCloseMe;
+                    gn('closeHelp').ontouchstart = gettingStartedCloseMe;
+                    iOS.waitForInterface(gettingStartedVideo);
                 }
             });
         });
