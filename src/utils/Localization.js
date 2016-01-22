@@ -15,8 +15,6 @@ let root = '';
 let localizationMessages = {};
 
 // Configuration
-const defaultLocale = window.Settings.defaultLocale;
-const supportedLocales = window.Settings.supportedLocales;
 const sampleKeyPrefix = 'key_';
 
 export default class Localization {
@@ -26,6 +24,9 @@ export default class Localization {
     // E.g., if we support 'en-US' but not 'en-GB', the user gets 'en-US'
     // The match in supported locales (or the default locale) is returned.
     static determineLocaleFromBrowser () {
+        let defaultLocale = window.Settings.defaultLocale;
+        let supportedLocales = window.Settings.supportedLocales;
+
         var localizationLanguage = window.navigator.userLanguage || window.navigator.language || 'en-us';
 
         var localizationLanguageParts = localizationLanguage.split('-');
