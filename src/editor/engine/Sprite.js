@@ -14,6 +14,7 @@ import UI from '../ui/UI';
 import BlockSpecs from '../blocks/BlockSpecs';
 import iOS from '../../iPad/iOS';
 import IO from '../../iPad/IO';
+import MediaLib from '../../iPad/MediaLib';
 import Undo from '../ui/Undo';
 import ScriptsPane from '../ui/ScriptsPane';
 import SVG2Canvas from '../../utils/SVG2Canvas';

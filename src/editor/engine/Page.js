@@ -7,6 +7,7 @@ import Palette from '../ui/Palette';
 import BlockSpecs from '../blocks/BlockSpecs';
 import iOS from '../../iPad/iOS';
 import IO from '../../iPad/IO';
+import MediaLib from '../../iPad/MediaLib';
 import Undo from '../ui/Undo';
 import Matrix from '../../geom/Matrix';
 import Vector from '../../geom/Vector';

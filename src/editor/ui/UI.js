@@ -15,6 +15,7 @@ import Undo from './Undo';
 import Library from './Library';
 import iOS from '../../iPad/iOS';
 import IO from '../../iPad/IO';
+import MediaLib from '../../iPad/MediaLib';
 import Paint from '../../painteditor/Paint';
 import Events from '../../utils/Events';
 import Localization from '../../utils/Localization';

@@ -1,4 +1,5 @@
 import iOS from './iOS';
+import MediaLib from './MediaLib';
 import JSZip from 'jszip';
 import {setCanvasSize, drawThumbnail} from '../utils/lib';
 import Lobby from '../lobby/Lobby';

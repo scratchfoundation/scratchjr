@@ -8,6 +8,7 @@ import BlockSpecs from '../blocks/BlockSpecs';
 import ScriptsPane from './ScriptsPane';
 import Undo from './Undo';
 import iOS from '../../iPad/iOS';
+import MediaLib from '../../iPad/MediaLib';
 import Events from '../../utils/Events';
 import Rectangle from '../../geom/Rectangle';
 import DrawPath from '../../utils/DrawPath';

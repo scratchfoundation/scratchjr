@@ -5,6 +5,7 @@ import SVG2Canvas from '../utils/SVG2Canvas';
 import Ghost from './Ghost';
 import iOS from '../iPad/iOS';
 import IO from '../iPad/IO';
+import MediaLib from '../iPad/MediaLib';
 import Localization from '../utils/Localization';
 import Alert from '../editor/ui/Alert';
 import PaintAction from './PaintAction';

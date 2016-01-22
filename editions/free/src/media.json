@@ -1,0 +1,13 @@
+{
+    "path": "./svglibrary/",
+    "samples": [
+	       "samples/Star.txt"
+    ],
+    "backgrounds": [
+        {"md5":"Farm.svg","width":480,"height":360,"ext":"svg","name":"Farm"}
+    ],
+    "sprites": [
+        {"md5":"Star.svg","width":80,"height":101,"ext":"svg","name":"Star","order":"characters,07 weather","tags":["characters","07 weather"]}
+    ],
+    "sounds": ["pop.mp3"]
+}

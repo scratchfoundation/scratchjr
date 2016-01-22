@@ -5,6 +5,7 @@
 import Lobby from './Lobby';
 import IO from '../iPad/IO';
 import iOS from '../iPad/iOS';
+import MediaLib from '../iPad/MediaLib';
 import ScratchAudio from '../utils/ScratchAudio';
 import Localization from '../utils/Localization';
 import {gn, newHTML} from '../utils/lib';

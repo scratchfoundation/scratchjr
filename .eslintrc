@@ -19,7 +19,6 @@
         "browser": true
     },
     "globals": {
-        "MediaLib": true,
         "AndroidInterface": true,
         "window": true,
         "WebKitCSSMatrix": true,
