@@ -593,12 +593,12 @@ export default class Paint {
         var sform = newHTML('form', 'spriteform', p);
         sform.name = 'spriteform';
         var ti = newHTML('input', undefined, sform);
-        ti.onkeypress = undefined;
-        ti.autocomplete = 'off';
+        ti.autocomplete = false;
         ti.autocorrect = false;
         ti.name = 'name';
         ti.maxLength = 25;
         ti.firstTime = true;
+        ti.ontouchstart = () => {};
         ti.onfocus = Paint.nameFocus;
         ti.onblur = Paint.nameBlur;
         ti.onkeypress = Paint.handleNamePress;
