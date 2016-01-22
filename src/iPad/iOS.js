@@ -342,3 +342,6 @@ export default class iOS {
         }
     }
 }
+
+// Expose iOS methods for ScratchJr tablet sharing callbacks
+window.iOS = iOS;

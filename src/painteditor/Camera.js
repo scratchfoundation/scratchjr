@@ -24,12 +24,12 @@ export default class Camera {
         available = newAvailable;
     }
 
-    static startFeed (target) {
+    static startFeed (feedTarget) {
         ScratchAudio.sndFX('entertap.wav');
         if (!Paint.canvasFits()) {
             Paint.scaleToFit();
         }
-        target = target;
+        target = feedTarget;
         Camera.active = true;
         var devicePixelRatio = window.devicePixelRatio;
         var viewbox = SVGTools.getBox(target).rounded();
@@ -196,3 +196,6 @@ export default class Camera {
         }
     }
 }
+
+// Exposing the camera for the tablet callback in iOS.snapShot
+window.Camera = Camera;
