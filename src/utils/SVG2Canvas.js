@@ -156,11 +156,12 @@ export default class SVG2Canvas {
             return;
         }
         if (elem.id.indexOf('pathborder_image') > -1) {
-            ctx.fillStyle = Settings.spriteOutlineColor;
+            ctx.fillStyle = window.Settings.spriteOutlineColor;
         } else {
-            ctx.fillStyle = (elem.getAttribute('fill') == 'none') ? 'rgba(0, 0, 0,0)' : Settings.spriteOutlineColor;
+            ctx.fillStyle = (elem.getAttribute('fill') == 'none') ?
+                'rgba(0, 0, 0,0)' : window.Settings.spriteOutlineColor;
         }
-        ctx.strokeStyle = Settings.spriteOutlineColor;
+        ctx.strokeStyle = window.Settings.spriteOutlineColor;
         ctx.lineCap = 'round';
         ctx.lineWidth = elem.getAttribute('stroke-width') ? Number(elem.getAttribute('stroke-width')) + 12 : 12;
         ctx.miterLimit = 2;

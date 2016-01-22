@@ -186,9 +186,9 @@ export default class Lobby {
         var languageButtons = newHTML('div', 'languagebuttons', div);
 
         var languageButton;
-        for (var l in Settings.supportedLocales) {
+        for (var l in window.Settings.supportedLocales) {
             var selected = '';
-            if (Settings.supportedLocales[l] == Localization.currentLocale) {
+            if (window.Settings.supportedLocales[l] == Localization.currentLocale) {
                 selected = ' selected';
             }
             languageButton = newHTML('div', 'localizationselect' + selected, languageButtons);
@@ -196,7 +196,7 @@ export default class Lobby {
 
             languageButton.ontouchstart = function (e) {
                 ScratchAudio.sndFX('tap.wav');
-                Cookie.set('localization', Settings.supportedLocales[e.target.textContent]);
+                Cookie.set('localization', window.Settings.supportedLocales[e.target.textContent]);
                 window.location = '?place=gear';
             };
         }

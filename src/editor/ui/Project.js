@@ -544,7 +544,7 @@ export default class Project {
         setCanvasSize(c, w, h);
         var ctx = c.getContext('2d');
         var md5 = page.md5;
-        ctx.fillStyle = Settings.stageColor;
+        ctx.fillStyle = window.Settings.stageColor;
         ctx.fillRect(0, 0, w, h);
         if (!md5) {
             Project.drawSprites(page, scale, c, w, h, fcn);
@@ -581,7 +581,7 @@ export default class Project {
     static maskBorders (ctx, w, h) {
         ctx.save();
         ctx.globalCompositeOperation = 'destination-in';
-        if (Settings.edition != 'PBS') {
+        if (window.Settings.edition != 'PBS') {
             ctx.drawImage(BlockSpecs.projectThumb, 0, 0, w, h);
         }
         ctx.restore();

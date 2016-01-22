@@ -199,7 +199,7 @@ export default class Palette {
         helpballoon.icon = obj;
         var ctx = helpballoon.getContext('2d');
         w = 16 * window.devicePixelRatio * scaleMultiplier +
-            getStringSize(ctx, 'bold ' + fontSize + 'px ' + Settings.paletteBalloonFont, label).width;
+            getStringSize(ctx, 'bold ' + fontSize + 'px ' + window.Settings.paletteBalloonFont, label).width;
         if (w < 36 * scaleMultiplier) {
             w = 36 * scaleMultiplier;
         }
@@ -211,7 +211,7 @@ export default class Palette {
                 'scale(' + (1 / window.devicePixelRatio) + ') translate(' + (dx + (w / 2)) + 'px, ' + (h / 2) + 'px)'
         });
         Palette.drawBalloon(helpballoon.getContext('2d'), w, h);
-        writeText(ctx, 'bold ' + fontSize + 'px ' + Settings.paletteBalloonFont, 'white', label,
+        writeText(ctx, 'bold ' + fontSize + 'px ' + window.Settings.paletteBalloonFont, 'white', label,
             21 * window.devicePixelRatio * scaleMultiplier, 8 * window.devicePixelRatio * scaleMultiplier);
     }
 

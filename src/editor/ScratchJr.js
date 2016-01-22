@@ -33,8 +33,8 @@ let inFullscreen = false;
 let keypad = undefined;
 let textForm = undefined;
 let editfirst = false;
-let stagecolor = Settings.stageColor;
-let defaultSprite = Settings.defaultSprite;
+let stagecolor;
+let defaultSprite;
 
 ///////////////////////////////////////////
 //Layers definitions for the whole site
@@ -176,6 +176,8 @@ export default class ScratchJr {
     }
 
     static appinit (v) {
+        stagecolor = window.Settings.stageColor;
+        defaultSprite = window.Settings.defaultSprite;
         version = v;
         document.body.scrollTop = 0;
         time = (new Date()) - 0;
@@ -202,14 +204,14 @@ export default class ScratchJr {
         ScratchJr.editorEvents();
         Project.load(currentProject);
         Events.init();
-        if (Settings.autoSaveInterval > 0) {
+        if (window.Settings.autoSaveInterval > 0) {
             autoSaveSetInterval = window.setInterval(function () {
                 if (autoSaveEnabled) {
                     ScratchJr.saveProject(null, function () {
                         Alert.close();
                     });
                 }
-            }, Settings.autoSaveInterval);
+            }, window.Settings.autoSaveInterval);
         }
     }
 
@@ -349,7 +351,7 @@ export default class ScratchJr {
                     Alert.close();
                 });
             }
-        }, Settings.autoSaveInterval);
+        }, window.Settings.autoSaveInterval);
     }
 
     static onPause () {

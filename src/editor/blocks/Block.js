@@ -99,7 +99,7 @@ export default class Block {
             position: 'absolute',
             left: '1px',
             top: '4px',
-            opacity: this.inpalette ? Settings.paletteBlockShadowOpacity : 1,
+            opacity: this.inpalette ? window.Settings.paletteBlockShadowOpacity : 1,
             visibility: 'hidden',
             webkitTransform: 'translate(' + (-this.blockshape.width / 2) + 'px, ' +
                 (-this.blockshape.height / 2) + 'px) ' +

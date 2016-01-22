@@ -249,7 +249,7 @@ export default class Page {
 
     setPageThumb (c) {
         var w0, h0;
-        if (Settings.edition == 'PBS') {
+        if (window.Settings.edition == 'PBS') {
             w0 = 136;
             h0 = 101;
         } else {
@@ -261,7 +261,7 @@ export default class Page {
         var h = c.height;
         var ctx = c.getContext('2d');
 
-        if (Settings.edition == 'PBS') {
+        if (window.Settings.edition == 'PBS') {
 
             ctx.rect(0, 0, w, h);
             ctx.fillStyle = '#fff';
@@ -283,7 +283,7 @@ export default class Page {
             }
             this.stampSpriteAt(ctx, spr, scale);
         }
-        if (Settings.edition != 'PBS') {
+        if (window.Settings.edition != 'PBS') {
             ctx.save();
             ctx.globalCompositeOperation = 'destination-in';
             ctx.drawImage(BlockSpecs.canvasMask, 0, 0, w, h);

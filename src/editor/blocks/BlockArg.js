@@ -158,7 +158,7 @@ export default class BlockArg {
                 'translate(' + (w * window.devicePixelRatio / 2) + 'px, ' + (h * window.devicePixelRatio / 2) + 'px)'
         });
         ctx = cnv.getContext('2d');
-        var font = (12 * window.devicePixelRatio) + 'px ' + Settings.blockArgFont;
+        var font = (12 * window.devicePixelRatio) + 'px ' + window.Settings.blockArgFont;
         var lsize = getStringSize(ctx, font, str).width;
         writeText(ctx, font, '#77787b', str, h * window.devicePixelRatio - 3,
             Math.round((w * window.devicePixelRatio - lsize) / 2));
@@ -448,7 +448,8 @@ export default class BlockArg {
         ictx.closePath();
         ictx.stroke();
         ictx.fill();
-        writeText(ictx, 'bold ' + (12 * dpr) + 'px ' + Settings.blockArgFont, 'white', page.num, 26 * dpr, 58 * dpr);
+        writeText(ictx, 'bold ' + (12 * dpr) + 'px ' +
+            window.Settings.blockArgFont, 'white', page.num, 26 * dpr, 58 * dpr);
         return icon;
     }
 

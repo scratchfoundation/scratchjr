@@ -55,12 +55,12 @@ export default class BlockSpecs {
         BlockSpecs.defs = BlockSpecs.setupBlocksSpecs();
         BlockSpecs.palettes = BlockSpecs.setupPalettesDef();
         BlockSpecs.categories = BlockSpecs.setupCategories();
-        if (Settings.edition == 'PBS') {
+        if (window.Settings.edition == 'PBS') {
             BlockSpecs.canvasMask = BlockSpecs.getImageFrom('assets/ui/canvasmask', 'svg');
         } else {
             BlockSpecs.canvasMask = BlockSpecs.getImageFrom('assets/ui/canvasmask');
         }
-        if (Settings.edition != 'PBS') {
+        if (window.Settings.edition != 'PBS') {
             BlockSpecs.projectThumb = BlockSpecs.getImageFrom('assets/lobby/pmask');
         }
         IO.requestFromServer('assets/balloon.svg', BlockSpecs.setBalloon);
@@ -143,32 +143,32 @@ export default class BlockSpecs {
             [
                 BlockSpecs.getImageFrom('assets/categories/StartOn', 'svg'),
                 BlockSpecs.getImageFrom('assets/categories/StartOff', 'svg'),
-                Settings.categoryStartColor
+                window.Settings.categoryStartColor
             ],
             [
                 BlockSpecs.getImageFrom('assets/categories/MotionOn', 'svg'),
                 BlockSpecs.getImageFrom('assets/categories/MotionOff', 'svg'),
-                Settings.categoryMotionColor
+                window.Settings.categoryMotionColor
             ],
             [
                 BlockSpecs.getImageFrom('assets/categories/LooksOn', 'svg'),
                 BlockSpecs.getImageFrom('assets/categories/LooksOff', 'svg'),
-                Settings.categoryLooksColor
+                window.Settings.categoryLooksColor
             ],
             [
                 BlockSpecs.getImageFrom('assets/categories/SoundOn', 'svg'),
                 BlockSpecs.getImageFrom('assets/categories/SoundOff', 'svg'),
-                Settings.categorySoundColor
+                window.Settings.categorySoundColor
             ],
             [
                 BlockSpecs.getImageFrom('assets/categories/FlowOn', 'svg'),
                 BlockSpecs.getImageFrom('assets/categories/FlowOff', 'svg'),
-                Settings.categoryFlowColor
+                window.Settings.categoryFlowColor
             ],
             [
                 BlockSpecs.getImageFrom('assets/categories/StopOn', 'svg'),
                 BlockSpecs.getImageFrom('assets/categories/StopOff', 'svg'),
-                Settings.categoryStopColor
+                window.Settings.categoryStopColor
             ]
         );
     }

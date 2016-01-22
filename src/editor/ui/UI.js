@@ -111,7 +111,7 @@ export default class UI {
         var author = newHTML('div', 'infolabel', staticinfo);
         author.setAttribute('id', 'deviceName');
 
-        if (Settings.shareEnabled) {
+        if (window.Settings.shareEnabled) {
             // Sharing
             var shareButtons = newHTML('div', 'infoboxShareButtons', infobox);
 

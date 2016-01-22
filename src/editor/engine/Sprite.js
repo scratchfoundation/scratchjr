@@ -703,7 +703,7 @@ export default class Sprite {
         setProps(this.div.style, {
             fontSize: this.fontsize + 'px',
             color: this.color,
-            fontFamily: Settings.textSpriteFont
+            fontFamily: window.Settings.textSpriteFont
         });
         this.div.owner = this;
         this.div.id = this.id;
@@ -998,7 +998,7 @@ export default class Sprite {
         this.div.style.fontSize = this.fontsize + 'px';
         this.div.textContent = this.str;
         var ctx = this.outline.getContext('2d');
-        ctx.font = 'bold ' + this.fontsize + 'px ' + Settings.textSpriteFont;
+        ctx.font = 'bold ' + this.fontsize + 'px ' + window.Settings.textSpriteFont;
         var w = ctx.measureText(this.str).width;
         this.w = (Math.round(w) + 1);
         this.div.style.width = (this.w * 2) + 'px';
@@ -1007,7 +1007,7 @@ export default class Sprite {
         this.cy = this.h / 2;
         setCanvasSize(this.outline, this.w, this.h);
         ctx.clearRect(0, 0, this.outline.width, this.outline.height);
-        ctx.font = 'bold ' + this.fontsize + 'px ' + Settings.textSpriteFont;
+        ctx.font = 'bold ' + this.fontsize + 'px ' + window.Settings.textSpriteFont;
         ctx.fillStyle = this.color;
         ctx.textAlign = 'left';
         ctx.textBaseline = 'top';

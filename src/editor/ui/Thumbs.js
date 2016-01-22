@@ -342,7 +342,7 @@ export default class Thumbs {
         var tb = newHTML('div', 'pagethumb', p);
         var c = newHTML('div', 'empty', tb);
         var img;
-        if (Settings.edition == 'PBS') {
+        if (window.Settings.edition == 'PBS') {
             img = newImage(c, 'assets/ui/newpage.svg');
         } else {
             img = newImage(c, 'assets/ui/newpage.png', {

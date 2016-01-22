@@ -19,11 +19,10 @@
         "browser": true
     },
     "globals": {
+        "MediaLib": true,
         "AndroidInterface": true,
         "window": true,
         "WebKitCSSMatrix": true,
-        "Settings": true,
-        "MediaLib": true,
         "webkitAudioContext": true,
         "require": true
     },

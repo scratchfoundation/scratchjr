@@ -12,7 +12,7 @@ import {gn, newHTML} from '../utils/lib';
 let frame;
 // Should ScratchJr projects be saved when the sample project is changed?
 // Enabled for the PBS version; disabled for the ScratchJr version
-const storyStarters = Settings.useStoryStarters;
+// window.Settings.useStoryStarters
 
 export default class Samples {
     static init () {
@@ -77,7 +77,7 @@ export default class Samples {
         iOS.analyticsEvent('samples', 'sample_opened', mt.textContent);
         var md5 = mt.md5;
         window.location.href = 'editor.html?pmd5=' + md5 + '&mode='
-            + ((storyStarters) ? 'storyStarter' : 'look');
+            + ((window.Settings.useStoryStarters) ? 'storyStarter' : 'look');
     }
 
     static insertThumbnail (img, data) {
