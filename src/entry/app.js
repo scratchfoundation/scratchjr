@@ -121,8 +121,8 @@ function editorCreateScratchJr () {
     }
 }
 
-function loadSettings (whenDone) {
-    IO.requestFromServer('./settings.json', (result) => {
+function loadSettings (settingsRoot, whenDone) {
+    IO.requestFromServer(settingsRoot + 'settings.json', (result) => {
         window.Settings = JSON.parse(result);
         whenDone();
     });
@@ -159,14 +159,19 @@ function gettingStartedCloseMe () {
 
 // App-wide entry-point
 window.onload = () => {
+    let page = window.scratchJrPage;
+    let root = './';
+    if (page == 'inappAbout') {
+        root = '../';
+    }
     // Load settings from JSON
-    loadSettings(() => {
+    loadSettings(root, () => {
         // Load locale strings from JSON
-        Localization.includeLocales(() => {
+        Localization.includeLocales(root, () => {
             // Load Media Lib from JSON
-            MediaLib.loadMediaLib(() => {
+            MediaLib.loadMediaLib(root, () => {
                 // Continue to load the page
-                let page = window.scratchJrPage;
+
                 if (page == 'index') {
                     preprocessAndLoadCss('css', 'css/font.css');
                     preprocessAndLoadCss('css', 'css/base.css');
@@ -199,6 +204,21 @@ window.onload = () => {
                     gn('closeHelp').onclick = gettingStartedCloseMe;
                     gn('closeHelp').ontouchstart = gettingStartedCloseMe;
                     iOS.waitForInterface(gettingStartedVideo);
+                } else if (page == 'inappAbout') {
+                    preprocessAndLoadCss('style', 'style/about.css');
+                    gn('aboutScratchjrTitle').textContent = Localization.localize('ABOUT_SCRATCHJR');
+                    gn('aboutWhatIs').textContent = Localization.localize('ABOUT_WHAT_IS');
+                    gn('aboutDescription').innerHTML = Localization.localize('ABOUT_DESCRIPTION') + '<br/><br/>' +
+                        Localization.localize('ABOUT_INSPIRED_BY');
+                    gn('aboutWhyCreate').textContent = Localization.localize('ABOUT_WHY_CREATE');
+                    gn('aboutWhyCreateDescription').innerHTML = Localization.localize('ABOUT_WHY_CREATE_DESCRIPTION');
+                    gn('aboutWhoCreated').textContent = Localization.localize('ABOUT_WHO_CREATED');
+                    gn('aboutWhoCreatedDescription').innerHTML = (
+                        Localization.localize('ABOUT_WHO_CREATED_DESCRIPTION'));
+                    gn('aboutWhoSupported').textContent = Localization.localize('ABOUT_WHO_SUPPORTED');
+                    gn('aboutWhoSupportedDescription').innerHTML = (
+                        Localization.localize('ABOUT_WHO_SUPPORTED_DESCRIPTION')
+                    );
                 }
             });
         });

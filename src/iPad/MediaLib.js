@@ -33,8 +33,8 @@ export default class MediaLib {
         return keys;
     }
 
-    static loadMediaLib (whenDone) {
-        IO.requestFromServer('./media.json', (result) => {
+    static loadMediaLib (root, whenDone) {
+        IO.requestFromServer(root + 'media.json', (result) => {
             let parsedResult = JSON.parse(result);
             path = parsedResult.path;
             samples = parsedResult.samples;

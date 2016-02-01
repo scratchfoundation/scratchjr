@@ -11,7 +11,6 @@ require('intl-messageformat/dist/locale-data/en');
 require('intl-messageformat/dist/locale-data/es');
 
 let currentLocale;
-let root = '';
 let localizationMessages = {};
 
 // Configuration
@@ -54,7 +53,7 @@ export default class Localization {
 
     // Include locale support files and load the messages
     // Call this when the app is initialized
-    static includeLocales (whenDone) {
+    static includeLocales (localizationRoot, whenDone) {
         var localizationCookie = Cookie.get('localization');
 
         if (localizationCookie === null) {
@@ -65,7 +64,7 @@ export default class Localization {
         var topLevel = currentLocale.split('-')[0];
 
         // Get messages
-        IO.requestFromServer(root + 'localizations/' + topLevel + '.json', (result) => {
+        IO.requestFromServer(localizationRoot + 'localizations/' + topLevel + '.json', (result) => {
             localizationMessages = JSON.parse(result);
             whenDone();
         });
