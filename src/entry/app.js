@@ -132,6 +132,8 @@ function loadSettings (settingsRoot, whenDone) {
 
 let place;
 function gettingStartedVideo () {
+    gn('closeHelp').onclick = gettingStartedCloseMe;
+    gn('closeHelp').ontouchstart = gettingStartedCloseMe;
     var videoObj = gn('myVideo');
     if (isiOS) {
         // On iOS we can load from server
@@ -157,11 +159,40 @@ function gettingStartedCloseMe () {
     window.location.href = 'home.html?place=' + place;
 }
 
+function inappAbout () {
+    gn('aboutScratchjrTitle').textContent = Localization.localize('ABOUT_SCRATCHJR');
+    gn('aboutWhatIs').textContent = Localization.localize('ABOUT_WHAT_IS');
+    gn('aboutDescription').innerHTML = Localization.localize('ABOUT_DESCRIPTION') + '<br/><br/>' +
+        Localization.localize('ABOUT_INSPIRED_BY');
+    gn('aboutWhyCreate').textContent = Localization.localize('ABOUT_WHY_CREATE');
+    gn('aboutWhyCreateDescription').innerHTML = Localization.localize('ABOUT_WHY_CREATE_DESCRIPTION');
+    gn('aboutWhoCreated').textContent = Localization.localize('ABOUT_WHO_CREATED');
+    gn('aboutWhoCreatedDescription').innerHTML = (
+        Localization.localize('ABOUT_WHO_CREATED_DESCRIPTION'));
+    gn('aboutWhoSupported').textContent = Localization.localize('ABOUT_WHO_SUPPORTED');
+    gn('aboutWhoSupportedDescription').innerHTML = (
+        Localization.localize('ABOUT_WHO_SUPPORTED_DESCRIPTION')
+    );
+}
+
+function inappInterfaceGuide () {
+
+}
+
+function inappPaintEditorGuide () {
+
+}
+
+function inappBlocksGuide () {
+
+}
+
 // App-wide entry-point
 window.onload = () => {
     let page = window.scratchJrPage;
     let root = './';
-    if (page == 'inappAbout') {
+    if (page == 'inappAbout' || page == 'inappInterfaceGuide' ||
+        page == 'inappPaintEditorGuide' || page == 'inappBlocksGuide') {
         root = '../';
     }
     // Load settings from JSON
@@ -201,24 +232,22 @@ window.onload = () => {
                     preprocessAndLoadCss('css', 'css/font.css');
                     preprocessAndLoadCss('css', 'css/base.css');
                     preprocessAndLoadCss('css', 'css/gs.css');
-                    gn('closeHelp').onclick = gettingStartedCloseMe;
-                    gn('closeHelp').ontouchstart = gettingStartedCloseMe;
                     iOS.waitForInterface(gettingStartedVideo);
                 } else if (page == 'inappAbout') {
                     preprocessAndLoadCss('style', 'style/about.css');
-                    gn('aboutScratchjrTitle').textContent = Localization.localize('ABOUT_SCRATCHJR');
-                    gn('aboutWhatIs').textContent = Localization.localize('ABOUT_WHAT_IS');
-                    gn('aboutDescription').innerHTML = Localization.localize('ABOUT_DESCRIPTION') + '<br/><br/>' +
-                        Localization.localize('ABOUT_INSPIRED_BY');
-                    gn('aboutWhyCreate').textContent = Localization.localize('ABOUT_WHY_CREATE');
-                    gn('aboutWhyCreateDescription').innerHTML = Localization.localize('ABOUT_WHY_CREATE_DESCRIPTION');
-                    gn('aboutWhoCreated').textContent = Localization.localize('ABOUT_WHO_CREATED');
-                    gn('aboutWhoCreatedDescription').innerHTML = (
-                        Localization.localize('ABOUT_WHO_CREATED_DESCRIPTION'));
-                    gn('aboutWhoSupported').textContent = Localization.localize('ABOUT_WHO_SUPPORTED');
-                    gn('aboutWhoSupportedDescription').innerHTML = (
-                        Localization.localize('ABOUT_WHO_SUPPORTED_DESCRIPTION')
-                    );
+                    iOS.waitForInterface(inappAbout);
+                } else if (page == 'inappInterfaceGuide') {
+                    preprocessAndLoadCss('style', 'style/style.css');
+                    preprocessAndLoadCss('style', 'style/interface.css');
+                    iOS.waitForInterface(inappInterfaceGuide);
+                } else if (page == 'inappPaintEditorGuide') {
+                    preprocessAndLoadCss('style', 'style/style.css');
+                    preprocessAndLoadCss('style', 'style/paint.css');
+                    iOS.waitForInterface(inappPaintEditorGuide);
+                } else if (page == 'inappBlocksGuide') {
+                    preprocessAndLoadCss('style', 'style/style.css');
+                    preprocessAndLoadCss('style', 'style/blocks.css');
+                    iOS.waitForInterface(inappBlocksGuide);
                 }
             });
         });
