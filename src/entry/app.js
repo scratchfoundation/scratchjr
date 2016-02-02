@@ -39,6 +39,8 @@ window.onload = () => {
         preprocessAndLoadCss('css', 'css/base.css');
         preprocessAndLoadCss('css', 'css/start.css');
         preprocessAndLoadCss('css', 'css/thumbs.css');
+        /* For parental gate. These CSS properties should be refactored */
+        preprocessAndLoadCss('css', 'css/editor.css');
         entryFunction = () => iOS.waitForInterface(indexMain);
         break;
     case 'home':
