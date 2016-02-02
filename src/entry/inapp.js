@@ -15,6 +15,14 @@ export function inappAbout () {
     gn('aboutWhoSupportedDescription').innerHTML = (
         Localization.localize('ABOUT_WHO_SUPPORTED_DESCRIPTION')
     );
+
+    // PBS-only
+    if (window.Settings.edition == 'PBS') {
+        gn('aboutWhatIsPbs').innerHTML = Localization.localize('ABOUT_WHAT_IS_PBS');
+        gn('aboutWhatIsPbsDescription').innerHTML = Localization.localize('ABOUT_WHAT_IS_PBS_DESCRIPTION');
+        gn('aboutPbsShows').innerHTML = Localization.localize('ABOUT_PBS_SHOWS');
+        gn('aboutPbsShowsDescription').innerHTML = Localization.localize('ABOUT_PBS_SHOWS_DESCRIPTION');
+    }
 }
 
 export function inappInterfaceGuide () {
