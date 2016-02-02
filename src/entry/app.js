@@ -400,7 +400,7 @@ window.onload = () => {
                     iOS.waitForInterface(gettingStartedVideo);
                 } else if (page == 'inappAbout') {
                     preprocessAndLoadCss('style', 'style/about.css');
-                    iOS.waitForInterface(inappAbout);
+                    inappAbout();
                 } else if (page == 'inappInterfaceGuide') {
                     preprocessAndLoadCss('style', 'style/style.css');
                     preprocessAndLoadCss('style', 'style/interface.css');
