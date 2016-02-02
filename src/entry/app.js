@@ -12,6 +12,8 @@ import Camera from '../painteditor/Camera';
 // Entry-points for each page
 // Previously index.html
 function indexStartup () {
+    gn('gettings').ontouchend = indexGettingstarted;
+    gn('startcode').ontouchend = indexGohome;
     ScratchAudio.init();
     var urlvars = getUrlVars();
     if (urlvars.back) {
@@ -85,6 +87,7 @@ function indexGettingstarted () {
 // Previously home.html
 
 function homeStartup () {
+    gn('logotab').ontouchend = homeGoBack;
     homeStrings();
     iOS.getsettings(doNext);
     function doNext (str) {
@@ -354,66 +357,90 @@ function inappBlocksGuide () {
 
 // App-wide entry-point
 window.onload = () => {
-    let page = window.scratchJrPage;
+    // Function to be called after settings, locale strings, and Media Lib
+    // are asynchronously loaded. This is overwritten per HTML page below.
+    let entryFunction = () => {};
+
+    // Root directory for includes. Needed in case we are in the inapp-help
+    // directory (and root becomes '../')
     let root = './';
-    if (page == 'inappAbout' || page == 'inappInterfaceGuide' ||
-        page == 'inappPaintEditorGuide' || page == 'inappBlocksGuide') {
+
+    // scratchJrPage is defined in the HTML pages
+    let page = window.scratchJrPage;
+
+    switch (page) {
+    case 'index':
+        // Index page (splash screen)
+        preprocessAndLoadCss('css', 'css/font.css');
+        preprocessAndLoadCss('css', 'css/base.css');
+        preprocessAndLoadCss('css', 'css/start.css');
+        preprocessAndLoadCss('css', 'css/thumbs.css');
+        entryFunction = () => iOS.waitForInterface(indexStartup);
+        break;
+    case 'home':
+        // Lobby pages
+        preprocessAndLoadCss('css', 'css/font.css');
+        preprocessAndLoadCss('css', 'css/base.css');
+        preprocessAndLoadCss('css', 'css/lobby.css');
+        preprocessAndLoadCss('css', 'css/thumbs.css');
+        entryFunction = () => iOS.waitForInterface(homeStartup);
+        break;
+    case 'editor':
+        // Editor pages
+        preprocessAndLoadCss('css', 'css/font.css');
+        preprocessAndLoadCss('css', 'css/base.css');
+        preprocessAndLoadCss('css', 'css/editor.css');
+        preprocessAndLoadCss('css', 'css/editorleftpanel.css');
+        preprocessAndLoadCss('css', 'css/editorstage.css');
+        preprocessAndLoadCss('css', 'css/editormodal.css');
+        preprocessAndLoadCss('css', 'css/librarymodal.css');
+        preprocessAndLoadCss('css', 'css/paintlook.css');
+        entryFunction = () => iOS.waitForInterface(editorCreateScratchJr);
+        break;
+    case 'gettingStarted':
+        // Getting started video page
+        preprocessAndLoadCss('css', 'css/font.css');
+        preprocessAndLoadCss('css', 'css/base.css');
+        preprocessAndLoadCss('css', 'css/gs.css');
+        entryFunction = () => iOS.waitForInterface(gettingStartedVideo);
+        break;
+    case 'inappAbout':
+        // About ScratchJr in-app help frame
+        preprocessAndLoadCss('style', 'style/about.css');
+        entryFunction = () => inappAbout();
         root = '../';
+        break;
+    case 'inappInterfaceGuide':
+        // Interface guide in-app help frame
+        preprocessAndLoadCss('style', 'style/style.css');
+        preprocessAndLoadCss('style', 'style/interface.css');
+        entryFunction = () => inappInterfaceGuide();
+        root = '../';
+        break;
+    case 'inappPaintEditorGuide':
+        // Paint editor guide in-app help frame
+        preprocessAndLoadCss('style', 'style/style.css');
+        preprocessAndLoadCss('style', 'style/paint.css');
+        entryFunction = () => inappPaintEditorGuide();
+        root = '../';
+        break;
+    case 'inappBlocksGuide':
+        // Blocks guide in-app help frame
+        preprocessAndLoadCss('style', 'style/style.css');
+        preprocessAndLoadCss('style', 'style/blocks.css');
+        entryFunction = () => inappBlocksGuide();
+        root = '../';
+        break;
     }
+
+    // Start up sequence
     // Load settings from JSON
     loadSettings(root, () => {
         // Load locale strings from JSON
         Localization.includeLocales(root, () => {
             // Load Media Lib from JSON
             MediaLib.loadMediaLib(root, () => {
-                // Continue to load the page
-
-                if (page == 'index') {
-                    preprocessAndLoadCss('css', 'css/font.css');
-                    preprocessAndLoadCss('css', 'css/base.css');
-                    preprocessAndLoadCss('css', 'css/start.css');
-                    preprocessAndLoadCss('css', 'css/thumbs.css');
-                    gn('gettings').ontouchend = indexGettingstarted;
-                    gn('startcode').ontouchend = indexGohome;
-                    iOS.waitForInterface(indexStartup);
-                } else if (page == 'home') {
-                    preprocessAndLoadCss('css', 'css/font.css');
-                    preprocessAndLoadCss('css', 'css/base.css');
-                    preprocessAndLoadCss('css', 'css/lobby.css');
-                    preprocessAndLoadCss('css', 'css/thumbs.css');
-                    gn('logotab').ontouchend = homeGoBack;
-                    iOS.waitForInterface(homeStartup);
-                } else if (page == 'editor') {
-                    preprocessAndLoadCss('css', 'css/font.css');
-                    preprocessAndLoadCss('css', 'css/base.css');
-                    preprocessAndLoadCss('css', 'css/editor.css');
-                    preprocessAndLoadCss('css', 'css/editorleftpanel.css');
-                    preprocessAndLoadCss('css', 'css/editorstage.css');
-                    preprocessAndLoadCss('css', 'css/editormodal.css');
-                    preprocessAndLoadCss('css', 'css/librarymodal.css');
-                    preprocessAndLoadCss('css', 'css/paintlook.css');
-                    iOS.waitForInterface(editorCreateScratchJr);
-                } else if (page == 'gettingStarted') {
-                    preprocessAndLoadCss('css', 'css/font.css');
-                    preprocessAndLoadCss('css', 'css/base.css');
-                    preprocessAndLoadCss('css', 'css/gs.css');
-                    iOS.waitForInterface(gettingStartedVideo);
-                } else if (page == 'inappAbout') {
-                    preprocessAndLoadCss('style', 'style/about.css');
-                    inappAbout();
-                } else if (page == 'inappInterfaceGuide') {
-                    preprocessAndLoadCss('style', 'style/style.css');
-                    preprocessAndLoadCss('style', 'style/interface.css');
-                    inappInterfaceGuide();
-                } else if (page == 'inappPaintEditorGuide') {
-                    preprocessAndLoadCss('style', 'style/style.css');
-                    preprocessAndLoadCss('style', 'style/paint.css');
-                    inappPaintEditorGuide();
-                } else if (page == 'inappBlocksGuide') {
-                    preprocessAndLoadCss('style', 'style/style.css');
-                    preprocessAndLoadCss('style', 'style/blocks.css');
-                    inappBlocksGuide();
-                }
+                entryFunction();
             });
         });
     });
