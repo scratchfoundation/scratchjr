@@ -226,7 +226,7 @@ function inappInterfaceGuide () {
             currentButton.className = 'interface-button';
             currentButton = target.parentNode;
             currentButton.className = currentButton.className + ' interface-button-selected';
-            ScratchAudio.sndFXWithVolume('keydown.wav', 0.3);
+            window.parent.ScratchAudio.sndFXWithVolume('keydown.wav', 0.3);
         }
     };
     document.addEventListener('touchstart', switchHelp, false);
@@ -276,7 +276,7 @@ function inappPaintEditorGuide () {
             currentButton.className = 'paint-button';
             currentButton = target.parentNode;
             currentButton.className = currentButton.className + ' paint-button-selected';
-            ScratchAudio.sndFXWithVolume('keydown.wav', 0.3);
+            window.parent.ScratchAudio.sndFXWithVolume('keydown.wav', 0.3);
         }
     };
     document.addEventListener('touchstart', switchHelp, false);

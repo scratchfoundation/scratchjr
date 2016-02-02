@@ -183,4 +183,6 @@ export default class ScratchAudio {
     }
 }
 
+window.ScratchAudio = ScratchAudio;
+
 window.addEventListener('touchend', ScratchAudio.firstOnTouchEnd, false);
