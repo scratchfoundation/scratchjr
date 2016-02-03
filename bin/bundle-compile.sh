@@ -1,2 +1,3 @@
 #!/bin/sh
-npm run build;
+cd ..;
+/usr/local/bin/node ./node_modules/webpack/bin/webpack.js
