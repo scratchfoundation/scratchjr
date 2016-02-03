@@ -1,7 +1,7 @@
 import iOS from './iOS';
 import MediaLib from './MediaLib';
 import JSZip from 'jszip';
-import {setCanvasSize, drawThumbnail} from '../utils/lib';
+import {setCanvasSize, drawThumbnail, gn} from '../utils/lib';
 import Lobby from '../lobby/Lobby';
 import SVG2Canvas from '../utils/SVG2Canvas';
 
@@ -700,7 +700,7 @@ export default class IO {
 
         // For updating the Lobby UI - if we're on the lobby page when receiving a project, refresh it
         function refreshLobby () {
-            if (typeof (Lobby) != 'undefined') { //
+            if (gn('hometab') !== null) { // Check if we're on the lobby page
                 if (saveActual == saveExpected) {
                     Lobby.setPage('home');
                 } else { // Waiting for assets to be saved
