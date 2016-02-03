@@ -17,6 +17,10 @@ let localizationMessages = {};
 const sampleKeyPrefix = 'key_';
 
 export default class Localization {
+    static get currentLocale () {
+        return currentLocale;
+    }
+
     // Take the browser's reported locale from navigator.language
     // Normalize this value and find a match in supportedLocales
     // If we support a similar language but not the specific one, it's returned.
