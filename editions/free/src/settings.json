@@ -22,5 +22,6 @@
     "supportedLocales": {
         "English": "en",
         "Español": "es"
-    }
+    },
+    "settingsPageDisabled": false
 }

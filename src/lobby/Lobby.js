@@ -40,6 +40,11 @@ export default class Lobby {
         ScratchAudio.addSound('sounds/', 'cut.wav', ScratchAudio.uiSounds);
         ScratchAudio.init();
         Lobby.setPage(place ? place : 'home');
+
+        if (window.Settings.settingsPageDisabled) {
+            gn('settings').style.visibility = 'hidden';
+        }
+
         gn('hometab').ontouchstart = function () {
             if (gn('hometab').className != 'home on') {
                 Lobby.setPage('home');
