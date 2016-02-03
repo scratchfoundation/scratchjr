@@ -476,7 +476,9 @@ public class JavaScriptDirectInterface {
     private void sendBase64Image(String onCameraCaptureComplete, byte[] jpegData) {
         Bitmap bitmap = BitmapFactory.decodeByteArray(jpegData, 0, jpegData.length);
         Log.i(LOG_TAG, "Picture size: " + bitmap.getWidth() + " x " + bitmap.getHeight());
-        byte[] translatedJpegData = _cameraView.getTransformedImage(bitmap);
+        int exifRotation = CameraExif.getOrientation(jpegData);
+        Log.i(LOG_TAG, "Picture rotation: " + exifRotation);
+        byte[] translatedJpegData = _cameraView.getTransformedImage(bitmap, exifRotation);
         String base64Data = Base64.encodeToString(translatedJpegData, Base64.NO_WRAP);
         closeFeed();
         _activity.runJavaScript(onCameraCaptureComplete + "('" + base64Data + "');");

@@ -179,12 +179,12 @@ public class CameraView
 
     /**
      * Take the given bitmap image from the camera and transform it to the correct
-     * aspect ratio and size.
+     * aspect ratio, size, and rotation.
      *
      * @return jpeg-encoded data of the transformed image.
      */
-    public byte[] getTransformedImage(Bitmap originalImage) {
-        Bitmap cropped = cropAndResize(originalImage);
+    public byte[] getTransformedImage(Bitmap originalImage, int exifRotation) {
+        Bitmap cropped = cropResizeAndRotate(originalImage, exifRotation);
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         cropped.compress(CompressFormat.JPEG, 90, bos);
         try {
@@ -202,7 +202,7 @@ public class CameraView
      *
      * If the image was front-facing, also mirror horizontally.
      */
-    private Bitmap cropAndResize(Bitmap image) {
+    private Bitmap cropResizeAndRotate(Bitmap image, int exifRotation) {
         int imageWidth = image.getWidth();
         int imageHeight = image.getHeight();
         float rectWidth = _rect.width();
@@ -220,6 +220,8 @@ public class CameraView
         }
         
         Matrix m = new Matrix();
+        // Adjust the image to undo rotation done by JPEG generator
+        m.postRotate(-1.0f * exifRotation);
         if (_currentFacingFront) {
             // flip bitmap horizontally since front-facing camera is mirrored
             m.preScale(-1.0f, 1.0f);
