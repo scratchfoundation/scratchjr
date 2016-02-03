@@ -196,7 +196,9 @@ export default class Lobby {
 
             languageButton.ontouchstart = function (e) {
                 ScratchAudio.sndFX('tap.wav');
-                Cookie.set('localization', window.Settings.supportedLocales[e.target.textContent]);
+                let newLocale = window.Settings.supportedLocales[e.target.textContent];
+                Cookie.set('localization', newLocale);
+                iOS.analyticsEvent('lobby', 'language_changed', newLocale);
                 window.location = '?place=gear';
             };
         }
