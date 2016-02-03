@@ -7,107 +7,13 @@
 
 <head>
 <title>Junior</title>
-<script type="text/javascript" src="./Settings.js"></script>
-<script type="text/javascript" src="jssource/utils/Cookie.js"></script>
-<script type="text/javascript" src="jssource/utils/lib.js"></script>
+
 <script>
-    preprocessAndLoadCss("css", "css/font.css");
-    preprocessAndLoadCss("css", "css/base.css");
-    preprocessAndLoadCss("css", "css/editor.css");
-    preprocessAndLoadCss("css", "css/editorleftpanel.css");
-    preprocessAndLoadCss("css", "css/editorstage.css");
-    preprocessAndLoadCss("css", "css/editormodal.css");
-    preprocessAndLoadCss("css", "css/librarymodal.css");
-    preprocessAndLoadCss("css", "css/paintlook.css");
+    window.scratchJrPage = 'editor';
 </script>
-
-<!-- Localization includes -->
-<script type="text/javascript" src="jssource/external/Intl/Intl.min.js"></script>
-<script type="text/javascript" src="jssource/external/intl-messageformat/intl-messageformat.min.js"></script>
-<script type="text/javascript" src="jssource/utils/Localization.js"></script>
-<script>
-    Localization.includeLocales();
-</script>
-<!-- End localization includes -->
-
-<script type="text/javascript" src="jssource/external/snap.svg-min.js"></script>
-<script type="text/javascript" src="./MediaLib.js"></script>
-<script type="text/javascript" src="jssource/iPad/iOS.js"></script>
-<script type="text/javascript" src="jssource/iPad/IO.js"></script>
-
-<script type="text/javascript" src="jssource/utils/ScratchAudio.js"></script>
-<script type="text/javascript" src="jssource/utils/Sound.js"></script>
-<script type="text/javascript" src="jssource/utils/DrawPath.js"></script>
-<script type="text/javascript" src="jssource/utils/SVG2Canvas.js"></script>
-<script type="text/javascript" src="jssource/utils/Events.js"></script>
-<script type="text/javascript" src="jssource/external/jszip.js"></script>
-
-<script type="text/javascript" src="jssource/editor/blocks/Block.js"></script>
-<script type="text/javascript" src="jssource/editor/blocks/BlockArg.js"></script>
-<script type="text/javascript" src="jssource/editor/blocks/Menu.js"></script>
-<script type="text/javascript" src="jssource/editor/blocks/BlockSpecs.js"></script>
-
-<script type="text/javascript" src="jssource/editor/ScratchJr.js"></script>
-<script type="text/javascript" src="jssource/editor/ui/Thumbs.js"></script>
-<script type="text/javascript" src="jssource/editor/ui/Alert.js"></script>
-<script type="text/javascript" src="jssource/editor/ui/Palette.js"></script>
-<script type="text/javascript" src="jssource/editor/ui/Project.js"></script>
-<script type="text/javascript" src="jssource/editor/ui/Grid.js"></script>
-<script type="text/javascript" src="jssource/editor/ui/Undo.js"></script>
-<script type="text/javascript" src="jssource/editor/ui/UI.js"></script>
-<script type="text/javascript" src="jssource/editor/ui/Library.js"></script>
-<script type="text/javascript" src="jssource/editor/ui/Record.js"></script>
-
-<script type="text/javascript" src="jssource/editor/ui/Scripts.js"></script>
-<script type="text/javascript" src="jssource/editor/ui/Scroll.js"></script>
-<script type="text/javascript" src="jssource/editor/ui/ScriptsPane.js"></script>
-
-<script type="text/javascript" src="jssource/editor/engine/Stage.js"></script>
-<script type="text/javascript" src="jssource/editor/engine/Page.js"></script>
-<script type="text/javascript" src="jssource/editor/engine/Sprite.js"></script>
-<script type="text/javascript" src="jssource/editor/engine/Runtime.js"></script>
-<script type="text/javascript" src="jssource/editor/engine/Prims.js"></script>
-<script type="text/javascript" src="jssource/editor/engine/Thread.js"></script>
-
-<script type="text/javascript" src="jssource/geom/Matrix.js"></script>
-<script type="text/javascript" src="jssource/geom/Vector.js"></script>
-<script type="text/javascript" src="jssource/geom/Rectangle.js"></script>
-
-<script type="text/javascript" src="jssource/painteditor/Paint.js"></script>
-<script type="text/javascript" src="jssource/painteditor/PaintLayout.js"></script>
-<script type="text/javascript" src="jssource/painteditor/PaintIO.js"></script>
-<script type="text/javascript" src="jssource/painteditor/Camera.js"></script>
-<script type="text/javascript" src="jssource/painteditor/SVGImage.js"></script>
-
-<script type="text/javascript" src="jssource/painteditor/PaintUndo.js"></script>
-<script type="text/javascript" src="jssource/painteditor/SVGTools.js"></script>
-<script type="text/javascript" src="jssource/painteditor/Transform.js"></script>
-
-<script type="text/javascript" src="jssource/painteditor/PaintAction.js"></script>
-<script type="text/javascript" src="jssource/painteditor/PathMgmt.js"></script>
-<script type="text/javascript" src="jssource/painteditor/PathEdit.js"></script>
-<script type="text/javascript" src="jssource/painteditor/PathTools.js"></script>
-<script type="text/javascript" src="jssource/painteditor/PathBkg.js"></script>
-<script type="text/javascript" src="jssource/painteditor/Layers.js"></script>
-<script type="text/javascript" src="jssource/painteditor/Ghost.js"></script>
-
-<script language="javascript">
-
-function createScratchJr(){
-	iOS.getsettings(doNext);
-	function doNext (str){
-		var list = str.split(",");
-		iOS.path =list[1] == "0" ?  list[0] + "/" : undefined ;
-		if (list.length > 2) Record.available = list[2] == "YES" ? true : false;
-		if (list.length > 3) Camera.available = list[3] == "YES" ? true : false;
-		ScratchJr.appinit(Settings.scratchJrVersion);
-		}
-	}
-
-</script>
-
+<script type="text/javascript" src="jssource/build/bundles/app.bundle.js"></script>
 </head>
-<body onload="iOS.waitForInterface(createScratchJr);" style="background: white;">
+<body style="background: white;">
 <div class="frame" id="frame"></div>
 <div class="libframe" id="libframe"></div>
 <div class="paintframe" id="paintframe"></div>

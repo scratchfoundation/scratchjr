@@ -1,25 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-     <script type="text/javascript" src="../Settings.js"></script>
-     <script type="text/javascript" src="../jssource/utils/Cookie.js"></script>
-    <script type="text/javascript" src="../jssource/utils/lib.js"></script>
-    <script type="text/javascript" src="../jssource/iPad/iOS.js"></script>
-    <script>
-        preprocessAndLoadCss("style", "style/style.css");
-        preprocessAndLoadCss("style", "style/blocks.css");
-    </script>
-
-    <!-- Localization includes -->
-    <script type="text/javascript" src="../jssource/external/Intl/Intl.min.js"></script>
-    <script type="text/javascript" src="../jssource/external/intl-messageformat/intl-messageformat.min.js"></script>
-    <script type="text/javascript" src="../jssource/utils/Localization.js"></script>
-    <script>
-        Localization.root = "../";
-        Localization.includeLocales();
-    </script>
-    <!-- End localization includes -->
     <meta charset="utf-8">
+    <script>
+        window.scratchJrPage = 'inappBlocksGuide';
+    </script>
+    <script type="text/javascript" src="../jssource/build/bundles/app.bundle.js"></script>
   </head>
 
   <body>
@@ -28,366 +14,304 @@
         <div class="learn-tab learn-blocks">
           <!-- Yellow Blocks -->
           <div class="block-category-header" id="yellow-block-category-header">
-            <script>document.write(Localization.localize("BLOCKS_TRIGGERING_BLOCKS"));</script>
           </div>
           <div class="block-category-header-line" id="yellow-block-category-header-line"></div>
           <div class="block-wrapper">
             <div class="block-wrapper-left">
-              <div class="block-title">
-            <script>document.write(Localization.localize("BLOCKS_GREEN_FLAG"));</script>
+              <div class="block-title" id="BLOCKS_GREEN_FLAG">
               </div>
               <div class="block-image-wrapper">
                 <img class="block-image" src="images/onflag.png" />
               </div>
-              <div class="block-description">
-            <script>document.write(Localization.localize("BLOCKS_GREEN_FLAG_DESCRIPTION"));</script>
+              <div class="block-description" id="BLOCKS_GREEN_FLAG_DESCRIPTION">
               </div>
             </div>
             <div class="block-wrapper-right">
-              <div class="block-title">
-              <script>document.write(Localization.localize("BLOCKS_ON_TAP"));</script>
+              <div class="block-title" id="BLOCKS_ON_TAP">
               </div>
               <div class="block-image-wrapper">
                 <img class="block-image" src="images/ontap.png" />
               </div>
-              <div class="block-description">
-            <script>document.write(Localization.localize("BLOCKS_ON_TAP_DESCRIPTION"));</script>
+              <div class="block-description" id="BLOCKS_ON_TAP_DESCRIPTION">
               </div>
             </div>
           </div>
           <div class="block-wrapper">
             <div class="block-wrapper-left">
-              <div class="block-title">
-                <script>document.write(Localization.localize("BLOCKS_ON_TOUCH"));</script>
+              <div class="block-title" id="BLOCKS_ON_TOUCH">
               </div>
               <div class="block-image-wrapper">
                 <img class="block-image" src="images/onbump.png" />
               </div>
-              <div class="block-description">
-                <script>document.write(Localization.localize("BLOCKS_ON_TOUCH_DESCRIPTION"));</script>
+              <div class="block-description" id="BLOCKS_ON_TOUCH_DESCRIPTION">
               </div>
             </div>
             <div class="block-wrapper-right">
-              <div class="block-title">
-              <script>document.write(Localization.localize("BLOCKS_ON_MESSAGE"));</script>
+              <div class="block-title" id="BLOCKS_ON_MESSAGE">
               </div>
               <div class="block-image-wrapper">
                 <img class="block-image" src="images/messagereceive.png" />
               </div>
-              <div class="block-description">
-                <script>document.write(Localization.localize("BLOCKS_ON_MESSAGE_DESCRIPTION"));</script>
+              <div class="block-description" id="BLOCKS_ON_MESSAGE_DESCRIPTION">
               </div>
             </div>
           </div>
           <div class="block-wrapper">
             <div class="block-wrapper-left">
-              <div class="block-title">
-                <script>document.write(Localization.localize("BLOCKS_SEND_MESSAGE"));</script>
+              <div class="block-title" id="BLOCKS_SEND_MESSAGE">
               </div>
               <div class="block-image-wrapper">
                 <img class="block-image" src="images/messagesend.png" />
               </div>
-              <div class="block-description">
-               <script>document.write(Localization.localize("BLOCKS_SEND_MESSAGE_DESCRIPTION"));</script>
+              <div class="block-description" id="BLOCKS_SEND_MESSAGE_DESCRIPTION">
               </div>
             </div>
           </div>
           <!-- Blue Blocks -->
           <div class="block-category-header" id="blue-block-category-header">
-            <script>document.write(Localization.localize("BLOCKS_MOTION_BLOCKS"));</script>
           </div>
           <div class="block-category-header-line" id="blue-block-category-header-line"></div>
           <div class="block-wrapper">
             <div class="block-wrapper-left">
-              <div class="block-title">
-                <script>document.write(Localization.localize("BLOCKS_MOVE_RIGHT"));</script>
+              <div class="block-title" id="BLOCKS_MOVE_RIGHT">
               </div>
               <div class="block-image-wrapper">
                 <img class="block-image" src="images/right.png" />
               </div>
-              <div class="block-description">
-              <script>document.write(Localization.localize("BLOCKS_MOVE_RIGHT_DESCRIPTION"));</script>
+              <div class="block-description" id="BLOCKS_MOVE_RIGHT_DESCRIPTION">
               </div>
             </div>
             <div class="block-wrapper-right">
-              <div class="block-title">
-                <script>document.write(Localization.localize("BLOCKS_MOVE_LEFT"));</script>
+              <div class="block-title" id="BLOCKS_MOVE_LEFT">
               </div>
               <div class="block-image-wrapper">
                 <img class="block-image" src="images/left.png" />
               </div>
-              <div class="block-description">
-                <script>document.write(Localization.localize("BLOCKS_MOVE_LEFT_DESCRIPTION"));</script>
+              <div class="block-description" id="BLOCKS_MOVE_LEFT_DESCRIPTION">
               </div>
             </div>
           </div>
           <div class="block-wrapper">
             <div class="block-wrapper-left">
-              <div class="block-title">
-                <script>document.write(Localization.localize("BLOCKS_MOVE_UP"));</script>
+              <div class="block-title" id="BLOCKS_MOVE_UP">
               </div>
               <div class="block-image-wrapper">
                 <img class="block-image" src="images/up.png" />
               </div>
-              <div class="block-description">
-               <script>document.write(Localization.localize("BLOCKS_MOVE_UP_DESCRIPTION"));</script>
+              <div class="block-description" id="BLOCKS_MOVE_UP_DESCRIPTION">
               </div>
             </div>
             <div class="block-wrapper-right">
-              <div class="block-title">
-                <script>document.write(Localization.localize("BLOCKS_MOVE_DOWN"));</script>
+              <div class="block-title" id="BLOCKS_MOVE_DOWN">
               </div>
               <div class="block-image-wrapper">
                 <img class="block-image" src="images/down.png" />
               </div>
-              <div class="block-description">
-               <script>document.write(Localization.localize("BLOCKS_MOVE_DOWN_DESCRIPTION"));</script>
+              <div class="block-description" id="BLOCKS_MOVE_DOWN_DESCRIPTION">
               </div>
             </div>
           </div>
           <div class="block-wrapper">
             <div class="block-wrapper-left">
-              <div class="block-title">
-                <script>document.write(Localization.localize("BLOCKS_TURN_RIGHT"));</script>
+              <div class="block-title" id="BLOCKS_TURN_RIGHT">
               </div>
               <div class="block-image-wrapper">
                 <img class="block-image" src="images/turnright.png" />
               </div>
-              <div class="block-description">
-                <script>document.write(Localization.localize("BLOCKS_TURN_RIGHT_DESCRIPTION"));</script>
+              <div class="block-description" id="BLOCKS_TURN_RIGHT_DESCRIPTION">
               </div>
             </div>
             <div class="block-wrapper-right">
-              <div class="block-title">
-                <script>document.write(Localization.localize("BLOCKS_TURN_LEFT"));</script>
+              <div class="block-title" id="BLOCKS_TURN_LEFT">
               </div>
               <div class="block-image-wrapper">
                 <img class="block-image" src="images/turnleft.png" />
               </div>
-              <div class="block-description">
-                <script>document.write(Localization.localize("BLOCKS_TURN_LEFT_DESCRIPTION"));</script>
+              <div class="block-description" id="BLOCKS_TURN_LEFT_DESCRIPTION">
               </div>
             </div>
           </div>
           <div class="block-wrapper">
             <div class="block-wrapper-left">
-              <div class="block-title">
-                <script>document.write(Localization.localize("BLOCKS_HOP"));</script>
+              <div class="block-title" id="BLOCKS_HOP">
               </div>
               <div class="block-image-wrapper">
                 <img class="block-image" src="images/hop.png" />
               </div>
-              <div class="block-description">
-                <script>document.write(Localization.localize("BLOCKS_HOP_DESCRIPTION"));</script>
+              <div class="block-description" id="BLOCKS_HOP_DESCRIPTION">
               </div>
             </div>
             <div class="block-wrapper-right">
-              <div class="block-title">
-                <script>document.write(Localization.localize("BLOCKS_GO_HOME"));</script>
+              <div class="block-title" id="BLOCKS_GO_HOME">
               </div>
               <div class="block-image-wrapper">
                 <img class="block-image" src="images/gohome.png" />
               </div>
-              <div class="block-description">
-                <script>document.write(Localization.localize("BLOCKS_GO_HOME_DESCRIPTION"));</script>
+              <div class="block-description" id="BLOCKS_GO_HOME_DESCRIPTION">
               </div>
             </div>
           </div>
           <!-- Purple Blocks -->
           <div class="block-category-header" id="purple-block-category-header">
-            <script>document.write(Localization.localize("BLOCKS_LOOKS_BLOCKS"));</script>
           </div>
           <div class="block-category-header-line" id="purple-block-category-header-line"></div>
           <div class="block-wrapper">
             <div class="block-wrapper-left">
-              <div class="block-title">
-                <script>document.write(Localization.localize("BLOCKS_SAY"));</script>
+              <div class="block-title" id="BLOCKS_SAY">
               </div>
               <div class="block-image-wrapper">
                 <img class="block-image" src="images/say.png" />
               </div>
-              <div class="block-description">
-                <script>document.write(Localization.localize("BLOCKS_SAY_DESCRIPTION"));</script>
+              <div class="block-description" id="BLOCKS_SAY_DESCRIPTION">
               </div>
             </div>
             <div class="block-wrapper-right">
-              <div class="block-title">
-                <script>document.write(Localization.localize("BLOCKS_GROW"));</script>
+              <div class="block-title" id="BLOCKS_GROW">
               </div>
               <div class="block-image-wrapper">
                 <img class="block-image" src="images/grow.png" />
               </div>
-              <div class="block-description">
-                <script>document.write(Localization.localize("BLOCKS_GROW_DESCRIPTION"));</script>
+              <div class="block-description" id="BLOCKS_GROW_DESCRIPTION">
               </div>
             </div>
           </div>
           <div class="block-wrapper">
             <div class="block-wrapper-left">
-              <div class="block-title">
-                <script>document.write(Localization.localize("BLOCKS_SHRINK"));</script>
+              <div class="block-title" id="BLOCKS_SHRINK">
               </div>
               <div class="block-image-wrapper">
                 <img class="block-image" src="images/shrink.png" />
               </div>
-              <div class="block-description">
-                <script>document.write(Localization.localize("BLOCKS_SHRINK_DESCRIPTION"));</script>
+              <div class="block-description" id="BLOCKS_SHRINK_DESCRIPTION">
               </div>
             </div>
             <div class="block-wrapper-right">
-              <div class="block-title">
-                <script>document.write(Localization.localize("BLOCKS_RESET_SIZE"));</script>
+              <div class="block-title" id="BLOCKS_RESET_SIZE">
               </div>
               <div class="block-image-wrapper">
                 <img class="block-image" src="images/reset.png" />
               </div>
-              <div class="block-description">
-                <script>document.write(Localization.localize("BLOCKS_RESET_SIZE_DESCRIPTION"));</script>
+              <div class="block-description" id="BLOCKS_RESET_SIZE_DESCRIPTION">
               </div>
             </div>
           </div>
           <div class="block-wrapper">
             <div class="block-wrapper-left">
-              <div class="block-title">
-                <script>document.write(Localization.localize("BLOCKS_HIDE"));</script>
+              <div class="block-title" id="BLOCKS_HIDE">
               </div>
               <div class="block-image-wrapper">
                 <img class="block-image" src="images/hide.png" />
               </div>
-              <div class="block-description">
-                <script>document.write(Localization.localize("BLOCKS_HIDE_DESCRIPTION"));</script>
+              <div class="block-description" id="BLOCKS_HIDE_DESCRIPTION">
               </div>
             </div>
             <div class="block-wrapper-right">
-              <div class="block-title">
-                <script>document.write(Localization.localize("BLOCKS_SHOW"));</script>
+              <div class="block-title" id="BLOCKS_SHOW">
               </div>
               <div class="block-image-wrapper">
                 <img class="block-image" src="images/show.png" />
               </div>
-              <div class="block-description">
-                <script>document.write(Localization.localize("BLOCKS_SHOW_DESCRIPTION"));</script>
+              <div class="block-description" id="BLOCKS_SHOW_DESCRIPTION">
               </div>
             </div>
           </div>
           <div class="block-category-header" id="green-block-category-header">
-            <script>document.write(Localization.localize("BLOCKS_SOUND_BLOCKS"));</script>
           </div>
           <div class="block-category-header-line" id="green-block-category-header-line"></div>
           <div class="block-wrapper">
             <div class="block-wrapper-left">
-              <div class="block-title">
-                <script>document.write(Localization.localize("BLOCKS_POP"));</script>
+              <div class="block-title" id="BLOCKS_POP">
               </div>
               <div class="block-image-wrapper">
                 <img class="block-image" src="images/pop.png" />
               </div>
-              <div class="block-description">
-                <script>document.write(Localization.localize("BLOCKS_POP_DESCRIPTION"));</script>
+              <div class="block-description" id="BLOCKS_POP_DESCRIPTION">
               </div>
             </div>
             <div class="block-wrapper-right">
-              <div class="block-title">
-                <script>document.write(Localization.localize("BLOCKS_PLAY_RECORDED"));</script>
+              <div class="block-title" id="BLOCKS_PLAY_RECORDED">
               </div>
               <div class="block-image-wrapper">
                 <img class="block-image" src="images/playsound.png" />
               </div>
-              <div class="block-description">
-                <script>document.write(Localization.localize("BLOCKS_PLAY_RECORDED_DESCRIPTION"));</script>
+              <div class="block-description" id="BLOCKS_PLAY_RECORDED_DESCRIPTION">
               </div>
             </div>
           </div>
           <div class="block-category-header" id="orange-block-category-header">
-            <script>document.write(Localization.localize("BLOCKS_CONTROL_BLOCKS"));</script>
           </div>
           <div class="block-category-header-line" id="orange-block-category-header-line"></div>
           <div class="block-wrapper">
             <div class="block-wrapper-left">
-              <div class="block-title">
-                <script>document.write(Localization.localize("BLOCKS_WAIT"));</script>
+              <div class="block-title" id="BLOCKS_WAIT">
               </div>
               <div class="block-image-wrapper">
                 <img class="block-image" src="images/wait.png" />
               </div>
-              <div class="block-description">
-                <script>document.write(Localization.localize("BLOCKS_WAIT_DESCRIPTION"));</script>
+              <div class="block-description" id="BLOCKS_WAIT_DESCRIPTION">
               </div>
             </div>
             <div class="block-wrapper-right">
-              <div class="block-title">
-                <script>document.write(Localization.localize("BLOCKS_STOP"));</script>
+              <div class="block-title" id="BLOCKS_STOP">
               </div>
               <div class="block-image-wrapper">
                 <img class="block-image" src="images/stop.png" />
               </div>
-              <div class="block-description">
-                <script>document.write(Localization.localize("BLOCKS_STOP_DESCRIPTION"));</script>
+              <div class="block-description" id="BLOCKS_STOP_DESCRIPTION">
               </div>
             </div>
           </div>
           <div class="block-wrapper">
             <div class="block-wrapper-left">
-              <div class="block-title">
-                <script>document.write(Localization.localize("BLOCKS_SET_SPEED"));</script>
+              <div class="block-title" id="BLOCKS_SET_SPEED">
               </div>
               <div class="block-image-wrapper">
                 <img class="block-image" src="images/speed.png" />
               </div>
-              <div class="block-description">
-                <script>document.write(Localization.localize("BLOCKS_SET_SPEED_DESCRIPTION"));</script>
+              <div class="block-description" id="BLOCKS_SET_SPEED_DESCRIPTION">
               </div>
             </div>
             <div class="block-wrapper-right">
-              <div class="block-title">
-                <script>document.write(Localization.localize("BLOCKS_REPEAT"));</script>
+              <div class="block-title" id="BLOCKS_REPEAT">
               </div>
               <div class="block-image-wrapper">
                 <img class="block-image-repeat" src="images/repeat.png" />
               </div>
-              <div class="block-description-repeat">
-                <script>document.write(Localization.localize("BLOCKS_REPEAT_DESCRIPTION"));</script>
+              <div class="block-description-repeat" id="BLOCKS_REPEAT_DESCRIPTION">
               </div>
             </div>
           </div>
           <div class="block-category-header" id="red-block-category-header">
-            <script>document.write(Localization.localize("BLOCKS_END_BLOCKS"));</script>
           </div>
           <div class="block-category-header-line" id="red-block-category-header-line"></div>
           <div class="block-wrapper">
             <div class="block-wrapper-left">
-              <div class="block-title">
-                <script>document.write(Localization.localize("BLOCKS_END"));</script>
+              <div class="block-title" id="BLOCKS_END">
               </div>
               <div class="block-image-wrapper">
                 <img class="block-image" src="images/end.png" />
               </div>
-              <div class="block-description">
-                <script>document.write(Localization.localize("BLOCKS_END_DESCRIPTION"));</script>
+              <div class="block-description" id="BLOCKS_END_DESCRIPTION">
               </div>
             </div>
             <div class="block-wrapper-right">
-              <div class="block-title">
-                <script>document.write(Localization.localize("BLOCKS_REPEAT_FOREVER"));</script>
+              <div class="block-title" id="BLOCKS_REPEAT_FOREVER">
               </div>
               <div class="block-image-wrapper">
                 <img class="block-image" src="images/forever.png" />
               </div>
-              <div class="block-description">
-                <script>document.write(Localization.localize("BLOCKS_REPEAT_FOREVER_DESCRIPTION"));</script>
+              <div class="block-description" id="BLOCKS_REPEAT_FOREVER_DESCRIPTION">
               </div>
             </div>
           </div>
           <div class="block-wrapper">
             <div class="block-wrapper-left">
-              <div class="block-title">
-                <script>document.write(Localization.localize("BLOCKS_GO_TO_PAGE"));</script>
+              <div class="block-title" id="BLOCKS_GO_TO_PAGE">
               </div>
               <div class="block-image-wrapper">
                 <img class="block-image" src="images/page.png" />
               </div>
-              <div class="block-description">
-                <script>document.write(Localization.localize("BLOCKS_GO_TO_PAGE_DESCRIPTION"));</script>
+              <div class="block-description" id="BLOCKS_GO_TO_PAGE_DESCRIPTION">
               </div>
             </div>
           </div>

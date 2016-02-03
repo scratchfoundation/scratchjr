@@ -2,250 +2,312 @@
 the caller should define the window event and call startDrag with the appropiate values
 */
 
-Events = function () {};
+import {gn, scaleMultiplier, isTablet} from './lib';
 
-Events.dragged = false;
-Events.dragthumbnail = undefined;
-Events.dragmousex = 0;
-Events.dragmousey = 0;
-Events.timeoutEvent = undefined;
-Events.initialPt;
-Events.dragcanvas = undefined;
-Events.dragDiv = undefined;
-Events.fcnstart = undefined;
-Events.fcnend = undefined;
-Events.updatefcn = undefined;
-Events.fcnclick = undefined;
-Events.mouseDownTime = 0;
-Events.scaleStartsAt = 1;
-Events.delta = 10;
-Events.pinchcenter = {
+let dragged = false;
+let dragthumbnail = undefined;
+let dragmousex = 0;
+let dragmousey = 0;
+let timeoutEvent = undefined;
+let dragcanvas = undefined;
+let dragDiv = undefined;
+let fcnstart = undefined;
+let fcnend = undefined;
+let updatefcn = undefined;
+let fcnclick = undefined;
+let scaleStartsAt = 1;
+let delta = 10;
+let pinchcenter = {
     x: 0,
     y: 0,
     distance: 0
 };
-Events.lastZoomScale = 1;
+let lastZoomScale = 1;
 
-// Instead of popping the dragging block, etc to the outer-most frame,
-// which causes delays while the content is reflowed, we create a
-// small drag div that is a parent of frame that the dragging block
-// can be a child of. This improves dragging performance.
-Events.init = function () {
-    var dragDiv = document.createElement('div');
-    dragDiv.id = 'dragDiv';
-    dragDiv.style.position = 'absolute';
-    dragDiv.style.width = '0px'; // size doesn't matter since children float
-    dragDiv.style.height = '0px';
-    dragDiv.style.zIndex = 7001; // slightly higher than ScratchJr.dragginLayer
-    var frameDiv = gn('frame');
-    frameDiv.appendChild(dragDiv);
-    Events.dragDiv = dragDiv;
-};
-Events.startDrag = function (e, c, atstart, atend, atdrag, atclick, athold) {
-    Events.dragged = false;
-    var pt = Events.getTargetPoint(e);
-    Events.dragmousex = pt.x;
-    Events.dragmousey = pt.y;
-    Events.initialPt = pt;
-    Events.mouseDownTime = (new Date() - 0);
-    Events.dragthumbnail = c;
-    Events.fcnstart = atstart;
-    Events.fcnend = atend;
-    Events.fcnclick = atclick;
-
-    if (athold) {
-        Events.holdit(c, athold);
+export default class Events {
+    // Getters/setters for globally used properties
+    static get dragged () {
+        return dragged;
     }
-    Events.updatefcn = atdrag;
-    if (isTablet) { // startDrag event setting
-        Events.delta = 10 * scaleMultiplier;
-        window.ontouchmove = function (evt) {
-            Events.mouseMove(evt);
-        };
-        window.ontouchend = function (evt) {
-            Events.mouseUp(evt);
-        };
-        window.ontouchleave = function (evt) {
-            Events.mouseUp(evt);
-        };
-        window.ontouchcancel = function (evt) {
-            Events.mouseUp(evt);
-        };
-    } else {
-        Events.delta = 7;
-        window.onmousemove = function (evt) {
-            Events.mouseMove(evt);
-        };
-        window.onmouseup = function (evt) {
-            Events.mouseUp(evt);
-        };
+
+    static set dragged (newDragged) {
+        dragged = newDragged;
     }
-};
 
-Events.holdit = function (c, fcn) {
-    var repeat = function () {
-        Events.clearEvents();
-        fcn(Events.dragthumbnail);
-        Events.clearDragAndDrop();
-    };
-    Events.timeoutEvent = setTimeout(repeat, 500);
-};
-
-Events.clearDragAndDrop = function () {
-    Events.timeoutEvent = undefined;
-    Events.dragcanvas = undefined;
-    Events.dragged = false;
-    Events.dragthumbnail = undefined;
-    Events.fcnstart = undefined;
-    Events.fcnend = undefined;
-    Events.updatefcn = undefined;
-    Events.fcnclick = undefined;
-};
-
-Events.mouseMove = function (e) {
-    // be forgiving about the click
-    var pt = Events.getTargetPoint(e);
-    if (!Events.dragged && (Events.distance(Events.dragmousex - pt.x, Events.dragmousey - pt.y) < Events.delta)) {
-        return;
+    static get dragthumbnail () {
+        return dragthumbnail;
     }
-    if (Events.timeoutEvent) {
-        clearTimeout(Events.timeoutEvent);
-    }
-    Events.timeoutEvent = undefined;
-    if (!Events.dragged) {
-        Events.fcnstart(e);
-    }
-    Events.dragged = true;
-    if (Events.updatefcn) {
-        Events.updatefcn(e, Events.dragcanvas);
-    }
-    Events.dragmousex = pt.x;
-    Events.dragmousey = pt.y;
-};
 
-Events.distance = function (dx, dy) {
-    return Math.round(Math.sqrt((dx * dx) + (dy * dy)));
-};
-
-Events.mouseUp = function (e) {
-    if (Events.timeoutEvent) {
-        clearTimeout(Events.timeoutEvent);
+    static set dragthumbnail (newDragthumbnail) {
+        dragthumbnail = newDragthumbnail;
     }
-    Events.timeoutEvent = undefined;
-    Events.clearEvents();
-    if (!Events.dragged) {
-        Events.itIsAClick(e);
-    } else {
-        Events.performMouseUpAction(e);
+
+    static get dragmousex () {
+        return dragmousex;
     }
-    Events.clearDragAndDrop();
-};
 
-Events.cancelAll = function () {
-    if (Events.timeoutEvent) {
-        clearTimeout(Events.timeoutEvent);
+    static set dragmousex (newDragmousex) {
+        dragmousex = newDragmousex;
     }
-    Events.timeoutEvent = undefined;
-    Events.clearEvents();
-};
 
-Events.clearEvents = function () {
-    if (isTablet) { // clearEvents
-        window.ontouchmove = undefined;
-        window.ontouchend = undefined;
-    } else {
-        window.onmousemove = function (e) {
-            e.preventDefault();
-        };
-        window.onmouseup = undefined;
+    static get dragmousey () {
+        return dragmousey;
     }
-};
 
-Events.performMouseUpAction = function (e) {
-    if (Events.fcnend) {
-        Events.fcnend(e, Events.dragcanvas);
+    static set dragmousey (newDragmousey) {
+        dragmousey = newDragmousey;
     }
-};
 
-Events.itIsAClick = function (e) {
-    if (Events.fcnclick) {
-        Events.fcnclick(e, Events.dragthumbnail);
+    static get timeoutEvent () {
+        return timeoutEvent;
     }
-};
 
-Events.moveThumbnail = function (el, dx, dy) {
-    if (!el) {
-        return;
+    static set timeoutEvent (newTimeoutEvent) {
+        timeoutEvent = newTimeoutEvent;
     }
-    el.top += dy;
-    el.left += dx;
-    el.style.top = el.top + 'px';
-    el.style.left = el.left + 'px';
-};
 
-Events.move3D = function (el, dx, dy) {
-    if (!el) {
-        return;
+    static get dragcanvas () {
+        return dragcanvas;
     }
-    var mtx = new WebKitCSSMatrix(window.getComputedStyle(el).webkitTransform);
-    el.top = dy + mtx.m42;
-    el.left = dx + mtx.m41;
-    el.style.webkitTransform = 'translate3d(' + el.left + 'px,' + el.top + 'px, 0)';
-};
 
+    static set dragcanvas (newDragcanvas) {
+        dragcanvas = newDragcanvas;
+    }
 
-/*
-.m41 – corresponds to the ‘x’ value of a WebKitCSSMatrix
-.m42 – corresponds to the ‘y’ value of a WebKitCSSMatrix
-*/
+    static get dragDiv () {
+        return dragDiv;
+    }
 
-Events.getTargetPoint = function (e) {
-    if (isTablet) {
-        if (e.touches && (e.touches.length > 0)) {
-            return {
-                x: e.touches[0].pageX,
-                y: e.touches[0].pageY
+    static get scaleStartsAt () {
+        return scaleStartsAt;
+    }
+
+    static set scaleStartsAt (newScaleStartsAt) {
+        scaleStartsAt = newScaleStartsAt;
+    }
+
+    static get pinchcenter () {
+        return pinchcenter;
+    }
+
+    // Instead of popping the dragging block, etc to the outer-most frame,
+    // which causes delays while the content is reflowed, we create a
+    // small drag div that is a parent of frame that the dragging block
+    // can be a child of. This improves dragging performance.
+    static init () {
+        dragDiv = document.createElement('div');
+        dragDiv.id = 'dragDiv';
+        dragDiv.style.position = 'absolute';
+        dragDiv.style.width = '0px'; // size doesn't matter since children float
+        dragDiv.style.height = '0px';
+        dragDiv.style.zIndex = 7001; // slightly higher than ScratchJr.dragginLayer
+        var frameDiv = gn('frame');
+        frameDiv.appendChild(dragDiv);
+    }
+    static startDrag (e, c, atstart, atend, atdrag, atclick, athold) {
+        dragged = false;
+        var pt = Events.getTargetPoint(e);
+        dragmousex = pt.x;
+        dragmousey = pt.y;
+        dragthumbnail = c;
+        fcnstart = atstart;
+        fcnend = atend;
+        fcnclick = atclick;
+
+        if (athold) {
+            Events.holdit(c, athold);
+        }
+        updatefcn = atdrag;
+        if (isTablet) { // startDrag event setting
+            delta = 10 * scaleMultiplier;
+            window.ontouchmove = function (evt) {
+                Events.mouseMove(evt);
             };
-        } else if (e.changedTouches) {
-            return {
-                x: e.changedTouches[0].pageX,
-                y: e.changedTouches[0].pageY
+            window.ontouchend = function (evt) {
+                Events.mouseUp(evt);
+            };
+            window.ontouchleave = function (evt) {
+                Events.mouseUp(evt);
+            };
+            window.ontouchcancel = function (evt) {
+                Events.mouseUp(evt);
+            };
+        } else {
+            delta = 7;
+            window.onmousemove = function (evt) {
+                Events.mouseMove(evt);
+            };
+            window.onmouseup = function (evt) {
+                Events.mouseUp(evt);
             };
         }
     }
-    return {
-        x: e.clientX,
-        y: e.clientY
-    };
-};
 
-Events.updatePinchCenter = function (e) {
-    if (e.touches.length != 2) {
-        return;
+    static holdit (c, fcn) {
+        var repeat = function () {
+            Events.clearEvents();
+            fcn(dragthumbnail);
+            Events.clearDragAndDrop();
+        };
+        timeoutEvent = setTimeout(repeat, 500);
     }
-    var x1 = e.touches[0].clientX,
-        y1 = e.touches[0].clientY;
-    var x2 = e.touches[1].clientX,
-        y2 = e.touches[1].clientY;
-    var cx = x1 + (x2 - x1) / 2,
-        cy = y1 + (y2 - y1) / 2;
-    var d = Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
-    Events.pinchcenter = {
-        x: cx,
-        y: cy,
-        distance: d
-    };
-};
 
-Events.zoomScale = function (e) {
-    if (e.touches.length !== 2) {
-        return Events.lastZoomScale;
+    static clearDragAndDrop () {
+        timeoutEvent = undefined;
+        dragcanvas = undefined;
+        dragged = false;
+        dragthumbnail = undefined;
+        fcnstart = undefined;
+        fcnend = undefined;
+        updatefcn = undefined;
+        fcnclick = undefined;
     }
-    var x1 = e.touches[0].clientX,
-        y1 = e.touches[0].clientY;
-    var x2 = e.touches[1].clientX,
-        y2 = e.touches[1].clientY;
-    var d = Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
-    Events.lastZoomScale = d / Events.pinchcenter.distance;
-    return Events.lastZoomScale;
-};
+
+    static mouseMove (e) {
+        // be forgiving about the click
+        var pt = Events.getTargetPoint(e);
+        if (!dragged && (Events.distance(dragmousex - pt.x, dragmousey - pt.y) < delta)) {
+            return;
+        }
+        if (timeoutEvent) {
+            clearTimeout(timeoutEvent);
+        }
+        timeoutEvent = undefined;
+        if (!dragged) {
+            fcnstart(e);
+        }
+        dragged = true;
+        if (updatefcn) {
+            updatefcn(e, dragcanvas);
+        }
+        dragmousex = pt.x;
+        dragmousey = pt.y;
+    }
+
+    static distance (dx, dy) {
+        return Math.round(Math.sqrt((dx * dx) + (dy * dy)));
+    }
+
+    static mouseUp (e) {
+        if (timeoutEvent) {
+            clearTimeout(timeoutEvent);
+        }
+        timeoutEvent = undefined;
+        Events.clearEvents();
+        if (!dragged) {
+            Events.itIsAClick(e);
+        } else {
+            Events.performMouseUpAction(e);
+        }
+        Events.clearDragAndDrop();
+    }
+
+    static cancelAll () {
+        if (timeoutEvent) {
+            clearTimeout(timeoutEvent);
+        }
+        timeoutEvent = undefined;
+        Events.clearEvents();
+    }
+
+    static clearEvents () {
+        if (isTablet) { // clearEvents
+            window.ontouchmove = undefined;
+            window.ontouchend = undefined;
+        } else {
+            window.onmousemove = function (e) {
+                e.preventDefault();
+            };
+            window.onmouseup = undefined;
+        }
+    }
+
+    static performMouseUpAction (e) {
+        if (fcnend) {
+            fcnend(e, dragcanvas);
+        }
+    }
+
+    static itIsAClick (e) {
+        if (fcnclick) {
+            fcnclick(e, dragthumbnail);
+        }
+    }
+
+    static moveThumbnail (el, dx, dy) {
+        if (!el) {
+            return;
+        }
+        el.top += dy;
+        el.left += dx;
+        el.style.top = el.top + 'px';
+        el.style.left = el.left + 'px';
+    }
+
+    static move3D (el, dx, dy) {
+        if (!el) {
+            return;
+        }
+        var mtx = new WebKitCSSMatrix(window.getComputedStyle(el).webkitTransform);
+        el.top = dy + mtx.m42;
+        el.left = dx + mtx.m41;
+        el.style.webkitTransform = 'translate3d(' + el.left + 'px,' + el.top + 'px, 0)';
+    }
+
+
+    /*
+    .m41 – corresponds to the ‘x’ value of a WebKitCSSMatrix
+    .m42 – corresponds to the ‘y’ value of a WebKitCSSMatrix
+    */
+
+    static getTargetPoint (e) {
+        if (isTablet) {
+            if (e.touches && (e.touches.length > 0)) {
+                return {
+                    x: e.touches[0].pageX,
+                    y: e.touches[0].pageY
+                };
+            } else if (e.changedTouches) {
+                return {
+                    x: e.changedTouches[0].pageX,
+                    y: e.changedTouches[0].pageY
+                };
+            }
+        }
+        return {
+            x: e.clientX,
+            y: e.clientY
+        };
+    }
+
+    static updatePinchCenter (e) {
+        if (e.touches.length != 2) {
+            return;
+        }
+        var x1 = e.touches[0].clientX,
+            y1 = e.touches[0].clientY;
+        var x2 = e.touches[1].clientX,
+            y2 = e.touches[1].clientY;
+        var cx = x1 + (x2 - x1) / 2,
+            cy = y1 + (y2 - y1) / 2;
+        var d = Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+        pinchcenter = {
+            x: cx,
+            y: cy,
+            distance: d
+        };
+    }
+
+    static zoomScale (e) {
+        if (e.touches.length !== 2) {
+            return lastZoomScale;
+        }
+        var x1 = e.touches[0].clientX,
+            y1 = e.touches[0].clientY;
+        var x2 = e.touches[1].clientX,
+            y2 = e.touches[1].clientY;
+        var d = Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+        lastZoomScale = d / pinchcenter.distance;
+        return lastZoomScale;
+    }
+}

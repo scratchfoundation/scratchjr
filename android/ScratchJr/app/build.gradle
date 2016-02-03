@@ -22,7 +22,7 @@ android {
             minSdkVersion 17
             targetSdkVersion 23
             versionCode 20
-            versionName "1.1"
+            versionName "1.2.0"
         }
     }
 }
@@ -50,6 +50,11 @@ task switchToFreeGA(type: Copy) {
     from "${commonHome}/editions/${buildType}/android-resources"
     include "$googleServicesJson"
     into "$appModuleRootFolder"
+}
+
+task generateWebpackBundle(type: Exec) {
+    workingDir '../../../bin'
+    commandLine './bundle-compile.sh'
 }
 
 class GenerateScratchJrPNGsTask extends DefaultTask {
@@ -86,6 +91,7 @@ task generateScratchJrPNGs(type: GenerateScratchJrPNGsTask)
 task cleanScratchJrResources(type: CleanScratchJrResourcesTask)
 
 afterEvaluate {
+    preBuild.dependsOn generateWebpackBundle
     processFreeDebugGoogleServices.dependsOn switchToFreeGA
     processFreeReleaseGoogleServices.dependsOn switchToFreeGA
     prepareFreeDebugDependencies.dependsOn switchToFree
