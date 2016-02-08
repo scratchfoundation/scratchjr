@@ -196,7 +196,7 @@ export function inappBlocksGuide () {
         'BLOCKS_GO_TO_PAGE_DESCRIPTION'
     ];
 
-    for (let key of blockDescriptionKeys) {
-        gn(key).textContent = Localization.localize(key);
+    for (let i = 0; i < blockDescriptionKeys.length; i++) {
+        gn(blockDescriptionKeys[i]).textContent = Localization.localize(blockDescriptionKeys[i]);
     }
 }

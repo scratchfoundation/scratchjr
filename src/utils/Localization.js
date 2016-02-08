@@ -1,7 +1,10 @@
 import Cookie from './Cookie';
 import Intl from 'intl';
 import IO from '../iPad/IO';
-window.Intl = Intl;
+
+if (!window.Intl) {
+    window.Intl = Intl;
+}
 
 require('intl/locale-data/jsonp/en.js');
 require('intl/locale-data/jsonp/es.js');
