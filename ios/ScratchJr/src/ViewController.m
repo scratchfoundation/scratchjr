@@ -334,7 +334,7 @@ JSContext *js;
         
          NSData *projectData = [NSData dataWithContentsOfURL:projectURL];
         
-        NSString* mimeType = @"application-x-scratchjr-project";
+        NSString* mimeType = @"application/x-scratchjr-project";
         
         #if PBS
             mimeType = @"application/x-pbskids-scratchjr-project";
