@@ -2,18 +2,13 @@
 This is the official git repository hosting the source code for the
 [ScratchJr](http://scratchjr.org/) project.
 
-ScratchJr cannot be copied and/or distributed without the express
-permission of the Massachusetts Institute of Technology (MIT). You should
-only access this repository if you have been given explicit permission
-from MIT.
-
-ScratchJr can be built both on iOS and Android.
+ScratchJr can be built both for iOS and Android.
 A pure-web version or Chrome-app version is planned to follow at some point in the future.
 
 Platform | Status
 -------- | -------------
 iOS      | Released in App Store
-Android  | Released in Google Play
+Android  | Released in Google Play and Amazon store
 
 ## Release Schedule
 
@@ -43,6 +38,11 @@ This repository has the following directory structure:
 ## Building ScratchJr
 To build the Android version, you need to have a system equipped with Android Studio. To build the iOS version, you need to have a Mac with XCode.
 
+Ensure you have node and npm [installed](http://blog.npmjs.org/post/85484771375/how-to-install-npm).
+
+With all of the code checked out, you must install npm dependencies for bundling the JavaScript:
+* <tt>npm install</tt>
+
 The build caches .png files out of the .svg files to improve performance. To enable this build step, you need to install a few dependencies.
 
 On Ubuntu:
@@ -59,6 +59,13 @@ On OS X:
 * Run <tt>brew install imagemagick</tt> to install ImageMagick
 
 Once these are installed, select the appropriate target in XCode or the appropriate flavor/build variant in Android Studio.
+
+## Where and how to make changes
+
+All changes should be made in a fork. Before making a pull request, ensure all changes pass our linter:
+* <tt>npm run lint</tt>
+
+For more information, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Code credits
 ScratchJr would not be possible without free and open source libraries, including:
