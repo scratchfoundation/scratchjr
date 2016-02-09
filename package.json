@@ -2,13 +2,16 @@
   "name": "scratchjr",
   "version": "1.2.0",
   "description": "ScratchJr",
-  "private": "true",
   "scripts": {
     "lint": "eslint src/**",
     "build": "webpack"
   },
-  "author": "MIT Media Lab",
-  "license": "MIT",
+  "author": "MIT Media Lab, Tufts University, Playful Invention Company",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/llk/scratchjr/issues"
+  },
+  "homepage": "https://github.com/llk/scratchjr",
   "devDependencies": {
     "babel-core": "^6.4.0",
     "babel-eslint": "^4.1.6",
