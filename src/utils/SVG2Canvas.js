@@ -264,7 +264,21 @@ export default class SVG2Canvas {
             while (p.tagName != 'svg') {
                 p = p.parentNode;
             }
-            SVGImage.draw(elem, p.getElementById('pathborder_' + elem.id), ctx);
+            // Note: previously, we used only p.getElementById(targetPath)
+            // In iOS 9, this broke and started returning null.
+            // getElementsByTagName('path') includes the right element, so we
+            // iterate through those and find the one with the matching ID.
+            var targetPathId = 'pathborder_' + elem.id;
+            var targetPathElement = p.getElementById(targetPathId);
+            if (!targetPathElement) {
+                var paths = p.getElementsByTagName('path');
+                for (var i = 0; i < paths.length; i++) {
+                    if (paths[i].id == targetPathId) {
+                        targetPathElement = paths[i];
+                    }
+                }
+            }
+            SVGImage.draw(elem, targetPathElement, ctx);
             break;
         case 'clipPath':
             break;
