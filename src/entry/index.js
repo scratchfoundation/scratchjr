@@ -72,6 +72,7 @@ function indexLoadOptions () {
         gn('purpleguy').className = 'purple hide';
         gn('blueguy').className = 'blue hide';
         gn('redguy').className = 'red hide';
+        gn('gear').className = 'gear show';
     }
     gn('gettings').className = 'gettings show';
     gn('startcode').className = 'startcode show';
