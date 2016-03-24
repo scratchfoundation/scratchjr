@@ -152,6 +152,23 @@ div.frame {
 .gettings.hide {display: none;}
 .gettings.show {display: block;}
 
+.gear.hide {display: none;}
+.gear.show {display: block;}
+
+.gear {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    background: url('../assets/lobby/gearOff.svg');
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    background-position-x: center;
+    -webkit-tap-highlight-color: transparent;
+    z-index: 1000;
+    width: 60px;
+    height: 60px;
+}
+
 .startcode {
     position: absolute;
     top: 65%;

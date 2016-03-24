@@ -25,6 +25,8 @@ export function indexMain () {
 
         gn('topbar-moreapps').ontouchstart = indexMoreApps;
         gn('topbar-info').ontouchstart = indexInfo;
+    } else {
+        gn('gear').ontouchstart = indexGoSettings;
     }
 
     setTimeout(function () {
@@ -72,6 +74,7 @@ function indexLoadOptions () {
         gn('purpleguy').className = 'purple hide';
         gn('blueguy').className = 'blue hide';
         gn('redguy').className = 'red hide';
+        gn('gear').className = 'gear show';
     }
     gn('gettings').className = 'gettings show';
     gn('startcode').className = 'startcode show';
@@ -97,6 +100,13 @@ function indexGohome () {
     function doNext () {
         window.location.href = 'home.html';
     }
+}
+
+function indexGoSettings () {
+    // Switch to the settings selection page
+    // Triggered by tapping the gear icon in the top right
+    ScratchAudio.sndFX('tap.wav');
+    window.location.href = 'home.html?place=gear';
 }
 
 function indexGettingstarted () {
