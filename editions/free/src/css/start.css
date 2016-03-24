@@ -162,6 +162,9 @@ div.frame {
     background: url('../assets/lobby/gearOff.svg');
     background-repeat: no-repeat;
     background-size: auto 100%;
+    background-position-x: center;
+    -webkit-tap-highlight-color: transparent;
+    z-index: 1000;
     width: 60px;
     height: 60px;
 }
