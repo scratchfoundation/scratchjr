@@ -311,6 +311,17 @@ div.localizationselect.selected {
     background-color: #F9A737;
 }
 
+div.localizationselect.selected:after {
+    display: block;
+    content: ' ';
+    background-image: url('../assets/ui/languageConfirm.svg');
+    background-size: 45px 45px;
+    height: 45px;
+    width: 45px;
+    margin-left: 252px;
+    margin-top: -82px;
+}
+
 /* footer */
 
 #footer {
