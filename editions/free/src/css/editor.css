@@ -606,8 +606,8 @@ div.infoboxShareButton {
    font-size: 15pt;
    letter-spacing: .5px;
    width:  ${css_vw(23.41)};
-   min-height:  ${css_vh(5.21)};
    padding-top: ${css_vh(1.56)};
+   padding-bottom: ${css_vh(1.56)};
    padding-left: ${css_vw(.5)};
    padding-right: ${css_vw(.5)};
    border-radius: 15px;
