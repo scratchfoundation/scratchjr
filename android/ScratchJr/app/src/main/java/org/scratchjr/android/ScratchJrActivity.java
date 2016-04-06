@@ -373,7 +373,6 @@ public class ScratchJrActivity
         // Enable cookie persistence
         CookieManager.setAcceptFileSchemeCookies(true);
         CookieManager cookieManager = CookieManager.getInstance();
-        cookieManager.setAcceptCookie(true);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             cookieManager.setAcceptThirdPartyCookies(_webView, true);
         } else {
