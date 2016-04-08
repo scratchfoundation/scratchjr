@@ -26,6 +26,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.ConsoleMessage;
 import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -261,6 +262,7 @@ public class ScratchJrActivity
             @Override
             public void run() {
                 _webView.onResume();
+                CookieSyncManager.getInstance().startSync();
             }
         });
         runJavaScript("if (typeof(ScratchJr) !== 'undefined') ScratchJr.onResume();");
@@ -274,6 +276,7 @@ public class ScratchJrActivity
             @Override
             public void run() {
                 _webView.onPause();
+                CookieSyncManager.getInstance().stopSync();
             }
         });
         _databaseManager.close();
@@ -367,6 +370,16 @@ public class ScratchJrActivity
         // Uncomment to enable remote Chrome debugging on a physical Android device
         //WebView.setWebContentsDebuggingEnabled(true);
 
+        // Enable cookie persistence
+        CookieManager.setAcceptFileSchemeCookies(true);
+        CookieManager cookieManager = CookieManager.getInstance();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            cookieManager.setAcceptThirdPartyCookies(_webView, true);
+        } else {
+            cookieManager.setAcceptCookie(true);
+        }
+        CookieSyncManager.createInstance(this);
+
         /* Object exposed to the JavaScript that makes it easy to bridge JavaScript and Java */
         JavaScriptDirectInterface javaScriptDirectInterface = new JavaScriptDirectInterface(this, (ScratchJrApplication) getApplication());
         _webView.addJavascriptInterface(javaScriptDirectInterface, "AndroidInterface");
@@ -388,6 +401,10 @@ public class ScratchJrActivity
 
             @Override
             public void onPageFinished(WebView view, String url) {
+                // Sync cookies
+                CookieSyncManager.getInstance().sync();
+
+                // Track page load
                 String[] parts = url.split("/");
                 _tracker.setScreenName(parts[parts.length - 1]);
                 _tracker.send(new HitBuilders.ScreenViewBuilder().build());
