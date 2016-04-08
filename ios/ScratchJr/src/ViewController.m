@@ -342,6 +342,9 @@ JSContext *js;
             mimeType = @"application/x-pbskids-scratchjr-project";
         #endif
         
+        // Check to ensure modal is not nil. This can occur when the user does not have a mail account configured on their device
+        if (mailComposeViewController == nil) return;
+        
         [mailComposeViewController addAttachmentData:projectData mimeType:mimeType fileName:filename];
         [self presentViewController:mailComposeViewController animated:YES completion:nil];
     });
