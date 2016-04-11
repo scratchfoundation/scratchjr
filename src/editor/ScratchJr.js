@@ -376,6 +376,8 @@ export default class ScratchJr {
                 }, function (md5) {
                     // Save project data
                     currentProject = md5;
+                    // Switch out of story-starter mode to avoid creating new projects
+                    editmode = 'edit';
                     Project.prepareToSave(currentProject, onDone);
                 });
             }, true);
