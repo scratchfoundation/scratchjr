@@ -32,6 +32,7 @@ export default class UI {
     static get infoBoxOpen () {
         return infoBoxOpen;
     }
+    
     static layout () {
         UI.topSection();
         UI.middleSection();
