@@ -206,7 +206,7 @@ export default class ScratchJr {
         Events.init();
         if (window.Settings.autoSaveInterval > 0) {
             autoSaveSetInterval = window.setInterval(function () {
-                if (autoSaveEnabled) {
+                if (autoSaveEnabled && !onHold && !Project.saving && !UI.infoBoxOpen) {
                     ScratchJr.saveProject(null, function () {
                         Alert.close();
                     });
@@ -346,7 +346,7 @@ export default class ScratchJr {
         // Re-enable autosaves
         autoSaveEnabled = true;
         autoSaveSetInterval = window.setInterval(function () {
-            if (autoSaveEnabled) {
+            if (autoSaveEnabled && !onHold && !Project.saving && !UI.infoBoxOpen) {
                 ScratchJr.saveProject(null, function () {
                     Alert.close();
                 });
