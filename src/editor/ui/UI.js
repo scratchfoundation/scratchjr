@@ -26,8 +26,13 @@ import {frame, gn, CSSTransition, localx, newHTML, scaleMultiplier, getIdFor, is
 let projectNameTextInput = null;
 let info = null;
 let okclicky = null;
+let infoBoxOpen = false;
 
 export default class UI {
+    static get infoBoxOpen () {
+        return infoBoxOpen;
+    }
+    
     static layout () {
         UI.topSection();
         UI.middleSection();
@@ -350,6 +355,7 @@ export default class UI {
     }
 
     static showInfoBox (e) {
+        infoBoxOpen = true;
         e.preventDefault();
         e.stopPropagation();
         if (Paint.saving) {
@@ -432,6 +438,7 @@ export default class UI {
             ScratchAudio.sndFX('exittap.wav');
             gn('infobox').className = 'infobox fade';
         }
+        infoBoxOpen = false;
     }
 
     //////////////////////////////////////
