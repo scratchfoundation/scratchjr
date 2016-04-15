@@ -298,9 +298,12 @@ div.localizationselect {
     width: ${css_vw(27)};
     height: 47pt;
     float: left;
+    position: relative; /* for absolute positioning of pseudo :after element */
     background-color: #35A8E0;
     color: #fff;
-    font-size: ${css_vh(4.5)};
+    /* font-size: ${css_vh(4.5)}; */
+    /* fontsize based on device vertical height doesn't work on 16:9 aspect Android device, just set fixed size font */
+    font-size: 34.5px;
     text-align: center;
     margin-left: ${css_vw(3)};
     padding-top: 2%;
@@ -318,8 +321,9 @@ div.localizationselect.selected:after {
     background-size: 45px 45px;
     height: 45px;
     width: 45px;
-    margin-left: 252px;
-    margin-top: -82px;
+    position: absolute;
+    top: -22.5px;
+    right: -22.5px;
 }
 
 /* footer */
