@@ -58,7 +58,7 @@ On OS X:
 * Run <tt>brew install librsvg</tt> to install rsvg-convert
 * Run <tt>brew install imagemagick</tt> to install ImageMagick
 
-Once these are installed, select the appropriate target in XCode or the appropriate flavor/build variant in Android Studio.
+Once these are installed, select the appropriate target in XCode or the appropriate flavor/build variant in Android Studio. To build in Android Studio, open the project <tt>android/ScratchJr</tt>. To build for iOS in XCode, open <tt>ios/ScratchJr.xcworkspace</tt> as ScratchJr uses CocoaPods.
 
 ## Where and how to make changes
 
