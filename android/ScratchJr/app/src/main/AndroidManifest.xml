@@ -9,6 +9,7 @@
 
 
     <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature android:name="android.hardware.microphone" android:required="false" />
     
     <supports-screens android:smallScreens="false"
                       android:normalScreens="false"
