@@ -15,7 +15,7 @@
                       android:normalScreens="false"
                       android:largeScreens="true"
                       android:xlargeScreens="true"
-                      android:requiresSmallestWidthDp="600" />
+                      android:requiresSmallestWidthDp="500" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
