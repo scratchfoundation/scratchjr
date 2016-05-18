@@ -6,7 +6,7 @@
     "lint": "eslint src/**",
     "build": "webpack"
   },
-  "author": "MIT Media Lab, Tufts University, Playful Invention Company",
+  "author": "Massachusetts Institute of Technology",
   "license": "BSD-3-Clause",
   "bugs": {
     "url": "https://github.com/llk/scratchjr/issues"
