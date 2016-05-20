@@ -29,8 +29,9 @@ NSString *canRecord;
 + (double) getVolume{
     if (recordingKilled) {
         recordingKilled = FALSE;
-        @throw [NSException exceptionWithName:@"RecordException" reason:@"app went to background" userInfo:nil];
+        return 0;
     }
+    
     [recorder updateMeters];
     const double ALPHA = 0.05;
 	double peakPowerForChannel = pow(10, (0.05 * [recorder peakPowerForChannel:0]));
@@ -44,9 +45,7 @@ NSString *canRecord;
     recordingKilled = TRUE;
 }
 
-
 // Init audio with record capability
-
 + (NSString*)startRecord{
     recordingKilled = FALSE;
     recorder = nil;
