@@ -24,6 +24,7 @@ export function indexMain () {
         gn('pbschars').ontouchend = indexGohome;
 
         gn('topbar-moreapps').ontouchstart = indexMoreApps;
+        gn('topbar-settings').ontouchstart = indexGoSettings;
         gn('topbar-info').ontouchstart = indexInfo;
     } else {
         gn('gear').ontouchstart = indexGoSettings;
