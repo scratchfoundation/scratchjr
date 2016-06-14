@@ -16,6 +16,7 @@ import ScriptsPane from './ui/ScriptsPane';
 import Events from '../utils/Events';
 import BlockSpecs from './blocks/BlockSpecs';
 import Runtime from './engine/Runtime';
+import Localization from '../utils/Localization';
 import {libInit, gn, scaleMultiplier, newHTML,
     isAndroid, isTablet, getUrlVars, CSSTransition3D, frame} from '../utils/lib';
 
@@ -362,9 +363,11 @@ export default class ScratchJr {
     static saveProject (e, onDone) {
         if (ScratchJr.isEditable() && editmode == 'storyStarter' && storyStarted && !Project.error) {
             iOS.analyticsEvent('samples', 'story_starter_edited', Project.metadata.name);
+            // Localize sample project names
+            var sampleName = Localization.localize('SAMPLE_' + Project.metadata.name);
             // Get the new project name
             IO.uniqueProjectName({
-                name: Project.metadata.name
+                name: sampleName
             }, function (jsonData) {
                 var newName = jsonData.name;
                 Project.metadata.name = newName;
