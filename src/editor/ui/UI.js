@@ -316,8 +316,9 @@ export default class UI {
         if (ScratchJr.isEditable() && ScratchJr.editmode == 'storyStarter' && !Project.error) {
             iOS.analyticsEvent('samples', 'story_starter_edited', Project.metadata.name);
             // Get the new project name
+            var sampleName = Localization.localize('SAMPLE_' + Project.metadata.name);
             IO.uniqueProjectName({
-                name: Project.metadata.name
+                name: sampleName
             }, function (jsonData) {
                 var newName = jsonData.name;
                 Project.metadata.name = newName;
