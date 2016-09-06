@@ -8,10 +8,20 @@ if (!window.Intl) {
 
 require('intl/locale-data/jsonp/en.js');
 require('intl/locale-data/jsonp/es.js');
+require('intl/locale-data/jsonp/fr.js');
+require('intl/locale-data/jsonp/ca.js');
+require('intl/locale-data/jsonp/nl.js');
+require('intl/locale-data/jsonp/it.js');
+require('intl/locale-data/jsonp/th.js');
 
 require('expose?IntlMessageFormat!intl-messageformat');
 require('intl-messageformat/dist/locale-data/en');
 require('intl-messageformat/dist/locale-data/es');
+require('intl-messageformat/dist/locale-data/fr');
+require('intl-messageformat/dist/locale-data/ca');
+require('intl-messageformat/dist/locale-data/nl');
+require('intl-messageformat/dist/locale-data/it');
+require('intl-messageformat/dist/locale-data/th');
 
 let currentLocale;
 let localizationMessages = {};
