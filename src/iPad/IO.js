@@ -437,7 +437,6 @@ export default class IO {
             // if we have many large sprites or large sounds
 
             zipFileName = jsonData.name.replace(/\s*/g, '');
-            zipFileName = zipFileName.replace(/\W/g, '');
             shareName = jsonData.name;
 
             function checkStatus () {
