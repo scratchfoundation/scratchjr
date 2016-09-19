@@ -436,8 +436,21 @@ export default class IO {
             // This could pause if getmedia takes a long time, for example,
             // if we have many large sprites or large sounds
 
+            // strip spaces and sanitize filename, including windows reserved names even though
+            // kids are unlikely to name their project lpt1 etc.
+            var illegalRe = /[\/\?<>\\:\*\|":]/g;
+            var controlRe = /[\x00-\x1f\x80-\x9f]/g;
+            var reservedRe = /^\.+$/;
+            var windowsReservedRe = /^(con|prn|aux|nul|com[0-9]|lpt[0-9])(\..*)?$/i;
+            var windowsTrailingRe = /[\. ]+$/;
+
             zipFileName = jsonData.name.replace(/\s*/g, '');
-            zipFileName = zipFileName.replace(/\W/g, '');
+            zipFileName = zipFileName
+                .replace(illegalRe, '_')
+                .replace(controlRe, '_')
+                .replace(reservedRe, '_')
+                .replace(windowsReservedRe, '_')
+                .replace(windowsTrailingRe, '_');
             shareName = jsonData.name;
 
             function checkStatus () {
