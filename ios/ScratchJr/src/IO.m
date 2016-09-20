@@ -201,13 +201,13 @@ NSMutableDictionary *mediastrings;
 // Receive a .sjr file from inside the app.  Send using native UI - Airdrop or Email
 
 + (NSString*) sendSjrUsingShareDialog:(NSString *)fullname :(NSString*)emailSubject :(NSString*)emailBody :(int)shareType :(NSString*)contents {
-    
+
     NSString* extensionFormat =  @"%@.sjr";
-    
+
     #if PBS
         extensionFormat =  @"%@.psjr";
     #endif
-    
+
     NSString *filename = [NSString stringWithFormat:extensionFormat, fullname];
     NSURL *url = [self getDocumentPath:filename];
     NSData *plaindata = [IO decodeBase64:contents];
@@ -215,7 +215,7 @@ NSMutableDictionary *mediastrings;
 
     if (ok) {
         if (shareType == 0) {
-            [HTML showShareEmail:url withName:fullname withSubject:emailSubject withBody:emailBody];
+            [HTML showShareEmail:url withName:filename withSubject:emailSubject withBody:emailBody];
         } else {
             [HTML showShareAirdrop:url];
         }
@@ -247,7 +247,7 @@ NSMutableDictionary *mediastrings;
 + (NSString*)encodeBase64:(NSData*)theData {
     const uint8_t* input = (const uint8_t*)[theData bytes];
     NSInteger length = [theData length];
-    static char table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";    
+    static char table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
     NSMutableData* data = [NSMutableData dataWithLength:((length + 2) / 3) * 4];
     uint8_t* output = (uint8_t*)data.mutableBytes;
     NSInteger i;
@@ -269,7 +269,7 @@ NSMutableDictionary *mediastrings;
 
 + (NSData *) decodeBase64:(NSString *) string {
     NSMutableData *mutableData = nil;
-    
+
     if( string ) {
         unsigned long ixtext = 0;
         unsigned long lentext = 0;
@@ -280,18 +280,18 @@ NSMutableDictionary *mediastrings;
         BOOL flendtext = NO;
         NSData *base64Data = nil;
         const unsigned char *base64Bytes = nil;
-        
+
         // Convert the string to ASCII data.
         base64Data = [string dataUsingEncoding:NSASCIIStringEncoding];
         base64Bytes = [base64Data bytes];
         mutableData = [NSMutableData dataWithCapacity:[base64Data length]];
         lentext = [base64Data length];
-        
+
         while( YES ) {
             if( ixtext >= lentext ) break;
             ch = base64Bytes[ixtext++];
             flignore = NO;
-            
+
             if( ( ch >= 'A' ) && ( ch <= 'Z' ) ) ch = ch - 'A';
             else if( ( ch >= 'a' ) && ( ch <= 'z' ) ) ch = ch - 'a' + 26;
             else if( ( ch >= '0' ) && ( ch <= '9' ) ) ch = ch - '0' + 52;
@@ -299,11 +299,11 @@ NSMutableDictionary *mediastrings;
             else if( ch == '=' ) flendtext = YES;
             else if( ch == '/' ) ch = 63;
             else flignore = YES;
-            
+
             if( ! flignore ) {
                 short ctcharsinbuf = 3;
                 BOOL flbreak = NO;
-                
+
                 if( flendtext ) {
                     if( ! ixinbuf ) break;
                     if( ( ixinbuf == 1 ) || ( ixinbuf == 2 ) ) ctcharsinbuf = 1;
@@ -311,26 +311,25 @@ NSMutableDictionary *mediastrings;
                     ixinbuf = 3;
                     flbreak = YES;
                 }
-                
+
                 inbuf [ixinbuf++] = ch;
-                
+
                 if( ixinbuf == 4 ) {
                     ixinbuf = 0;
                     outbuf [0] = ( inbuf[0] << 2 ) | ( ( inbuf[1] & 0x30) >> 4 );
                     outbuf [1] = ( ( inbuf[1] & 0x0F ) << 4 ) | ( ( inbuf[2] & 0x3C ) >> 2 );
                     outbuf [2] = ( ( inbuf[2] & 0x03 ) << 6 ) | ( inbuf[3] & 0x3F );
-                    
+
                     for( i = 0; i < ctcharsinbuf; i++ )
                         [mutableData appendBytes:&outbuf[i] length:1];
                 }
-                
+
                 if( flbreak )  break;
             }
         }
     }
-    
+
     return  [mutableData copy];
 }
 
 @end
-

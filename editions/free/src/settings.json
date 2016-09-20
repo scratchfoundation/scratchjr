@@ -20,8 +20,13 @@
     "defaultLocale": "en",
     "defaultLocaleShort": "en",
     "supportedLocales": {
+        "Català": "ca",
         "English": "en",
-        "Español": "es"
+        "Español": "es",
+        "Français": "fr",
+        "Italiano": "it",
+        "Nederlands": "nl",
+        "ไทย": "th"
     },
     "settingsPageDisabled": false
 }

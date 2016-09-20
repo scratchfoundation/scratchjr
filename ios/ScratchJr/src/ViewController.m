@@ -118,7 +118,7 @@ JSContext *js;
     js = [webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
     js[@"tablet"] = self;
     [self disableWebViewLongPressGestures:webView];
-    
+
     NSString *debugChoice =[[NSUserDefaults standardUserDefaults] stringForKey:@"debugstate"];
 
     // Patch through app "advanced"->debug to allow users to display long-form errors
@@ -129,12 +129,12 @@ JSContext *js;
     NSURL* screenName = webView.request.URL.filePathURL;
     NSString* screenString =[screenName absoluteString];
     NSArray<NSString*>* parts = [screenString componentsSeparatedByString:@"/"];
-    
+
     // Track an Analytics pageview
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:[parts lastObject]];
     [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
-    
+
 }
 
 // Disables iOS 9 webview touch tooltip by disabling the long-press gesture recognizer in subviews
@@ -328,23 +328,23 @@ JSContext *js;
     dispatch_async(dispatch_get_main_queue(), ^{
         MFMailComposeViewController *mailComposeViewController = [[MFMailComposeViewController alloc] init];
         mailComposeViewController.mailComposeDelegate = self;
-        
-        NSString* filename = [[projectURL absoluteString] lastPathComponent];
-        
+
+        NSString* filename = name;
+
         [mailComposeViewController setSubject: subject];
         [mailComposeViewController setMessageBody:body isHTML:YES];
-        
+
          NSData *projectData = [NSData dataWithContentsOfURL:projectURL];
-        
+
         NSString* mimeType = @"application/x-scratchjr-project";
-        
+
         #if PBS
             mimeType = @"application/x-pbskids-scratchjr-project";
         #endif
-        
+
         // Check to ensure modal is not nil. This can occur when the user does not have a mail account configured on their device
         if (mailComposeViewController == nil) return;
-        
+
         [mailComposeViewController addAttachmentData:projectData mimeType:mimeType fileName:filename];
         [self presentViewController:mailComposeViewController animated:YES completion:nil];
     });
