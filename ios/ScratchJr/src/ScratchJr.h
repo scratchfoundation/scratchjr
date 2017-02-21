@@ -103,6 +103,10 @@
 -(NSString*) io_getmedialen:(NSString*)file :(NSString*)key;
 -(NSString*) io_getmediadone:(NSString*)filename;
 -(NSString*) io_remove:(NSString*)filename;
+-(NSString*) io_registersound:(NSString*) dir :(NSString*) name;
+-(NSString*) io_playsound:(NSString*) name;
+-(NSString*) io_stopsound:(NSString*) name;
+
 -(NSString*) recordsound_recordstart;
 -(NSString*) recordsound_recordstop;
 -(NSString*) recordsound_volume;
@@ -158,6 +162,9 @@
 + (NSString*) getmediadone:(NSString*)filename;
 + (NSString*) remove:(NSString*)filename;
 + (NSString*) sendSjrUsingShareDialog:(NSString*) fileName :(NSString*) emailSubject :(NSString*) emailBody :(int) shareType :(NSString*) b64data;
++(NSString *) registerSound:(NSString*) dir :(NSString*) name;
++(NSString *) playSound:(NSString*) name;
++(NSString *) stopSound:(NSString*) name;
 @end
 
 @interface ScratchJr : NSObject
@@ -175,4 +182,3 @@
 +(NSString*) choosecamera:(NSString*) body;
 +(NSString*) captureimage:(NSString*)onCameraCaptureComplete;
 @end
-

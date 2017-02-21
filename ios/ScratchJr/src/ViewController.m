@@ -256,6 +256,18 @@ JSContext *js;
     return [IO remove:filename];
 }
 
+-(NSString*) io_registersound:(NSString*)dir :(NSString*)name {
+    return [IO registerSound:dir:name];
+}
+
+-(NSString*) io_playsound:(NSString*) name {
+    return [IO playSound:name];
+}
+
+-(NSString*) io_stopsound:(NSString*) name {
+    return [IO stopSound:name];
+}
+
 -(NSString*) recordsound_recordstart {
     return [RecordSound startRecord];
 }

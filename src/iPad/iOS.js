@@ -2,6 +2,7 @@ import {isiOS, gn} from '../utils/lib';
 import IO from './IO';
 import Lobby from '../lobby/Lobby';
 import Alert from '../editor/ui/Alert';
+import ScratchAudio from '../utils/ScratchAudio';
 
 //////////////////////////////////////////////////
 //  Tablet interface functions
@@ -180,6 +181,40 @@ export default class iOS {
         }
     }
 
+    // Sound functions
+
+        static registerSound (dir, name, fcn) {
+            var result = tabletInterface.io_registersound(dir, name);
+            console.log(result);
+            if (fcn) {
+                fcn(result);
+            }
+        }
+
+
+    static playSound (name, fcn) {
+        var result = tabletInterface.io_playsound(name);
+        console.log(result); // eslint-disable-line no-console
+        if (fcn) {
+            fcn(result);
+        }
+    }
+
+    static stopSound (name, fcn) {
+        var result = tabletInterface.io_stopsound(name);
+        if (fcn) {
+            fcn(result);
+        }
+    }
+
+    // Web Wiew delegate call backs
+
+    static soundDone (name) {
+        console.log('soundDone callback, id:', name); // eslint-disable-line no-console
+
+        ScratchAudio.soundDone(name);
+    }
+
     static sndrecord (fcn) {
         var result = tabletInterface.recordsound_recordstart();
         if (fcn) {
@@ -341,6 +376,8 @@ export default class iOS {
             }
         }
     }
+
+
 }
 
 // Expose iOS methods for ScratchJr tablet sharing callbacks

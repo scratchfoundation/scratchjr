@@ -229,26 +229,12 @@ export default class ScratchJr {
         document.ontouchmove = function (e) {
             e.preventDefault();
         };
-        window.ontouchstart = ScratchJr.triggerAudio;
+        window.ontouchstart = ScratchJr.unfocus;
         if (isTablet) {
             window.ontouchend = undefined;
         } else {
             window.onmouseup = undefined;
         }
-    }
-
-    static prepareAudio () {
-        if (ScratchAudio.firstTime) {
-            ScratchAudio.firstClick();
-        }
-        if (!ScratchAudio.firstTime) {
-            window.ontouchstart = ScratchJr.unfocus;
-        }
-    }
-
-    static triggerAudio (evt) {
-        ScratchJr.prepareAudio();
-        ScratchJr.unfocus(evt);
     }
 
     static unfocus (evt) {
@@ -456,7 +442,6 @@ export default class ScratchJr {
     }
 
     static runStrips (e) {
-        ScratchJr.prepareAudio();
         ScratchJr.stopStripsFromTop(e);
         ScratchJr.unfocus(e);
         ScratchJr.startGreenFlagThreads();
