@@ -21,6 +21,8 @@ JSContext *js;
     if (self) {
         // Custom initialization
     }
+    
+    printf("ViewController initialized\n");
     return self;
 }
 
@@ -38,6 +40,8 @@ JSContext *js;
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:NO];
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
     [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+    
+    printf("viewDidLoad\n");
 }
 
 - (void) showSplash {
@@ -46,7 +50,9 @@ JSContext *js;
     splashScreen.animationImages = [NSArray arrayWithObjects:
                                     [UIImage imageNamed:@"Default.png"],
                                     nil];
-    [self.view addSubview:splashScreen];
+//    [self.view addSubview:splashScreen];
+    
+    printf("splash screen show\n");
 }
 
 - (void)didReceiveMemoryWarning
@@ -91,6 +97,9 @@ JSContext *js;
     NSURLRequest* request = [NSURLRequest requestWithURL:url];
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
     [webview loadRequest:request];
+    
+    NSLog(request.URL.absoluteString);
+    printf("Reload Complete\n\n");
 }
 
 - (void)viewWillAppear:(BOOL)animated{[super viewWillAppear:animated];}
@@ -105,16 +114,22 @@ JSContext *js;
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
     //read your request here
     //before the webview will load your request
+    
+    NSString *requestString = [[[request URL] absoluteString] stringByReplacingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+    NSLog(requestString);
+    
     return YES;
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView{
     //access your request
+    printf("request loading\n");
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
     // Inject a reference for the dispatch method into the UIWebView
     // This happens after the page is loaded and the page's onLoad method is called
+    printf("request loaded\n");
     js = [webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
     js[@"tablet"] = self;
     [self disableWebViewLongPressGestures:webView];
@@ -134,7 +149,7 @@ JSContext *js;
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:[parts lastObject]];
     [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
-
+    
 }
 
 // Disables iOS 9 webview touch tooltip by disabling the long-press gesture recognizer in subviews

@@ -13,6 +13,8 @@ NSMutableDictionary *mediastrings;
 + (void)init:(ViewController*)vc {
     mediastrings = [[NSMutableDictionary alloc] init];
     HTML =vc;
+    
+    printf("IO init");
 }
 
 + (NSString*)getpath {return [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];}
