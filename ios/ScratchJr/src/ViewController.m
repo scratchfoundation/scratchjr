@@ -37,7 +37,7 @@ JSContext *js;
     [self reload];
     [self showSplash];
     [IO init: self];
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:NO];
+    //[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:NO]; // Deprecated  iOS9
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
     [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
     
@@ -93,12 +93,16 @@ JSContext *js;
     NSString *location = [[NSUserDefaults standardUserDefaults] stringForKey:@"html"];
     if ([location length] > 3) location = [location substringFromIndex:3];
     NSString *path = [[NSBundle mainBundle]  pathForResource: @"HTML5/index" ofType:@"html"];
-    NSURL *url = [NSURL URLWithString: [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    
+    // NSURL *url = [NSURL URLWithString: [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]; // Deprecated iOS9
+    // TODO: confirm correct NSCharacterSet
+    NSURL *url = [NSURL URLWithString: [path stringByAddingPercentEncodingWithAllowedCharacters: [NSCharacterSet URLPathAllowedCharacterSet]]];
+    
     NSURLRequest* request = [NSURLRequest requestWithURL:url];
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
     [webview loadRequest:request];
     
-    NSLog(request.URL.absoluteString);
+    NSLog(@"%@", request.URL.absoluteString);
     printf("Reload Complete\n\n");
 }
 
@@ -115,8 +119,7 @@ JSContext *js;
     //read your request here
     //before the webview will load your request
     
-    NSString *requestString = [[[request URL] absoluteString] stringByReplacingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
-    NSLog(requestString);
+    NSLog(@"%@", [[request URL] absoluteString]);
     
     return YES;
 }
@@ -387,6 +390,7 @@ JSContext *js;
     });
 
 }
+
 
 
 @end
