@@ -333,6 +333,14 @@ JSContext *js;
     return @"1";
 }
 
+-(bool) screenrecord_recordstart:(bool)microphoneEnabled {
+    return [self startRecordingWithMicrophoneEnabled:microphoneEnabled];
+}
+
+-(bool) screenrecord_recordstop {
+    return [self stopRecording];
+}
+
 // iPad name (used for information in the name/sharing dialog to help people using Airdrop)
 - (NSString*) deviceName {
     return [[UIDevice currentDevice] name];
@@ -392,5 +400,106 @@ JSContext *js;
 }
 
 
+@end
+
+@implementation ViewController (ScreenRecorder)
+
+- (BOOL) startRecordingWithMicrophoneEnabled:(BOOL)microphoneEnabled {
+    __block BOOL success = NO;
+
+    // Microphone
+    [[RPScreenRecorder sharedRecorder] setMicrophoneEnabled:microphoneEnabled];
+    
+    if ([[RPScreenRecorder sharedRecorder] isAvailable]) {
+        if (![[RPScreenRecorder sharedRecorder] isRecording]) {
+            [[RPScreenRecorder sharedRecorder] startRecordingWithHandler:^(NSError * _Nullable error) {
+                
+                if (error == nil) {
+                    printf("Recording Started");
+                    
+                    // UI Stuff
+                    
+                    success = YES;
+                } else {
+                    // Handle Error
+                    printf("Error: Recording could not start");
+                    printf("%s", [error debugDescription]);
+                }
+            }];
+        } else {
+            printf("Error: Recording already in progress");
+        }
+    } else {
+        // Handle Availability Error
+        printf("Error: Recorder not available");
+    }
+    
+    return success;
+}
+
+- (BOOL) stopRecording {
+    __block BOOL success = NO;
+    
+    printf("Recording Stopping");
+    
+    // Turn off microphone
+    [[RPScreenRecorder sharedRecorder] setMicrophoneEnabled:NO];
+    
+    if ([[RPScreenRecorder sharedRecorder] isRecording]) {
+        [[RPScreenRecorder sharedRecorder] stopRecordingWithHandler:^(RPPreviewViewController * _Nullable previewViewController, NSError * _Nullable error) {
+            
+            if (error == nil) {
+                if (previewViewController != nil) {
+                    
+                    [previewViewController setPreviewControllerDelegate:self];
+                    
+                    // View / Discard Response
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Recording Ended" message:@"Do you wish to view or discard your recording?" preferredStyle: UIAlertControllerStyleAlert];
+                    
+                    UIAlertAction *discardAction = [UIAlertAction actionWithTitle:@"Discard" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                        [[RPScreenRecorder sharedRecorder] discardRecordingWithHandler:^{
+                            // Handle Discarding
+                            printf("Recording Discarded");
+                        }];
+                    }];
+                    
+                    UIAlertAction *viewAction = [UIAlertAction actionWithTitle:@"View" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        printf("\n\nPRESENTING PREVIEW\n\n");
+                        [previewViewController setModalPresentationStyle:UIModalPresentationFullScreen];
+                        UIPopoverPresentationController *previewPresenter = [previewViewController popoverPresentationController];
+                        previewPresenter.sourceView = self.view;
+                        
+                        [self presentViewController:previewViewController animated:YES completion:nil];
+                    }];
+                    
+                    [alertController addAction:discardAction];
+                    [alertController addAction:viewAction];
+                    
+                    [self presentViewController:alertController animated:YES completion:nil];
+                    
+                    // UI Stuff
+                    
+                    success = YES;
+                } else {
+                    // Handle Error
+                    printf("Preview Controller is nil");
+                }
+            } else {
+                // Handle Error
+                printf("Error: Recording could not stop");
+                printf("%s", [error debugDescription]);
+            }
+        }];
+    }
+    
+    return success;
+}
+
+
+- (void)previewController:(RPPreviewViewController *)previewController didFinishWithActivityTypes:(NSSet<NSString *> *)activityTypes {
+    // Handle Activity Types
+    
+    [previewController dismissViewControllerAnimated:YES completion:nil];
+}
 
 @end

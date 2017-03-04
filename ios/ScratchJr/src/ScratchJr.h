@@ -3,6 +3,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <MessageUI/MessageUI.h>
 #import <JavaScriptCore/JavaScriptCore.h>
+#import <ReplayKit/ReplayKit.h>
 
 @interface Database : NSObject
 
@@ -119,6 +120,10 @@
 - (NSString*) sendSjrUsingShareDialog:(NSString*) fileName :(NSString*) emailSubject :(NSString*) emailBody :(int) shareType :(NSString*) b64data;
 -(NSString*) deviceName;
 -(NSString*) analyticsEvent:(NSString*) category :(NSString*) action :(NSString*) label :(NSNumber*) value;
+
+-(bool) screenrecord_recordstart:(bool)microphoneEnabled;
+-(bool) screenrecord_recordstop;
+
 @end
 
 @interface ViewController : UIViewController <JSExports,UIWebViewDelegate,MFMailComposeViewControllerDelegate>
@@ -135,6 +140,12 @@
 - (void) showShareAirdrop:(NSURL *) projectURL;
 @end
 
+@interface ViewController (ScreenRecorder) <RPPreviewViewControllerDelegate>
+// Exports
+- (BOOL) startRecordingWithMicrophoneEnabled:(BOOL)microphoneEnabled;
+- (BOOL) stopRecording;
+
+@end
 
 @interface IO : NSObject
 

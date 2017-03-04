@@ -124,6 +124,11 @@ export default class UI {
             var shareEmail = newHTML('div', 'infoboxShareButton', shareButtons);
             shareEmail.id = 'infoboxShareButtonEmail';
             shareEmail.textContent = Localization.localize('SHARING_BY_EMAIL');
+            
+            var shareRecord = newHTML('div', 'infoboxShareButton', shareButtons);
+            shareRecord.id = 'infoboxShareButtonRecord';
+            shareRecord.textContent = 'SHARE BY RECORDING';
+            shareRecord.style.float = 'right'
 
             if (isAndroid) {
                 shareEmail.style.margin = 'auto';
@@ -135,7 +140,7 @@ export default class UI {
                 var shareAirdrop = newHTML('div', 'infoboxShareButton', shareButtons);
                 shareAirdrop.id = 'infoboxShareButtonAirdrop';
                 shareAirdrop.textContent = Localization.localize('SHARING_BY_AIRDROP');
-                shareAirdrop.style.float = 'right';
+//                shareAirdrop.style.float = 'right';
                 shareAirdrop.ontouchstart = function (e) {
                     UI.parentalGate(e, function (e) {
                         UI.infoDoShare(e, nameField, shareLoadingGif, 1);
@@ -155,12 +160,21 @@ export default class UI {
                     UI.infoDoShare(e, nameField, shareLoadingGif, 0);
                 });
             };
+            
+            shareRecord.ontouchstart = function (e) {
+                UI.parentalGate(e, function (e) {
+                    iOS.startscreenrecord(false, UI.hideInfoBox, e, true);
+                    setTimeout(function () {
+                        iOS.stopscreenrecord();
+                    }, 10000);
+
+                });
+            };
         }
 
         info.ontouchend = UI.showInfoBox;
-        okclicky.ontouchstart = UI.hideInfoBox;
         okclicky.ontouchstart = function (evt) {
-            UI.hideInfoBox(evt, nameField);
+            UI.hideInfoBox(evt);
         };
     }
 
@@ -311,7 +325,7 @@ export default class UI {
         return ti;
     }
 
-    static handleTextFieldSave (dontHide) {
+    static handleTextFieldSave (dontHide, cancelSound) {
         // Handle story-starter mode project
         if (ScratchJr.isEditable() && ScratchJr.editmode == 'storyStarter' && !Project.error) {
             iOS.analyticsEvent('samples', 'story_starter_edited', Project.metadata.name);
@@ -332,15 +346,15 @@ export default class UI {
                     ScratchJr.currentProject = md5;
                     ScratchJr.editmode = 'edit';
                     Project.metadata.gallery = '';
-                    UI.finishTextFieldSave(dontHide);
+                    UI.finishTextFieldSave(dontHide, cancelSound);
                 });
             });
         } else {
-            UI.finishTextFieldSave(dontHide);
+            UI.finishTextFieldSave(dontHide, cancelSound);
         }
     }
 
-    static finishTextFieldSave (dontHide) {
+    static finishTextFieldSave (dontHide, cancelSound) {
         var ti = projectNameTextInput;
         var pname = (ti.value.length == 0) ? ti.oldvalue : ti.value.substring(0, ti.maxLength);
         if (Project.metadata.name != pname) {
@@ -350,7 +364,9 @@ export default class UI {
         ScratchJr.changed = true;
         iOS.setfield(iOS.database, Project.metadata.id, 'name', pname);
         if (!dontHide) {
-            ScratchAudio.sndFX('exittap.wav');
+            if (!cancelSound) {
+                ScratchAudio.sndFX('exittap.wav');
+            }
             gn('infobox').className = 'infobox fade';
         }
     }
@@ -421,7 +437,7 @@ export default class UI {
         return year + '-' + month + '-' + day + ' ' + hour + ':' + min + ':' + sec;
     }
 
-    static hideInfoBox (e) {
+    static hideInfoBox (e, cancelSound) {
         e.preventDefault();
         e.stopPropagation();
         ScratchJr.onBackButtonCallback.pop();
@@ -434,7 +450,9 @@ export default class UI {
 
         if (ScratchJr.isEditable()) {
             (document.forms.projectname.myproject).blur();
-            UI.handleTextFieldSave();
+            
+            var dontHide = false;
+            UI.handleTextFieldSave(dontHide, cancelSound);
         } else {
             ScratchAudio.sndFX('exittap.wav');
             gn('infobox').className = 'infobox fade';
