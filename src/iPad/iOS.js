@@ -185,7 +185,6 @@ export default class iOS {
 
         static registerSound (dir, name, fcn) {
             var result = tabletInterface.io_registersound(dir, name);
-            console.log(result);
             if (fcn) {
                 fcn(result);
             }
@@ -194,7 +193,6 @@ export default class iOS {
 
     static playSound (name, fcn) {
         var result = tabletInterface.io_playsound(name);
-        console.log(result); // eslint-disable-line no-console
         if (fcn) {
             fcn(result);
         }
@@ -210,8 +208,6 @@ export default class iOS {
     // Web Wiew delegate call backs
 
     static soundDone (name) {
-        console.log('soundDone callback, id:', name); // eslint-disable-line no-console
-
         ScratchAudio.soundDone(name);
     }
 

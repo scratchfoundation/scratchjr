@@ -53,7 +53,6 @@ function indexFirstTime () {
         iOS.hidesplash(doit);
     }, 500);
     function doit () {
-        ScratchAudio.sndFX('tap.wav');
         window.ontouchend = function () {
             indexLoadOptions();
         };
@@ -88,13 +87,6 @@ function indexLoadOptions () {
 }
 
 function indexGohome () {
-    // On iOS, sounds are loaded async, but the code as written expects to play tap.wav when we enter home.html
-    // (but since it isn't loaded yet, no sound is played).
-    // On Android, sync sounds means both calls to tap.wav result in a sound play.
-    // XXX: we should re-write the lobby loading to wait for the sounds to load, and not play a sound here.
-    if (isiOS) {
-        ScratchAudio.sndFX('tap.wav');
-    }
     iOS.setfile('homescroll.sjr', 0, function () {
         doNext();
     });

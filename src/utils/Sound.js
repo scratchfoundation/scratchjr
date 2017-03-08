@@ -1,5 +1,5 @@
 import {isAndroid} from './lib';
-import ScratchAudio from './ScratchAudio';
+import iOS from '../iPad/iOS';
 
 export default class Sound {
     constructor (name, time) {
