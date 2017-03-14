@@ -4,6 +4,7 @@ ViewController* HTML;
 MFMailComposeViewController *emailDialog;
 NSMutableDictionary *mediastrings;
 NSMutableDictionary *sounds;
+NSMutableDictionary *soundtimers;
 
 // new primtives
 
@@ -14,6 +15,7 @@ NSMutableDictionary *sounds;
 + (void)init:(ViewController*)vc {
     mediastrings = [[NSMutableDictionary alloc] init];
     sounds = [[NSMutableDictionary alloc] init];
+    soundtimers = [[NSMutableDictionary alloc] init];
     HTML =vc;
 }
 
@@ -260,20 +262,26 @@ NSMutableDictionary *sounds;
     //         [[AVAudioSession sharedInstance] setCategory:audiotype error:nil];
     AVAudioPlayer *snd = sounds[name];
     if (snd == nil) {
-        return [NSString stringWithFormat: @"%@ not found", name];
+        return [NSString stringWithFormat:@"%@ not found", name];
     }
-    else {
-        [snd setCurrentTime:0.0];
-        [snd play];
-        [NSTimer scheduledTimerWithTimeInterval: [snd duration] target: self selector: @selector(so\
-undEnded:) userInfo:@{@"soundName": name} repeats: NO];
-        return  [NSString stringWithFormat: @"%@ played", name];
+    NSTimer *sndTimer = soundtimers[name];
+    if (sndTimer.valid) {
+        // this sound is already playing, invalidate so that new timer will overrule
+        [sndTimer invalidate];
     }
+    [snd setCurrentTime:0];
+    [snd play];
+    [soundtimers setObject:[NSTimer scheduledTimerWithTimeInterval:[snd duration]
+                                     target:self
+                                   selector:@selector(soundEnded:)
+                                   userInfo:@{@"soundName":name}
+                                    repeats:NO] forKey:name];
+    return  [NSString stringWithFormat:@"%@ played", name];
 }
 
 + (void)soundEnded:(NSTimer*)timer {
         NSString *soundName = [[timer userInfo] objectForKey:@"soundName"];
-        if (sounds[soundName]  == nil) return;
+        if (sounds[soundName] == nil) return;
         NSString *callback = [NSString stringWithFormat:@"iOS.soundDone('%@');", soundName];
         UIWebView *webview = [ViewController webview];
         [webview stringByEvaluatingJavaScriptFromString:callback];
