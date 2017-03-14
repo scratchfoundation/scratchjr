@@ -48,18 +48,10 @@ export default class ScratchAudio {
             ScratchAudio.addSound(prefix + 'sounds/', defaultSounds[i], uiSounds);
         }
         ScratchAudio.addSound(prefix, 'pop.mp3', projectSounds);
-        // } else {
-        //     for (var j=0; j < defaultSounds.length; j++) {
-        //         iOS.registerSound('HTML5/sounds/',  defaultSounds[j], ScratchAudio.UIsoundLoaded );
-        //     }
-        //     iOS.registerSound('HTML5/', 'pop.mp3', ScratchAudio.UIsoundLoaded );
-        // }
-
     }
 
     static addSound (url, snd, dict, fcn) {
         var name = snd;
-        console.log(url+' '+snd);
         if (!isAndroid) {
             var whenDone =  function (str) {
                 if (str != 'error') {
@@ -71,10 +63,8 @@ export default class ScratchAudio {
                 if (fcn) {
                     fcn(name);
                 }
-            //	dict [name].time  = Number (result[1]);
             };
             iOS.registerSound(url, snd, whenDone);
-
         } else {
             // In Android, this is handled outside of JavaScript, so just place a stub here.
             dict[snd] = new Sound(url + snd);
@@ -87,12 +77,9 @@ export default class ScratchAudio {
     static soundDone (name) {
         if (!projectSounds[name]) return;
         projectSounds[name].playing = false;
-        console.log(name);
-
     }
 
     static loadProjectSound (md5, fcn) {
-        console.log(md5);
         if (!md5) {
             return;
         }
@@ -101,7 +88,6 @@ export default class ScratchAudio {
             if (md5.indexOf('/') > -1) dir = 'HTML5/';
             else if (md5.indexOf('wav') > -1) dir = 'Documents';
         }
-        console.log('loadProjectSound: ' + dir + ' ' + md5);
         ScratchAudio.loadFromLocal(dir, md5, fcn);
     }
 
@@ -111,7 +97,6 @@ export default class ScratchAudio {
         }
         ScratchAudio.addSound(dir, md5, projectSounds, fcn);
     }
-
 }
 
 window.ScratchAudio = ScratchAudio;

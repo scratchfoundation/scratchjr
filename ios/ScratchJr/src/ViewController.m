@@ -78,7 +78,6 @@ JSContext *js;
             [defaultsToRegister setObject:[prefSpecification objectForKey:@"DefaultValue"] forKey:key];
         }
     }
-  //  NSLog(@"defaultsToRegister %@", defaultsToRegister);
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultsToRegister];
 }
 

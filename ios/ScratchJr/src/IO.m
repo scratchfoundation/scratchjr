@@ -233,58 +233,23 @@ NSMutableDictionary *sounds;
 
 + (NSString *)registerSound:(NSString*)dir :(NSString*)name  {
     NSURL *url;
-    if ([dir  isEqual: @"Documents"]){
+    if ([dir isEqual:@"Documents"]){
         url = [self getDocumentPath: name];
     }
     else {
         url = [self getResourcePath: [NSString stringWithFormat: @"%@%@", dir, name]];
     }
-    NSLog (@"registering %@", url);
 
     NSError *error;
     AVAudioPlayer *snd = [[AVAudioPlayer alloc] initWithContentsOfURL: url error:&error];
 
-    if (error == NULL) {
+    if (error == nil) {
         [sounds setObject:snd forKey:name];
+        [snd prepareToPlay];
         return [NSString stringWithFormat: @"%@,%f", name,  snd.duration];
-    }
-    else {
-
-        NSLog (@"%@", error);
     }
     return @"error";
 }
-
-// +(NSString *)playSound:(NSString*)name  {
-//         // get the sound either from Documents (user defined sounds)
-//         // or from the HTML5 bundle.
-//         NSURL *url = ([dir  isEqual: @"Documents"]) ? [self getDocumentPath: name] : [self getResou\
-// rcePath: [NSString stringWithFormat: @"%@%@", dir, name]];
-//
-//         // audio type: respect the "Mute" if there are audio sounds
-//         // ignore the Mute if it is from recording / playback and Runtime.
-//         NSString *audiotype = ([dir  isEqual: @"Documents"] || [name isEqual:@"pop.mp3"]) ? AVAudio\
-// SessionCategoryPlayAndRecord : AVAudioSessionCategoryAmbient;
-//         [[AVAudioSession sharedInstance] setCategory:audiotype error:nil];
-//
-//         NSError *error;
-//         AVAudioPlayer *snd = [[AVAudioPlayer alloc] initWithContentsOfURL: url error:&error];
-//
-//         if (error == NULL) {
-//             snd.numberOfLoops = 0;
-//             [snd prepareToPlay];
-//             [snd play];
-//             NSString *id =  [self setSoundTimeout: snd];
-//             NSString *result = [NSString stringWithFormat: @"%@,%f", id,  [snd duration]];
-//             NSLog (@"%@", result);
-//             return result;
-//         }
-//         else {
-//             NSLog (@"%@", error);
-//             return @"error";
-//         }
-//     }
-
 
 + (NSString *)playSound :(NSString*)name  {
     // TODO: make scratchJr pay attention to the mute
@@ -294,12 +259,11 @@ NSMutableDictionary *sounds;
     // SessionCategoryPlayAndRecord : AVAudioSessionCategoryAmbient;
     //         [[AVAudioSession sharedInstance] setCategory:audiotype error:nil];
     AVAudioPlayer *snd = sounds[name];
-    NSLog (@"play %@", snd);
-    if (snd == NULL) {
+    if (snd == nil) {
         return [NSString stringWithFormat: @"%@ not found", name];
     }
     else {
-        [snd prepareToPlay];
+        [snd setCurrentTime:0.0];
         [snd play];
         [NSTimer scheduledTimerWithTimeInterval: [snd duration] target: self selector: @selector(so\
 undEnded:) userInfo:@{@"soundName": name} repeats: NO];
@@ -308,27 +272,21 @@ undEnded:) userInfo:@{@"soundName": name} repeats: NO];
 }
 
 + (void)soundEnded:(NSTimer*)timer {
-        NSString *soundName =  [[timer userInfo] objectForKey:@"soundName"];
-        NSLog(@"%@", soundName);
-        if (sounds [soundName]  == NULL) return;
-        NSString *callback = [NSString stringWithFormat: @"iOS.soundDone('%@');",soundName];
+        NSString *soundName = [[timer userInfo] objectForKey:@"soundName"];
+        if (sounds[soundName]  == nil) return;
+        NSString *callback = [NSString stringWithFormat:@"iOS.soundDone('%@');", soundName];
         UIWebView *webview = [ViewController webview];
-        [webview stringByEvaluatingJavaScriptFromString: callback];
+        [webview stringByEvaluatingJavaScriptFromString:callback];
     }
+
 + (NSString *)stopSound :(NSString*)name  {
     AVAudioPlayer *snd = sounds[name];
-    NSLog (@"stop %@", snd);
-    if (snd == NULL) {
-        return [NSString stringWithFormat: @"%@ not found", name];
+    if (snd == nil) {
+        return [NSString stringWithFormat:@"%@ not found", name];
     }
-    else {
-        [snd stop];
-        return  [NSString stringWithFormat: @"%@ stopped", name];
-    }
+    [snd stop];
+    return  [NSString stringWithFormat:@"%@ stopped", name];
 }
-
-
-
 
 ////////////////////////////
 // File system

@@ -183,13 +183,12 @@ export default class iOS {
 
     // Sound functions
 
-        static registerSound (dir, name, fcn) {
-            var result = tabletInterface.io_registersound(dir, name);
-            if (fcn) {
-                fcn(result);
-            }
+    static registerSound (dir, name, fcn) {
+        var result = tabletInterface.io_registersound(dir, name);
+        if (fcn) {
+            fcn(result);
         }
-
+    }
 
     static playSound (name, fcn) {
         var result = tabletInterface.io_playsound(name);
@@ -372,8 +371,6 @@ export default class iOS {
             }
         }
     }
-
-
 }
 
 // Expose iOS methods for ScratchJr tablet sharing callbacks
