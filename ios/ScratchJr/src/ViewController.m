@@ -78,7 +78,6 @@ JSContext *js;
             [defaultsToRegister setObject:[prefSpecification objectForKey:@"DefaultValue"] forKey:key];
         }
     }
-  //  NSLog(@"defaultsToRegister %@", defaultsToRegister);
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultsToRegister];
 }
 
@@ -254,6 +253,18 @@ JSContext *js;
 
 -(NSString*) io_remove:(NSString*)filename {
     return [IO remove:filename];
+}
+
+-(NSString*) io_registersound:(NSString*)dir :(NSString*)name {
+    return [IO registerSound:dir:name];
+}
+
+-(NSString*) io_playsound:(NSString*) name {
+    return [IO playSound:name];
+}
+
+-(NSString*) io_stopsound:(NSString*) name {
+    return [IO stopSound:name];
 }
 
 -(NSString*) recordsound_recordstart {

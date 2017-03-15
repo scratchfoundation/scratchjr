@@ -2,6 +2,7 @@ import {isiOS, gn} from '../utils/lib';
 import IO from './IO';
 import Lobby from '../lobby/Lobby';
 import Alert from '../editor/ui/Alert';
+import ScratchAudio from '../utils/ScratchAudio';
 
 //////////////////////////////////////////////////
 //  Tablet interface functions
@@ -178,6 +179,35 @@ export default class iOS {
         if (fcn) {
             fcn(result);
         }
+    }
+
+    // Sound functions
+
+    static registerSound (dir, name, fcn) {
+        var result = tabletInterface.io_registersound(dir, name);
+        if (fcn) {
+            fcn(result);
+        }
+    }
+
+    static playSound (name, fcn) {
+        var result = tabletInterface.io_playsound(name);
+        if (fcn) {
+            fcn(result);
+        }
+    }
+
+    static stopSound (name, fcn) {
+        var result = tabletInterface.io_stopsound(name);
+        if (fcn) {
+            fcn(result);
+        }
+    }
+
+    // Web Wiew delegate call backs
+
+    static soundDone (name) {
+        ScratchAudio.soundDone(name);
     }
 
     static sndrecord (fcn) {
