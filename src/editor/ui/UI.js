@@ -13,6 +13,7 @@ import Stage from '../engine/Stage';
 import ScriptsPane from './ScriptsPane';
 import Undo from './Undo';
 import Library from './Library';
+import ScreenRecord from './ScreenRecord';
 import iOS from '../../iPad/iOS';
 import IO from '../../iPad/IO';
 import MediaLib from '../../iPad/MediaLib';
@@ -727,6 +728,11 @@ export default class UI {
         UI.creatTopBarClicky(div, 'go', 'go on', UI.toggleRun);
         UI.creatTopBarClicky(div, 'resetall', 'resetall', UI.resetAllSprites);
         UI.creatTopBarClicky(div, 'full', 'fullscreen', ScratchJr.fullScreen);
+
+        if (isTablet) {
+            UI.creatTopBarClicky(div, 'record', 'recordToggle off', UI.toggleRecording);
+        }
+        
         UI.toggleGrid(true);
     }
 
@@ -757,9 +763,22 @@ export default class UI {
         UI.toggleGrid(!Grid.hidden);
     }
 
+
     static toggleGrid (b) {
         Grid.hide(b);
         gn('grid').className = Grid.hidden ? 'gridToggle off' : 'gridToggle on';
+    }
+    
+    static toggleRecording () {
+        // ScreenRecord menu appear/disappear
+        if (ScreenRecord.dialogOpen) {
+            ScreenRecord.disappear();
+        } else {
+            ScreenRecord.appear();
+        }
+
+        // Menu Icon UI change
+        gn('record').className = ScreenRecord.dialogOpen ? 'recordToggle on' : 'recordToggle off';
     }
 
     static creatTopBarClicky (p, str, mstyle, fcn) {

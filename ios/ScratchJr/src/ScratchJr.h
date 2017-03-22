@@ -122,7 +122,7 @@
 -(NSString*) analyticsEvent:(NSString*) category :(NSString*) action :(NSString*) label :(NSNumber*) value;
 
 -(bool) screenrecord_recordstart:(bool)microphoneEnabled;
--(bool) screenrecord_recordstop;
+-(bool) screenrecord_recordstop:(bool)force;
 
 @end
 
@@ -143,7 +143,7 @@
 @interface ViewController (ScreenRecorder) <RPPreviewViewControllerDelegate>
 // Exports
 - (BOOL) startRecordingWithMicrophoneEnabled:(BOOL)microphoneEnabled;
-- (BOOL) stopRecording;
+- (BOOL) stopRecordingWithForce:(BOOL)kill;
 
 @end
 

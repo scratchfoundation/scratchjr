@@ -32,6 +32,26 @@
 .gridToggle.off {background:  url('../assets/ui/gridOn.svg'); background-size: 100%; }
 .gridToggle.on {background:  url('../assets/ui/gridOff.svg'); background-size: 100%; }
 
+.recordToggle {
+    position: absolute;
+    margin: 0px;
+    padding: 0px;
+    top: ${css_vh(1.30)};
+    left: ${css_vh(22.09)};
+    width: ${css_vh(6.83)};
+    height: ${css_vh(6.83)};
+}
+
+.recordToggle.on {
+    background: url('../assets/ui/camcorder-off.png');
+    background-size: 100%;
+}
+
+.recordToggle.off {
+    background: url('../assets/ui/camcorder-on.png');
+    background-size: 100%;
+}
+
 .addText {
     position: absolute;
     margin: 0px;

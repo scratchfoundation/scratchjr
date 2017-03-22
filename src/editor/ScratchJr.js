@@ -6,6 +6,7 @@ import Undo from './ui/Undo';
 import Alert from './ui/Alert';
 import Palette from './ui/Palette';
 import Record from './ui/Record';
+import ScreenRecord from './ui/ScreenRecord';
 import IO from '../iPad/IO';
 import iOS from '../iPad/iOS';
 import UI from './ui/UI';
@@ -199,6 +200,7 @@ export default class ScratchJr {
         Library.init();
         Paint.init();
         Record.init();
+        ScreenRecord.init();
         Prims.init();
         runtime = new Runtime();
         Undo.init();

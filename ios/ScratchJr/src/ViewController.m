@@ -337,8 +337,8 @@ JSContext *js;
     return [self startRecordingWithMicrophoneEnabled:microphoneEnabled];
 }
 
--(bool) screenrecord_recordstop {
-    return [self stopRecording];
+-(bool) screenrecord_recordstop:(bool)force {
+    return [self stopRecordingWithForce:force];
 }
 
 // iPad name (used for information in the name/sharing dialog to help people using Airdrop)
@@ -405,7 +405,7 @@ JSContext *js;
 @implementation ViewController (ScreenRecorder)
 
 - (BOOL) startRecordingWithMicrophoneEnabled:(BOOL)microphoneEnabled {
-    __block BOOL success = NO;
+    __block BOOL success = YES;
 
     // Microphone
     [[RPScreenRecorder sharedRecorder] setMicrophoneEnabled:microphoneEnabled];
@@ -424,20 +424,23 @@ JSContext *js;
                     // Handle Error
                     printf("Error: Recording could not start");
                     printf("%s", [error debugDescription]);
+                    success = NO;
                 }
             }];
         } else {
             printf("Error: Recording already in progress");
+            success = NO;
         }
     } else {
         // Handle Availability Error
         printf("Error: Recorder not available");
+        success = NO;
     }
     
     return success;
 }
 
-- (BOOL) stopRecording {
+- (BOOL) stopRecordingWithForce:(BOOL)kill {
     __block BOOL success = NO;
     
     printf("Recording Stopping");
@@ -449,7 +452,14 @@ JSContext *js;
         [[RPScreenRecorder sharedRecorder] stopRecordingWithHandler:^(RPPreviewViewController * _Nullable previewViewController, NSError * _Nullable error) {
             
             if (error == nil) {
-                if (previewViewController != nil) {
+                // If Force Kill, discard and do not prompt user
+                if (kill) {
+                    [[RPScreenRecorder sharedRecorder] discardRecordingWithHandler:^{
+                        return;
+                    }];
+                    
+                    success = YES;
+                } else if (previewViewController != nil) {
                     
                     [previewViewController setPreviewControllerDelegate:self];
                     
@@ -495,6 +505,8 @@ JSContext *js;
     return success;
 }
 
+
+// RPPreviewControllerDelegate Methods
 
 - (void)previewController:(RPPreviewViewController *)previewController didFinishWithActivityTypes:(NSSet<NSString *> *)activityTypes {
     // Handle Activity Types

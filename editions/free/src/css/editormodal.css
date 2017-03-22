@@ -141,7 +141,6 @@
 
 
 .record	.toolbar {
-    position: absoulte;
     width: ${239 * scaleMultiplier}px;
     height: ${66 * scaleMultiplier}px;
     overflow: hidden;
@@ -276,3 +275,100 @@
 
 .soundlevel.on{ background: #8CC63F;}
 .soundlevel.off{background: #B3B3B3;}
+
+
+///////////////////
+// screen record
+///////////////////
+
+.screenrecord {
+    position: absolute;
+    bottom: -100%;
+    right: 2%;
+    z-index: 10999;
+    width: ${211 * scaleMultiplier}px;
+    height: ${66 * scaleMultiplier}px;
+    margin: 1px 1px 0px;
+    background-color: #FFC0CB;
+    border: 1px solid #999;
+    -webkit-border-radius: ${6 * scaleMultiplier}px;
+    -moz-border-radius: ${6 * scaleMultiplier}px;
+    border-radius: ${6 * scaleMultiplier}px;
+    -webkit-box-shadow: 0 ${3 * scaleMultiplier}px ${7 * scaleMultiplier}px rgba(0, 0, 0, 0.3);
+    opacity: 1;
+}
+
+.screenrecord.fade {
+    position: absolute;
+    -webkit-transition: opacity 0s linear, top 0s ease-out;
+    bottom: -100%;
+    right: 2%;
+    opacity: .99;
+}
+
+
+.screenrecord.fade.in {
+    position: absolute;
+    z-index: 110000000000;
+    top: 90%;
+    right: 2%;
+    opacity: 1;
+}
+
+
+.screenrecord .screentoolbar {
+    width: ${209 * scaleMultiplier}px;
+    height: ${66 * scaleMultiplier}px;
+    overflow: hidden;
+    text-shadow: none;
+    z-index: 10999;
+    border: 1px solid #4682B5;
+    -webkit-box-shadow: 0px 1px 0px #fff;
+    -webkit-border-radius: ${6 * scaleMultiplier}px;
+}
+
+.screentoolbar .recordcontrols {
+    margin: ${5 * scaleMultiplier}px ${5 * scaleMultiplier}px ${5 * scaleMultiplier}px;
+    height: ${65 * scaleMultiplier}px;
+    /*background-color: #B3B3B3;*/
+}
+
+.recordcontrols .camera {
+    float: left;
+    margin: ${0 * scaleMultiplier}px ${10 * scaleMultiplier}px ${5 * scaleMultiplier}px;
+    width: ${45 * scaleMultiplier}px;
+    height: ${65 * scaleMultiplier}px;
+    background: url('../assets/lib/mic.svg');
+    background-size: 101%;
+}
+
+.screencontrolwrap{
+    margin: ${6 * scaleMultiplier}px ${2 * scaleMultiplier}px ${4 * scaleMultiplier}px ${5 * scaleMultiplier}px;
+    padding: 0px 0px 0px;
+    display: inline-block;
+    width: ${55 * scaleMultiplier}px;
+    height: ${45 * scaleMultiplier}px;
+}
+
+
+.stoprecord {
+    display: inline-block;
+    width: ${45 * scaleMultiplier}px;
+    height: ${45 * scaleMultiplier}px;
+    background: url('../assets/lib/stopoff.svg');
+    background-size: 101%;
+}
+
+.startrecord {
+    display: inline-block;
+    width: ${45 * scaleMultiplier}px;
+    height: ${45 * scaleMultiplier}px;
+    background: url('../assets/lib/recordoff.svg');
+    background-size: 101%;
+}
+
+.startrecord.on{ background: url('../assets/lib/recordon.svg'); background-size: 101%; }
+.startrecord.off{ background: url('../assets/lib/recordoff.svg'); background-size: 101%; }
+
+.stoprecord.on{ background: url('../assets/lib/stopon.svg'); background-size: 101%; }
+.stoprecord.off{ background: url('../assets/lib/stopoff.svg'); background-size: 101%; }
