@@ -289,7 +289,7 @@ export default class Record {
     }
 
     static closeContinueSave () {
-        iOS.recorddisappear('YES', Record.getUserSound);
+        iOS.recorddisappear('YES', Record.registerProjectSound);
     }
 
     static closeContinueRemove () {
@@ -297,18 +297,8 @@ export default class Record {
         iOS.recorddisappear('NO', Record.tearDownRecorder);
     }
 
-    static getUserSound () {
-        isRecording = false;
-        if (!isAndroid) {
-            iOS.getmedia(recordedSound, Record.registerProjectSound);
-        } else {
-            // On Android, just pass URL
-            Record.registerProjectSound(null);
-        }
-    }
-
-    static registerProjectSound (data) {
-        function loadingDone (snd) {
+    static registerProjectSound () {
+        function whenDone (snd) {
             if (snd != 'error') {
                 var spr = ScratchJr.getSprite();
                 var page = spr.div.parentNode.owner;
@@ -325,10 +315,10 @@ export default class Record {
             Palette.selectCategory(3);
         }
         if (!isAndroid) {
-            ScratchAudio.loadFromData(recordedSound, data, loadingDone);
+            ScratchAudio.loadFromLocal('Documents', recordedSound, whenDone);
         } else {
             // On Android, just pass URL
-            ScratchAudio.loadFromLocal(recordedSound, loadingDone);
+            ScratchAudio.loadFromLocal('', recordedSound, whenDone);
         }
     }
 
@@ -352,7 +342,6 @@ export default class Record {
             error = false;
         }
         // Refresh audio context
-        ScratchAudio.firstTime = true;
         isRecording = false;
         recordedSound = null;
         // Hide the dialog

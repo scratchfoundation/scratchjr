@@ -7,48 +7,17 @@ import iOS from '../iPad/iOS';
 ////////////////////////////////////////////////////
 
 let uiSounds = {};
-let context;
-let firstTime = true;
 let defaultSounds = ['cut.wav', 'snap.wav', 'copy.wav', 'grab.wav', 'boing.wav', 'tap.wav',
     'keydown.wav', 'entertap.wav', 'exittap.wav', 'splash.wav'];
 let projectSounds = {};
-let path = '';
 
 export default class ScratchAudio {
     static get uiSounds () {
         return uiSounds;
     }
 
-    static get firstTime () {
-        return firstTime;
-    }
-
-    static set firstTime (newFirstTime) {
-        firstTime = newFirstTime;
-    }
-
     static get projectSounds () {
         return projectSounds;
-    }
-
-    static get context () {
-        return context;
-    }
-
-    static firstClick () { // trick to abilitate the Audio context in iOS 8+
-        var res = true;
-        if (uiSounds['keydown.wav']) {
-            uiSounds['keydown.wav'].playWithVolume(0);
-            res = false;
-        }
-        firstTime = res;
-    }
-
-    static firstOnTouchEnd () { // trick to abilitate the Audio context in iOS 9
-        if (uiSounds['keydown.wav']) {
-            uiSounds['keydown.wav'].playWithVolume(0);
-        }
-        window.removeEventListener('touchend', ScratchAudio.firstOnTouchEnd, false);
     }
 
     static sndFX (name) {
@@ -60,8 +29,7 @@ export default class ScratchAudio {
             if (!uiSounds[name]) {
                 return;
             }
-            uiSounds[name].playWithVolume(volume);
-            firstTime = false;
+            uiSounds[name].play();
         } else {
             AndroidInterface.audio_sndfxwithvolume(name, volume);
         }
@@ -72,49 +40,31 @@ export default class ScratchAudio {
             prefix = '';
         }
         if (!isAndroid) {
-            context = new webkitAudioContext();
-        } else {
-            context = {
-                decodeAudioData: function () {
-                },
-                play: function () {
-                }
-            };
+            prefix = 'HTML5/';
         }
         uiSounds = {};
+
         for (var i = 0; i < defaultSounds.length; i++) {
             ScratchAudio.addSound(prefix + 'sounds/', defaultSounds[i], uiSounds);
         }
-        ScratchAudio.addSound(path, prefix + 'pop.mp3', projectSounds);
+        ScratchAudio.addSound(prefix, 'pop.mp3', projectSounds);
     }
 
     static addSound (url, snd, dict, fcn) {
+        var name = snd;
         if (!isAndroid) {
-
-            var bufferSound = function () {
-                context.decodeAudioData(request.response, onDecode, onDecodeError);
-            };
-            var onDecodeError = function () {
+            var whenDone =  function (str) {
+                if (str != 'error') {
+                    var result = snd.split (',');
+                    dict[snd] = new Sound(result[0], result[1]);
+                } else {
+                    name = 'error';
+                }
                 if (fcn) {
-                    fcn('error');
+                    fcn(name);
                 }
             };
-            var onDecode = function (buffer) {
-                dict[snd] = new Sound(buffer);
-                if (fcn) {
-                    fcn(snd);
-                }
-            };
-            var transferFailed = function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-            };
-            var request = new XMLHttpRequest();
-            request.open('GET', url + snd, true);
-            request.responseType = 'arraybuffer';
-            request.addEventListener('load', bufferSound, false);
-            request.addEventListener('error', transferFailed, false);
-            request.send(null);
+            iOS.registerSound(url, snd, whenDone);
         } else {
             // In Android, this is handled outside of JavaScript, so just place a stub here.
             dict[snd] = new Sound(url + snd);
@@ -124,65 +74,29 @@ export default class ScratchAudio {
         }
     }
 
+    static soundDone (name) {
+        if (!projectSounds[name]) return;
+        projectSounds[name].playing = false;
+    }
+
     static loadProjectSound (md5, fcn) {
         if (!md5) {
             return;
         }
-        if (md5.indexOf('/') > -1) {
-            ScratchAudio.loadFromLocal(md5, fcn);
-        } else {
-
-            if (md5.indexOf('wav') > -1) {
-                if (!isAndroid) {
-                    iOS.getmedia(md5, nextStep);
-                } else {
-                    // On Android, all sounds play server-side
-                    ScratchAudio.loadFromLocal(md5, fcn);
-                }
-            } else {
-                ScratchAudio.loadFromLocal(md5, fcn);
-            }
+        var dir = '';
+        if (!isAndroid) {
+            if (md5.indexOf('/') > -1) dir = 'HTML5/';
+            else if (md5.indexOf('wav') > -1) dir = 'Documents';
         }
-        function nextStep (data) {
-            ScratchAudio.loadFromData(md5, data, fcn);
-        }
+        ScratchAudio.loadFromLocal(dir, md5, fcn);
     }
 
-    static loadFromLocal (md5, fcn) {
+    static loadFromLocal (dir, md5, fcn) {
         if (projectSounds[md5] != undefined) {
             return;
         }
-        ScratchAudio.addSound(path, md5, projectSounds, fcn);
-    }
-
-    static loadFromData (md5, data, fcn) {
-        if (!data) {
-            projectSounds[md5] = projectSounds['pop.mp3'];
-        } else {
-            var onDecode = function (buffer) {
-                projectSounds[md5] = new Sound(buffer);
-                if (fcn) {
-                    fcn(md5);
-                }
-            };
-            var onError = function () {
-                //	console.log ("error", md5, err);
-                if (fcn) {
-                    fcn('error');
-                }
-            };
-            var byteString = atob(data); // take out the base 64 encoding
-            var buffer = new ArrayBuffer(byteString.length);
-            var bytearray = new Uint8Array(buffer);
-            for (var i = 0; i < byteString.length; i++) {
-                bytearray[i] = byteString.charCodeAt(i);
-            }
-            context.decodeAudioData(buffer, onDecode, onError);
-
-        }
+        ScratchAudio.addSound(dir, md5, projectSounds, fcn);
     }
 }
 
 window.ScratchAudio = ScratchAudio;
-
-window.addEventListener('touchend', ScratchAudio.firstOnTouchEnd, false);

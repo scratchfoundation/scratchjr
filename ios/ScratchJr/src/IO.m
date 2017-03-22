@@ -3,6 +3,8 @@
 ViewController* HTML;
 MFMailComposeViewController *emailDialog;
 NSMutableDictionary *mediastrings;
+NSMutableDictionary *sounds;
+NSMutableDictionary *soundtimers;
 
 // new primtives
 
@@ -12,6 +14,8 @@ NSMutableDictionary *mediastrings;
 // new primtives
 + (void)init:(ViewController*)vc {
     mediastrings = [[NSMutableDictionary alloc] init];
+    sounds = [[NSMutableDictionary alloc] init];
+    soundtimers = [[NSMutableDictionary alloc] init];
     HTML =vc;
     
     printf("IO init");
@@ -225,6 +229,73 @@ NSMutableDictionary *mediastrings;
         NSLog(@"couldn't save file");
     }
     return @"1";
+}
+
+////////////////////////////
+// Sound System
+////////////////////////////
+
++ (NSString *)registerSound:(NSString*)dir :(NSString*)name  {
+    NSURL *url;
+    if ([dir isEqual:@"Documents"]){
+        url = [self getDocumentPath: name];
+    }
+    else {
+        url = [self getResourcePath: [NSString stringWithFormat: @"%@%@", dir, name]];
+    }
+
+    NSError *error;
+    AVAudioPlayer *snd = [[AVAudioPlayer alloc] initWithContentsOfURL: url error:&error];
+
+    if (error == nil) {
+        [sounds setObject:snd forKey:name];
+        [snd prepareToPlay];
+        return [NSString stringWithFormat: @"%@,%f", name,  snd.duration];
+    }
+    return @"error";
+}
+
++ (NSString *)playSound :(NSString*)name  {
+    // TODO: make scratchJr pay attention to the mute
+    //         // audio type: respect the "Mute" if there are audio sounds
+    //         // ignore the Mute if it is from recording / playback and Runtime.
+    //         NSString *audiotype = ([dir  isEqual: @"Documents"] || [name isEqual:@"pop.mp3"]) ? AVAudio\
+    // SessionCategoryPlayAndRecord : AVAudioSessionCategoryAmbient;
+    //         [[AVAudioSession sharedInstance] setCategory:audiotype error:nil];
+    AVAudioPlayer *snd = sounds[name];
+    if (snd == nil) {
+        return [NSString stringWithFormat:@"%@ not found", name];
+    }
+    NSTimer *sndTimer = soundtimers[name];
+    if (sndTimer.valid) {
+        // this sound is already playing, invalidate so that new timer will overrule
+        [sndTimer invalidate];
+    }
+    [snd setCurrentTime:0];
+    [snd play];
+    [soundtimers setObject:[NSTimer scheduledTimerWithTimeInterval:[snd duration]
+                                     target:self
+                                   selector:@selector(soundEnded:)
+                                   userInfo:@{@"soundName":name}
+                                    repeats:NO] forKey:name];
+    return  [NSString stringWithFormat:@"%@ played", name];
+}
+
++ (void)soundEnded:(NSTimer*)timer {
+        NSString *soundName = [[timer userInfo] objectForKey:@"soundName"];
+        if (sounds[soundName] == nil) return;
+        NSString *callback = [NSString stringWithFormat:@"iOS.soundDone('%@');", soundName];
+        UIWebView *webview = [ViewController webview];
+        [webview stringByEvaluatingJavaScriptFromString:callback];
+    }
+
++ (NSString *)stopSound :(NSString*)name  {
+    AVAudioPlayer *snd = sounds[name];
+    if (snd == nil) {
+        return [NSString stringWithFormat:@"%@ not found", name];
+    }
+    [snd stop];
+    return  [NSString stringWithFormat:@"%@ stopped", name];
 }
 
 ////////////////////////////
