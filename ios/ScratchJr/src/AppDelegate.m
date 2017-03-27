@@ -31,6 +31,7 @@
     // gai.logger.logLevel = kGAILogLevelVerbose;  // remove before app release
     // [gai setDispatchInterval:5]; // remove before app release
     
+    printf("didFinishLaunching");
     return YES;
 }
 
