@@ -778,7 +778,16 @@ export default class UI {
         }
 
         // Menu Icon UI change
-        gn('record').className = ScreenRecord.dialogOpen ? 'recordToggle on' : 'recordToggle off';
+        var newName = '';
+        if (gn('record').className == 'recordToggle on presentationmode') {
+            newName = 'recordToggle off presentationmode';
+        } else if (gn('record').className == 'recordToggle off presentationmode') {
+            newName = 'recordToggle on presentationmode';
+        } else {
+            newName = ScreenRecord.dialogOpen ? 'recordToggle on' : 'recordToggle off';
+        }
+
+        gn('record').className = newName;
     }
 
     static creatTopBarClicky (p, str, mstyle, fcn) {
@@ -841,7 +850,7 @@ export default class UI {
         var w = Math.min(getDocumentWidth(), frame.offsetWidth);
         var h = Math.max(getDocumentHeight(), frame.offsetHeight);
         frame.appendChild(gn('stage'));
-        var list = ['go', 'full'];
+        var list = ['go', 'full', 'record', 'screenrecorddialog'];
         for (var i = 0; i < list.length; i++) {
             gn(list[i]).className = gn(list[i]).className + ' presentationmode';
             frame.appendChild(gn(list[i]));
@@ -867,6 +876,18 @@ export default class UI {
         div.appendChild(gn('go'));
         gn('full').className = 'fullscreen';
         div.appendChild(gn('full'));
+
+        if (ScreenRecord.dialogOpen) {
+            gn('record').className = 'recordToggle on';
+            gn('screenrecorddialog').className = 'screenrecord fade in';
+        } else {
+            gn('record').className = 'recordToggle off';
+            gn('screenrecorddialog').className = 'screenrecord fade';
+        }
+        div.appendChild(gn('record'));
+
+
+
         gn('stage').owner.currentZoom = 1;
         gn('stage').style.webkitTextSizeAdjust = '100%';
         document.body.parentNode.style.background = 'none';

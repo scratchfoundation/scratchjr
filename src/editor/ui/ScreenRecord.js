@@ -45,11 +45,9 @@ export default class ScreenRecord {
         var controls = newHTML('div', 'recordcontrols', toolbar);
         controls.setAttribute('id', 'recordcontrols')
 
-        // Static Camera Icon 
-        newHTML('div', 'camera', controls);
-        
         // Buttons
         var lib = [['startrecord', ScreenRecord.startRecording], ['stoprecord', ScreenRecord.stopRecording]];
+
         for (var j = 0; j < lib.length; j++) {
             ScreenRecord.newToggleClicky(controls, 'id_', lib[j][0], lib[j][1]);
         }
@@ -94,7 +92,12 @@ export default class ScreenRecord {
 
     static appear () {
         // Update UI and state
-        gn('screenrecorddialog').setAttribute('class', 'screenrecord fade in');
+        if (ScratchJr.inFullscreen) {
+            gn('screenrecorddialog').setAttribute('class', 'screenrecord fade in presentationmode');
+        } else {
+            gn('screenrecorddialog').setAttribute('class', 'screenrecord fade in');
+        }
+
         ScratchJr.stopStrips();
         dialogOpen = true;
 

@@ -286,15 +286,7 @@
     bottom: -100%;
     right: 2%;
     z-index: 10999;
-    width: ${211 * scaleMultiplier}px;
-    height: ${66 * scaleMultiplier}px;
-    margin: 1px 1px 0px;
-    background-color: #FFC0CB;
-    border: 1px solid #999;
-    -webkit-border-radius: ${6 * scaleMultiplier}px;
-    -moz-border-radius: ${6 * scaleMultiplier}px;
-    border-radius: ${6 * scaleMultiplier}px;
-    -webkit-box-shadow: 0 ${3 * scaleMultiplier}px ${7 * scaleMultiplier}px rgba(0, 0, 0, 0.3);
+    height: 2px;
     opacity: 1;
 }
 
@@ -304,6 +296,7 @@
     bottom: -100%;
     right: 2%;
     opacity: .99;
+    height: ${66 * scaleMultiplier}px;
 }
 
 
@@ -313,32 +306,41 @@
     top: 90%;
     right: 2%;
     opacity: 1;
+    height: ${66 * scaleMultiplier}px;
+    background-color: #B3B3B3;
+    border: 1px solid;
+    -webkit-border-radius: ${6 * scaleMultiplier}px;
+
+}
+
+.screenrecord.fade.in.presentationmode {
+    -webkit-transform: rotate(90deg) translate(25px, -18px) scale(0.85);
+    -webkit-transform-origin: top right;
+    background-color: #B3B3B3;
+    border: 1px solid;
+    -webkit-border-radius: ${6 * scaleMultiplier}px;
 }
 
 
 .screenrecord .screentoolbar {
-    width: ${209 * scaleMultiplier}px;
+    width: ${139 * scaleMultiplier}px;
     height: ${66 * scaleMultiplier}px;
     overflow: hidden;
     text-shadow: none;
     z-index: 10999;
-    border: 1px solid #4682B5;
-    -webkit-box-shadow: 0px 1px 0px #fff;
-    -webkit-border-radius: ${6 * scaleMultiplier}px;
 }
 
 .screentoolbar .recordcontrols {
     margin: ${5 * scaleMultiplier}px ${5 * scaleMultiplier}px ${5 * scaleMultiplier}px;
     height: ${65 * scaleMultiplier}px;
-    /*background-color: #B3B3B3;*/
 }
 
 .recordcontrols .camera {
     float: left;
-    margin: ${0 * scaleMultiplier}px ${10 * scaleMultiplier}px ${5 * scaleMultiplier}px;
+    margin: ${0 * scaleMultiplier}px ${10 * scaleMultiplier}px ${10 * scaleMultiplier}px ${5 * scaleMultiplier}px;
     width: ${45 * scaleMultiplier}px;
-    height: ${65 * scaleMultiplier}px;
-    background: url('../assets/lib/mic.svg');
+    height: ${60 * scaleMultiplier}px;
+    background: url('../assets/lib/mic.svg'); /* change to cam icon */
     background-size: 101%;
 }
 
