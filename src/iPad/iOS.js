@@ -317,18 +317,26 @@ export default class iOS {
     
     // screen record functions
     
+    // mic off by default; enable background mic recording by 
+    //      passing true to mic
     static startscreenrecord (mic, fcn, e, cancelSound) {
-        var result = tabletInterface.screenrecord_recordstart(mic);
+        tabletInterface.screenrecord_recordstart(mic);
         if (fcn) {
-            fcn(e, cancelSound, result);
+            fcn(e, cancelSound);
         }
     }
     
+    // pass true to kill paramater in order to stop recording WITHOUT 
+    //      asking user to view/save recording
     static stopscreenrecord (kill, fcn) {
-        var result = tabletInterface.screenrecord_recordstop(kill);
+        tabletInterface.screenrecord_recordstop(kill);
         if (fcn) {
-            fcn(result);
+            fcn();
         }
+    }
+
+    static isscreenrecording (fcn) {
+        return tabletInterface.screenrecord_isrecording();
     }
 
     ///////////////

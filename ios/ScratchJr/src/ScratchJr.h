@@ -129,8 +129,9 @@
 - (NSString *) deviceName;
 - (NSString *) analyticsEvent:(NSString *)category :(NSString *)action :(NSString *)label :(NSNumber*)value;
 
--(bool) screenrecord_recordstart:(bool)microphoneEnabled;
--(bool) screenrecord_recordstop:(bool)force;
+-(void) screenrecord_recordstart:(bool)microphoneEnabled;
+-(void) screenrecord_recordstop:(bool)force;
+-(bool) screenrecord_isrecording;
 -(void) setdefault_dontask;
 
 @end
@@ -154,9 +155,15 @@
 
 @interface ViewController (ScreenRecorder) <RPPreviewViewControllerDelegate>
 // Exports
-- (BOOL) startRecordingWithMicrophoneEnabled:(BOOL)microphoneEnabled;
-- (BOOL) stopRecordingWithForce:(BOOL)kill;
++ (void) startRecordingWithMicrophoneEnabled:(BOOL)microphoneEnabled;
+- (void) stopRecordingDisplayPreview;
++ (void) killScreenRecording;
++ (BOOL) isAppScreenRecording;
 
+@end
+
+@interface ViewController (PopoverDelegate) <UIPopoverPresentationControllerDelegate>
+- (BOOL) popoverPresentationControllerShouldDismissPopover:(UIPopoverPresentationController *)popoverPresentationController;
 @end
 
 @interface IO : NSObject

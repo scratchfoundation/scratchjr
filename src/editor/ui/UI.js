@@ -90,6 +90,7 @@ export default class UI {
         var flip = newHTML('div', 'flipme', sl);
         flip.setAttribute('id', 'flip');
         flip.ontouchstart = function (evt) {
+            ScreenRecord.killRecorder();
             ScratchJr.saveAndFlip(evt);
         }; // move to project
         UI.layoutLibrary(sl);

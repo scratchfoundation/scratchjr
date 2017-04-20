@@ -3,10 +3,10 @@ import iOS from '../../iPad/iOS';
 import UI from './UI'
 import {frame, gn, newHTML, isTablet, isAndroid} from '../../utils/lib';
 
-let isRecording = false;
 let error = false;
 let dialogOpen = false;
 let timeLimit = null;
+let isRecording = false;
 
 export default class ScreenRecord {
 
@@ -15,16 +15,12 @@ export default class ScreenRecord {
 	//---------------------------
 
 	static get isRecording() {
-		return isRecording;
+        return iOS.isscreenrecording();
 	}
 
 	static get dialogOpen() {
 		return dialogOpen;
 	}
-
-	// static set isRecording(newRecording) {
-	// 	isRecording = newRecording;
-	// }
 
 
 	//---------------------------
@@ -51,6 +47,13 @@ export default class ScreenRecord {
         for (var j = 0; j < lib.length; j++) {
             ScreenRecord.newToggleClicky(controls, 'id_', lib[j][0], lib[j][1]);
         }
+
+        setInterval(function () {
+            isRecording = ScreenRecord.isRecording;
+            console.log(isRecording);
+        }, 1000);
+
+        ScreenRecord.killRecorder();
 	}
 
 
@@ -105,11 +108,7 @@ export default class ScreenRecord {
         ScratchJr.onBackButtonCallback.push(ScreenRecord.disappear);
     }
 
-    static disappear () {
-        // setTimeout(function () {
-        //     gn('screenrecorddialog').setAttribute('class', 'screenrecord fade');
-        // }, 0);
-		
+    static disappear () {		
 		// Update UI and state
 		gn('screenrecorddialog').setAttribute('class', 'screenrecord fade');
         dialogOpen = false;
@@ -126,39 +125,33 @@ export default class ScreenRecord {
 
 	// Press on start
     static startRecording () {
+        // ScreenRecord.killRecorder();
+        // ScreenRecord.appear();
+
         if (error) {
             ScreenRecord.killRecorder();
             return;
         }
 
-        if (isRecording) {
-            return;
-        } else {
-        	var micEnabled = true;
-            iOS.startscreenrecord(micEnabled, function (e, cancelSound, result) {
-            	console.log("RESULT INSIDE: " + result);
+    	var micEnabled = false; // mic disabled by default
+        iOS.startscreenrecord(micEnabled, function (e, cancelSound) {
+            // await sleep(3000); // waits 3 sec for recording to start
 
-            	if (result) {
-            		// Update UI and state
-            		isRecording = true;
-					gn('id_startrecord').childNodes[0].setAttribute('class', 'startrecord on');
-            		gn('id_startrecord').ontouchstart = ScreenRecord.stopRecording;
+        	if (true) {
+        		// Update UI and state
+				gn('id_startrecord').childNodes[0].setAttribute('class', 'startrecord on');
+        		gn('id_startrecord').ontouchstart = ScreenRecord.stopRecording;
 
-
-            		// If timeLimit is defined, set a timeout function to stop to record
-            		if (timeLimit) {
-	            		timeLimit = setTimeout(function () {
-	                		if (isRecording) {
-	                 			ScreenRecord.stopRecording();
-	                		}
-	            		}, timeLimit);
-	            	}
-
-            	} else {
-            		console.log("iOS returned no match for startRecord");
+        		// If timeLimit is defined, set a timeout function to stop to record
+        		if (timeLimit) {
+            		setTimeout(ScreenRecord.stopRecording, timeLimit);
             	}
-            });
-        }
+
+        	} else {
+                ScreenRecord.killRecorder();
+        		console.log("iOS returned no match for startRecord");
+        	}
+        });
     }
 
 
@@ -167,7 +160,7 @@ export default class ScreenRecord {
     	gn('id_startrecord').ontouchstart = ScreenRecord.startRecording;
     	
         if (error) {
-            Record.killRecorder();
+            ScreenRecord.killRecorder();
             return;
         }
 
@@ -177,9 +170,8 @@ export default class ScreenRecord {
         gn('id_startrecord').childNodes[0].setAttribute('class', 'startrecord off'); // Start Button
         
         // Stop Recording
-        if (isRecording) {
+        if (true) {
             iOS.stopscreenrecord(false, function (e) {
-            	isRecording = false;
             	UI.toggleRecording(); // TODO: maybe wait a little bit before toggling?
             });
         }
@@ -200,7 +192,6 @@ export default class ScreenRecord {
     static tearDownRecorder () {
         // Refresh context
         error = false;
-        isRecording = false;
         ScreenRecord.disappear();
     }
 
