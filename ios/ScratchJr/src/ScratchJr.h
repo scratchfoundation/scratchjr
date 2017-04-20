@@ -131,6 +131,7 @@
 
 -(bool) screenrecord_recordstart:(bool)microphoneEnabled;
 -(bool) screenrecord_recordstop:(bool)force;
+-(void) setdefault_dontask;
 
 @end
 

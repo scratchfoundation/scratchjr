@@ -91,7 +91,10 @@ JSContext *js;
     UIWebView *webview = (UIWebView*)[self view];
     NSString *location = [[NSUserDefaults standardUserDefaults] stringForKey:@"html"];
     if ([location length] > 3) location = [location substringFromIndex:3];
-    NSString *path = [[NSBundle mainBundle]  pathForResource: @"HTML5/index" ofType:@"html"];
+    
+    NSString *resourcePath = [[NSUserDefaults standardUserDefaults] boolForKey:@"AskForAnalyticsUse"] ? @"HTML5/info" : @"HTML5/index";
+    
+    NSString *path = [[NSBundle mainBundle]  pathForResource: resourcePath ofType:@"html"];
     
     // NSURL *url = [NSURL URLWithString: [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]; // Deprecated iOS9
     // TODO: confirm correct NSCharacterSet
@@ -350,6 +353,8 @@ JSContext *js;
 
 -(bool) screenrecord_recordstop:(bool)force {
     return [self stopRecordingWithForce:force];
+-(void) setdefault_dontask {
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"AskForAnalyticsUse"];
 }
 
 // iPad name (used for information in the name/sharing dialog to help people using Airdrop)

@@ -4,6 +4,7 @@ import iOS from '../iPad/iOS';
 import IO from '../iPad/IO';
 import MediaLib from '../iPad/MediaLib';
 
+import {infoMain} from './info';
 import {indexMain} from './index';
 import {homeMain} from './home';
 import {editorMain} from './editor';
@@ -43,6 +44,16 @@ window.onload = () => {
         /* For parental gate. These CSS properties should be refactored */
         preprocessAndLoadCss('css', 'css/editor.css');
         entryFunction = () => iOS.waitForInterface(indexMain);
+        break;
+    case 'info':
+        // Info page (analytics use screen)
+        // preprocessing copied from 'index' above
+        preprocessAndLoadCss('css', 'css/font.css');
+        preprocessAndLoadCss('css', 'css/base.css');
+        preprocessAndLoadCss('css', 'css/start.css');
+        preprocessAndLoadCss('css', 'css/thumbs.css');
+        preprocessAndLoadCss('css', 'css/editor.css');
+        entryFunction = () => iOS.waitForInterface(infoMain);
         break;
     case 'home':
         // Lobby pages

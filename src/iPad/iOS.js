@@ -377,6 +377,10 @@ export default class iOS {
         tabletInterface.analyticsEvent(category, action, label, value);
     }
 
+    static stopAskingUsage() {
+        tabletInterface.setdefault_dontask();
+    }
+
     // Web Wiew delegate call backs
 
     static pageError (desc) {

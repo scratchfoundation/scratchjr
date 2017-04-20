@@ -217,3 +217,56 @@ div.frame {
     from { -webkit-transform: rotate(0deg); }
     to { -webkit-transform: rotate(36deg); }
 }
+
+
+/* Analytics Info Page Elements */
+.question {
+    position: absolute;
+    width: 75%;
+    height: 35%;
+    top: 5%;
+    left: 12.5%;
+    background: url('../assets/ui/usage-question.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.usage {
+    position: absolute;
+    width: 25%;
+    height: 15%;
+}
+
+.usage.school {
+    top: 55%;
+    left: 20%;
+    background: url('../assets/ui/usage-in-school.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.usage.home {
+    top: 55%;
+    left: 55%;
+    background: url('../assets/ui/usage-at-home.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.usage.ask-later {
+    top: 75%;
+    left: 40%;
+    width: 20%;
+    background: url('../assets/ui/usage-ask-later.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.usage.dont-ask {
+    top: 95%;
+    left: 82%;
+    width: 15%;
+    background: url('../assets/ui/usage-dont-ask-no-background.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+}

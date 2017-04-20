@@ -12,8 +12,14 @@
         [Database runMigrations];
         [Database close:@"ScratchJr"];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
+        
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"AskForAnalyticsUse"];
+        
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
+    
+    
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
