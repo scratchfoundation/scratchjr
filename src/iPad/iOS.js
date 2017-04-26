@@ -319,10 +319,10 @@ export default class iOS {
     
     // mic off by default; enable background mic recording by 
     //      passing true to mic
-    static startscreenrecord (mic, fcn, e, cancelSound) {
+    static startscreenrecord (mic, fcn) {
         tabletInterface.screenrecord_recordstart(mic);
         if (fcn) {
-            fcn(e, cancelSound);
+            fcn();
         }
     }
     

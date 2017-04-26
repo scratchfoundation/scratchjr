@@ -134,7 +134,7 @@ export default class ScreenRecord {
         }
 
     	var micEnabled = false; // mic disabled by default
-        iOS.startscreenrecord(micEnabled, function (e, cancelSound) {
+        iOS.startscreenrecord(micEnabled, function () {
             // await sleep(3000); // waits 3 sec for recording to start
 
         	if (true) {
@@ -171,7 +171,7 @@ export default class ScreenRecord {
         
         // Stop Recording
         if (true) {
-            iOS.stopscreenrecord(false, function (e) {
+            iOS.stopscreenrecord(false, function () {
             	UI.toggleRecording(); // TODO: maybe wait a little bit before toggling?
             });
         }

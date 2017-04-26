@@ -592,7 +592,7 @@ z-index: 5;
 }
 
 div.infoboxShareButtons {
-   width: 77%;
+   width: 51%;
    margin: auto;
    margin-top: 8%;
 }
@@ -642,21 +642,6 @@ div#infoboxShareButtonAirdrop::before {
    margin-left: 10%;
    margin-top: -5%;
 }
-
-div#infoboxShareButtonRecord::before {
-    content: "";
-    position: absolute;
-    display: block;
-    background-image: url(../assets/ui/email-shadow.svg);
-    background-size: 100%;
-    background-repeat: no-repeat;
-    width: ${css_vw(4.88)};
-    height:  ${css_vh(6.51)};
-    -webkit-transform: rotate(-10deg);
-    margin-left: 10%;
-    margin-top: -4%;
-}
-
 
 img.infoboxShareLoading {
     margin-top:3%;
