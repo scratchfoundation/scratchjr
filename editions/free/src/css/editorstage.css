@@ -43,12 +43,12 @@
 }
 
 .recordToggle.on {
-    background: url('../assets/ui/new-camcorder-real-with-button.png');
+    background: url('../assets/ui/camcorder-bordered-with-button.png');
     background-size: 100%;
 }
 
 .recordToggle.off {
-    background: url('../assets/ui/new-camcorder-real.png');
+    background: url('../assets/ui/camcorder.png');
     background-size: 100%;
     /*background-size: 96px 96px;*/
 }
