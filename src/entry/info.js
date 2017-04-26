@@ -1,36 +1,50 @@
 import {gn} from '../utils/lib';
 import iOS from '../iPad/iOS';
+import Cookie from '../utils/Cookie';
 
 export function infoMain () {
     gn('use-in-school').ontouchend = moveToHome;
     gn('use-at-home').ontouchend = moveToHome;
+    gn('use-other').ontouchend = moveToHome;
     gn('ask-me-later').ontouchend = moveToHome;
     gn('dont-ask-again').ontouchend = moveToHome;
 }
 
 function moveToHome (e) {
-    var eventLabel = "";
+    var usage = "";
 
     switch (e.target.id) {
         case 'use-in-school':
-            eventLabel = 'in_school';
+            usage = 'school';
             iOS.stopAskingUsage();
             break;
         case 'use-at-home':
-            eventLabel = 'at_home';
+            usage = 'home';
+            iOS.stopAskingUsage();
+            break;
+        case 'use-other':
+            usage = 'other';
             iOS.stopAskingUsage();
             break;
         case 'ask-me-later':
-            eventLabel = 'ask_later';
+            usage = 'ask_later';
             break;
         case 'dont-ask-again':
-            eventLabel = 'dont_ask';
+            usage = 'dont_ask';
             iOS.stopAskingUsage();
             break;
     }
 
-    // UNCOMMENT TO BEGIN ANALYTICS USE
-    // iOS.analyticsEvent('lobby', 'scratchjr_usage', eventLabel);
+    // Send one-time analytics event about usage
+    iOS.analyticsEvent('lobby', 'scratchjr_usage', usage);
 
+    // Set Cookie for future analytics events to use
+    setUsageCookie(usage);
+
+    // Go to index.html
     window.location.href = 'index.html';
+}
+
+function setUsageCookie(usage) {
+    Cookie.set('usage', usage);
 }

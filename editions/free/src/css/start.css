@@ -239,7 +239,7 @@ div.frame {
 
 .usage.school {
     top: 55%;
-    left: 20%;
+    left: 7.5%;
     background: url('../assets/ui/usage-in-school.png');
     background-size: 100%;
     background-repeat: no-repeat;
@@ -247,8 +247,16 @@ div.frame {
 
 .usage.home {
     top: 55%;
-    left: 55%;
+    left: 37.5%;
     background: url('../assets/ui/usage-at-home.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.usage.other {
+    top: 55%;
+    left: 67.5%;
+    background: url('../assets/ui/usage-other.png');
     background-size: 100%;
     background-repeat: no-repeat;
 }

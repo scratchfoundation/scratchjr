@@ -1,4 +1,5 @@
 import {isiOS, gn} from '../utils/lib';
+import Cookie from '../utils/Cookie';
 import IO from './IO';
 import Lobby from '../lobby/Lobby';
 import Alert from '../editor/ui/Alert';
@@ -382,6 +383,12 @@ export default class iOS {
         if (!value) {
             value = 1;
         }
+
+        var usageCookie = Cookie.get('usage');
+        if (usageCookie == "home" || usageCookie == "school" || usageCookie == "other") {
+            category += "_" + usageCookie;
+        }
+
         tabletInterface.analyticsEvent(category, action, label, value);
     }
 
