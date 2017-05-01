@@ -13,6 +13,7 @@ import Stage from '../engine/Stage';
 import ScriptsPane from './ScriptsPane';
 import Undo from './Undo';
 import Library from './Library';
+import ScreenRecord from './ScreenRecord';
 import iOS from '../../iPad/iOS';
 import IO from '../../iPad/IO';
 import MediaLib from '../../iPad/MediaLib';
@@ -89,6 +90,7 @@ export default class UI {
         var flip = newHTML('div', 'flipme', sl);
         flip.setAttribute('id', 'flip');
         flip.ontouchstart = function (evt) {
+            ScreenRecord.killRecorder();
             ScratchJr.saveAndFlip(evt);
         }; // move to project
         UI.layoutLibrary(sl);
@@ -135,7 +137,7 @@ export default class UI {
                 var shareAirdrop = newHTML('div', 'infoboxShareButton', shareButtons);
                 shareAirdrop.id = 'infoboxShareButtonAirdrop';
                 shareAirdrop.textContent = Localization.localize('SHARING_BY_AIRDROP');
-                shareAirdrop.style.float = 'right';
+               shareAirdrop.style.float = 'right';
                 shareAirdrop.ontouchstart = function (e) {
                     UI.parentalGate(e, function (e) {
                         UI.infoDoShare(e, nameField, shareLoadingGif, 1);
@@ -158,9 +160,8 @@ export default class UI {
         }
 
         info.ontouchend = UI.showInfoBox;
-        okclicky.ontouchstart = UI.hideInfoBox;
         okclicky.ontouchstart = function (evt) {
-            UI.hideInfoBox(evt, nameField);
+            UI.hideInfoBox(evt);
         };
     }
 
@@ -709,6 +710,11 @@ export default class UI {
         UI.creatTopBarClicky(div, 'go', 'go on', UI.toggleRun);
         UI.creatTopBarClicky(div, 'resetall', 'resetall', UI.resetAllSprites);
         UI.creatTopBarClicky(div, 'full', 'fullscreen', ScratchJr.fullScreen);
+
+        if (isTablet) {
+            UI.creatTopBarClicky(div, 'record', 'recordToggle off', UI.toggleRecording);
+        }
+        
         UI.toggleGrid(true);
     }
 
@@ -739,9 +745,31 @@ export default class UI {
         UI.toggleGrid(!Grid.hidden);
     }
 
+
     static toggleGrid (b) {
         Grid.hide(b);
         gn('grid').className = Grid.hidden ? 'gridToggle off' : 'gridToggle on';
+    }
+    
+    static toggleRecording () {
+        // ScreenRecord menu appear/disappear
+        if (ScreenRecord.dialogOpen) {
+            ScreenRecord.disappear();
+        } else {
+            ScreenRecord.appear();
+        }
+
+        // Menu Icon UI change
+        var newName = '';
+        if (gn('record').className == 'recordToggle on presentationmode') {
+            newName = 'recordToggle off presentationmode';
+        } else if (gn('record').className == 'recordToggle off presentationmode') {
+            newName = 'recordToggle on presentationmode';
+        } else {
+            newName = ScreenRecord.dialogOpen ? 'recordToggle on' : 'recordToggle off';
+        }
+
+        gn('record').className = newName;
     }
 
     static creatTopBarClicky (p, str, mstyle, fcn) {
@@ -804,7 +832,7 @@ export default class UI {
         var w = Math.min(getDocumentWidth(), frame.offsetWidth);
         var h = Math.max(getDocumentHeight(), frame.offsetHeight);
         frame.appendChild(gn('stage'));
-        var list = ['go', 'full'];
+        var list = ['go', 'full', 'record', 'screenrecorddialog'];
         for (var i = 0; i < list.length; i++) {
             gn(list[i]).className = gn(list[i]).className + ' presentationmode';
             frame.appendChild(gn(list[i]));
@@ -830,6 +858,18 @@ export default class UI {
         div.appendChild(gn('go'));
         gn('full').className = 'fullscreen';
         div.appendChild(gn('full'));
+
+        if (ScreenRecord.dialogOpen) {
+            gn('record').className = 'recordToggle on';
+            gn('screenrecorddialog').className = 'screenrecord fade in';
+        } else {
+            gn('record').className = 'recordToggle off';
+            gn('screenrecorddialog').className = 'screenrecord fade';
+        }
+        div.appendChild(gn('record'));
+
+
+
         gn('stage').owner.currentZoom = 1;
         gn('stage').style.webkitTextSizeAdjust = '100%';
         document.body.parentNode.style.background = 'none';

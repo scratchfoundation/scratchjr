@@ -21,6 +21,8 @@ JSContext *js;
     if (self) {
         // Custom initialization
     }
+    
+    printf("ViewController initialized\n");
     return self;
 }
 
@@ -35,9 +37,11 @@ JSContext *js;
     [self reload];
     [self showSplash];
     [IO init: self];
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:NO];
+    //[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:NO]; // Deprecated  iOS9
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
     [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+    
+    printf("viewDidLoad\n");
 }
 
 - (void) showSplash {
@@ -46,7 +50,9 @@ JSContext *js;
     splashScreen.animationImages = [NSArray arrayWithObjects:
                                     [UIImage imageNamed:@"Default.png"],
                                     nil];
-    [self.view addSubview:splashScreen];
+//    [self.view addSubview:splashScreen];
+    
+    printf("splash screen show\n");
 }
 
 - (void)didReceiveMemoryWarning
@@ -85,11 +91,21 @@ JSContext *js;
     UIWebView *webview = (UIWebView*)[self view];
     NSString *location = [[NSUserDefaults standardUserDefaults] stringForKey:@"html"];
     if ([location length] > 3) location = [location substringFromIndex:3];
-    NSString *path = [[NSBundle mainBundle]  pathForResource: @"HTML5/index" ofType:@"html"];
-    NSURL *url = [NSURL URLWithString: [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    
+    NSString *resourcePath = [[NSUserDefaults standardUserDefaults] boolForKey:@"AskForAnalyticsUse"] ? @"HTML5/info" : @"HTML5/index";
+    
+    NSString *path = [[NSBundle mainBundle]  pathForResource: resourcePath ofType:@"html"];
+    
+    // NSURL *url = [NSURL URLWithString: [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]; // Deprecated iOS9
+    // TODO: confirm correct NSCharacterSet
+    NSURL *url = [NSURL URLWithString: [path stringByAddingPercentEncodingWithAllowedCharacters: [NSCharacterSet URLPathAllowedCharacterSet]]];
+    
     NSURLRequest* request = [NSURLRequest requestWithURL:url];
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
     [webview loadRequest:request];
+    
+    NSLog(@"%@", request.URL.absoluteString);
+    printf("Reload Complete\n\n");
 }
 
 - (void)viewWillAppear:(BOOL)animated{[super viewWillAppear:animated];}
@@ -104,16 +120,21 @@ JSContext *js;
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
     //read your request here
     //before the webview will load your request
+    
+    NSLog(@"%@", [[request URL] absoluteString]);
+    
     return YES;
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView{
     //access your request
+    printf("request loading\n");
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
     // Inject a reference for the dispatch method into the UIWebView
     // This happens after the page is loaded and the page's onLoad method is called
+    printf("request loaded\n");
     js = [webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
     js[@"tablet"] = self;
     [self disableWebViewLongPressGestures:webView];
@@ -133,7 +154,7 @@ JSContext *js;
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:[parts lastObject]];
     [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
-
+    
 }
 
 // Disables iOS 9 webview touch tooltip by disabling the long-press gesture recognizer in subviews
@@ -326,6 +347,26 @@ JSContext *js;
     return @"1";
 }
 
+-(void) screenrecord_recordstart:(bool)microphoneEnabled {
+    [ViewController startRecordingWithMicrophoneEnabled:microphoneEnabled];
+}
+
+-(void) screenrecord_recordstop:(bool)force {
+    if (force) {
+        [ViewController killScreenRecording];
+    } else {
+        [self stopRecordingDisplayPreview];
+    }
+}
+
+-(bool) screenrecord_isrecording {
+    return [ViewController isAppScreenRecording];
+}
+
+-(void) setdefault_dontask {
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"AskForAnalyticsUse"];
+}
+
 // iPad name (used for information in the name/sharing dialog to help people using Airdrop)
 - (NSString*) deviceName {
     return [[UIDevice currentDevice] name];
@@ -384,5 +425,155 @@ JSContext *js;
 
 }
 
+
+@end
+
+@implementation ViewController (ScreenRecorder)
+
+// Enable background mic recording by passing YES to microphoneEnabled
++ (void) startRecordingWithMicrophoneEnabled:(BOOL)microphoneEnabled {
+    // Microphone
+    [[RPScreenRecorder sharedRecorder] setMicrophoneEnabled:microphoneEnabled];
+    NSLog(@"recording start called");
+    if ([[RPScreenRecorder sharedRecorder] isAvailable]) {
+        if (![[RPScreenRecorder sharedRecorder] isRecording]) {
+            [[RPScreenRecorder sharedRecorder] startRecordingWithHandler:^(NSError * _Nullable error) {
+                
+                if (error == nil) {
+                    printf("Recording Started");
+                    
+                    // UI Stuff
+                    
+                } else {
+                    // Handle Error
+                    printf("Error: Recording could not start");
+                    printf("%s", [error debugDescription]);
+                }
+            }];
+        } else {
+            printf("Error: Recording already in progress");
+        }
+    } else {
+        // Handle Availability Error
+        printf("Error: Recorder not available");
+    }
+}
+
+- (void) stopRecordingDisplayPreview {
+    printf("Recording Stopping");
+    
+    // Turn off microphone
+    [[RPScreenRecorder sharedRecorder] setMicrophoneEnabled:NO];
+    
+    if ([[RPScreenRecorder sharedRecorder] isRecording]) {
+        [[RPScreenRecorder sharedRecorder] stopRecordingWithHandler:^(RPPreviewViewController * _Nullable previewViewController, NSError * _Nullable error) {
+            
+            if (error == nil) {
+                if (previewViewController != nil) {
+                    
+                    [previewViewController setPreviewControllerDelegate:self];
+                    
+                    // View / Discard Response
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Recording Ended" message:@"Do you wish to view or discard your recording?" preferredStyle: UIAlertControllerStyleAlert];
+                    
+                    UIAlertAction *discardAction = [UIAlertAction actionWithTitle:@"Discard" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                        [[RPScreenRecorder sharedRecorder] discardRecordingWithHandler:^{
+                            // Handle Discarding
+                            printf("Recording Discarded");
+                        }];
+                    }];
+                    
+                    UIAlertAction *viewAction = [UIAlertAction actionWithTitle:@"View" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        printf("\n\nPRESENTING PREVIEW\n\n");
+                        [previewViewController setModalPresentationStyle:UIModalPresentationPopover];
+                        UIPopoverPresentationController *previewPresenter = [previewViewController popoverPresentationController];
+                        previewPresenter.sourceView = self.view;
+                        previewPresenter.delegate = self;
+                        
+                        [self presentViewController:previewViewController animated:YES completion:nil];
+                    }];
+                    
+                    [alertController addAction:discardAction];
+                    [alertController addAction:viewAction];
+                    
+                    [self presentViewController:alertController animated:YES completion:nil];
+                    
+                    // UI Stuff
+                    
+                } else {
+                    // Handle Error
+                    printf("Preview Controller is nil");
+                }
+            } else {
+                // Handle Error
+                printf("Error: Recording could not stop");
+                printf("%s", [error debugDescription]);
+            }
+        }];
+    }
+}
+
+// Stop Recording WITHOUT displaying view/save/discard popover to user
++ (void) killScreenRecording {
+    // Turn off microphone
+    [[RPScreenRecorder sharedRecorder] setMicrophoneEnabled:NO];
+    
+    if ([[RPScreenRecorder sharedRecorder] isRecording]) {
+        [[RPScreenRecorder sharedRecorder] stopRecordingWithHandler:^(RPPreviewViewController * _Nullable previewViewController, NSError * _Nullable error) {
+            
+            if (error == nil) {
+                [[RPScreenRecorder sharedRecorder] discardRecordingWithHandler:^{
+                    NSLog(@"recording discarderd");
+                    return;
+                }];
+            } else {
+                // Handle Error
+                NSLog(@"%@", [error debugDescription]);
+            }
+        }];
+    }
+}
+
++ (BOOL) isAppScreenRecording {
+    BOOL isRecording = [[RPScreenRecorder sharedRecorder] isRecording];
+    NSLog(@"%u", isRecording);
+    return isRecording;
+}
+
+// RPPreviewControllerDelegate Methods
+
+- (void)previewController:(RPPreviewViewController *)previewController didFinishWithActivityTypes:(NSSet<NSString *> *)activityTypes {
+    NSLog(@"%@", activityTypes);
+    
+    // Dismiss View Controller
+    [previewController dismissViewControllerAnimated:YES completion:nil];
+    
+    // Handle Activity Types
+    NSString *message = [activityTypes containsObject:@"com.apple.UIKit.activity.SaveToCameraRoll"] ?
+                                                        @"Successfully saved to Camera Roll!" :
+                                                        [activityTypes count] != 0 ?
+                                                            @"Successfully shared project!" :
+                                                            @"Did not share...";
+    
+    
+    // View / Discard Response
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Sharing" message:message preferredStyle: UIAlertControllerStyleAlert];
+    
+    
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //
+    }];
+    
+    [alertController addAction:okAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+
+// UIPopoverPresentationControllerDelegate Methods
+
+// If save popover displaying, disable dismissing the popover by touching outside
+- (BOOL) popoverPresentationControllerShouldDismissPopover:(UIPopoverPresentationController *)popoverPresentationController {
+    return NO;
+}
 
 @end

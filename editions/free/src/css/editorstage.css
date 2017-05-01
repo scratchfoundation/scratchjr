@@ -32,12 +32,49 @@
 .gridToggle.off {background:  url('../assets/ui/gridOn.svg'); background-size: 100%; }
 .gridToggle.on {background:  url('../assets/ui/gridOff.svg'); background-size: 100%; }
 
+.recordToggle {
+    position: absolute;
+    margin: 0px;
+    padding: 0px;
+    top: ${css_vh(1.00)};
+    left: ${css_vh(43.09)};
+    width: ${css_vh(8.03)};
+    height: ${css_vh(8.03)};
+}
+
+.recordToggle.on {
+    background: url('../assets/ui/camcorder-bordered-with-button.png');
+    background-size: 100%;
+}
+
+.recordToggle.off {
+    background: url('../assets/ui/camcorder.png');
+    background-size: 100%;
+    /*background-size: 96px 96px;*/
+}
+
+.recordToggle.on.presentationmode, .recordToggle.off.presentationmode {
+    position: absolute;
+    margin: 0px;
+    padding: 0px;
+    top: ${css_vh(0)};
+    left: 46%;
+    width: ${css_vh(8.03)};
+    height: ${css_vh(8.03)};
+}
+
+.recordToggle.off {
+    background: url('../assets/ui/new-camcorder-real.png');
+    background-size: 100%;
+    /*background-size: 96px 96px;*/
+}
+
 .addText {
     position: absolute;
     margin: 0px;
     padding: 0px;
     top: ${css_vh(0.65)};
-    left: ${css_vh(37.89)};
+    left: ${css_vh(32.89)};
 
     width: ${css_vh(8.33)};
     height: ${css_vh(8.33)};
@@ -55,7 +92,7 @@
     margin: 0px;
     padding: 0px;
     top: ${css_vh(0.65)};
-    left: ${css_vh(29.30)};
+    left: ${css_vh(24.30)};
 
     width: ${css_vh(8.33)};
     height: ${css_vh(8.33)};
