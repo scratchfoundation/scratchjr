@@ -28,12 +28,12 @@ This repository has the following directory structure:
 
 * <tt>src/</tt> - Shared Javasript code for iOS and Android common client. This is where most changes should be made for features, bug fixes, UI, etc.
 * <tt>editions/</tt> - Assembly directories for each "flavor" of ScratchJr. These symlink to src for common code, and could diverge in settings and assets.
- * <tt>free/</tt> - Free edition JavaScript, including all shared code for all releases
+  * <tt>free/</tt> - Free edition JavaScript, including all shared code for all releases
 * <tt>android/</tt> - Android port of Scratch Jr. (Java, Android Studio Projects)
   * <tt>ScratchJr/</tt> - Android Studio Project for ScratchJr Android Application
 * <tt>bin/</tt> - Build scripts and other executables
 * <tt>doc/</tt> - Developer Documentation
-* <tt>ios/</tt> - XCode project for iOS build.
+* <tt>ios/</tt> - XCode project for iOS build. (Make sure to open <tt>ScratchJr.xcworkspace</tt> not <tt>ScratchJr.xcodeproj</tt>)
 
 ## Building ScratchJr
 To build the Android version, you need to have a system equipped with Android Studio. To build the iOS version, you need to have a Mac with XCode.
