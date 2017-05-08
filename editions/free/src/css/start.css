@@ -220,6 +220,8 @@ div.frame {
 
 
 /* Analytics Info Page Elements */
+
+/* Top of page UI */
 .question {
     position: absolute;
     width: 75%;
@@ -231,50 +233,83 @@ div.frame {
     background-repeat: no-repeat;
 }
 
-.usage {
+/* Usage image buttons */
+.usage-button {
     position: absolute;
-    width: 25%;
-    height: 15%;
-}
-
-.usage.school {
-    top: 55%;
-    left: 7.5%;
-    background: url('../assets/ui/usage-in-school.png');
-    background-size: 100%;
-    background-repeat: no-repeat;
-}
-
-.usage.home {
-    top: 55%;
-    left: 37.5%;
-    background: url('../assets/ui/usage-at-home.png');
-    background-size: 100%;
-    background-repeat: no-repeat;
-}
-
-.usage.other {
-    top: 55%;
-    left: 67.5%;
-    background: url('../assets/ui/usage-other.png');
-    background-size: 100%;
-    background-repeat: no-repeat;
-}
-
-.usage.ask-later {
-    top: 75%;
-    left: 40%;
     width: 20%;
-    background: url('../assets/ui/usage-ask-later.png');
+    height: 30%;
+}
+
+.usage-button.school {
+    top: 45%;
+    left: 10%;
+    background: url('../assets/ui/placeholder-usage-icon.png');
+    /*background: url('../assets/ui/usage-in-school.png');*/
     background-size: 100%;
     background-repeat: no-repeat;
 }
 
-.usage.dont-ask {
+.usage-button.home {
+    top: 45%;
+    left: 40%;
+    background: url('../assets/ui/placeholder-usage-icon.png');
+    /*background: url('../assets/ui/usage-at-home.png');*/
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.usage-button.other {
+    top: 45%;
+    left: 70%;
+    background: url('../assets/ui/placeholder-usage-icon.png');
+    /*background: url('../assets/ui/usage-other.png');*/
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+/*.usage-button.dont-ask {
     top: 95%;
     left: 82%;
     width: 15%;
     background: url('../assets/ui/usage-dont-ask-no-background.png');
     background-size: 100%;
     background-repeat: no-repeat;
+}*/
+
+/* TODO: make font sizes relative!! */
+/* Usage text boxes */
+.usage-text {
+    position: absolute;
+    width: 20%;
+    height: 15%;
+    top: 75%;
+    background-color: #35A8E0;
+    border: none;
+    color: white;
+    font-size: 35px;
+    text-align: center;
+    text-decoration: none;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.usage-text.school {
+    left: 10%;
+}
+
+.usage-text.home {
+    left: 40%;
+}
+
+.usage-text.other {
+    left: 70%;
+}
+
+.usage-text.dont-ask {
+    top: 90%;
+    right: 2%;
+    height: 10%;
+    width: 20%;
+    font-size: 20px;
+    text-align: right;
 }
