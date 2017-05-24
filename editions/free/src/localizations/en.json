@@ -361,7 +361,7 @@
     "SHARING_BY_EMAIL": "Share by Email",
     "SHARING_BY_AIRDROP": "Share by Airdrop",
     "SHARING_EMAIL_SUBJECT": "ScratchJr Project: {PROJECT_NAME}",
-    "SHARING_EMAIL_TEXT": "Click the icon to try my ScratchJr project on your iPad or Android tablet!<br><br>If you don't have the ScratchJr app, you can <a href='http://www.scratchjr.org'>download it</a> from the Apple App store or the Google Play Store.<br><br>With ScratchJr, children can create their own interactive stories and games.To learn more, see <a href='http://www.scratchjr.org'>scratchjr.org</a>.",
+    "SHARING_EMAIL_TEXT": "Click the icon to try my ScratchJr project on your iPad or Android tablet!<br><br>If you don't have the ScratchJr app, you can <a href='http://www.scratchjr.org'>download it</a> from the Apple App store or the Google Play Store.<br><br>With ScratchJr, children can create their own interactive stories and games. To learn more, see <a href='http://www.scratchjr.org'>scratchjr.org</a>.",
     "PARENTAL_GATE_EXPLANATION": "Why are we asking this? An adult must approve online sharing.",
     "GRID_NUMBER": "{N, number}",
     "NEW_PROJECT_PREFIX": "Project",
