@@ -3,6 +3,7 @@ package org.scratchjr.android;
 import android.Manifest;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -73,7 +74,7 @@ public class ScratchJrActivity
 
     /** Maintains connection to database */
     private DatabaseManager _databaseManager;
-
+    private ScreenRecord _screenRecord;
     /** Performs file IO */
     private IOManager _ioManager;
 
@@ -116,6 +117,7 @@ public class ScratchJrActivity
         _ioManager = new IOManager(this);
         _soundManager = new SoundManager(this);
         _soundRecorderManager = new SoundRecorderManager(this);
+         _screenRecord = new ScreenRecord();
         setContentView(R.layout.activity_scratch_jr);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
         _container = (RelativeLayout) findViewById(R.id.container);
@@ -257,6 +259,7 @@ public class ScratchJrActivity
         super.onResume();
         _databaseManager.open();
         _soundManager.open();
+        _screenRecord.open();
         _soundRecorderManager.open();
         runOnUiThread(new Runnable() {
             @Override
@@ -282,6 +285,7 @@ public class ScratchJrActivity
         _databaseManager.close();
         _soundManager.close();
         _soundRecorderManager.close();
+        _screenRecord.close();
     }
     
     @Override
@@ -340,6 +344,8 @@ public class ScratchJrActivity
         return _soundRecorderManager;
     }
 
+    public ScreenRecord getScreenRecord(){ return _screenRecord;}
+
     private void setImmersiveMode() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Log.i(LOG_TAG, "Setting immersive mode");
@@ -359,6 +365,7 @@ public class ScratchJrActivity
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     @SuppressLint("SetJavaScriptEnabled")
     private void configureWebView() {
         WebSettings webSettings = _webView.getSettings();
@@ -368,7 +375,7 @@ public class ScratchJrActivity
         webSettings.setLoadWithOverviewMode(false);
         webSettings.setUseWideViewPort(false);
         // Uncomment to enable remote Chrome debugging on a physical Android device
-        //WebView.setWebContentsDebuggingEnabled(true);
+        WebView.setWebContentsDebuggingEnabled(true);
 
         // Enable cookie persistence
         CookieManager.setAcceptFileSchemeCookies(true);

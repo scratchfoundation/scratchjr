@@ -233,6 +233,7 @@ export default class iOS {
     }
 
     static startplay (fcn) {
+ 
         var result = tabletInterface.recordsound_startplay();
         if (fcn) {
             fcn(result);

@@ -125,10 +125,13 @@ export default class ScreenRecord {
 
 	// Press on start
     static startRecording () {
+
         // ScreenRecord.killRecorder();
         // ScreenRecord.appear();
 
+
         if (error) {
+            
             ScreenRecord.killRecorder();
             return;
         }
