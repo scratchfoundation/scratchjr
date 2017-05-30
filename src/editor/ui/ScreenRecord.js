@@ -170,6 +170,9 @@ export default class ScreenRecord {
         if (timeLimit) {
             setTimeout(ScreenRecord.stopRecording, timeLimit);
         }
+
+        // Send Analytics Event
+        iOS.analyticsEvent('editor', 'project_recorded');
     }
 
     // Press on stop
