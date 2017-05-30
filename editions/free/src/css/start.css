@@ -243,7 +243,7 @@ div.frame {
 .usage-button.school {
     top: 45%;
     left: 10%;
-    background: url('../assets/ui/placeholder-usage-icon.png');
+    background: url('../assets/ui/placeholder-usage-school.png');
     /*background: url('../assets/ui/usage-in-school.png');*/
     background-size: 100%;
     background-repeat: no-repeat;
@@ -252,7 +252,7 @@ div.frame {
 .usage-button.home {
     top: 45%;
     left: 40%;
-    background: url('../assets/ui/placeholder-usage-icon.png');
+    background: url('../assets/ui/placeholder-usage-home.png');
     /*background: url('../assets/ui/usage-at-home.png');*/
     background-size: 100%;
     background-repeat: no-repeat;
@@ -261,7 +261,7 @@ div.frame {
 .usage-button.other {
     top: 45%;
     left: 70%;
-    background: url('../assets/ui/placeholder-usage-icon.png');
+    background: url('../assets/ui/placeholder-usage-other.png');
     /*background: url('../assets/ui/usage-other.png');*/
     background-size: 100%;
     background-repeat: no-repeat;
