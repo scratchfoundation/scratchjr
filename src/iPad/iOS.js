@@ -336,7 +336,7 @@ export default class iOS {
         }
     }
 
-    static isscreenrecording (fcn) {
+    static isscreenrecording () {
         return tabletInterface.screenrecord_isrecording();
     }
 

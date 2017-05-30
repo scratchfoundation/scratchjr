@@ -165,6 +165,13 @@ export default class ScreenRecord {
         gn('id_startrecord').childNodes[0].setAttribute('class', 'startrecord on');
         gn('id_startrecord').ontouchstart = ScreenRecord.stopRecording;
 
+        var newRecordClass = 'recordToggle on_recording';
+        if(ScratchJr.inFullscreen) {
+            newRecordClass += ' presentationmode';
+        }
+
+        gn('record').setAttribute('class', newRecordClass);
+
         // If timeLimit is defined, set a timeout function to stop to record
         if (timeLimit) {
             setTimeout(ScreenRecord.stopRecording, timeLimit);
@@ -192,7 +199,7 @@ export default class ScreenRecord {
 		// Update UI and state
 		gn('id_startrecord').childNodes[0].setAttribute('class', 'startrecord off'); // Start Button
 		gn('id_startrecord').ontouchstart = ScreenRecord.startRecording;
-        UI.toggleRecording(); // TODO: maybe wait a little bit before toggling?
+        UI.toggleRecording();
     }
 
 
