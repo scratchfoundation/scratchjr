@@ -36,11 +36,6 @@ JSContext *js;
     self.bridge = [WebViewJavascriptBridge bridgeForWebView:webview];
     [WebViewJavascriptBridge enableLogging];
     
-    [self.bridge registerHandler:@"ObjC Echo" handler:^(id data, WVJBResponseCallback responseCallback) {
-        NSLog(@"ObjC Echo called with: %@", data);
-        responseCallback(data);
-    }];
-    
     // Also sets self.webview's delegate to self
     [_bridge setWebViewDelegate:self];
     
@@ -457,14 +452,11 @@ JSContext *js;
                     NSLog(@"Recording Started");
                     
                     // Alert JS
-                    [self.bridge callHandler:@"Recording Started" data:nil responseCallback:^(id responseData) {
-                        NSLog(@"ObjC received response: %@", responseData);
-                    }];
+                    [self.bridge callHandler:@"Recording Started" data:nil];
                     
                 } else {
                     // Handle Error
-                    NSLog(@"Error: Recording could not start");
-                    NSLog(@"%@", [error debugDescription]);
+                    NSLog(@"Error: Recording could not start; %@", [error debugDescription]);
                 }
             }];
             
@@ -492,9 +484,7 @@ JSContext *js;
                 if (previewViewController != nil) {
                     
                     // Alert JS of completion
-                    [self.bridge callHandler:@"Recording Stopped" data:nil responseCallback:^(id responseData) {
-                        NSLog(@"ObjC received response: %@", responseData);
-                    }];
+                    [self.bridge callHandler:@"Recording Stopped" data:nil];
                 
                     [previewViewController setPreviewControllerDelegate:self];
                     

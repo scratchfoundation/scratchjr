@@ -36,18 +36,12 @@ export default class ScreenRecord {
         ScreenRecord.setupWebViewJavascriptBridge(function(bridge) {
             // Callback for when iOS completes startup for recording
         	bridge.registerHandler('Recording Started', function(data, responseCallback) {
-        		console.log("Recording Started called with:", data);
                 ScreenRecord.finishStartRecording();
-
-                responseCallback(data);
         	});
 
             // Callback for when iOS completes stopping of recording
             bridge.registerHandler('Recording Stopped', function(data, responseCallback) {
-                console.log("Recording Stopped called with:", data);
                 ScreenRecord.finishStopRecording();
-
-                responseCallback(data);
             });
         });
 
