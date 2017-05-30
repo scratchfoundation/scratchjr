@@ -1,5 +1,6 @@
 #import "ScratchJr.h"
 #import <Google/Analytics.h>
+#import <objc/runtime.h>
 // @import MessageUI;
 
 
@@ -22,7 +23,6 @@ JSContext *js;
         // Custom initialization
     }
     
-    printf("ViewController initialized\n");
     return self;
 }
 
@@ -31,7 +31,19 @@ JSContext *js;
     [super viewDidLoad];
     [self registerDefaultsFromSettingsBundle];
     webview = (UIWebView*)[self view] ;
-    [webview setDelegate:self];
+    
+    // JavaScript bridge init (for screen recording callbacks from iOS -> JS)
+    self.bridge = [WebViewJavascriptBridge bridgeForWebView:webview];
+    [WebViewJavascriptBridge enableLogging];
+    
+    [self.bridge registerHandler:@"ObjC Echo" handler:^(id data, WVJBResponseCallback responseCallback) {
+        NSLog(@"ObjC Echo called with: %@", data);
+        responseCallback(data);
+    }];
+    
+    // Also sets self.webview's delegate to self
+    [_bridge setWebViewDelegate:self];
+    
     [Database open:@"ScratchJr"];
     [ScratchJr cameraInit];
     [self reload];
@@ -40,8 +52,6 @@ JSContext *js;
     //[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:NO]; // Deprecated  iOS9
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
     [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
-    
-    printf("viewDidLoad\n");
 }
 
 - (void) showSplash {
@@ -50,9 +60,6 @@ JSContext *js;
     splashScreen.animationImages = [NSArray arrayWithObjects:
                                     [UIImage imageNamed:@"Default.png"],
                                     nil];
-//    [self.view addSubview:splashScreen];
-    
-    printf("splash screen show\n");
 }
 
 - (void)didReceiveMemoryWarning
@@ -103,9 +110,6 @@ JSContext *js;
     NSURLRequest* request = [NSURLRequest requestWithURL:url];
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
     [webview loadRequest:request];
-    
-    NSLog(@"%@", request.URL.absoluteString);
-    printf("Reload Complete\n\n");
 }
 
 - (void)viewWillAppear:(BOOL)animated{[super viewWillAppear:animated];}
@@ -121,20 +125,16 @@ JSContext *js;
     //read your request here
     //before the webview will load your request
     
-    NSLog(@"%@", [[request URL] absoluteString]);
-    
     return YES;
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView{
     //access your request
-    printf("request loading\n");
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
     // Inject a reference for the dispatch method into the UIWebView
     // This happens after the page is loaded and the page's onLoad method is called
-    printf("request loaded\n");
     js = [webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
     js[@"tablet"] = self;
     [self disableWebViewLongPressGestures:webView];
@@ -348,7 +348,7 @@ JSContext *js;
 }
 
 -(void) screenrecord_recordstart:(bool)microphoneEnabled {
-    [ViewController startRecordingWithMicrophoneEnabled:microphoneEnabled];
+    [self startRecordingWithMicrophoneEnabled:microphoneEnabled];
 }
 
 -(void) screenrecord_recordstop:(bool)force {
@@ -430,37 +430,57 @@ JSContext *js;
 
 @implementation ViewController (ScreenRecorder)
 
+
 // Enable background mic recording by passing YES to microphoneEnabled
-+ (void) startRecordingWithMicrophoneEnabled:(BOOL)microphoneEnabled {
+- (void) startRecordingWithMicrophoneEnabled:(BOOL)microphoneEnabled {
+    
+    // Discard for safety
+    // [ViewController killScreenRecording];
+    
+    // Inactivate audio session to avoid black screen bug
+    [[AVAudioSession sharedInstance] setActive:NO error:nil];
+    
     // Microphone
     [[RPScreenRecorder sharedRecorder] setMicrophoneEnabled:microphoneEnabled];
-    NSLog(@"recording start called");
+    
+    NSLog(@"Recording Start Called");
+    
+    // Start Recording (attempt)
     if ([[RPScreenRecorder sharedRecorder] isAvailable]) {
+        NSLog(@"Recorder Is Available");
         if (![[RPScreenRecorder sharedRecorder] isRecording]) {
+            NSLog(@"Recorder Is Not Recording");
+            
             [[RPScreenRecorder sharedRecorder] startRecordingWithHandler:^(NSError * _Nullable error) {
                 
                 if (error == nil) {
-                    printf("Recording Started");
+                    NSLog(@"Recording Started");
                     
-                    // UI Stuff
+                    // Alert JS
+                    [self.bridge callHandler:@"Recording Started" data:nil responseCallback:^(id responseData) {
+                        NSLog(@"ObjC received response: %@", responseData);
+                    }];
                     
                 } else {
                     // Handle Error
-                    printf("Error: Recording could not start");
-                    printf("%s", [error debugDescription]);
+                    NSLog(@"Error: Recording could not start");
+                    NSLog(@"%@", [error debugDescription]);
                 }
             }];
+            
         } else {
-            printf("Error: Recording already in progress");
+            NSLog(@"Error: Recording already in progress");
+            [[AVAudioSession sharedInstance] setActive:YES error:nil];
         }
     } else {
         // Handle Availability Error
-        printf("Error: Recorder not available");
+        NSLog(@"Error: Recorder not available");
+        [[AVAudioSession sharedInstance] setActive:YES error:nil];
     }
 }
 
 - (void) stopRecordingDisplayPreview {
-    printf("Recording Stopping");
+    NSLog(@"Recording Stop Called");
     
     // Turn off microphone
     [[RPScreenRecorder sharedRecorder] setMicrophoneEnabled:NO];
@@ -471,6 +491,11 @@ JSContext *js;
             if (error == nil) {
                 if (previewViewController != nil) {
                     
+                    // Alert JS of completion
+                    [self.bridge callHandler:@"Recording Stopped" data:nil responseCallback:^(id responseData) {
+                        NSLog(@"ObjC received response: %@", responseData);
+                    }];
+                
                     [previewViewController setPreviewControllerDelegate:self];
                     
                     // View / Discard Response
@@ -479,12 +504,11 @@ JSContext *js;
                     UIAlertAction *discardAction = [UIAlertAction actionWithTitle:@"Discard" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                         [[RPScreenRecorder sharedRecorder] discardRecordingWithHandler:^{
                             // Handle Discarding
-                            printf("Recording Discarded");
+                            NSLog(@"Recording Discarded (Stop)");
                         }];
                     }];
                     
                     UIAlertAction *viewAction = [UIAlertAction actionWithTitle:@"View" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                        printf("\n\nPRESENTING PREVIEW\n\n");
                         [previewViewController setModalPresentationStyle:UIModalPresentationPopover];
                         UIPopoverPresentationController *previewPresenter = [previewViewController popoverPresentationController];
                         previewPresenter.sourceView = self.view;
@@ -496,18 +520,20 @@ JSContext *js;
                     [alertController addAction:discardAction];
                     [alertController addAction:viewAction];
                     
+                    // Reactivate audio session
+                    [[AVAudioSession sharedInstance] setActive:YES error:nil];
+                    
                     [self presentViewController:alertController animated:YES completion:nil];
                     
-                    // UI Stuff
+                
                     
                 } else {
                     // Handle Error
-                    printf("Preview Controller is nil");
+                    NSLog(@"Error: Preview Controller is nil");
                 }
             } else {
                 // Handle Error
-                printf("Error: Recording could not stop");
-                printf("%s", [error debugDescription]);
+                NSLog(@"Error: Recording could not stop; %@", [error debugDescription]);
             }
         }];
     }
@@ -518,35 +544,43 @@ JSContext *js;
     // Turn off microphone
     [[RPScreenRecorder sharedRecorder] setMicrophoneEnabled:NO];
     
+    [[AVAudioSession sharedInstance] setActive:YES error:nil];
+    
     if ([[RPScreenRecorder sharedRecorder] isRecording]) {
         [[RPScreenRecorder sharedRecorder] stopRecordingWithHandler:^(RPPreviewViewController * _Nullable previewViewController, NSError * _Nullable error) {
             
             if (error == nil) {
                 [[RPScreenRecorder sharedRecorder] discardRecordingWithHandler:^{
-                    NSLog(@"recording discarderd");
+                    NSLog(@"Recording Killed");
                     return;
                 }];
+                
+                
             } else {
                 // Handle Error
-                NSLog(@"%@", [error debugDescription]);
+                NSLog(@"Error: Recording could not be killed; %@", [error debugDescription]);
             }
+        }];
+    } else {
+        [[RPScreenRecorder sharedRecorder] discardRecordingWithHandler:^{
+            NSLog(@"Recording Discarded (Kill)");
         }];
     }
 }
 
 + (BOOL) isAppScreenRecording {
-    BOOL isRecording = [[RPScreenRecorder sharedRecorder] isRecording];
-    NSLog(@"%u", isRecording);
-    return isRecording;
+    return [[RPScreenRecorder sharedRecorder] isRecording];
 }
 
 // RPPreviewControllerDelegate Methods
 
 - (void)previewController:(RPPreviewViewController *)previewController didFinishWithActivityTypes:(NSSet<NSString *> *)activityTypes {
-    NSLog(@"%@", activityTypes);
-    
     // Dismiss View Controller
-    [previewController dismissViewControllerAnimated:YES completion:nil];
+    [previewController dismissViewControllerAnimated:YES completion:^{
+        [[RPScreenRecorder sharedRecorder] discardRecordingWithHandler:^{
+            // continue
+        }];
+    }];
     
     // Handle Activity Types
     NSString *message = [activityTypes containsObject:@"com.apple.UIKit.activity.SaveToCameraRoll"] ?
@@ -566,6 +600,7 @@ JSContext *js;
     
     [alertController addAction:okAction];
     [self presentViewController:alertController animated:YES completion:nil];
+    
 }
 
 

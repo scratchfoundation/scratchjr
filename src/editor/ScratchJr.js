@@ -200,9 +200,9 @@ export default class ScratchJr {
         Library.init();
         Paint.init();
         Record.init();
-        ScreenRecord.init();
         Prims.init();
         runtime = new Runtime();
+        ScreenRecord.init();
         Undo.init();
         ScratchJr.editorEvents();
         Project.load(currentProject);

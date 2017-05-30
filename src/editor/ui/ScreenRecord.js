@@ -6,7 +6,6 @@ import {frame, gn, newHTML, isTablet, isAndroid} from '../../utils/lib';
 let error = false;
 let dialogOpen = false;
 let timeLimit = null;
-let isRecording = false;
 
 export default class ScreenRecord {
 
@@ -15,7 +14,7 @@ export default class ScreenRecord {
 	//---------------------------
 
 	static get isRecording() {
-        return iOS.isscreenrecording();
+		return iOS.isscreenrecording();
 	}
 
 	static get dialogOpen() {
@@ -27,12 +26,35 @@ export default class ScreenRecord {
 	//      Initialization      |
 	//---------------------------
 
-	static init() {
+    static init() {
 		// Screen Recording only for mobile devices
 		if (!isTablet) {
-			return;
+            return;
 		}
 
+        // iOS bridge init (for screen recording callbacks from iOS -> JS)
+        ScreenRecord.setupWebViewJavascriptBridge(function(bridge) {
+            // Callback for when iOS completes startup for recording
+        	bridge.registerHandler('Recording Started', function(data, responseCallback) {
+        		console.log("Recording Started called with:", data);
+                ScreenRecord.finishStartRecording();
+
+                responseCallback(data);
+        	});
+
+            // Callback for when iOS completes stopping of recording
+            bridge.registerHandler('Recording Stopped', function(data, responseCallback) {
+                console.log("Recording Stopped called with:", data);
+                ScreenRecord.finishStopRecording();
+
+                responseCallback(data);
+            });
+        });
+
+
+        // UI Initialization
+
+        // Topbar icon
 		var modal = newHTML('div', 'screenrecord fade', frame);
         modal.setAttribute('id', 'screenrecorddialog');
 
@@ -41,21 +63,25 @@ export default class ScreenRecord {
         var controls = newHTML('div', 'recordcontrols', toolbar);
         controls.setAttribute('id', 'recordcontrols')
 
-        // Buttons
+        // Start/Stop Buttons
         var lib = [['startrecord', ScreenRecord.startRecording], ['stoprecord', ScreenRecord.stopRecording]];
 
         for (var j = 0; j < lib.length; j++) {
             ScreenRecord.newToggleClicky(controls, 'id_', lib[j][0], lib[j][1]);
         }
+    }
 
-        setInterval(function () {
-            isRecording = ScreenRecord.isRecording;
-            console.log(isRecording);
-        }, 1000);
-
-        ScreenRecord.killRecorder();
+    // Setup Bridge for iOS to call JS (https://github.com/marcuswestin/WebViewJavascriptBridge)
+	static setupWebViewJavascriptBridge(callback) {
+		if (window.WebViewJavascriptBridge) { return callback(WebViewJavascriptBridge); }
+		if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback); }
+		window.WVJBCallbacks = [callback];
+		var WVJBIframe = document.createElement('iframe');
+		WVJBIframe.style.display = 'none';
+		WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__';
+		document.documentElement.appendChild(WVJBIframe);
+		setTimeout(function() { document.documentElement.removeChild(WVJBIframe) }, 0);
 	}
-
 
 
 	// Register toggle buttons and handlers
@@ -64,7 +90,7 @@ export default class ScreenRecord {
         newHTML('div', key + ' off', button);
         button.setAttribute('type', 'toggleclicky');
         button.setAttribute('id', prefix + key);
-        
+
         if (fcn) {
             if (isTablet) {
                 button.ontouchstart = function (evt) {
@@ -77,13 +103,14 @@ export default class ScreenRecord {
     }
 
 
-    //----------------------------
+	//----------------------------
 	//     Button UI Methods     |
 	//----------------------------
 
     static flashStopButton() {
     	gn('id_stoprecord').childNodes[0].setAttribute('class', 'stoprecord on');
-    	setTimeout( function () {
+
+        setTimeout( function () {
     		gn('id_stoprecord').childNodes[0].setAttribute('class', 'stoprecord off');
     	}, 150);
     }
@@ -101,16 +128,15 @@ export default class ScreenRecord {
             gn('screenrecorddialog').setAttribute('class', 'screenrecord fade in');
         }
 
-        ScratchJr.stopStrips();
         dialogOpen = true;
 
         // Android; TODO: modify if necessary
         ScratchJr.onBackButtonCallback.push(ScreenRecord.disappear);
     }
 
-    static disappear () {		
-		// Update UI and state
-		gn('screenrecorddialog').setAttribute('class', 'screenrecord fade');
+    static disappear () {
+        // Update UI and state
+        gn('screenrecorddialog').setAttribute('class', 'screenrecord fade');
         dialogOpen = false;
 
         // Android; TODO: modify if necessary
@@ -118,47 +144,35 @@ export default class ScreenRecord {
     }
 
 
-
     //---------------------------
-	//      Button Actions      |
-	//---------------------------
+    //      Record Actions      |
+    //---------------------------
 
-	// Press on start
+    // Press on start
     static startRecording () {
-        // ScreenRecord.killRecorder();
-        // ScreenRecord.appear();
-
         if (error) {
             ScreenRecord.killRecorder();
             return;
         }
 
-    	var micEnabled = false; // mic disabled by default
-        iOS.startscreenrecord(micEnabled, function () {
-            // await sleep(3000); // waits 3 sec for recording to start
-
-        	if (true) {
-        		// Update UI and state
-				gn('id_startrecord').childNodes[0].setAttribute('class', 'startrecord on');
-        		gn('id_startrecord').ontouchstart = ScreenRecord.stopRecording;
-
-        		// If timeLimit is defined, set a timeout function to stop to record
-        		if (timeLimit) {
-            		setTimeout(ScreenRecord.stopRecording, timeLimit);
-            	}
-
-        	} else {
-                ScreenRecord.killRecorder();
-        		console.log("iOS returned no match for startRecord");
-        	}
-        });
+		var micEnabled = false; // mic disabled by default
+        iOS.startscreenrecord(micEnabled);
     }
 
+    // Called by iOS bridge after recording has started
+    static finishStartRecording() {
+        // Update UI and state
+        gn('id_startrecord').childNodes[0].setAttribute('class', 'startrecord on');
+        gn('id_startrecord').ontouchstart = ScreenRecord.stopRecording;
+
+        // If timeLimit is defined, set a timeout function to stop to record
+        if (timeLimit) {
+            setTimeout(ScreenRecord.stopRecording, timeLimit);
+        }
+    }
 
     // Press on stop
     static stopRecording () {
-    	gn('id_startrecord').ontouchstart = ScreenRecord.startRecording;
-    	
         if (error) {
             ScreenRecord.killRecorder();
             return;
@@ -166,27 +180,32 @@ export default class ScreenRecord {
 
         // UI Changes
         // Play Sounds?
-        ScreenRecord.flashStopButton(); // Stop Button 
-        gn('id_startrecord').childNodes[0].setAttribute('class', 'startrecord off'); // Start Button
-        
+        ScreenRecord.flashStopButton(); // Stop Button
+
         // Stop Recording
-        if (true) {
-            iOS.stopscreenrecord(false, function () {
-            	UI.toggleRecording(); // TODO: maybe wait a little bit before toggling?
-            });
-        }
+        var withForce = false;
+        iOS.stopscreenrecord(withForce);
+    }
+
+    // Called by iOS bridge after recording has stopped
+    static finishStopRecording() {
+		// Update UI and state
+		gn('id_startrecord').childNodes[0].setAttribute('class', 'startrecord off'); // Start Button
+		gn('id_startrecord').ontouchstart = ScreenRecord.startRecording;
+        UI.toggleRecording(); // TODO: maybe wait a little bit before toggling?
     }
 
 
     //---------------------------
-	//       Error Control      |
-	//---------------------------
+    //       Error Control      |
+    //---------------------------
 
 	// Forcibly stop recording with no dialog
 	static killRecorder() {
-		iOS.stopscreenrecord(true, function (e) {
-			ScreenRecord.disappear();
-		});
+	    var withForce = true;
+        iOS.stopscreenrecord(withForce, function (e) {
+            ScreenRecord.disappear();
+        });
 	}
 
     static tearDownRecorder () {

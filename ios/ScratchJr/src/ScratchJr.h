@@ -4,6 +4,7 @@
 #import <MessageUI/MessageUI.h>
 #import <JavaScriptCore/JavaScriptCore.h>
 #import <ReplayKit/ReplayKit.h>
+#import "WebViewJavascriptBridge.h"
 
 @interface Database : NSObject
 
@@ -138,6 +139,8 @@
 
 @interface ViewController : UIViewController <JSExports,UIWebViewDelegate,MFMailComposeViewControllerDelegate>
 @property (nonatomic, readwrite, strong) JSContext *js;
+@property WebViewJavascriptBridge* bridge;
+
 + (UIWebView *)webview;
 + (UIImageView *)splashScreen;
 - (void)receiveProject:(NSString *)project;
@@ -154,8 +157,9 @@
 @end
 
 @interface ViewController (ScreenRecorder) <RPPreviewViewControllerDelegate>
+
 // Exports
-+ (void) startRecordingWithMicrophoneEnabled:(BOOL)microphoneEnabled;
+- (void) startRecordingWithMicrophoneEnabled:(BOOL)microphoneEnabled;
 - (void) stopRecordingDisplayPreview;
 + (void) killScreenRecording;
 + (BOOL) isAppScreenRecording;
