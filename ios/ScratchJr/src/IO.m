@@ -17,8 +17,6 @@ NSMutableDictionary *soundtimers;
     sounds = [[NSMutableDictionary alloc] init];
     soundtimers = [[NSMutableDictionary alloc] init];
     HTML =vc;
-    
-    printf("IO init");
 }
 
 + (NSString*)getpath {return [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];}

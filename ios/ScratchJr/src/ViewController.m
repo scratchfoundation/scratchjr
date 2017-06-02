@@ -438,14 +438,9 @@ JSContext *js;
     // Microphone
     [[RPScreenRecorder sharedRecorder] setMicrophoneEnabled:microphoneEnabled];
     
-    NSLog(@"Recording Start Called");
-    
     // Start Recording (attempt)
     if ([[RPScreenRecorder sharedRecorder] isAvailable]) {
-        NSLog(@"Recorder Is Available");
         if (![[RPScreenRecorder sharedRecorder] isRecording]) {
-            NSLog(@"Recorder Is Not Recording");
-            
             [[RPScreenRecorder sharedRecorder] startRecordingWithHandler:^(NSError * _Nullable error) {
                 
                 if (error == nil) {
@@ -472,8 +467,6 @@ JSContext *js;
 }
 
 - (void) stopRecordingDisplayPreview {
-    NSLog(@"Recording Stop Called");
-    
     // Turn off microphone
     [[RPScreenRecorder sharedRecorder] setMicrophoneEnabled:NO];
     
@@ -482,6 +475,7 @@ JSContext *js;
             
             if (error == nil) {
                 if (previewViewController != nil) {
+                    NSLog(@"Recording Stopped");
                     
                     // Alert JS of completion
                     [self.bridge callHandler:@"Recording Stopped" data:nil];
@@ -513,17 +507,16 @@ JSContext *js;
                     // Reactivate audio session
                     [[AVAudioSession sharedInstance] setActive:YES error:nil];
                     
+                    // Present recording
                     [self presentViewController:alertController animated:YES completion:nil];
-                    
-                
                     
                 } else {
                     // Handle Error
-                    NSLog(@"Error: Preview Controller is nil");
+                    NSLog(@"Error: Could not display recording - Preview Controller is nil");
                 }
             } else {
                 // Handle Error
-                NSLog(@"Error: Recording could not stop; %@", [error debugDescription]);
+                NSLog(@"Error: Recording could not be stopped; %@", [error debugDescription]);
             }
         }];
     }
