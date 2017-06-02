@@ -1,0 +1,9 @@
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/GoogleNetworkingUtilities/Frameworks" "${PODS_ROOT}/GoogleSymbolUtilities/Frameworks" "${PODS_ROOT}/GoogleUtilities/Frameworks"
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/Google" "${PODS_ROOT}/Headers/Public/GoogleAnalytics" "${PODS_ROOT}/Headers/Public/GoogleNetworkingUtilities" "${PODS_ROOT}/Headers/Public/GoogleSymbolUtilities" "${PODS_ROOT}/Headers/Public/GoogleUtilities" "${PODS_ROOT}/Headers/Public/WebViewJavascriptBridge"
+LIBRARY_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/WebViewJavascriptBridge" $(inherited) "${PODS_ROOT}/Google/Libraries" $(inherited) "${PODS_ROOT}/GoogleAnalytics/Libraries"
+OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/Google" -isystem "${PODS_ROOT}/Headers/Public/GoogleAnalytics" -isystem "${PODS_ROOT}/Headers/Public/GoogleNetworkingUtilities" -isystem "${PODS_ROOT}/Headers/Public/GoogleSymbolUtilities" -isystem "${PODS_ROOT}/Headers/Public/GoogleUtilities" -isystem "${PODS_ROOT}/Headers/Public/WebViewJavascriptBridge"
+OTHER_LDFLAGS = $(inherited) -ObjC -l"GGLAnalytics" -l"GGLCore" -l"GoogleAnalytics" -l"WebViewJavascriptBridge" -l"sqlite3" -l"z" -framework "AddressBook" -framework "CoreData" -framework "CoreGraphics" -framework "GoogleNetworkingUtilities" -framework "GoogleSymbolUtilities" -framework "GoogleUtilities" -framework "Security" -framework "SystemConfiguration" -framework "UIKit"
+PODS_BUILD_DIR = $BUILD_DIR
+PODS_CONFIGURATION_BUILD_DIR = $PODS_BUILD_DIR/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
+PODS_ROOT = ${SRCROOT}/Pods
