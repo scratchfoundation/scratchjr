@@ -314,6 +314,22 @@ export default class iOS {
 
     ignore () {
     }
+    
+    // screen record functions
+    
+    static startscreenrecord (mic, fcn, e, cancelSound) {
+        var result = tabletInterface.screenrecord_recordstart(mic);
+        if (fcn) {
+            fcn(e, cancelSound, result);
+        }
+    }
+    
+    static stopscreenrecord (kill, fcn) {
+        var result = tabletInterface.screenrecord_recordstop(kill);
+        if (fcn) {
+            fcn(result);
+        }
+    }
 
     ///////////////
     // Sharing

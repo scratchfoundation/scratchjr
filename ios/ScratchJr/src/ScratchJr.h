@@ -3,6 +3,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <MessageUI/MessageUI.h>
 #import <JavaScriptCore/JavaScriptCore.h>
+#import <ReplayKit/ReplayKit.h>
 
 @interface Database : NSObject
 
@@ -127,6 +128,10 @@
                                      :(NSString *)b64data;
 - (NSString *) deviceName;
 - (NSString *) analyticsEvent:(NSString *)category :(NSString *)action :(NSString *)label :(NSNumber*)value;
+
+-(bool) screenrecord_recordstart:(bool)microphoneEnabled;
+-(bool) screenrecord_recordstop:(bool)force;
+
 @end
 
 @interface ViewController : UIViewController <JSExports,UIWebViewDelegate,MFMailComposeViewControllerDelegate>
@@ -146,6 +151,12 @@
 - (void)showShareAirdrop:(NSURL *)projectURL;
 @end
 
+@interface ViewController (ScreenRecorder) <RPPreviewViewControllerDelegate>
+// Exports
+- (BOOL) startRecordingWithMicrophoneEnabled:(BOOL)microphoneEnabled;
+- (BOOL) stopRecordingWithForce:(BOOL)kill;
+
+@end
 
 @interface IO : NSObject
 
