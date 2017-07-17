@@ -61,9 +61,9 @@ NSString *canRecord;
     NSError *err;
     NSDictionary *settings = [NSDictionary dictionaryWithObjectsAndKeys:
                               [NSNumber numberWithInt: kAudioFormatLinearPCM], AVFormatIDKey,
-                              [NSNumber numberWithFloat: 22050.0], AVSampleRateKey,
+                              [NSNumber numberWithFloat: 16000.0], AVSampleRateKey,
                               [NSNumber numberWithInt: 1], AVNumberOfChannelsKey,
-                              [NSNumber numberWithInt: 16], AVLinearPCMBitDepthKey,
+                              [NSNumber numberWithInt: 8], AVLinearPCMBitDepthKey,
                               nil];
     recorder = [[ AVAudioRecorder alloc] initWithURL:url settings:settings error:&err];
     if (err) {
