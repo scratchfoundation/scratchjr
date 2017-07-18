@@ -173,7 +173,7 @@ export default class Record {
                 if (isRecording) {
                     Record.stopRecording();
                 }
-            }, 60000);
+            }, 30000);
         }
     }
 
