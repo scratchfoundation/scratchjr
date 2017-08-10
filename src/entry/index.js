@@ -84,6 +84,11 @@ function indexLoadStart () {
         gn('blueguy').className = 'blue hide';
         gn('redguy').className = 'red hide';
         gn('gear').className = 'gear show';
+        gn('usageQuestion').className = 'usageQuestion hide';
+        gn('usageSchool').className = 'usageSchool hide';
+        gn('usageHome').className = 'usageHome hide';
+        gn('usageOther').className = 'usageOther hide';
+        gn('usageNoanswer').className = 'usageNoanswer hide';
     }
     gn('gettings').className = 'gettings show';
     gn('startcode').className = 'startcode show';
@@ -161,7 +166,7 @@ function indexSetUsage (e) {
     iOS.analyticsEvent('lobby', 'scratchjr_usage', usageText);
     AppUsage.setUsage(usageText);
     ScratchAudio.sndFX('tap.wav');
-    window.location.href = 'index.html';
+    indexLoadStart();
 }
 // For PBS KIDS edition only
 function indexInfo () {
