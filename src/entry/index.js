@@ -3,6 +3,7 @@ import {gn, getUrlVars, isAndroid, isiOS} from '../utils/lib';
 import iOS from '../iPad/iOS';
 import UI from '../editor/ui/UI';
 import Localization from '../utils/Localization';
+import AppUsage from '../utils/AppUsage';
 
 export function indexMain () {
     gn('gettings').ontouchend = indexGettingstarted;
@@ -63,6 +64,14 @@ function indexFirstTime () {
 }
 
 function indexLoadOptions () {
+    if (window.Settings.edition != 'PBS' && AppUsage.askForUsage()) {
+        indexLoadUsage();
+    } else {
+        indexLoadStart();
+    }
+}
+
+function indexLoadStart () {
     gn('authors').className = 'credits hide';
     gn('authorsText').className = 'creditsText hide';
 
@@ -86,6 +95,30 @@ function indexLoadOptions () {
     }
 }
 
+function indexLoadUsage () {
+    gn('authors').className = 'credits show';
+    gn('authorsText').className = 'creditsText hide';
+    gn('purpleguy').className = 'purple hide';
+    gn('blueguy').className = 'blue hide';
+    gn('redguy').className = 'red hide';
+    
+    gn('usageQuestion').textContent = Localization.localize('USAGE_QUESTION');
+    gn('useSchoolText').textContent = Localization.localize('USAGE_SCHOOL');
+    gn('useHomeText').textContent = Localization.localize('USAGE_HOME');
+    gn('useOtherText').textContent = Localization.localize('USAGE_OTHER');
+    gn('usageNoanswerText').textContent = Localization.localize('USAGE_NONE');
+    
+    gn('usageQuestion').className = 'usageQuestion show';
+    gn('usageSchool').className = 'usageSchool show';
+    gn('usageHome').className = 'usageHome show';
+    gn('usageOther').className = 'usageOther show';
+    gn('usageNoanswer').className = 'usageNoanswer show';
+    gn('usageSchool').ontouchend = indexSetUsage;
+    gn('usageHome').ontouchend = indexSetUsage;
+    gn('usageOther').ontouchend = indexSetUsage;
+    gn('usageNoanswer').ontouchend = indexSetUsage;
+}
+
 function indexGohome () {
     iOS.setfile('homescroll.sjr', 0, function () {
         doNext();
@@ -107,6 +140,29 @@ function indexGettingstarted () {
     window.location.href = 'gettingstarted.html?place=home';
 }
 
+function indexSetUsage (e) {
+    var usageText = '';
+
+    switch (e.target.parentElement.id) {
+    case 'usageSchool':
+        usageText = 'school';
+        break;
+    case 'usageHome':
+        usageText = 'home';
+        break;
+    case 'usageOther':
+        usageText = 'other';
+        break;
+    case 'usageNoanswer':
+        usageText = 'noanswer';
+        break;
+    }
+    // Send one-time analytics event about usage
+    iOS.analyticsEvent('lobby', 'scratchjr_usage', usageText);
+    AppUsage.setUsage(usageText);
+    ScratchAudio.sndFX('tap.wav');
+    window.location.href = 'index.html';
+}
 // For PBS KIDS edition only
 function indexInfo () {
     ScratchAudio.sndFX('tap.wav');

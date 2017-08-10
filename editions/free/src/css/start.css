@@ -217,3 +217,130 @@ div.frame {
     from { -webkit-transform: rotate(0deg); }
     to { -webkit-transform: rotate(36deg); }
 }
+
+/* Analytics Info Page Elements */
+
+.usageQuestion {
+    position: absolute;
+    width: 60%;
+    height: 35%;
+    top: 15%;
+    left: 20%;
+    color: white;
+    font-size: 5em;
+    font-weight: 500;
+    text-align: center;
+    text-shadow: 1px 1px 4px #333333;
+}
+
+.usageQuestion.hide {display: none;}
+.usageQuestion.show {display: block;}
+
+.usageIcon {
+    width: 100%;
+    margin-left: 3%;
+}
+.usageText {
+    color: #999999;
+    font-size: 2em;
+    text-align: center;
+    margin-top: .5em;
+}
+
+.usageSchool {
+    position: absolute;
+    top: 45%;
+    left: 17%;
+    margin: 0px;
+    width: 17%;
+    height: 30%;
+    -webkit-tap-highlight-color: transparent;
+    z-index: 1000;
+}
+
+.usageSchool.hide {display: none;}
+.usageSchool.show {display: block;}
+
+.usageHome {
+    position: absolute;
+    top: 45%;
+    left: 42%;
+    width: 17%;
+    height: 30%;
+    margin: 0px;
+    -webkit-tap-highlight-color: transparent;
+    z-index: 1000;
+}
+
+.usageHome.hide {display: none;}
+.usageHome.show {display: block;}
+
+.usageOther {
+    position: absolute;
+    top: 45%;
+    left: 67%;
+    margin: 0px;
+    width: 17%;
+    height: 22%;
+    -webkit-tap-highlight-color: transparent;
+    z-index: 1000;
+}
+
+.usageOther.hide {display: none;}
+.usageOther.show {display: block;}
+
+.usageNoanswer {
+    position: absolute;
+    width: 50%;
+    height: 15%;
+    top: 90%;
+    left: 25%;
+    text-align: center;
+    z-index: 25;
+}
+.usageNoanswerText {
+    color: #35A8E0;
+    font-size: 1.8em;
+}
+
+.usageNoanswer.hide {display: none;}
+.usageNoanswer.show {display: block;}
+
+/* TODO: make font sizes relative!! */
+/* Usage text boxes */
+.usage-text {
+    position: absolute;
+    width: 20%;
+    height: 15%;
+    top: 75%;
+    background-color: #35A8E0;
+    border: none;
+    color: white;
+    font-size: 35px;
+    text-align: center;
+    text-decoration: none;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.usage-text.school {
+    left: 10%;
+}
+
+.usage-text.home {
+    left: 40%;
+}
+
+.usage-text.other {
+    left: 70%;
+}
+
+.usage-text.dont-ask {
+    top: 90%;
+    right: 2%;
+    height: 10%;
+    width: 20%;
+    font-size: 20px;
+    text-align: right;
+}
+
