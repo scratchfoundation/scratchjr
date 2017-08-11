@@ -71,7 +71,7 @@ function indexLoadOptions () {
     }
 }
 
-function indexLoadStart () {
+function indexLoadStart (afterUsage) {
     gn('authors').className = 'credits hide';
     gn('authorsText').className = 'creditsText hide';
 
@@ -84,11 +84,16 @@ function indexLoadStart () {
         gn('blueguy').className = 'blue hide';
         gn('redguy').className = 'red hide';
         gn('gear').className = 'gear show';
-        gn('usageQuestion').className = 'usageQuestion hide';
-        gn('usageSchool').className = 'usageSchool hide';
-        gn('usageHome').className = 'usageHome hide';
-        gn('usageOther').className = 'usageOther hide';
-        gn('usageNoanswer').className = 'usageNoanswer hide';
+        
+        if (afterUsage) {
+            gn('catface').className = 'catface show';
+            gn('jrlogo').className = 'jrlogo show';
+            gn('usageQuestion').className = 'usageQuestion hide';
+            gn('usageSchool').className = 'usageSchool hide';
+            gn('usageHome').className = 'usageHome hide';
+            gn('usageOther').className = 'usageOther hide';
+            gn('usageNoanswer').className = 'usageNoanswer hide';
+        }
     }
     gn('gettings').className = 'gettings show';
     gn('startcode').className = 'startcode show';
@@ -106,6 +111,8 @@ function indexLoadUsage () {
     gn('purpleguy').className = 'purple hide';
     gn('blueguy').className = 'blue hide';
     gn('redguy').className = 'red hide';
+    gn('catface').className = 'catface hide';
+    gn('jrlogo').className = 'jrlogo hide';
     
     gn('usageQuestion').textContent = Localization.localize('USAGE_QUESTION');
     gn('useSchoolText').textContent = Localization.localize('USAGE_SCHOOL');
@@ -166,7 +173,7 @@ function indexSetUsage (e) {
     iOS.analyticsEvent('lobby', 'scratchjr_usage', usageText);
     AppUsage.setUsage(usageText);
     ScratchAudio.sndFX('tap.wav');
-    indexLoadStart();
+    indexLoadStart(true);
 }
 // For PBS KIDS edition only
 function indexInfo () {
