@@ -8,13 +8,8 @@ export default class AppUsage {
     }
     
     static initUsage () {
-        var usageCookie = Cookie.get('usage');
-        if (usageCookie === null || usageCookie === 'noanswer') {
-            currentUsage =   '';
-        } else {
-            currentUsage = '_' + usageCookie;
-        }
-
+        const usageCookie = Cookie.get('usage');
+        currentUsage =  usageCookie ? usageCookie + '::' : '';
     }
     
     static askForUsage () {

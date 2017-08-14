@@ -353,14 +353,11 @@ export default class iOS {
     }
 
     static analyticsEvent (category, action, label, value) {
-        if (!label) {
-            label = '';
-        }
         if (!value) {
             value = 1;
         }
-        let newCategory = category + AppUsage.currentUsage;
-        tabletInterface.analyticsEvent(newCategory, action, label, value);
+        let usageLabel = label ? AppUsage.currentUsage + label : AppUsage.currentUsage;
+        tabletInterface.analyticsEvent(category, action, usageLabel, value);
     }
 
     // Web Wiew delegate call backs
