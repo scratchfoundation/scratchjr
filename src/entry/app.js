@@ -1,5 +1,6 @@
 import {preprocessAndLoadCss} from '../utils/lib';
 import Localization from '../utils/Localization';
+import AppUsage from '../utils/AppUsage';
 import iOS from '../iPad/iOS';
 import IO from '../iPad/IO';
 import MediaLib from '../iPad/MediaLib';
@@ -109,5 +110,7 @@ window.onload = () => {
                 entryFunction();
             });
         });
+        // Initialize currentUsage data
+        AppUsage.initUsage();
     });
 };

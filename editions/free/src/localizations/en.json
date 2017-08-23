@@ -370,5 +370,10 @@
     "SAY_BLOCK_DEFAULT_ARGUMENT": "hi",
     "ALERT_BACK": "Back",
     "ALERT_SAVING": "Saving...",
-    "SELECT_LANGUAGE": "Select language"
+    "SELECT_LANGUAGE": "Select language",
+    "USAGE_QUESTION": "Where are you using ScratchJr?",
+    "USAGE_SCHOOL": "School",
+    "USAGE_HOME": "Home",
+    "USAGE_OTHER": "Other",
+    "USAGE_NONE": "Don't ask again"
 }
