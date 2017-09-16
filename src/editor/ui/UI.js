@@ -760,13 +760,14 @@ export default class UI {
         }
 
         // Menu Icon UI change
-        var newName = '';
-        if (gn('record').className == 'recordToggle on presentationmode') {
-            newName = 'recordToggle off presentationmode';
-        } else if (gn('record').className == 'recordToggle off presentationmode') {
-            newName = 'recordToggle on presentationmode';
-        } else {
-            newName = ScreenRecord.dialogOpen ? 'recordToggle on' : 'recordToggle off';
+        var newName = ScreenRecord.dialogOpen ? 'recordToggle on' : 'recordToggle off';
+
+        if (ScreenRecord.isRecording) {
+            newName += '_recording'
+        }
+
+        if (ScratchJr.inFullscreen) {
+            newName += ' presentationmode';
         }
 
         gn('record').className = newName;
@@ -866,6 +867,11 @@ export default class UI {
             gn('record').className = 'recordToggle off';
             gn('screenrecorddialog').className = 'screenrecord fade';
         }
+
+        if (ScreenRecord.isRecording) {
+            gn('record').className += '_recording';
+        }
+
         div.appendChild(gn('record'));
 
 

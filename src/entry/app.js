@@ -21,7 +21,6 @@ function loadSettings (settingsRoot, whenDone) {
 
 // App-wide entry-point
 window.onload = () => {
-    console.log("hello world");
     // Function to be called after settings, locale strings, and Media Lib
     // are asynchronously loaded. This is overwritten per HTML page below.
     let entryFunction = () => {};
