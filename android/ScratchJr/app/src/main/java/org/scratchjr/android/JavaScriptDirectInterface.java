@@ -1,19 +1,5 @@
 package org.scratchjr.android;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Locale;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -31,7 +17,18 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Locale;
 
 /**
  * The methods in this inner class are exposed directly to JavaScript in the HTML5 pages
@@ -103,6 +100,7 @@ public class JavaScriptDirectInterface {
         SoundManager soundManager = _activity.getSoundManager();
         return soundManager.playSound(file);
     }
+
 
     @JavascriptInterface
     public boolean audio_isplaying(int soundId) {
@@ -292,6 +290,19 @@ public class JavaScriptDirectInterface {
 
     //////////////////////////////////////////////////////////////////////
     // recordsound_*
+
+    @JavascriptInterface
+    public void screenrecord_recordstart(){
+        ScreenRecord screenRecord=_activity.getScreenRecord();
+        screenRecord.startRecording();
+        System.out.print("I got here");
+    }
+
+    @JavascriptInterface
+    public void screenrecord_recordstop(){
+        ScreenRecord screenRecord=_activity.getScreenRecord();
+        screenRecord.releaseEncoders();
+    }
 
     @JavascriptInterface
     public String recordsound_recordstart() {
