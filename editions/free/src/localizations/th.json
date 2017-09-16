@@ -147,8 +147,8 @@
     "SAMPLE_Star": "ดวงดาว",
     "SAMPLE_TEXT_key_character_cat": "แมว",
     "SAMPLE_TEXT_key_character_star": "ดวงดาว",
-    "SAMPLE_TEXT_key_character_teen_girl": "วันรุ่น",
-    "SAMPLE_TEXT_key_character_teen_boy": "วันรุ่น",
+    "SAMPLE_TEXT_key_character_teen_girl": "วัยรุ่น",
+    "SAMPLE_TEXT_key_character_teen_boy": "วัยรุ่น",
     "SAMPLE_TEXT_key_farm_tap_them": "แตะตัว",
     "SAMPLE_TEXT_key_party_question": "จัดงานเลี้ยงไหม?",
     "SAMPLE_TEXT_key_soccer_question": "หรือเล่นฟุตบอล?",
@@ -361,7 +361,7 @@
     "SHARING_BY_EMAIL": "แจกจ่ายทางอีเมล",
     "SHARING_BY_AIRDROP": "แจกจ่ายทางแอร์ดรอป-AirDrop",
     "SHARING_EMAIL_SUBJECT": "โครงงาน ScratchJr: {PROJECT_NAME}",
-    "SHARING_EMAIL_TEXT": "กดรูปสัญญาลักษณ์เพื่อทดลองใช้โครงงานใน ไอแพด หรือ แอนดรอด แท็บเล็ต<br><br>แต่ถ้ายังไม่มีโปรแกรม ScratchJr ก็สามารถ<a href='http://www.scratchjr.org'>ดาวน์โหลด</a>ได้จากร้าน แอปเปิล แอป-Apple App หรือร้าน กูเกิล เพล-Google Play <br><br> ใช้ ScratchJr เพื่อเรียนทักษะสำคัญอันใหม่เพื่อสร้างสรรค์ผลงานโปรแกรมคำสั่งโต้ตอบและเกมส์. สามารถศึกษาเพิ่มเติมได้ที่ <a href='http://www.scratchjr.org'>scratchjr.org</a>",
+    "SHARING_EMAIL_TEXT": "Click the icon to try my ScratchJr project on your iPad or Android tablet!<br><br>If you don't have the ScratchJr app, you can <a href='http://www.scratchjr.org'>download it</a> from the Apple App store or the Google Play Store.<br><br>With ScratchJr, children can create their own interactive stories and games. To learn more, see <a href='http://www.scratchjr.org'>scratchjr.org</a>.",
     "PARENTAL_GATE_EXPLANATION": "ทำไมเราถึงถามแบบนี้? ผู้ใหญ่ต้องอนุญาตใหัแจกจ่ายทางออนไลน์ได้",
     "GRID_NUMBER": "{N, number}",
     "NEW_PROJECT_PREFIX": "โครงงาน",
@@ -370,5 +370,10 @@
     "SAY_BLOCK_DEFAULT_ARGUMENT": "สวัสดี",
     "ALERT_BACK": "ถอยกลับ",
     "ALERT_SAVING": "กำลังบันทึก...",
-    "SELECT_LANGUAGE": "เลือกภาษา"
+    "SELECT_LANGUAGE": "เลือกภาษา",
+    "USAGE_QUESTION": "Where are you using ScratchJr?",
+    "USAGE_SCHOOL": "School",
+    "USAGE_HOME": "Home",
+    "USAGE_OTHER": "Other",
+    "USAGE_NONE": "Don't ask again"
 }

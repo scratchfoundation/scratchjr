@@ -290,12 +290,12 @@ h1.localizationtitle {
 div.languagebuttons {
     margin: auto;
     margin-top: ${css_vh(4)};
-    width: 70%;
+    width: 90%;
 }
 
 div.localizationselect {
     border-radius: 15px;
-    width: ${css_vw(27)};
+    width: ${css_vw(23)};
     height: 47pt;
     float: left;
     position: relative; /* for absolute positioning of pseudo :after element */
