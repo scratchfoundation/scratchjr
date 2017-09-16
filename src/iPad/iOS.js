@@ -336,7 +336,7 @@ export default class iOS {
         }
     }
 
-    static isscreenrecording (fcn) {
+    static isscreenrecording () {
         return tabletInterface.screenrecord_isrecording();
     }
 
@@ -385,7 +385,7 @@ export default class iOS {
         }
 
         var usageCookie = Cookie.get('usage');
-        if (usageCookie == "home" || usageCookie == "school" || usageCookie == "other") {
+        if (usageCookie) {
             category += "_" + usageCookie;
         }
 

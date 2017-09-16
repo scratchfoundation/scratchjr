@@ -43,7 +43,7 @@
 }
 
 .recordToggle.on {
-    background: url('../assets/ui/camcorder-bordered-with-button.png');
+    background: url('../assets/ui/camcorder-bordered.png');
     background-size: 100%;
 }
 
@@ -53,7 +53,17 @@
     /*background-size: 96px 96px;*/
 }
 
-.recordToggle.on.presentationmode, .recordToggle.off.presentationmode {
+.recordToggle.on_recording {
+    background: url('../assets/ui/camcorder-bordered-with-button.png');
+    background-size: 100%;s
+}
+
+.recordToggle.off_recording {
+    background: url('../assets/ui/camcorder-with-button.png');
+    background-size: 100%;
+}
+
+.recordToggle.on.presentationmode, .recordToggle.off.presentationmode, .recordToggle.on_recording.presentationmode, .recordToggle.off_recording.presentationmode {
     position: absolute;
     margin: 0px;
     padding: 0px;
@@ -63,11 +73,6 @@
     height: ${css_vh(8.03)};
 }
 
-.recordToggle.off {
-    background: url('../assets/ui/new-camcorder-real.png');
-    background-size: 100%;
-    /*background-size: 96px 96px;*/
-}
 
 .addText {
     position: absolute;
