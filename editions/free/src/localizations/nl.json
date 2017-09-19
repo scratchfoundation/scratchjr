@@ -361,7 +361,7 @@
     "SHARING_BY_EMAIL": "Deel via e-mailbericht",
     "SHARING_BY_AIRDROP": "Deel via Airdrop",
     "SHARING_EMAIL_SUBJECT": "ScratchJr-project: {PROJECT_NAME}",
-    "SHARING_EMAIL_TEXT": "Klik op het icoontje om mijn ScratchJr-project op jouw iPad of Android-tablet te proberen!<br><br>Als je de ScratchJr-app niet hebt, kun je het <a href='http://www.scratchjr.org'>downloaden</a> in de Apple App store of de Google Play Store.<br><br>Met ScratchJr kunnen kinderen hun eigen interactieve verhalen en spelletjes maken. Voor meer informatie, zie <a href='http://www.scratchjr.org'>scratchjr.org</a>.",
+    "SHARING_EMAIL_TEXT": "Klik op het icoontje om mijn ScratchJr-project uit te proberen op jouw iPad of Android-tablet!<br><br> Als je de ScratchJr-app niet hebt, dan kun je deze <a href='http://www.scratchjr.org'>downloaden </a> van de Apple App-store of de Google Play Store.<br><br>Met ScratchJr kunnen kinderen hun eigen interactieve verhalen en games maken. Ga voor meer informatie naar <a href='http://www.scratchjr.org'>scratchjr.org</a>.",
     "PARENTAL_GATE_EXPLANATION": "Waarom vragen we dit? Een volwassenen moet online delen goedkeuren.",
     "GRID_NUMBER": "{N, number}",
     "NEW_PROJECT_PREFIX": "Project",
@@ -370,5 +370,10 @@
     "SAY_BLOCK_DEFAULT_ARGUMENT": "hoi",
     "ALERT_BACK": "Terug",
     "ALERT_SAVING": "Opslaan...",
-    "SELECT_LANGUAGE": "Kies taal"
+    "SELECT_LANGUAGE": "Kies taal",
+    "USAGE_QUESTION": "Waar gebruik je ScratchJr?",
+    "USAGE_SCHOOL": "School",
+    "USAGE_HOME": "Thuis",
+    "USAGE_OTHER": "Anders",
+    "USAGE_NONE": "Niet opnieuw vragen"
 }

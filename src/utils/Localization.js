@@ -6,22 +6,32 @@ if (!window.Intl) {
     window.Intl = Intl;
 }
 
+require('intl/locale-data/jsonp/ca.js');
+require('intl/locale-data/jsonp/de.js');
 require('intl/locale-data/jsonp/en.js');
 require('intl/locale-data/jsonp/es.js');
 require('intl/locale-data/jsonp/fr.js');
-require('intl/locale-data/jsonp/ca.js');
-require('intl/locale-data/jsonp/nl.js');
 require('intl/locale-data/jsonp/it.js');
+require('intl/locale-data/jsonp/nl.js');
+require('intl/locale-data/jsonp/ja.js');
+require('intl/locale-data/jsonp/pt.js');
+require('intl/locale-data/jsonp/sv.js');
 require('intl/locale-data/jsonp/th.js');
+require('intl/locale-data/jsonp/zh.js');
 
 require('expose?IntlMessageFormat!intl-messageformat');
+require('intl-messageformat/dist/locale-data/ca');
+require('intl-messageformat/dist/locale-data/de');
 require('intl-messageformat/dist/locale-data/en');
 require('intl-messageformat/dist/locale-data/es');
 require('intl-messageformat/dist/locale-data/fr');
-require('intl-messageformat/dist/locale-data/ca');
-require('intl-messageformat/dist/locale-data/nl');
 require('intl-messageformat/dist/locale-data/it');
+require('intl-messageformat/dist/locale-data/nl');
+require('intl-messageformat/dist/locale-data/ja');
+require('intl-messageformat/dist/locale-data/pt');
+require('intl-messageformat/dist/locale-data/sv');
 require('intl-messageformat/dist/locale-data/th');
+require('intl-messageformat/dist/locale-data/zh');
 
 let currentLocale;
 let localizationMessages = {};
@@ -79,7 +89,12 @@ export default class Localization {
             currentLocale = localizationCookie;
         }
         var topLevel = currentLocale.split('-')[0];
-
+        if (topLevel === 'zh') {
+            // need to handle locale in addition to language code for Chinese,
+            // ensure it's lower case to match filename
+            topLevel = currentLocale.toLowerCase();
+        }
+        
         // Get messages
         IO.requestFromServer(localizationRoot + 'localizations/' + topLevel + '.json', (result) => {
             localizationMessages = JSON.parse(result);
