@@ -105,7 +105,7 @@
     "INTERFACE_GUIDE_PAGES_DESCRIPTION": "Seleziona una pagina del progetto - oppure tocca il segno più per aggiungere una nuova pagina. Ogni pagina ha i propri personaggi e uno sfondo. Per eliminare una pagina toccala e tienila premuta. Per riordinare le pagine trascinale nella nuova posizione.",
     "INTERFACE_GUIDE_PROJECT_INFO_DESCRIPTION": "Cambia il titolo del progetto, vedi quando è stato creato e condividilo (se la condivisione è supportata dal tuo dispositivo).",
     "INTERFACE_GUIDE_UNDO_REDO_DESCRIPTION": "Se commetti un errore, tocca Annulla per tornare indietro annullando l'ultima azione. Tocca Ripeti per invertire l'effetto dell'ultimo Annulla.",
-    "INTERFACE_GUIDE_PROGRAMMING_SCRIPT_DESCRIPTION": "Unisci i blocchi tra loro per creare un programma e dare istruzioni al personaggio. Tocca uno script per avviarlo. Per cancellare un blocco o uno script trascinalo fuori dall'area di programmazione. Per copiare un blocco o uno script da un personaggio all'altro trascinalo sull'anteprima del personaggio.",
+    "INTERFACE_GUIDE_PROGRAMMING_SCRIPT_DESCRIPTION": "Unisci i blocchi tra loro per creare un programma e dare istruzioni al personaggio. Tocca uno script per avviarlo. Per cancellare un blocco o uno script trascinali fuori dall'area di programmazione. Per copiare un blocco o uno script da un personaggio all'altro trascinalo sull'anteprima del personaggio.",
     "INTERFACE_GUIDE_PROGRAMMING_AREA_DESCRIPTION": "Qui è dove unisci i blocchi di programmazione per creare gli script che diranno al personaggio cosa fare.",
     "INTERFACE_GUIDE_BLOCKS_PALETTE_DESCRIPTION": "Questo è il menu dei blocchi di programmazione. Trascina un blocco nell'area di programmazione e poi toccalo per vedere a che cosa fa.",
     "INTERFACE_GUIDE_BLOCKS_CATEGORIES_DESCRIPTION": "Qui è dove puoi selezionare una categoria di blocchi di programmazione: Eventi (Giallo), Movimento (Blu), Aspetto (Viola), Suono (Verde), Controllo (Arancio), Blocchi di Fine (Rosso).",
@@ -361,7 +361,7 @@
     "SHARING_BY_EMAIL": "Condividi via Email",
     "SHARING_BY_AIRDROP": "Condividi via Airdrop",
     "SHARING_EMAIL_SUBJECT": "Progetto ScratchJr: {PROJECT_NAME}",
-    "SHARING_EMAIL_TEXT": "Clicca l'icona qui sotto per provare il mio progetto ScratchJr sul tuo iPad o sul tuo tablet Android!<br><br>Se non hai l'app ScratchJr la puoi <a href='http://www.scratchjr.org'>scaricare</a> dall'Apple Store o da Google Play Store.<br><br>Con ScratchJr i bambini possono creare storie interattive e giochi. Per saperne di più vai al sito <a href='http://www.scratchjr.org'>scratchjr.org</a>.",
+    "SHARING_EMAIL_TEXT": "Clicca sull'icona per provare il mio progetto ScratchJr sul tuo iPad o sul tuo tablet Android!<br><br>Se non hai l'app ScratchJr puoi <a href='http://www.scratchjr.org'>scaricarla</a> dall'App store della Apple o dal Play Store di Google.<br><br>Con ScratchJr i bambini possono creare storie interattive e giochi. Per saperne di più vai alla pagina <a href='http://www.scratchjr.org'>scratchjr.org</a>.",
     "PARENTAL_GATE_EXPLANATION": "Perché te lo chiediamo? Perché la condivisione online deve essere approvata da un adulto.",
     "GRID_NUMBER": "{N, number}",
     "NEW_PROJECT_PREFIX": "Progetto",
@@ -370,5 +370,10 @@
     "SAY_BLOCK_DEFAULT_ARGUMENT": "ciao",
     "ALERT_BACK": "Indietro",
     "ALERT_SAVING": "Sto salvando...",
-    "SELECT_LANGUAGE": "Seleziona la lingua"
+    "SELECT_LANGUAGE": "Seleziona la lingua",
+    "USAGE_QUESTION": "Dove stai usando ScratchJr?",
+    "USAGE_SCHOOL": "Scuola",
+    "USAGE_HOME": "Casa",
+    "USAGE_OTHER": "Altro",
+    "USAGE_NONE": "Non chiederlo di nuovo"
 }

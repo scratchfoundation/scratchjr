@@ -361,7 +361,7 @@
     "SHARING_BY_EMAIL": "Comparteix per correu electrònic",
     "SHARING_BY_AIRDROP": "Comparteix per Airdrop",
     "SHARING_EMAIL_SUBJECT": "Projecte ScratchJr: {PROJECT_NAME}",
-    "SHARING_EMAIL_TEXT": "Premeu sobre la icona per provar el meu projecte d'ScratchJr en el vostre iPad o tauleta Android<br><br>Si no disposeu de l'aplicació de l'ScratchJr, podeu <a href='http://www.scratchjr.org'>descarregar-la</a>des de l'Apple Store o de la Google Play Store.<br><br>Amb l'ScratchJr, els nens poden crear històries intereractives i jocs. Per saber-ne més, visiteu <a href='http://www.scratchjr.org'>scratchjr.org</a>.",
+    "SHARING_EMAIL_TEXT": "Fes clic a la icona per provar el meu projecte a la tauleta iPad o Android!<br><br>Si no tens l'app ScratchJr, pots <a href='http://www.scratchjr.org'>descarregar-la</a> a la botiga d'apps Apple o Google Play Store.<br><br>Amb ScratchJr, els infants poden crear les seves pròpies històries interactives i jocs. Per saber-ne més, visita <a href='http://www.scratchjr.org'>scratchjr.org</a>.",
     "PARENTAL_GATE_EXPLANATION": "Per què us preguntem això? Un adult ha d'aprobar la compartició en línia.",
     "GRID_NUMBER": "{N, number}",
     "NEW_PROJECT_PREFIX": "Projecte",
@@ -370,5 +370,10 @@
     "SAY_BLOCK_DEFAULT_ARGUMENT": "hola",
     "ALERT_BACK": "Torna enrere",
     "ALERT_SAVING": "S'està desant...",
-    "SELECT_LANGUAGE": "Selecciona la llengua"
+    "SELECT_LANGUAGE": "Selecciona la llengua",
+    "USAGE_QUESTION": "On estàs usant ScratchJr?",
+    "USAGE_SCHOOL": "Escola",
+    "USAGE_HOME": "Casa",
+    "USAGE_OTHER": "Altres",
+    "USAGE_NONE": "No preguntar-ho més"
 }

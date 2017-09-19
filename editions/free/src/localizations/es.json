@@ -361,7 +361,7 @@
     "SHARING_BY_EMAIL": "Compartir vía correo electrónico",
     "SHARING_BY_AIRDROP": "Compartir vía Airdrop",
     "SHARING_EMAIL_SUBJECT": "Proyecto ScratchJr: {PROJECT_NAME}",
-    "SHARING_EMAIL_TEXT": "Pincha en el icono para probar mi proyecto ScratchJr en tu iPad o tableta de Android!<br/><br/>Si no tienes la aplicación ScratchJr, puedes <a href='http://bit.ly/scratchjr-app'>decargarla</a> en la App Store de Apple o en la Google Play Store.<br/><br/> Con ScratchJr, los niños pueden crear sus propias historias y juegos interactivos. Para más información, visita <a href='http://scratchjr.org/'>scratchjr.org</a>.",
+    "SHARING_EMAIL_TEXT": "Click the icon to try my ScratchJr project on your iPad or Android tablet!<br><br>If you don't have the ScratchJr app, you can <a href='http://www.scratchjr.org'>download it</a> from the Apple App store or the Google Play Store.<br><br>With ScratchJr, children can create their own interactive stories and games. To learn more, see <a href='http://www.scratchjr.org'>scratchjr.org</a>.",
     "PARENTAL_GATE_EXPLANATION": "¿Por qué estamos preguntando esto? Un adulto debe aprobar el compartir en línea.",
     "GRID_NUMBER": "{N, number}",
     "NEW_PROJECT_PREFIX": "Proyecto",
@@ -370,5 +370,10 @@
     "SAY_BLOCK_DEFAULT_ARGUMENT": "hola",
     "ALERT_BACK": "Volver",
     "ALERT_SAVING": "...",
-    "SELECT_LANGUAGE": "Seleccione el idioma"
+    "SELECT_LANGUAGE": "Seleccione el idioma",
+    "USAGE_QUESTION": "Where are you using ScratchJr?",
+    "USAGE_SCHOOL": "School",
+    "USAGE_HOME": "Home",
+    "USAGE_OTHER": "Other",
+    "USAGE_NONE": "Don't ask again"
 }

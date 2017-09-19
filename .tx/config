@@ -1,0 +1,16 @@
+[main]
+host = https://www.transifex.com
+lang_map = zh_CN:zh-cn, zh_TW:zh-tw, pt_BR:pt-br
+type = KEYVALUEJSON
+
+[scratchjr.enjson]
+file_filter = editions/free/src/localizations/<lang>.json
+source_file = editions/free/src/localizations/en.json
+source_lang = en
+type = KEYVALUEJSON
+
+[scratchjr.storelisting_enjson]
+file_filter = editions/free/src/localizations/storelisting_<lang>.json
+source_file = editions/free/src/localizations/storelisting_en.json
+source_lang = en
+type = KEYVALUEJSON
