@@ -8,7 +8,7 @@ A pure-web version or Chrome-app version is planned to follow at some point in t
 Platform | Status
 -------- | -------------
 iOS      | Released in App Store
-Android  | Released in Google Play and Amazon store
+Android  | Released on Google Play and Amazon store
 
 ## Release Schedule
 
@@ -26,7 +26,7 @@ versions share a common client.
 ## Directory Structure and Projects
 This repository has the following directory structure:
 
-* <tt>src/</tt> - Shared Javasript code for iOS and Android common client. This is where most changes should be made for features, bug fixes, UI, etc.
+* <tt>src/</tt> - Shared JavaScript code for iOS and Android common client. This is where most changes should be made for features, bug fixes, UI, etc.
 * <tt>editions/</tt> - Assembly directories for each "flavor" of ScratchJr. These symlink to src for common code, and could diverge in settings and assets.
   * <tt>free/</tt> - Free edition JavaScript, including all shared code for all releases
 * <tt>android/</tt> - Android port of Scratch Jr. (Java, Android Studio Projects)
