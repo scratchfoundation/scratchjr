@@ -8,7 +8,7 @@ A pure-web version or Chrome-app version is planned to follow at some point in t
 Platform | Status
 -------- | -------------
 iOS      | Released in App Store
-Android  | Released on Google Play and Amazon store
+Android  | Released in Google Play and Amazon store
 
 ## Release Schedule
 
