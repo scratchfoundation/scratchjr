@@ -1131,8 +1131,6 @@ export default class PaintAction {
         pt2.x = pt.x;
         pt2.y = pt.y;
         var globalPoint = pt2.matrixTransform(Paint.root.getScreenCTM().inverse());
-        globalPoint.x = globalPoint.x / Paint.currentZoom;
-        globalPoint.y = globalPoint.y / Paint.currentZoom;
         return globalPoint;
     }
 }
