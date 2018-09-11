@@ -379,7 +379,7 @@ export default class ScratchJr {
         }
     }
 
-    static saveAndFlip (e){
+    static saveAndFlip (e) {
         onHold = true;
         ScratchJr.stopStripsFromTop(e);
         ScratchJr.unfocus(e);

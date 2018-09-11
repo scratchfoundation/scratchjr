@@ -4,9 +4,9 @@
   "description": "ScratchJr",
   "scripts": {
     "lint": "eslint src/**",
-    "watch": "webpack --watch --progress --mode=development --hide-modules",
-    "dev": "webpack --mode=development --hide-modules",
-    "build": "webpack --mode=production --hide-modules"
+    "watch": "webpack --mode=development --progress --hide-modules --watch",
+    "dev": "webpack --mode=development --progress --hide-modules",
+    "build": "webpack --mode=production --progress --hide-modules"
   },
   "author": "Massachusetts Institute of Technology",
   "license": "BSD-3-Clause",
