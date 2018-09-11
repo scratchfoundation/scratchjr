@@ -19,7 +19,9 @@ NSString *oncomplete;
 
 + (NSString *) hideSplash :(NSString *)body{
     UIImageView* splashScreen = [ViewController splashScreen];
-    [splashScreen removeFromSuperview];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [splashScreen removeFromSuperview];
+    });
     return @"1";
 }
 
