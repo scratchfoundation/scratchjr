@@ -1,1 +1,1 @@
-../../../src/build/bundles/app.bundle.js
+../../../build/bundles/app.bundle.js
