@@ -280,12 +280,14 @@ NSMutableDictionary *soundtimers;
 }
 
 + (void)soundEnded:(NSTimer*)timer {
-        NSString *soundName = [[timer userInfo] objectForKey:@"soundName"];
-        if (sounds[soundName] == nil) return;
-        NSString *callback = [NSString stringWithFormat:@"iOS.soundDone('%@');", soundName];
-        UIWebView *webview = [ViewController webview];
+    NSString *soundName = [[timer userInfo] objectForKey:@"soundName"];
+    if (sounds[soundName] == nil) return;
+    NSString *callback = [NSString stringWithFormat:@"iOS.soundDone('%@');", soundName];
+    UIWebView *webview = [ViewController webview];
+    dispatch_async(dispatch_get_main_queue(), ^{
         [webview stringByEvaluatingJavaScriptFromString:callback];
-    }
+    });
+}
 
 + (NSString *)stopSound :(NSString*)name  {
     AVAudioPlayer *snd = sounds[name];
