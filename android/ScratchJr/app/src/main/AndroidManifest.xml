@@ -12,11 +12,7 @@
     <uses-feature android:name="android.hardware.camera" android:required="false" />
     <uses-feature android:name="android.hardware.microphone" android:required="false" />
     
-    <supports-screens android:smallScreens="false"
-                      android:normalScreens="false"
-                      android:largeScreens="true"
-                      android:xlargeScreens="true"
-                      android:requiresSmallestWidthDp="500" />
+    <supports-screens android:requiresSmallestWidthDp="500" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
