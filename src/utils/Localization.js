@@ -19,7 +19,7 @@ require('intl/locale-data/jsonp/sv.js');
 require('intl/locale-data/jsonp/th.js');
 require('intl/locale-data/jsonp/zh.js');
 
-require('expose?IntlMessageFormat!intl-messageformat');
+require('expose-loader?IntlMessageFormat!intl-messageformat');
 require('intl-messageformat/dist/locale-data/ca');
 require('intl-messageformat/dist/locale-data/de');
 require('intl-messageformat/dist/locale-data/en');
@@ -94,7 +94,7 @@ export default class Localization {
             // ensure it's lower case to match filename
             topLevel = currentLocale.toLowerCase();
         }
-        
+
         // Get messages
         IO.requestFromServer(localizationRoot + 'localizations/' + topLevel + '.json', (result) => {
             localizationMessages = JSON.parse(result);

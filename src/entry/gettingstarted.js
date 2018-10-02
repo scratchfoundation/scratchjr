@@ -20,7 +20,7 @@ export function gettingStartedMain () {
 
     var urlvars = getUrlVars();
     place = urlvars['place'];
-    document.ontouchmove = function (e){
+    document.ontouchmove = function (e) {
         e.preventDefault();
     };
 }

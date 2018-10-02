@@ -471,7 +471,7 @@ export default class Scripts {
     getEncodableBlocks () {
         var list = [];
         var sc = this.sc;
-        for (var i =0; i < sc.childElementCount; i++){
+        for (var i = 0; i < sc.childElementCount; i++) {
             var b = sc.childNodes[i].owner;
             if (!b || b.type != 'block') {
                 continue;

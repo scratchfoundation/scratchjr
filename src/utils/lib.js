@@ -66,7 +66,7 @@ export function preprocessAndLoadCss (baseUrl, url) {
     const head = document.head;
     let style = document.createElement('style');
     style.type = 'text/css';
-    if (style.styleSheet){
+    if (style.styleSheet) {
         style.styleSheet.cssText = cssData;
     } else {
         style.appendChild(document.createTextNode(cssData));
