@@ -21,6 +21,8 @@
     "defaultLocaleShort": "en",
     "supportedLocales": {
         "Català": "ca",
+        "Cymraeg": "cy",
+        "Dansk": "da",
         "Deutsch": "de",
         "English": "en",
         "Español": "es",
@@ -31,7 +33,8 @@
         "Português": "pt",
         "Svenska": "sv",
         "ไทย": "th",
-        "简体中文": "zh-cn"
+        "简体中文": "zh-cn",
+        "繁體中文": "zh-tw"
     },
     "settingsPageDisabled": false
 }
