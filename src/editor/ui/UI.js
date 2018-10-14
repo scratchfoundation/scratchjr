@@ -20,7 +20,7 @@ import Paint from '../../painteditor/Paint';
 import Events from '../../utils/Events';
 import Localization from '../../utils/Localization';
 import ScratchAudio from '../../utils/ScratchAudio';
-import {frame, gn, CSSTransition, localx, newHTML, scaleMultiplier, getIdFor, isTablet, newDiv,
+import {frame, gn, CSSTransition, localx, newHTML, scaleMultiplier, fullscreenScaleMultiplier, getIdFor, isTablet, newDiv,
     newTextInput, isAndroid, getDocumentWidth, getDocumentHeight, setProps, globalx} from '../../utils/lib';
 
 let projectNameTextInput = null;
@@ -809,7 +809,7 @@ export default class UI {
             gn(list[i]).className = gn(list[i]).className + ' presentationmode';
             frame.appendChild(gn(list[i]));
         }
-        var scale = Math.min((w - (136 * scaleMultiplier)) / gn('stage').owner.width, h / gn('stage').owner.height);
+        var scale = Math.min((w - (fullscreenScaleMultiplier * scaleMultiplier)) / gn('stage').owner.width, h / gn('stage').owner.height);
         var dx = Math.floor((w - (gn('stage').owner.width * scale)) / 2);
         var dy = Math.floor((h - (gn('stage').owner.height * scale)) / 2);
 
