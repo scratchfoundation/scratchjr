@@ -11,8 +11,8 @@
 
     <uses-feature android:name="android.hardware.camera" android:required="false" />
     <uses-feature android:name="android.hardware.microphone" android:required="false" />
-    
-    <supports-screens android:requiresSmallestWidthDp="500" />
+
+    <supports-screens android:requiresSmallestWidthDp="600" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
