@@ -6,6 +6,7 @@ export const DEGTOR = Math.PI / 180;
 export const WINDOW_INNER_HEIGHT = window.innerHeight;
 export const WINDOW_INNER_WIDTH = window.innerWidth;
 export const scaleMultiplier = WINDOW_INNER_HEIGHT / 768.0;
+export const fullscreenScaleMultiplier = 136;
 
 export const isiOS = (typeof AndroidInterface == 'undefined');
 export const isAndroid = (typeof AndroidInterface != 'undefined');
