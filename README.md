@@ -43,21 +43,6 @@ Ensure you have node and npm [installed](http://blog.npmjs.org/post/85484771375/
 With all of the code checked out, you must install npm dependencies for bundling the JavaScript:
 * <tt>npm install</tt>
 
-The build caches .png files out of the .svg files to improve performance. To enable this build step, you need to install a few dependencies.
-
-On Ubuntu:
-
-* Run <tt>sudo easy_install pysvg</tt> to install python svg libraries
-* Run <tt>sudo apt-get install librsvg2-bin</tt> to install rsvg-convert
-* Run <tt>sudo apt-get install imagemagick</tt> to install ImageMagick
-
-On OS X:
-
-* Install [Homebrew](http://brew.sh).
-* Run <tt>sudo easy_install pysvg</tt> to install python svg libraries
-* Run <tt>brew install librsvg</tt> to install rsvg-convert
-* Run <tt>brew install imagemagick</tt> to install ImageMagick
-
 Once these are installed, select the appropriate target in XCode or the appropriate flavor/build variant in Android Studio. To build in Android Studio, open the project <tt>android/ScratchJr</tt>. To build for iOS in XCode, open <tt>ios/ScratchJr.xcworkspace</tt> as ScratchJr uses CocoaPods.
 
 ## Where and how to make changes
