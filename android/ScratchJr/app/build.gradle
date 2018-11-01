@@ -57,27 +57,6 @@ task generateWebpackBundle(type: Exec) {
     commandLine './bundle-compile.sh'
 }
 
-class GenerateScratchJrPNGsTask extends DefaultTask {
-    File commonHome = project.file("../../..")
-    File binDir = project.file("${commonHome}/bin")
-
-    @OutputDirectory
-    File generatedAssets = project.file("src/main/assets")
-    File generatedHtml5Assets = project.file("${generatedAssets}/HTML5")
-    File pngLibrary = project.file("${generatedHtml5Assets}/pnglibrary")
-    File svgLibrary = project.file("${generatedHtml5Assets}/svglibrary")
-
-    @TaskAction
-    def go() {
-        pngLibrary.mkdirs()
-        ant.exec(executable: "${binDir}/convert-svg-to-png.py",
-            failOnError: true)
-        {
-            arg(value: "-i ${svgLibrary}/")
-            arg(value: "-o ${pngLibrary}/")
-        }
-    }
-}
 class CleanScratchJrResourcesTask extends DefaultTask {
     File generatedAssets = project.file('src/main/assets')
 
@@ -87,7 +66,6 @@ class CleanScratchJrResourcesTask extends DefaultTask {
     }
 }
 
-task generateScratchJrPNGs(type: GenerateScratchJrPNGsTask)
 task cleanScratchJrResources(type: CleanScratchJrResourcesTask)
 
 afterEvaluate {
@@ -96,10 +74,6 @@ afterEvaluate {
     processFreeReleaseGoogleServices.dependsOn switchToFreeGA
     prepareFreeDebugDependencies.dependsOn switchToFree
     prepareFreeReleaseDependencies.dependsOn switchToFree
-
-    generateFreeReleaseResources.dependsOn generateScratchJrPNGs
-    generateFreeDebugResources.dependsOn generateScratchJrPNGs
-    generateScratchJrPNGs.mustRunAfter switchToFree
 }
 
 clean.dependsOn('cleanScratchJrResources')
