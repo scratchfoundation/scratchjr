@@ -953,3 +953,6 @@ export default class ScratchJr {
         }
     }
 }
+
+// Expose ScratchJr to global
+window.ScratchJr = ScratchJr;
