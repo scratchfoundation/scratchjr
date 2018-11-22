@@ -4,6 +4,7 @@ import android.Manifest;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -37,6 +38,8 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -147,9 +150,8 @@ public class ScratchJrActivity
         CookieManager.getInstance().setAcceptCookie(true);
         CookieManager.setAcceptFileSchemeCookies(true);
 
-        String PROJECT_MIMETYPE = getApplicationContext().getString(R.string.share_mimetype);
         Intent it = getIntent();
-        if (it != null && it.getType() != null && it.getType().equals(PROJECT_MIMETYPE)) {
+        if (it != null && it.getData() != null) {
             receiveProject(it.getData());
         }
 
@@ -171,11 +173,20 @@ public class ScratchJrActivity
                 }, 1000);
             }
         });
-
         requestPermissions();
     }
 
+    private void requestExtStoragePermissions() {
+        int readExtPermissionResult = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        if (readExtPermissionResult != PackageManager.PERMISSION_GRANTED) {
+            int requestCode = 2;
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, requestCode);
+        }
+    }
+
     public void requestPermissions() {
+        requestExtStoragePermissions();
         cameraPermissionResult = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
         micPermissionResult = ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO);
 
@@ -293,17 +304,31 @@ public class ScratchJrActivity
     @Override
     protected void onNewIntent(Intent it) {
         super.onNewIntent(it);
-        String PROJECT_MIMETYPE = getApplicationContext().getString(R.string.share_mimetype);
-        if (it != null && it.getType() != null && it.getType().equals(PROJECT_MIMETYPE)) {
+        if (it != null && it.getData() != null) {
             receiveProject(it.getData());
         }
     }
 
     private void receiveProject(Uri projectUri) {
+        File projectFile = null;
+        String scheme = projectUri.getScheme();
+        if (scheme != null) {
+            if (scheme.equals(ContentResolver.SCHEME_FILE)) {
+                String filePath = projectUri.getPath();
+                projectFile = filePath != null ? new File(filePath) : null;
+            } else if (!scheme.equals(ContentResolver.SCHEME_CONTENT)) {
+                return;
+            }
+        }
         // Read the project one byte at a time into a buffer
         ByteArrayOutputStream projectData = new ByteArrayOutputStream();
         try {
-            InputStream is = getContentResolver().openInputStream(projectUri);
+            InputStream is = null;
+            if (projectFile != null) {
+                is = new FileInputStream(projectFile);
+            } else {
+                getContentResolver().openInputStream(projectUri);
+            }
             byte[] readByte = new byte[1];
             while ((is.read(readByte)) == 1) {
                 projectData.write(readByte[0]);
