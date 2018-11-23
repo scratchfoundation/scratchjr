@@ -323,12 +323,9 @@ public class ScratchJrActivity
         // Read the project one byte at a time into a buffer
         ByteArrayOutputStream projectData = new ByteArrayOutputStream();
         try {
-            InputStream is = null;
-            if (projectFile != null) {
-                is = new FileInputStream(projectFile);
-            } else {
-                getContentResolver().openInputStream(projectUri);
-            }
+            InputStream is = (projectFile != null) ? new FileInputStream(projectFile) :
+                    getContentResolver().openInputStream(projectUri);
+            
             byte[] readByte = new byte[1];
             while ((is.read(readByte)) == 1) {
                 projectData.write(readByte[0]);
