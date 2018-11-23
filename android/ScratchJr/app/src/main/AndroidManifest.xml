@@ -45,6 +45,14 @@
                 <data android:pathPattern="@string/share_extension_filter" />
                 <data android:host="*" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:mimeType="@string/share_mimetype" />
+                <data android:pathPattern="@string/share_extension_filter" />
+                <data android:host="*" />
+            </intent-filter>
         </activity>
 
         <receiver android:name="com.google.android.gms.analytics.AnalyticsReceiver"
