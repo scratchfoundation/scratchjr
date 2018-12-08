@@ -47,14 +47,14 @@ The build caches .png files out of the .svg files to improve performance. To ena
 
 On Ubuntu:
 
-* Run <tt>sudo easy_install pysvg</tt> to install python svg libraries
-* Run <tt>sudo apt-get install librsvg2-bin</tt> to install rsvg-convert
-* Run <tt>sudo apt-get install imagemagick</tt> to install ImageMagick
+* Run <tt>sudo pip install pysvg</tt> to install python svg libraries
+* Run <tt>sudo apt install librsvg2-bin</tt> to install rsvg-convert
+* Run <tt>sudo apt install imagemagick</tt> to install ImageMagick
 
 On OS X:
 
 * Install [Homebrew](http://brew.sh).
-* Run <tt>sudo easy_install pysvg</tt> to install python svg libraries
+* Run <tt>sudo pip install pysvg</tt> to install python svg libraries
 * Run <tt>brew install librsvg</tt> to install rsvg-convert
 * Run <tt>brew install imagemagick</tt> to install ImageMagick
 
