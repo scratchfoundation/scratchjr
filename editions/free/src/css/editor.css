@@ -591,10 +591,35 @@ z-index: 5;
     background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255, 255, 255, 0.2)), color-stop(35%,rgba(255, 255, 255, 0)), color-stop(100%,rgba(255, 255, 255, 0)));
 }
 
+div.infoboxParentsSection {
+   width: 51%;
+   margin: auto;
+   margin-top: 8%;
+}
+
+div.infoboxParentsButton {
+   color: #fff;
+   background-image: linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.2) 51%);
+   text-transform: uppercase;
+   text-align: center;
+   font-weight: bold;
+   font-size: 15pt;
+   letter-spacing: .5px;
+   width:  ${css_vw(23.41)};
+   padding-top: ${css_vh(1.56)};
+   padding-bottom: ${css_vh(1.56)};
+   padding-left: ${css_vw(.5)};
+   padding-right: ${css_vw(.5)};
+   border-radius: 15px;
+   border: 2px solid #c19f21;
+   margin: auto;
+}
+
 div.infoboxShareButtons {
    width: 51%;
    margin: auto;
    margin-top: 8%;
+   visibility: hidden;
 }
 
 div.infoboxShareButton {

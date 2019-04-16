@@ -118,12 +118,22 @@ export default class UI {
         author.setAttribute('id', 'deviceName');
 
         if (window.Settings.shareEnabled) {
+            // For Parents button
+            var parentsSection = newHTML('div', 'infoboxParentsSection', infobox);
+            var parentsButton = newHTML('div', 'infoboxParentsButton', parentsSection);
+            parentsButton.id = 'infoboxParentsSectionButton';
+            parentsButton.textContent = Localization.localize('FOR_PARENTS');
+
             // Sharing
             var shareButtons = newHTML('div', 'infoboxShareButtons', infobox);
+            shareButtons.setAttribute('id', 'sharebuttons');
 
             var shareEmail = newHTML('div', 'infoboxShareButton', shareButtons);
             shareEmail.id = 'infoboxShareButtonEmail';
             shareEmail.textContent = Localization.localize('SHARING_BY_EMAIL');
+            shareEmail.ontouchstart = function (e) {
+                UI.infoDoShare(e, nameField, shareLoadingGif, 1);
+            };
 
             if (isAndroid) {
                 shareEmail.style.margin = 'auto';
@@ -137,9 +147,7 @@ export default class UI {
                 shareAirdrop.textContent = Localization.localize('SHARING_BY_AIRDROP');
                 shareAirdrop.style.float = 'right';
                 shareAirdrop.ontouchstart = function (e) {
-                    UI.parentalGate(e, function (e) {
-                        UI.infoDoShare(e, nameField, shareLoadingGif, 1);
-                    });
+                    UI.infoDoShare(e, nameField, shareLoadingGif, 1);
                 };
             }
 
@@ -150,9 +158,9 @@ export default class UI {
             var shareLoadingGif = newHTML('img', 'infoboxShareLoading', shareButtons);
             shareLoadingGif.src = './assets/ui/loader.png';
 
-            shareEmail.ontouchstart = function (e) {
+            parentsButton.ontouchstart = function (e) {
                 UI.parentalGate(e, function (e) {
-                    UI.infoDoShare(e, nameField, shareLoadingGif, 0);
+                    UI.showSharing(e, shareButtons);
                 });
             };
         }
@@ -221,6 +229,10 @@ export default class UI {
                 callback(evt);
             }
         }
+    }
+
+    static showSharing (evt, shareButtons) {
+        shareButtons.style.visibility = 'visible';
     }
 
     /*
@@ -439,6 +451,7 @@ export default class UI {
             ScratchAudio.sndFX('exittap.wav');
             gn('infobox').className = 'infobox fade';
         }
+        gn('sharebuttons').style.visibility = 'hidden';
         infoBoxOpen = false;
     }
 
