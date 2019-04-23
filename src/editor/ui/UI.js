@@ -32,7 +32,7 @@ export default class UI {
     static get infoBoxOpen () {
         return infoBoxOpen;
     }
-    
+
     static layout () {
         UI.topSection();
         UI.middleSection();
@@ -120,6 +120,8 @@ export default class UI {
         if (window.Settings.shareEnabled) {
             // For Parents button
             var parentsSection = newHTML('div', 'infoboxParentsSection', infobox);
+            parentsSection.setAttribute('id', 'parentsection');
+
             var parentsButton = newHTML('div', 'infoboxParentsButton', parentsSection);
             parentsButton.id = 'infoboxParentsSectionButton';
             parentsButton.textContent = Localization.localize('FOR_PARENTS');
@@ -160,7 +162,7 @@ export default class UI {
 
             parentsButton.ontouchstart = function (e) {
                 UI.parentalGate(e, function (e) {
-                    UI.showSharing(e, shareButtons);
+                    UI.showSharing(e, shareButtons, parentsSection);
                 });
             };
         }
@@ -231,8 +233,9 @@ export default class UI {
         }
     }
 
-    static showSharing (evt, shareButtons) {
+    static showSharing (evt, shareButtons, parentsSection) {
         shareButtons.style.visibility = 'visible';
+        parentsSection.style.visibility = 'hidden';
     }
 
     /*
@@ -452,6 +455,7 @@ export default class UI {
             gn('infobox').className = 'infobox fade';
         }
         gn('sharebuttons').style.visibility = 'hidden';
+        gn('parentsection').style.visibility = 'visible';
         infoBoxOpen = false;
     }
 
