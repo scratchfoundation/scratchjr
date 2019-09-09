@@ -23,3 +23,6 @@
 # Gradle:
 .idea/gradle.xml
 .idea/libraries
+
+.idea/caches/*
+.idea/modules.xml
