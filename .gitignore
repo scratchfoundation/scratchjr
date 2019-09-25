@@ -26,3 +26,5 @@
 
 .idea/caches/*
 .idea/modules.xml
+/android/ScratchJr/.idea/caches
+/android/ScratchJr/.idea/modules.xml
