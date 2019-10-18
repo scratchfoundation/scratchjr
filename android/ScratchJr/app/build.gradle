@@ -91,13 +91,14 @@ class CleanScratchJrResourcesTask extends DefaultTask {
 
 task generateScratchJrPNGs(type: GenerateScratchJrPNGsTask)
 task cleanScratchJrResources(type: CleanScratchJrResourcesTask)
-assemble.dependsOn switchToFree
 
 afterEvaluate {
     preBuild.dependsOn generateWebpackBundle
     processFreeDebugGoogleServices.dependsOn switchToFreeGA
     processFreeReleaseGoogleServices.dependsOn switchToFreeGA
 
+    generateFreeReleaseResources.dependsOn switchToFree
+    generateFreeDebugResources.dependsOn switchToFree
     generateFreeReleaseResources.dependsOn generateScratchJrPNGs
     generateFreeDebugResources.dependsOn generateScratchJrPNGs
     generateScratchJrPNGs.mustRunAfter switchToFree
