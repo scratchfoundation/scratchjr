@@ -28,7 +28,7 @@ import android.util.Log;
  * @author markroth8
  */
 public class SoundRecorderManager {
-    private static final String LOG_TAG = "ScratchJr.SoundRecorderManager";
+    private static final String LOG_TAG = "SoundRecorderManager";
 
     // Recording parameters
     private static final int SAMPLE_RATE_IN_HZ_DEVICE = 22050;

@@ -23,3 +23,8 @@
 # Gradle:
 .idea/gradle.xml
 .idea/libraries
+
+.idea/caches/*
+.idea/modules.xml
+/android/ScratchJr/.idea/caches
+/android/ScratchJr/.idea/modules.xml
