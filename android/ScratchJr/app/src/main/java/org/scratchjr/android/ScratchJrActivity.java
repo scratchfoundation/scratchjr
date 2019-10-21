@@ -33,8 +33,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
 
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -55,10 +54,10 @@ public class ScratchJrActivity
 {
     /** Milliseconds to pan when showing the soft keyboard */
     private static final int SOFT_KEYBOARD_PAN_MS = 250;
-    
+
     /** Log tag for Scratch Jr. app */
     private static final String LOG_TAG = "ScratchJr";
-    
+
     /** Bundle key in which the current url is stored */
     private static final String BUNDLE_KEY_URL = "url";
 
@@ -91,7 +90,7 @@ public class ScratchJrActivity
 
     /** Set to true when the splash screen is done loading. This is used for unit testing. */
     private boolean _splashDone = false;
-    
+
     /** Y starting and ending coordinate for soft keyboard scroll position */
     private int _softKeyboardScrollPosY0;
     private int _softKeyboardScrollPosY1;
@@ -104,8 +103,8 @@ public class ScratchJrActivity
     public int cameraPermissionResult = PackageManager.PERMISSION_DENIED;
     public int micPermissionResult = PackageManager.PERMISSION_DENIED;
 
-    /** Analytics tracker */
-    private Tracker _tracker;
+    /* Firebase analytics tracking */
+    private FirebaseAnalytics _FirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,8 +152,7 @@ public class ScratchJrActivity
             receiveProject(it.getData());
         }
 
-        ScratchJrApplication application = (ScratchJrApplication) getApplication();
-        _tracker = application.getDefaultTracker();
+        _FirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         // When System UI bar is displayed, wait one second and then re-assert immersive mode.
         getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(new OnSystemUiVisibilityChangeListener() {
@@ -283,7 +281,7 @@ public class ScratchJrActivity
         _soundManager.close();
         _soundRecorderManager.close();
     }
-    
+
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -368,7 +366,7 @@ public class ScratchJrActivity
         webSettings.setLoadWithOverviewMode(false);
         webSettings.setUseWideViewPort(false);
         // Uncomment to enable remote Chrome debugging on a physical Android device
-        //WebView.setWebContentsDebuggingEnabled(true);
+        // WebView.setWebContentsDebuggingEnabled(true);
 
         // Enable cookie persistence
         CookieManager.setAcceptFileSchemeCookies(true);
@@ -381,7 +379,7 @@ public class ScratchJrActivity
         CookieSyncManager.createInstance(this);
 
         /* Object exposed to the JavaScript that makes it easy to bridge JavaScript and Java */
-        JavaScriptDirectInterface javaScriptDirectInterface = new JavaScriptDirectInterface(this, (ScratchJrApplication) getApplication());
+        JavaScriptDirectInterface javaScriptDirectInterface = new JavaScriptDirectInterface(this);
         _webView.addJavascriptInterface(javaScriptDirectInterface, "AndroidInterface");
         _webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -406,8 +404,8 @@ public class ScratchJrActivity
 
                 // Track page load
                 String[] parts = url.split("/");
-                _tracker.setScreenName(parts[parts.length - 1]);
-                _tracker.send(new HitBuilders.ScreenViewBuilder().build());
+                String page = parts[parts.length - 1].split("\\?")[0];
+                _FirebaseAnalytics.setCurrentScreen((Activity) view.getContext(), page, null);
             }
         });
         _webView.requestFocus(View.FOCUS_DOWN);
@@ -478,6 +476,28 @@ public class ScratchJrActivity
         });
     }
 
+    /**
+     * log a Firebase analytics event for the app
+     * @param category
+     * @param action
+     * @param label
+     */
+    public void logAnalyticsEvent(String category, String action, String label) {
+        Bundle params = new Bundle();
+        params.putString(FirebaseAnalytics.Param.ITEM_ID, action);
+        params.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, category);
+        params.putString(FirebaseAnalytics.Param.ITEM_NAME, label);
+        _FirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, params);
+    }
+
+    /**
+     * Record the preferred place for the user: home, school, other, noanswer
+     * @param place
+     */
+    public void setAnalyticsUser(String place) {
+        _FirebaseAnalytics.setUserProperty("place_preference", place);
+    }
+
     public void translateAndScaleRectToContainerCoords(RectF rect, float devicePixelRatio) {
         float wx = _webView.getX();
         float wy = _webView.getY();
@@ -489,7 +509,7 @@ public class ScratchJrActivity
         _softKeyboardScrollPosY0 = topYPx;
         _softKeyboardScrollPosY1 = bottomYPx;
     }
-    
+
     /**
      * Height of the status bar at the top of the screen
      */

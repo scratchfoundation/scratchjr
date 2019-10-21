@@ -30,9 +30,6 @@ import android.webkit.JavascriptInterface;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-
 /**
  * The methods in this inner class are exposed directly to JavaScript in the HTML5 pages
  * as AndroidInterface.
@@ -44,7 +41,6 @@ public class JavaScriptDirectInterface {
 
     /** Activity hosting the webview running the JavaScript */
     private final ScratchJrActivity _activity;
-    private final ScratchJrApplication _application;
 
     /** Current camera view, if active */
     private CameraView _cameraView;
@@ -55,9 +51,8 @@ public class JavaScriptDirectInterface {
     /**
      * @param scratchJrActivity
      */
-    JavaScriptDirectInterface(ScratchJrActivity scratchJrActivity, ScratchJrApplication application) {
+    JavaScriptDirectInterface(ScratchJrActivity scratchJrActivity) {
         _activity = scratchJrActivity;
-        _application = application;
     }
 
     @JavascriptInterface
@@ -623,7 +618,13 @@ public class JavaScriptDirectInterface {
     // Analytics
     @JavascriptInterface
     public void analyticsEvent(String category, String action, String label, long value) {
-        _application.getDefaultTracker().send(new HitBuilders.EventBuilder()
-                .setCategory(category).setAction(action).setLabel(label).setValue(value).build());
+        _activity.logAnalyticsEvent(category, action, label);
+    }
+
+    @JavascriptInterface
+    public void setAnalyticsUser(String place) {
+        if (place != null) {
+            _activity.setAnalyticsUser(place);
+        }
     }
 }
