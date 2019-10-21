@@ -12,13 +12,14 @@
 		204D80C418A4140600ECBB8B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 204D80AC18A4140600ECBB8B /* UIKit.framework */; };
 		204D80CC18A4140600ECBB8B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 204D80CA18A4140600ECBB8B /* InfoPlist.strings */; };
 		204D80CE18A4140600ECBB8B /* ScratchJrTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 204D80CD18A4140600ECBB8B /* ScratchJrTests.m */; };
+		7465F19843DCA9DDC62CC852 /* libPods-ScratchJr Free.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ACBA0233542F96AC72D4D7E /* libPods-ScratchJr Free.a */; };
+		A7FDEB52BFEDCD9E4520FF89 /* libPods-ScratchJrTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 512C88D0E9938AB5972ACF38 /* libPods-ScratchJrTests.a */; };
 		D92D0F951C33381B00C573AD /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2001BEB918E237AE008E563F /* MessageUI.framework */; };
 		D92D0F961C33381B00C573AD /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20B2227818A53688003BDE44 /* AVFoundation.framework */; };
 		D92D0F971C33381B00C573AD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 204D80AC18A4140600ECBB8B /* UIKit.framework */; };
 		D92D0F981C33381B00C573AD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 204D80A818A4140600ECBB8B /* Foundation.framework */; };
 		D92D0F991C33381B00C573AD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 204D80AA18A4140600ECBB8B /* CoreGraphics.framework */; };
 		D92D0F9A1C33381B00C573AD /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 20B2226E18A46327003BDE44 /* libsqlite3.0.dylib */; };
-		D92D0F9B1C33381B00C573AD /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 606997F0B0C126484A3FC986 /* libPods.a */; };
 		D92D0F9D1C33381B00C573AD /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 20B2226818A4404B003BDE44 /* Settings.bundle */; };
 		D92D0F9E1C33381B00C573AD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 204D80B118A4140600ECBB8B /* InfoPlist.strings */; };
 		D92D0F9F1C33381B00C573AD /* View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 204D80DC18A4195E00ECBB8B /* View.xib */; };
@@ -40,6 +41,8 @@
 			isa = PBXBuildRule;
 			compilerSpec = com.apple.compilers.proxy.script;
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			outputFiles = (
 			);
@@ -63,9 +66,11 @@
 		20B2226818A4404B003BDE44 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = SOURCE_ROOT; };
 		20B2226E18A46327003BDE44 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		20B2227818A53688003BDE44 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		606997F0B0C126484A3FC986 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		69DDF292EA2B0A514FECD9DA /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		D6F781A4D3B58E8A9E640BCB /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		512C88D0E9938AB5972ACF38 /* libPods-ScratchJrTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ScratchJrTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5A3230A01AEC02BC09345F16 /* Pods-ScratchJrTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScratchJrTests.debug.xcconfig"; path = "Target Support Files/Pods-ScratchJrTests/Pods-ScratchJrTests.debug.xcconfig"; sourceTree = "<group>"; };
+		72E2C9BF3BE9F67099F0180F /* Pods-ScratchJrTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScratchJrTests.release.xcconfig"; path = "Target Support Files/Pods-ScratchJrTests/Pods-ScratchJrTests.release.xcconfig"; sourceTree = "<group>"; };
+		7ACBA0233542F96AC72D4D7E /* libPods-ScratchJr Free.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ScratchJr Free.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		97A526F2B60190BFC0BD3081 /* Pods-ScratchJr Free.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScratchJr Free.debug.xcconfig"; path = "Target Support Files/Pods-ScratchJr Free/Pods-ScratchJr Free.debug.xcconfig"; sourceTree = "<group>"; };
 		D905DF721C220BA6003DA34A /* free */ = {isa = PBXFileReference; lastKnownFileType = folder; name = free; path = ../editions/free; sourceTree = "<group>"; };
 		D92D0FA61C33381B00C573AD /* ScratchJr Free.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ScratchJr Free.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D92D0FB21C33469A00C573AD /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = src/AppDelegate.h; sourceTree = "<group>"; };
@@ -84,6 +89,7 @@
 		D92D0FE41C335BDE00C573AD /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = ../src; sourceTree = "<group>"; };
 		D965E3961C3EC63A005D792F /* Free-Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "Free-Images.xcassets"; path = "../editions/free/Free-Images.xcassets"; sourceTree = "<group>"; };
 		D9DDC1E71B50407A00076A58 /* bin */ = {isa = PBXFileReference; lastKnownFileType = folder; name = bin; path = ../bin; sourceTree = "<group>"; };
+		F8E5189E06A85870C28705B8 /* Pods-ScratchJr Free.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScratchJr Free.release.xcconfig"; path = "Target Support Files/Pods-ScratchJr Free/Pods-ScratchJr Free.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +100,7 @@
 				204D80C218A4140600ECBB8B /* XCTest.framework in Frameworks */,
 				204D80C418A4140600ECBB8B /* UIKit.framework in Frameworks */,
 				204D80C318A4140600ECBB8B /* Foundation.framework in Frameworks */,
+				A7FDEB52BFEDCD9E4520FF89 /* libPods-ScratchJrTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,7 +114,7 @@
 				D92D0F981C33381B00C573AD /* Foundation.framework in Frameworks */,
 				D92D0F991C33381B00C573AD /* CoreGraphics.framework in Frameworks */,
 				D92D0F9A1C33381B00C573AD /* libsqlite3.0.dylib in Frameworks */,
-				D92D0F9B1C33381B00C573AD /* libPods.a in Frameworks */,
+				7465F19843DCA9DDC62CC852 /* libPods-ScratchJr Free.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,7 +132,7 @@
 				204D80A718A4140600ECBB8B /* Frameworks */,
 				204D80A618A4140600ECBB8B /* Products */,
 				D9DDC1E71B50407A00076A58 /* bin */,
-				77E429479DEA96301339407F /* Pods */,
+				4DECBFAFC6446E944CEF4F32 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -148,7 +155,8 @@
 				204D80AA18A4140600ECBB8B /* CoreGraphics.framework */,
 				204D80AC18A4140600ECBB8B /* UIKit.framework */,
 				204D80C118A4140600ECBB8B /* XCTest.framework */,
-				606997F0B0C126484A3FC986 /* libPods.a */,
+				7ACBA0233542F96AC72D4D7E /* libPods-ScratchJr Free.a */,
+				512C88D0E9938AB5972ACF38 /* libPods-ScratchJrTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -190,13 +198,16 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		77E429479DEA96301339407F /* Pods */ = {
+		4DECBFAFC6446E944CEF4F32 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				69DDF292EA2B0A514FECD9DA /* Pods.debug.xcconfig */,
-				D6F781A4D3B58E8A9E640BCB /* Pods.release.xcconfig */,
+				97A526F2B60190BFC0BD3081 /* Pods-ScratchJr Free.debug.xcconfig */,
+				F8E5189E06A85870C28705B8 /* Pods-ScratchJr Free.release.xcconfig */,
+				5A3230A01AEC02BC09345F16 /* Pods-ScratchJrTests.debug.xcconfig */,
+				72E2C9BF3BE9F67099F0180F /* Pods-ScratchJrTests.release.xcconfig */,
 			);
 			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		D9104A9F1C220516004D1708 /* Editions */ = {
@@ -259,6 +270,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 204D80D418A4140600ECBB8B /* Build configuration list for PBXNativeTarget "ScratchJrTests" */;
 			buildPhases = (
+				4AF95ECA9DAE9DCC8A894FC4 /* [CP] Check Pods Manifest.lock */,
 				204D80BC18A4140600ECBB8B /* Sources */,
 				204D80BD18A4140600ECBB8B /* Frameworks */,
 				204D80BE18A4140600ECBB8B /* Resources */,
@@ -276,12 +288,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D92D0FA31C33381B00C573AD /* Build configuration list for PBXNativeTarget "ScratchJr Free" */;
 			buildPhases = (
-				D92D0F871C33381B00C573AD /* Check Pods Manifest.lock */,
+				54CC4189E794223B3E82E9B0 /* [CP] Check Pods Manifest.lock */,
 				D92D0F881C33381B00C573AD /* Run Script */,
 				D92D0F891C33381B00C573AD /* Sources */,
 				D92D0F941C33381B00C573AD /* Frameworks */,
 				D92D0F9C1C33381B00C573AD /* Resources */,
-				D92D0FA11C33381B00C573AD /* Copy Pods Resources */,
 			);
 			buildRules = (
 				D92D0FA21C33381B00C573AD /* PBXBuildRule */,
@@ -299,7 +310,7 @@
 		204D809D18A4140600ECBB8B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 1110;
 				ORGANIZATIONNAME = "Playful Invention Company";
 				TargetAttributes = {
 					204D80BF18A4140600ECBB8B = {
@@ -313,7 +324,7 @@
 			};
 			buildConfigurationList = 204D80A018A4140600ECBB8B /* Build configuration list for PBXProject "ScratchJr" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -353,19 +364,48 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		D92D0F871C33381B00C573AD /* Check Pods Manifest.lock */ = {
+		4AF95ECA9DAE9DCC8A894FC4 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
+			inputFileListPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ScratchJrTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		54CC4189E794223B3E82E9B0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ScratchJr Free-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D92D0F881C33381B00C573AD /* Run Script */ = {
@@ -381,21 +421,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "EDITION=free;\n\n../bin/bundle-compile.sh;\n\nrsync -pvtrlL --cvs-exclude \\\n    ../editions/$EDITION/ios-resources/* \\\n    \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/\";\n\nrsync -pvtrlL --cvs-exclude \\\n    ../editions/$EDITION/src/* \\\n    \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/HTML5\";\n    \nmkdir -p \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/HTML5/pnglibrary\";\n\n../bin/convert-svg-to-png.py -i \"../editions/$EDITION/src/svglibrary/\" -o \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/HTML5/pnglibrary\";";
-		};
-		D92D0FA11C33381B00C573AD /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -451,18 +476,27 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -499,18 +533,27 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -538,6 +581,7 @@
 		};
 		204D80D518A4140600ECBB8B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5A3230A01AEC02BC09345F16 /* Pods-ScratchJrTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/ScratchJr.app/ScratchJr";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -564,6 +608,7 @@
 		};
 		204D80D618A4140600ECBB8B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 72E2C9BF3BE9F67099F0180F /* Pods-ScratchJrTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/ScratchJr.app/ScratchJr";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -586,7 +631,7 @@
 		};
 		D92D0FA41C33381B00C573AD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 69DDF292EA2B0A514FECD9DA /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 97A526F2B60190BFC0BD3081 /* Pods-ScratchJr Free.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "Free-AppIcon";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Free-LaunchImage";
@@ -611,7 +656,7 @@
 		};
 		D92D0FA51C33381B00C573AD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D6F781A4D3B58E8A9E640BCB /* Pods.release.xcconfig */;
+			baseConfigurationReference = F8E5189E06A85870C28705B8 /* Pods-ScratchJr Free.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "Free-AppIcon";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Free-LaunchImage";

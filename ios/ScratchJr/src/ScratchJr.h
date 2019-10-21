@@ -121,12 +121,13 @@
 - (NSString *)scratchjr_choosecamera:(NSString *)body;
 - (NSString *)scratchjr_captureimage:(NSString *)onCameraCaptureComplete;
 - (NSString *)sendSjrUsingShareDialog:(NSString *)fileName
-                                     :(NSString *)emailSubject 
+                                     :(NSString *)emailSubject
                                      :(NSString *)emailBody
                                      :(int)shareType
                                      :(NSString *)b64data;
 - (NSString *) deviceName;
 - (NSString *) analyticsEvent:(NSString *)category :(NSString *)action :(NSString *)label :(NSNumber*)value;
+- (void) setAnalyticsUser:(NSString *)place;
 @end
 
 @interface ViewController : UIViewController <JSExports,UIWebViewDelegate,MFMailComposeViewControllerDelegate>

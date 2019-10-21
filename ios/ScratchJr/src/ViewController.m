@@ -1,7 +1,6 @@
 #import "ScratchJr.h"
-#import <Google/Analytics.h>
 // @import MessageUI;
-
+@import Firebase;
 
 UIWebView *webview;
 NSDate* startDate;
@@ -128,12 +127,11 @@ JSContext *js;
     NSURL* screenName = webView.request.URL.filePathURL;
     NSString* screenString =[screenName absoluteString];
     NSArray<NSString*>* parts = [screenString componentsSeparatedByString:@"/"];
+    NSString* page = [[[parts lastObject] componentsSeparatedByString:@"?"] firstObject];
 
-    // Track an Analytics pageview
-    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker set:kGAIScreenName value:[parts lastObject]];
-    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
-
+    // Track pageview in Firebase?
+    [FIRAnalytics setScreenName:page screenClass:NULL];
+    
 }
 
 // Disables iOS 9 webview touch tooltip by disabling the long-press gesture recognizer in subviews
@@ -318,12 +316,17 @@ JSContext *js;
 }
 
 -(NSString*) analyticsEvent:(NSString*) category :(NSString*) action :(NSString*) label :(NSNumber*) value {
-    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:category
-        action:action
-       label:label
-       value:value] build]];
+    [FIRAnalytics logEventWithName:kFIREventViewItem
+    parameters:@{
+                 kFIRParameterItemID:action,
+                 kFIRParameterItemName:label,
+                 kFIRParameterItemCategory:category
+                 }];
     return @"1";
+}
+
+-(void) setAnalyticsUser:(NSString*)place {
+    [FIRAnalytics setUserPropertyString:place forName:@"place_preference"];
 }
 
 // iPad name (used for information in the name/sharing dialog to help people using Airdrop)
