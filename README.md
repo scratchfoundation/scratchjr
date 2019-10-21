@@ -12,7 +12,7 @@ Android  | Released in Google Play and Amazon store
 
 ## Release Schedule
 
-As of this writing, the Android version now supports Android 4.2
+As of this writing, the Android version now supports Android 4.4
 and above.
 
 ## Architecture Overview
@@ -57,8 +57,9 @@ On OS X:
 * Run <tt>sudo easy_install pysvg</tt> to install python svg libraries
 * Run <tt>brew install librsvg</tt> to install rsvg-convert
 * Run <tt>brew install imagemagick</tt> to install ImageMagick
+* Run <tt>brew install cocoapods</tt> to install CocoaPods if you are building for iOS
 
-Once these are installed, select the appropriate target in XCode or the appropriate flavor/build variant in Android Studio. To build in Android Studio, open the project <tt>android/ScratchJr</tt>. To build for iOS in XCode, open <tt>ios/ScratchJr.xcworkspace</tt> as ScratchJr uses CocoaPods.
+Once these are installed, select the appropriate target in XCode or the appropriate flavor/build variant in Android Studio. To build in Android Studio, open the project <tt>android/ScratchJr</tt>. To build for iOS in XCode, open <tt>ios/ScratchJr.xcworkspace</tt> as ScratchJr uses CocoaPods. Before you build for iOS, you will need to run <tt>pod install</tt> to install the Firebase Analytics dependencies.
 
 ## Where and how to make changes
 
