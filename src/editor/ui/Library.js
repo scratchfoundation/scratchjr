@@ -521,7 +521,7 @@ export default class Library {
 
         // Prevent reporting user asset names
         if (clickThumb) {
-            var analyticsName = clickThumb.fieldname;
+            var analyticsName = clickThumb.id;
             if (!(selectedOne in MediaLib.keys)) {
                 analyticsName = 'user_asset';
             }
@@ -535,6 +535,14 @@ export default class Library {
         e.stopPropagation();
         if (selectedOne) {
             ScratchJr.stage.currentPage.setBackground(selectedOne, ScratchJr.stage.currentPage.updateBkg);
+        }
+
+        if (clickThumb) {
+            var analyticsName = clickThumb.id;
+            if (!(selectedOne in MediaLib.keys)) {
+                analyticsName = 'user_background';
+            }
+            iOS.analyticsEvent('editor', 'choose_background', analyticsName);
         }
         Library.close(e);
     }

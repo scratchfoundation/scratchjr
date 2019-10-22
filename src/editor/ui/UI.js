@@ -134,7 +134,7 @@ export default class UI {
             shareEmail.id = 'infoboxShareButtonEmail';
             shareEmail.textContent = Localization.localize('SHARING_BY_EMAIL');
             shareEmail.ontouchstart = function (e) {
-                UI.infoDoShare(e, nameField, shareLoadingGif, 1);
+                UI.infoDoShare(e, nameField, shareLoadingGif, 0);
             };
 
             if (isAndroid) {
