@@ -235,6 +235,11 @@ export default class ScratchJr {
         } else {
             window.onmouseup = undefined;
         }
+        document.body.addEventListener('touchmove',
+            function (e) {
+                e.preventDefault();
+            },
+            {passive: false});
     }
 
     static unfocus (evt) {
