@@ -226,15 +226,17 @@ export default class ScratchJr {
 
     static editorEvents () {
         document.ongesturestart = undefined;
-        document.ontouchmove = function (e) {
-            e.preventDefault();
-        };
         window.ontouchstart = ScratchJr.unfocus;
         if (isTablet) {
             window.ontouchend = undefined;
         } else {
             window.onmouseup = undefined;
         }
+        document.body.addEventListener('touchmove',
+            function (e) {
+                e.preventDefault();
+            },
+            {passive: false});
     }
 
     static unfocus (evt) {

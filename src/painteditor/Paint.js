@@ -161,7 +161,19 @@ export default class Paint {
     }
 
     static open (bkg, md5, sname, cname, cscale, sw, sh) {
-        iOS.analyticsEvent('editor', 'paint_editor_opened', bkg ? 'bkg' : 'character');
+        let action = '';
+        let label = '';
+        // Analytics:
+        // md3: name of the asset, an md5 hash for user generated, filename for library items
+        // sname: is not set for a new character (ignored for backgrounds)
+        if (bkg) {
+            action = 'edit_background';
+            label = (md5 in MediaLib.keys) ? md5 : 'user_background';
+        } else {
+            action = sname ? 'edit_character' : 'new_character';
+            label = (md5 in MediaLib.keys) ? md5 : 'user_character';
+        }
+        iOS.analyticsEvent('paint_editor', action, label);
         PaintUndo.buffer = [];
         PaintUndo.index = 0;
         maxZoom = 5;

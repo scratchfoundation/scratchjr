@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion "24.0.2"
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
 
     defaultConfig {
         applicationId "org.scratchjr.android"
@@ -15,11 +15,13 @@ android {
         }
     }
 
+    flavorDimensions 'scratchjrversion'
     productFlavors {
         free {
+            dimension = 'scratchjrversion'
             applicationId "org.scratchjr.androidfree"
             minSdkVersion 19
-            targetSdkVersion 27
+            targetSdkVersion 28
             versionCode 21
             versionName "1.2.0"
         }
@@ -27,10 +29,11 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:27.1.0'
-    compile 'com.android.support:support-v4:27.1.0'
-    compile 'com.google.android.gms:play-services-analytics:15.0.0'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.google.firebase:firebase-core:17.2.0'
+    implementation 'com.google.firebase:firebase-analytics:17.2.0'
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
 }
 
 def appModuleRootFolder = '.'
@@ -94,9 +97,9 @@ afterEvaluate {
     preBuild.dependsOn generateWebpackBundle
     processFreeDebugGoogleServices.dependsOn switchToFreeGA
     processFreeReleaseGoogleServices.dependsOn switchToFreeGA
-    prepareFreeDebugDependencies.dependsOn switchToFree
-    prepareFreeReleaseDependencies.dependsOn switchToFree
 
+    generateFreeReleaseResources.dependsOn switchToFree
+    generateFreeDebugResources.dependsOn switchToFree
     generateFreeReleaseResources.dependsOn generateScratchJrPNGs
     generateFreeDebugResources.dependsOn generateScratchJrPNGs
     generateScratchJrPNGs.mustRunAfter switchToFree
