@@ -3,7 +3,6 @@ import IO from './IO';
 import Lobby from '../lobby/Lobby';
 import Alert from '../editor/ui/Alert';
 import ScratchAudio from '../utils/ScratchAudio';
-import AppUsage from '../utils/AppUsage';
 
 //////////////////////////////////////////////////
 //  Tablet interface functions
@@ -352,12 +351,12 @@ export default class iOS {
         fcn(tabletInterface.deviceName());
     }
 
-    static analyticsEvent (category, action, label, value) {
-        if (!value) {
-            value = 1;
-        }
-        let usageLabel = label ? AppUsage.currentUsage + label : AppUsage.currentUsage;
-        tabletInterface.analyticsEvent(category, action, usageLabel, value);
+    static analyticsEvent (category, action, label) {
+        tabletInterface.analyticsEvent(category, action, label);
+    }
+
+    static setAnalyticsPlacePref (preferredPlace) {
+        tabletInterface.setAnalyticsPlacePref(preferredPlace);
     }
 
     // Web Wiew delegate call backs

@@ -30,9 +30,10 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.google.firebase:firebase-core:17.2.0'
+    implementation 'com.google.firebase:firebase-analytics:17.2.0'
     implementation 'com.google.android.gms:play-services-location:17.0.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'com.google.android.gms:play-services-analytics:17.0.0'
 }
 
 def appModuleRootFolder = '.'
@@ -91,13 +92,14 @@ class CleanScratchJrResourcesTask extends DefaultTask {
 
 task generateScratchJrPNGs(type: GenerateScratchJrPNGsTask)
 task cleanScratchJrResources(type: CleanScratchJrResourcesTask)
-assemble.dependsOn switchToFree
 
 afterEvaluate {
     preBuild.dependsOn generateWebpackBundle
     processFreeDebugGoogleServices.dependsOn switchToFreeGA
     processFreeReleaseGoogleServices.dependsOn switchToFreeGA
 
+    generateFreeReleaseResources.dependsOn switchToFree
+    generateFreeDebugResources.dependsOn switchToFree
     generateFreeReleaseResources.dependsOn generateScratchJrPNGs
     generateFreeDebugResources.dependsOn generateScratchJrPNGs
     generateScratchJrPNGs.mustRunAfter switchToFree

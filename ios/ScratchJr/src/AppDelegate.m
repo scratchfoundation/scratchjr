@@ -1,6 +1,6 @@
 #import "AppDelegate.h"
 #import "ScratchJr.h"
-#import <Google/Analytics.h>
+@import Firebase;
 
 @implementation AppDelegate
 
@@ -20,16 +20,8 @@
     self.window.rootViewController = [[ViewController alloc] initWithNibName:@"View" bundle:nil];
     [self.window makeKeyAndVisible];
     
-    // Configure tracker from GoogleService-Info.plist.
-    NSError *configureError;
-    [[GGLContext sharedInstance] configureWithError:&configureError];
-    NSAssert(!configureError, @"Error configuring Google services: %@", configureError);
-
-    // Optional: configure GAI options.
-    GAI *gai = [GAI sharedInstance];
-    gai.trackUncaughtExceptions = YES;  // report uncaught exceptions
-    // gai.logger.logLevel = kGAILogLevelVerbose;  // remove before app release
-    // [gai setDispatchInterval:5]; // remove before app release
+    // Configure Firebase
+    [FIRApp configure];
     
     return YES;
 }

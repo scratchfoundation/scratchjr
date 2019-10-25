@@ -84,7 +84,7 @@ function indexLoadStart (afterUsage) {
         gn('blueguy').className = 'blue hide';
         gn('redguy').className = 'red hide';
         gn('gear').className = 'gear show';
-        
+
         if (afterUsage) {
             gn('catface').className = 'catface show';
             gn('jrlogo').className = 'jrlogo show';
@@ -94,6 +94,7 @@ function indexLoadStart (afterUsage) {
             gn('usageOther').className = 'usageOther hide';
             gn('usageNoanswer').className = 'usageNoanswer hide';
         }
+        iOS.setAnalyticsPlacePref(AppUsage.currentUsage);
     }
     gn('gettings').className = 'gettings show';
     gn('startcode').className = 'startcode show';
@@ -113,13 +114,13 @@ function indexLoadUsage () {
     gn('redguy').className = 'red hide';
     gn('catface').className = 'catface hide';
     gn('jrlogo').className = 'jrlogo hide';
-    
+
     gn('usageQuestion').textContent = Localization.localize('USAGE_QUESTION');
     gn('useSchoolText').textContent = Localization.localize('USAGE_SCHOOL');
     gn('useHomeText').textContent = Localization.localize('USAGE_HOME');
     gn('useOtherText').textContent = Localization.localize('USAGE_OTHER');
     gn('usageNoanswerText').textContent = Localization.localize('USAGE_NONE');
-    
+
     gn('usageQuestion').className = 'usageQuestion show';
     gn('usageSchool').className = 'usageSchool show';
     gn('usageHome').className = 'usageHome show';
