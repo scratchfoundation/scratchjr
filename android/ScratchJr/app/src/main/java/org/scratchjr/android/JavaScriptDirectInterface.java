@@ -617,14 +617,14 @@ public class JavaScriptDirectInterface {
 
     // Analytics
     @JavascriptInterface
-    public void analyticsEvent(String category, String action, String label, long value) {
+    public void analyticsEvent(String category, String action, String label) {
         _activity.logAnalyticsEvent(category, action, label);
     }
 
     @JavascriptInterface
-    public void setAnalyticsUser(String place) {
+    public void setAnalyticsPlacePref(String place) {
         if (place != null) {
-            _activity.setAnalyticsUser(place);
+            _activity.setAnalyticsPlacePref(place);
         }
     }
 }

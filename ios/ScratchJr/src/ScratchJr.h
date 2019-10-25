@@ -126,8 +126,8 @@
                                      :(int)shareType
                                      :(NSString *)b64data;
 - (NSString *) deviceName;
-- (NSString *) analyticsEvent:(NSString *)category :(NSString *)action :(NSString *)label :(NSNumber*)value;
-- (void) setAnalyticsUser:(NSString *)place;
+- (NSString *) analyticsEvent:(NSString *)category :(NSString *)action :(NSString *)label;
+- (void) setAnalyticsPlacePref:(NSString *)place;
 @end
 
 @interface ViewController : UIViewController <JSExports,UIWebViewDelegate,MFMailComposeViewControllerDelegate>

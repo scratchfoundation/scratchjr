@@ -163,6 +163,9 @@ export default class Paint {
     static open (bkg, md5, sname, cname, cscale, sw, sh) {
         let action = '';
         let label = '';
+        // Analytics:
+        // md3: name of the asset, an md5 hash for user generated, filename for library items
+        // sname: is not set for a new character (ignored for backgrounds)
         if (bkg) {
             action = 'edit_background';
             label = (md5 in MediaLib.keys) ? md5 : 'user_background';

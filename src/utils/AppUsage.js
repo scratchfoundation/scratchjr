@@ -31,11 +31,7 @@ export default class AppUsage {
      * @param {string} kind answer from user to the usage survey (home, school, other, noanswer)
      */
     static setUsage (kind) {
-        if (kind === '') {
-            Cookie.set('usage', 'noanswer');
-        } else {
-            Cookie.set('usage', kind);
-        }
         currentUsage = (kind === '') ? 'noanswer' : kind;
+        Cookie.set('usage', currentUsage);
     }
 }

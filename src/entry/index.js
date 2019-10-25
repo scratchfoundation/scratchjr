@@ -94,7 +94,7 @@ function indexLoadStart (afterUsage) {
             gn('usageOther').className = 'usageOther hide';
             gn('usageNoanswer').className = 'usageNoanswer hide';
         }
-        iOS.setAnalyticsUser(AppUsage.currentUsage);
+        iOS.setAnalyticsPlacePref(AppUsage.currentUsage);
     }
     gn('gettings').className = 'gettings show';
     gn('startcode').className = 'startcode show';

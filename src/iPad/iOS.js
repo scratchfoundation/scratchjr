@@ -351,15 +351,12 @@ export default class iOS {
         fcn(tabletInterface.deviceName());
     }
 
-    static analyticsEvent (category, action, label, value) {
-        if (!value) {
-            value = 1;
-        }
-        tabletInterface.analyticsEvent(category, action, label, value);
+    static analyticsEvent (category, action, label) {
+        tabletInterface.analyticsEvent(category, action, label);
     }
 
-    static setAnalyticsUser (preferredPlace) {
-        tabletInterface.setAnalyticsUser(preferredPlace);
+    static setAnalyticsPlacePref (preferredPlace) {
+        tabletInterface.setAnalyticsPlacePref(preferredPlace);
     }
 
     // Web Wiew delegate call backs

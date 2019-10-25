@@ -131,7 +131,7 @@ JSContext *js;
 
     // Track pageview in Firebase?
     [FIRAnalytics setScreenName:page screenClass:NULL];
-    
+
 }
 
 // Disables iOS 9 webview touch tooltip by disabling the long-press gesture recognizer in subviews
@@ -315,7 +315,7 @@ JSContext *js;
     return [ScratchJr hideSplash:body];
 }
 
--(NSString*) analyticsEvent:(NSString*) category :(NSString*) action :(NSString*) label :(NSNumber*) value {
+-(NSString*) analyticsEvent:(NSString*) category :(NSString*) action :(NSString*) label {
     [FIRAnalytics logEventWithName:kFIREventViewItem
     parameters:@{
                  kFIRParameterItemID:action,
@@ -325,7 +325,7 @@ JSContext *js;
     return @"1";
 }
 
--(void) setAnalyticsUser:(NSString*)place {
+-(void) setAnalyticsPlacePref:(NSString*)place {
     [FIRAnalytics setUserPropertyString:place forName:@"place_preference"];
 }
 

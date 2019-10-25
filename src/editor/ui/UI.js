@@ -28,6 +28,9 @@ let info = null;
 let okclicky = null;
 let infoBoxOpen = false;
 
+const EMAILSHARE = 0;
+const AIRDROPSHARE = 1;
+
 export default class UI {
     static get infoBoxOpen () {
         return infoBoxOpen;
@@ -134,7 +137,7 @@ export default class UI {
             shareEmail.id = 'infoboxShareButtonEmail';
             shareEmail.textContent = Localization.localize('SHARING_BY_EMAIL');
             shareEmail.ontouchstart = function (e) {
-                UI.infoDoShare(e, nameField, shareLoadingGif, 0);
+                UI.infoDoShare(e, nameField, shareLoadingGif, EMAILSHARE);
             };
 
             if (isAndroid) {
@@ -149,7 +152,7 @@ export default class UI {
                 shareAirdrop.textContent = Localization.localize('SHARING_BY_AIRDROP');
                 shareAirdrop.style.float = 'right';
                 shareAirdrop.ontouchstart = function (e) {
-                    UI.infoDoShare(e, nameField, shareLoadingGif, 1);
+                    UI.infoDoShare(e, nameField, shareLoadingGif, AIRDROPSHARE);
                 };
             }
 
@@ -254,7 +257,7 @@ export default class UI {
 
         setTimeout(saveAndShare, 500); // 500ms delay to wait for loading GIF to show and keyboard to hide
 
-        iOS.analyticsEvent('editor', 'share_button', (shareType == 0) ? 'email' : 'airdrop');
+        iOS.analyticsEvent('editor', 'share_button', (shareType == EMAILSHARE) ? 'email' : 'airdrop');
 
         function saveAndShare () {
             // Save the project's new name

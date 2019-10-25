@@ -494,7 +494,7 @@ public class ScratchJrActivity
      * Record the preferred place for the user: home, school, other, noanswer
      * @param place
      */
-    public void setAnalyticsUser(String place) {
+    public void setAnalyticsPlacePref(String place) {
         _FirebaseAnalytics.setUserProperty("place_preference", place);
     }
 
