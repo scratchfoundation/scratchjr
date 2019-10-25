@@ -206,7 +206,6 @@
 				5A3230A01AEC02BC09345F16 /* Pods-ScratchJrTests.debug.xcconfig */,
 				72E2C9BF3BE9F67099F0180F /* Pods-ScratchJrTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};

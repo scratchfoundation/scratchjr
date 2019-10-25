@@ -226,9 +226,6 @@ export default class ScratchJr {
 
     static editorEvents () {
         document.ongesturestart = undefined;
-        document.ontouchmove = function (e) {
-            e.preventDefault();
-        };
         window.ontouchstart = ScratchJr.unfocus;
         if (isTablet) {
             window.ontouchend = undefined;
