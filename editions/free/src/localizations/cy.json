@@ -362,6 +362,7 @@
     "SHARING_BY_AIRDROP": "Rhannu drwy Airdrop",
     "SHARING_EMAIL_SUBJECT": "Project ScratchJr: {PROJECT_NAME}",
     "SHARING_EMAIL_TEXT": "Cliciwch yr eicon i brofi fy mhroject ScratchJr ar eich iPad neu dabled Android! <br><br>Os nad yw'r ap ScratchJr gennych, gallwch ei <a href='http://www.scratchjr.org'>lwytho i lawr </a>o'rApple Appstore neu Google Play Store. <br><br> Gyda ScratchJr, gall plant greu eu straeon rhyngweithiol a gemau eu hunain. I ddysgu rhagor, ewch i <a href='http://www.scratchjr.org'>ScratchJr</a>.",
+    "FOR_PARENTS": "Ar Gyfer Rhieni",
     "PARENTAL_GATE_EXPLANATION": "Pam ydyn ni'n gofyn hyn? Rhaid i oedolyn gytuno i rannu ar-lein.",
     "GRID_NUMBER": "{N, number}",
     "NEW_PROJECT_PREFIX": "Project",
