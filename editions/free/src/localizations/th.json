@@ -362,6 +362,7 @@
     "SHARING_BY_AIRDROP": "แจกจ่ายทางแอร์ดรอป-AirDrop",
     "SHARING_EMAIL_SUBJECT": "โครงงาน ScratchJr: {PROJECT_NAME}",
     "SHARING_EMAIL_TEXT": "Click the icon to try my ScratchJr project on your iPad or Android tablet!<br><br>If you don't have the ScratchJr app, you can <a href='http://www.scratchjr.org'>download it</a> from the Apple App store or the Google Play Store.<br><br>With ScratchJr, children can create their own interactive stories and games. To learn more, see <a href='http://www.scratchjr.org'>scratchjr.org</a>.",
+    "FOR_PARENTS": "สำหรับผู้ปกครอง",
     "PARENTAL_GATE_EXPLANATION": "ทำไมเราถึงถามแบบนี้? ผู้ใหญ่ต้องอนุญาตใหัแจกจ่ายทางออนไลน์ได้",
     "GRID_NUMBER": "{N, number}",
     "NEW_PROJECT_PREFIX": "โครงงาน",

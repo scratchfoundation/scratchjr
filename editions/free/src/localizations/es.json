@@ -362,6 +362,7 @@
     "SHARING_BY_AIRDROP": "Compartir vía Airdrop",
     "SHARING_EMAIL_SUBJECT": "Proyecto ScratchJr: {PROJECT_NAME}",
     "SHARING_EMAIL_TEXT": "¡Haz clic en el icono para probar mi proyecto ScratchJr en tu iPad o tableta Android!<br><br>Si no tienes la app de ScratchJr puedes <a href='http://www.scratchjr.org'>descargarla</a> del Apple App Store o de la Google Play Store.<br><br>Con ScratchJr, los niños pueden crear sus propias historias y juegos interactivos. Para más información, visita <a href='http://www.scratchjr.org'>scratchjr.org</a>.",
+    "FOR_PARENTS": "Para padres",
     "PARENTAL_GATE_EXPLANATION": "¿Por qué estamos preguntando esto? Un adulto debe aprobar el compartir en línea.",
     "GRID_NUMBER": "{N, number}",
     "NEW_PROJECT_PREFIX": "Proyecto",
