@@ -362,6 +362,7 @@
     "SHARING_BY_AIRDROP": "えあどろっぷで きょうゆうする",
     "SHARING_EMAIL_SUBJECT": "すくらっちじゅにあ ぷろじぇくと： {PROJECT_NAME}",
     "SHARING_EMAIL_TEXT": "アイコンをクリックして、あなたのiPadやアンドロイドタブレットでスクラッチジュニアアプリを試してみよう。<br><br>もしスクラッチジュニアアプリを持っていなければ、Apple App storeかGoogle Play Storeから <a href='http://www.scratchjr.org'>ダウンロード</a> できます。<br><br>子供達はスクラッチジュニアで自分自身で対話型の物語やゲームを作ることができます。詳しくは  <a href='http://www.scratchjr.org'>scratchjr.org</a>を見てください。",
+    "FOR_PARENTS": "保護者の方へ",
     "PARENTAL_GATE_EXPLANATION": "なぜかくにんするのでしょうか？おんらいんできょうゆうするにはおとなのきょかがひつようだからです。（やくしゃちゅう：おとうさん、おかあさん、おとなのひとにきいてください）",
     "GRID_NUMBER": "{N, number}",
     "NEW_PROJECT_PREFIX": "ぷろじぇくと",
