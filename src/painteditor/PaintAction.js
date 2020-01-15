@@ -13,7 +13,7 @@ import SVGImage from './SVGImage';
 import Camera from './Camera';
 import Events from '../utils/Events';
 import Rectangle from '../geom/Rectangle';
-import {gn, isTablet, isiOS, getIdFor} from '../utils/lib';
+import {gn, isTablet, getIdFor} from '../utils/lib';
 /*
 Type of objects:
 - fixed: Only exists on Assets Backgrounds and can it only be fill (color or camera) or removed
@@ -1130,9 +1130,13 @@ export default class PaintAction {
         var pt2 = Paint.root.createSVGPoint();
         pt2.x = pt.x;
         pt2.y = pt.y;
-        var globalPoint = pt2.matrixTransform(Paint.root.getScreenCTM().inverse());
-        globalPoint.x = globalPoint.x / Paint.currentZoom;
-        globalPoint.y = globalPoint.y / Paint.currentZoom;
+        var screenMatrix = Paint.root.getScreenCTM();
+        var globalPoint = pt2.matrixTransform(screenMatrix.inverse());
+        // screenMatrix should include the currentScale, if it doesn't match, apply scaling
+        if (screenMatrix.a != Paint.currentZoom) {
+            globalPoint.x = globalPoint.x / Paint.currentZoom;
+            globalPoint.y = globalPoint.y / Paint.currentZoom;
+        }
         return globalPoint;
     }
 }
