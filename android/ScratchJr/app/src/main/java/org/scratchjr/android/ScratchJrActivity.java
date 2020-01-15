@@ -365,8 +365,9 @@ public class ScratchJrActivity
         webSettings.setDisplayZoomControls(false);
         webSettings.setLoadWithOverviewMode(false);
         webSettings.setUseWideViewPort(false);
-        // Uncomment to enable remote Chrome debugging on a physical Android device
-        // WebView.setWebContentsDebuggingEnabled(true);
+        if (0 != (getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE)) {
+            WebView.setWebContentsDebuggingEnabled(true);
+        }
 
         // Enable cookie persistence
         CookieManager.setAcceptFileSchemeCookies(true);
