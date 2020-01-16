@@ -365,7 +365,7 @@ public class ScratchJrActivity
         webSettings.setDisplayZoomControls(false);
         webSettings.setLoadWithOverviewMode(false);
         webSettings.setUseWideViewPort(false);
-        if (0 != (getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE)) {
+        if (BuildConfig.DEBUG) {
             WebView.setWebContentsDebuggingEnabled(true);
         }
 
