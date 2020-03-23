@@ -93,6 +93,7 @@ export default class Scripts {
             // It seems to have been checking if the drag was on the invisible shadow of the repeat block
             // It's not clear to me why we would want this, and seems functional without it. -- TM
             //if ((ths.owner.blocktype == "repeat") && !hitTest(ths.childNodes[1], pixel)) continue;
+            e.preventDefault();
             Events.startDrag(e, ths, ScriptsPane.prepareToDrag,
                 ScriptsPane.dropBlock, ScriptsPane.draggingBlock, ScriptsPane.runBlock);
             return;

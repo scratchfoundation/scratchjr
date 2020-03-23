@@ -36,30 +36,39 @@ This repository has the following directory structure:
 * <tt>ios/</tt> - XCode project for iOS build. (Make sure to open <tt>ScratchJr.xcworkspace</tt> not <tt>ScratchJr.xcodeproj</tt>)
 
 ## Building ScratchJr
-To build the Android version, you need to have a system equipped with Android Studio. To build the iOS version, you need to have a Mac with XCode.
 
-Ensure you have node and npm [installed](http://blog.npmjs.org/post/85484771375/how-to-install-npm).
+### Initial setup
 
-With all of the code checked out, you must install npm dependencies for bundling the JavaScript:
-* <tt>npm install</tt>
+Regardless of whether you are doing iOS development or Android development, you should do these steps.
 
-The build caches .png files out of the .svg files to improve performance. To enable this build step, you need to install a few dependencies.
+*These instructions assume you are building both versions on Mac OSX, with [Homebrew](http://brew.sh) installed.*
 
-On Ubuntu:
+1. Clone or update the code for this repo
+2. Ensure you have node and npm [installed](http://blog.npmjs.org/post/85484771375/how-to-install-npm).
+3. Run <tt>sudo easy_install pysvg</tt> to install python svg libraries
+4. Run <tt>brew install librsvg</tt> to install commandline `rsvg-convert`
+5. Run <tt>brew install imagemagick</tt> to install commandline `magick`
+6. In the top level of the scratchjr repo directory, install npm dependencies for bundling the JavaScript: <tt>npm install</tt>
 
-* Run <tt>sudo easy_install pysvg</tt> to install python svg libraries
-* Run <tt>sudo apt-get install librsvg2-bin</tt> to install rsvg-convert
-* Run <tt>sudo apt-get install imagemagick</tt> to install ImageMagick
+### iOS
 
-On OS X:
+1. To build the iOS version, you need to have a Mac with XCode
+2. Run <tt>brew install cocoapods</tt> to install CocoaPods
+3. Run <tt>pod install</tt> to install the Firebase Analytics dependencies
+4. Open XCode
+5. In XCode, open <tt>ios/ScratchJr.xcworkspace</tt>
 
-* Install [Homebrew](http://brew.sh).
-* Run <tt>sudo easy_install pysvg</tt> to install python svg libraries
-* Run <tt>brew install librsvg</tt> to install rsvg-convert
-* Run <tt>brew install imagemagick</tt> to install ImageMagick
-* Run <tt>brew install cocoapods</tt> to install CocoaPods if you are building for iOS
+### Android
 
-Once these are installed, select the appropriate target in XCode or the appropriate flavor/build variant in Android Studio. To build in Android Studio, open the project <tt>android/ScratchJr</tt>. To build for iOS in XCode, open <tt>ios/ScratchJr.xcworkspace</tt> as ScratchJr uses CocoaPods. Before you build for iOS, you will need to run <tt>pod install</tt> to install the Firebase Analytics dependencies.
+1. Install or update Android Studio
+2. In Android Studio, open the project <tt>android/ScratchJr</tt>
+3. Choose the appropriate flavor/build variant in Android Studio
+
+*Note: you can still do Android development on Ubuntu. Instead of the install commands above, run:*
+
+1. <tt>sudo easy_install pysvg</tt> to install python svg libraries
+2. <tt>sudo apt-get install librsvg2-bin</tt> to install rsvg-convert
+3. <tt>sudo apt-get install imagemagick</tt> to install ImageMagick
 
 ## Where and how to make changes
 
