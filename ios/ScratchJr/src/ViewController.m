@@ -28,6 +28,11 @@ JSContext *js;
     [super viewDidLoad];
     [self registerDefaultsFromSettingsBundle];
     webview = (UIWebView*)[self view] ;
+
+    // disable webview scroll
+    // to fix https://github.com/LLK/scratchjr/issues/243
+    webview.scrollView.scrollEnabled = false;
+
     [webview setDelegate:self];
     [Database open:@"ScratchJr"];
     [ScratchJr cameraInit];
