@@ -3,12 +3,12 @@ This is the official git repository hosting the source code for the
 [ScratchJr](http://scratchjr.org/) project.
 
 ScratchJr can be built both for iOS and Android.
-A pure-web version or Chrome-app version is planned to follow at some point in the future.
+A pure-web version is planned to follow at some point in the future.
 
 Platform | Status
 -------- | -------------
 iOS      | Released in App Store
-Android  | Released in Google Play and Amazon store
+Android  | Released in Google Play
 
 ## Release Schedule
 
@@ -49,6 +49,14 @@ Regardless of whether you are doing iOS development or Android development, you 
 4. Run <tt>brew install librsvg</tt> to install commandline `rsvg-convert`
 5. Run <tt>brew install imagemagick</tt> to install commandline `magick`
 6. In the top level of the scratchjr repo directory, install npm dependencies for bundling the JavaScript: <tt>npm install</tt>
+
+### Analytics
+ScratchJr uses the Firebase SDK to record analytics for the app. Scratch Team developers should look for
+the configuration files in the Scratch Devs Vault. If you're not on the Scratch Team, then you'll need to
+set up your own [app analytics](https://firebase.google.com/products/analytics) with Google Firebase. It's free.
+
+1. Place the `google-services.json` file in `editions/free/android-resources`
+2. Place the `GoogleService-Info.plist` file in `editions/free/ios-resources`
 
 ### iOS
 
