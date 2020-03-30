@@ -33,7 +33,7 @@ This repository has the following directory structure:
   * <tt>ScratchJr/</tt> - Android Studio Project for ScratchJr Android Application
 * <tt>bin/</tt> - Build scripts and other executables
 * <tt>doc/</tt> - Developer Documentation
-* <tt>ios/</tt> - XCode project for iOS build. (Make sure to open <tt>ScratchJr.xcworkspace</tt> not <tt>ScratchJr.xcodeproj</tt>)
+* <tt>ios/</tt> - Xcode project for iOS build. (Make sure to open <tt>ScratchJr.xcworkspace</tt> not <tt>ScratchJr.xcodeproj</tt>)
 
 ## Building ScratchJr
 
@@ -53,18 +53,18 @@ Regardless of whether you are doing iOS development or Android development, you 
 ### Analytics
 ScratchJr uses the Firebase SDK to record analytics for the app. Scratch Team developers should look for
 the configuration files in the Scratch Devs Vault. If you're not on the Scratch Team, then you'll need to
-set up your own [app analytics](https://firebase.google.com/products/analytics) with Google Firebase. It's free.
+set up your own [app analytics](https://firebase.google.com/products/analytics) with Google Firebase. It's free. Firebase will generate the configuration files for you to download.
 
 1. Place the `google-services.json` file in `editions/free/android-resources`
 2. Place the `GoogleService-Info.plist` file in `editions/free/ios-resources`
 
 ### iOS
 
-1. To build the iOS version, you need to have a Mac with XCode
+1. To build the iOS version, you need to have a Mac with Xcode
 2. Run <tt>brew install cocoapods</tt> to install CocoaPods
 3. Run <tt>pod install</tt> to install the Firebase Analytics dependencies
-4. Open XCode
-5. In XCode, open <tt>ios/ScratchJr.xcworkspace</tt>
+4. Open Xcode
+5. In Xcode, open <tt>ios/ScratchJr.xcworkspace</tt>
 
 ### Android
 
