@@ -29,3 +29,5 @@
 /android/ScratchJr/.idea/caches
 /android/ScratchJr/.idea/modules.xml
 ios/Pods
+google-services.json
+GoogleService-Info.plist
