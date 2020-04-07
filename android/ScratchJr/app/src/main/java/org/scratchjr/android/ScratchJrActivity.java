@@ -4,6 +4,7 @@ import android.Manifest;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -146,9 +147,8 @@ public class ScratchJrActivity
         CookieManager.getInstance().setAcceptCookie(true);
         CookieManager.setAcceptFileSchemeCookies(true);
 
-        String PROJECT_MIMETYPE = getApplicationContext().getString(R.string.share_mimetype);
         Intent it = getIntent();
-        if (it != null && it.getType() != null && it.getType().equals(PROJECT_MIMETYPE)) {
+        if (it != null && it.getData() != null) {
             receiveProject(it.getData());
         }
 
@@ -169,11 +169,20 @@ public class ScratchJrActivity
                 }, 1000);
             }
         });
-
         requestPermissions();
     }
 
+    private void requestExtStoragePermissions() {
+        int readExtPermissionResult = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        if (readExtPermissionResult != PackageManager.PERMISSION_GRANTED) {
+            int requestCode = 2;
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, requestCode);
+        }
+    }
+
     public void requestPermissions() {
+        requestExtStoragePermissions();
         cameraPermissionResult = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
         micPermissionResult = ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO);
 
@@ -291,17 +300,25 @@ public class ScratchJrActivity
     @Override
     protected void onNewIntent(Intent it) {
         super.onNewIntent(it);
-        String PROJECT_MIMETYPE = getApplicationContext().getString(R.string.share_mimetype);
-        if (it != null && it.getType() != null && it.getType().equals(PROJECT_MIMETYPE)) {
+        if (it != null && it.getData() != null) {
             receiveProject(it.getData());
         }
     }
 
     private void receiveProject(Uri projectUri) {
+        String PROJECT_EXTENSION = getApplicationContext().getString(R.string.share_extension_filter);
+        String scheme = projectUri.getScheme();
+        Log.i(LOG_TAG, "receiveProject(scheme): " + scheme);
+        Log.i(LOG_TAG, "receiveProject(path): " + projectUri.getPath());
+        if (scheme == null || !(scheme.equals(ContentResolver.SCHEME_FILE) || scheme.equals(ContentResolver.SCHEME_CONTENT)) ||
+                !projectUri.getPath().matches(PROJECT_EXTENSION)) {
+            return;
+        }
         // Read the project one byte at a time into a buffer
         ByteArrayOutputStream projectData = new ByteArrayOutputStream();
         try {
             InputStream is = getContentResolver().openInputStream(projectUri);
+            
             byte[] readByte = new byte[1];
             while ((is.read(readByte)) == 1) {
                 projectData.write(readByte[0]);
