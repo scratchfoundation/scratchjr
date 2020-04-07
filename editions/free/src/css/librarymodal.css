@@ -145,6 +145,8 @@ Assets chooser
     margin: ${css_vh(0.00)};
     margin-left: auto;
     margin-right: auto;
+    height: ${css_vh(88.28)};
+    overflow-y: scroll;
 }
 
 *.scrollarea{
