@@ -19,7 +19,7 @@ android {
         free {
             applicationId "org.scratchjr.androidfree"
             minSdkVersion 19
-            targetSdkVersion 27
+            targetSdkVersion 28
             versionCode 21
             versionName "1.2.0"
         }

@@ -38,8 +38,6 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -310,21 +308,18 @@ public class ScratchJrActivity
     }
 
     private void receiveProject(Uri projectUri) {
-        File projectFile = null;
+        String PROJECT_EXTENSION = getApplicationContext().getString(R.string.share_extension_filter);
         String scheme = projectUri.getScheme();
-        if (scheme != null) {
-            if (scheme.equals(ContentResolver.SCHEME_FILE)) {
-                String filePath = projectUri.getPath();
-                projectFile = filePath != null ? new File(filePath) : null;
-            } else if (!scheme.equals(ContentResolver.SCHEME_CONTENT)) {
-                return;
-            }
+        Log.i(LOG_TAG, "receiveProject(scheme): " + scheme);
+        Log.i(LOG_TAG, "receiveProject(path): " + projectUri.getPath());
+        if (scheme == null || !(scheme.equals(ContentResolver.SCHEME_FILE) || scheme.equals(ContentResolver.SCHEME_CONTENT)) ||
+                !projectUri.getPath().matches(PROJECT_EXTENSION)) {
+            return;
         }
         // Read the project one byte at a time into a buffer
         ByteArrayOutputStream projectData = new ByteArrayOutputStream();
         try {
-            InputStream is = (projectFile != null) ? new FileInputStream(projectFile) :
-                    getContentResolver().openInputStream(projectUri);
+            InputStream is = getContentResolver().openInputStream(projectUri);
             
             byte[] readByte = new byte[1];
             while ((is.read(readByte)) == 1) {

@@ -41,6 +41,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="file" />
+                <data android:scheme="content" />
                 <data android:mimeType="*/*" />
                 <data android:pathPattern="@string/share_extension_filter" />
                 <data android:host="*" />
@@ -49,8 +50,9 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="file" />
+                <data android:scheme="content" />
                 <data android:mimeType="@string/share_mimetype" />
-                <data android:pathPattern="@string/share_extension_filter" />
                 <data android:host="*" />
             </intent-filter>
         </activity>
