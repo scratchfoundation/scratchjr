@@ -10,6 +10,7 @@
 
     <uses-feature android:name="android.hardware.camera" android:required="false" />
     <uses-feature android:name="android.hardware.microphone" android:required="false" />
+    <uses-feature android:name="android.hardware.touchscreen" android:required="true" />
 
     <supports-screens android:requiresSmallestWidthDp="600" />
     <application
