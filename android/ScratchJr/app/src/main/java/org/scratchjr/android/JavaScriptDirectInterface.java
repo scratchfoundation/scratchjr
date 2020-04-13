@@ -3,8 +3,6 @@ package org.scratchjr.android;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -350,7 +348,7 @@ public class JavaScriptDirectInterface {
     public String scratchjr_cameracheck() {
         return _activity.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY) ? "1" : "0";
     }
-    
+
     @JavascriptInterface
     public boolean scratchjr_has_multiple_cameras() {
         return Camera.getNumberOfCameras() > 1;
@@ -582,10 +580,13 @@ public class JavaScriptDirectInterface {
         File tempFile;
 
         String extension;
+        String mimetype;
         if (BuildConfig.APPLICATION_ID.equals("org.pbskids.scratchjr")) {
             extension = ".psjr";
+            mimetype = "application/x-pbskids-scratchjr-project";
         } else {
             extension = ".sjr";
+            mimetype = "application/x-scratchjr-project";
         }
 
         try {
@@ -602,17 +603,18 @@ public class JavaScriptDirectInterface {
         }
 
         final Intent it = new Intent(Intent.ACTION_SEND);
-        it.setType("message/rfc822");
+        it.setType(mimetype);
         it.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {});
-        it.putExtra(android.content.Intent.EXTRA_SUBJECT, emailSubject);
+        it.putExtra(android.content.Intent.EXTRA_SUBJECT, fileName);
         it.putExtra(android.content.Intent.EXTRA_TEXT, Html.fromHtml(emailBody));
 
         // The stream data is a reference to the temporary file provided by our contentprovider
         it.putExtra(Intent.EXTRA_STREAM,
                 Uri.parse("content://" + ShareContentProvider.AUTHORITY + "/"
                         + fileName));
+        Intent shareIntent = Intent.createChooser(it, null);
 
-        _activity.startActivity(it);
+        _activity.startActivity(shareIntent);
     }
 
     // Analytics

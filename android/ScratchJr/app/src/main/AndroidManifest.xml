@@ -40,12 +40,17 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="file" />
-                <data android:scheme="content" />
                 <data android:mimeType="*/*" />
                 <data android:pathPattern="@string/share_extension_filter" />
+                <!-- These additional pathPattern blocks are to allow for paths with
+                additional periods in them. See:
+                http://stackoverflow.com/questions/3400072/pathpattern-to-match-file-extension-does-not-work-if-a-period-exists-elsewhere-i/8599921 -->
+                <data android:pathPattern="@{`.*\\.` + @string/share_extension_filter}"/>
+                <data android:pathPattern="@{`.*\\..*\\.` + @string/share_extension_filter}"/>
+                <data android:pathPattern="@{`.*\\..*\\..*\\.` + @string/share_extension_filter}"/>
+                <data android:pathPattern="@{`.*\\..*\\..*\\..*\\.` + @string/share_extension_filter}"/>
+                <data android:pathPattern="@{`.*\\..*\\..*\\..*\\..*\\.` + @string/share_extension_filter}"/>
                 <data android:host="*" />
-                <data android:scheme="file" />
-                <data android:scheme="content" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -54,6 +59,16 @@
                 <data android:scheme="file" />
                 <data android:scheme="content" />
                 <data android:mimeType="@string/share_mimetype" />
+                <data android:host="*" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="file" />
+                <data android:scheme="content" />
+                <data android:mimeType="application/octet-stream" />
                 <data android:host="*" />
             </intent-filter>
         </activity>
