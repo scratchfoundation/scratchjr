@@ -321,9 +321,8 @@ JSContext *js;
 }
 
 -(NSString*) analyticsEvent:(NSString*) category :(NSString*) action :(NSString*) label {
-    [FIRAnalytics logEventWithName:kFIREventViewItem
+    [FIRAnalytics logEventWithName:action
     parameters:@{
-                 kFIRParameterItemID:action,
                  kFIRParameterItemName:label,
                  kFIRParameterItemCategory:category
                  }];
