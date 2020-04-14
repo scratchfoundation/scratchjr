@@ -536,6 +536,7 @@ export default class ScratchJr {
         inFullscreen = false;
         UI.quitFullScreen();
         onBackButtonCallback.pop();
+        iOS.analyticsEvent('editor', 'full_screen_exited');
         document.body.style.background = 'white';
     }
 

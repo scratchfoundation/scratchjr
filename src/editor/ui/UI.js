@@ -761,6 +761,7 @@ export default class UI {
 
     static toggleGrid (b) {
         Grid.hide(b);
+        iOS.analyticsEvent('editor', Grid.hidden ? 'hide_grid' : 'show_grid');
         gn('grid').className = Grid.hidden ? 'gridToggle off' : 'gridToggle on';
     }
 

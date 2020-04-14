@@ -60,6 +60,7 @@ export default class Record {
 
     // Dialog box hide/show
     static appear () {
+        iOS.analyticsEvent('editor', 'record_dialog_open');
         gn('backdrop').setAttribute('class', 'modal-backdrop fade in');
         setProps(gn('backdrop').style, {
             display: 'block'
@@ -71,6 +72,7 @@ export default class Record {
     }
 
     static disappear () {
+        iOS.analyticsEvent('editor', 'record_dialog_close');
         setTimeout(function () {
             gn('backdrop').setAttribute('class', 'modal-backdrop fade');
             setProps(gn('backdrop').style, {
@@ -152,6 +154,7 @@ export default class Record {
     }
 
     static startRecording (filename) {
+        iOS.analyticsEvent('editor', 'start_recording');
         if (parseInt(filename) < 0) {
             // Error in getting record filename - go back to editor
             recordedSound = undefined;
@@ -250,6 +253,7 @@ export default class Record {
 
     // Stop the volume monitor and recording
     static stopRecording (fcn) {
+        iOS.analyticsEvent('editor', 'stop_recording');
         if (timeLimit != null) {
             clearTimeout(timeLimit);
             timeLimit = null;
