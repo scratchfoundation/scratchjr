@@ -381,6 +381,7 @@ export default class ScratchJr {
         ScratchJr.stopStripsFromTop(e);
         ScratchJr.unfocus(e);
         ScratchJr.saveProject(e, ScratchJr.flippage);
+        iOS.analyticsEvent('editor', 'project_editor_close');
     }
 
     static flippage () {
