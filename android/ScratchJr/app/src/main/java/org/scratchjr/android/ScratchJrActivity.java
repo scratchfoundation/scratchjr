@@ -310,15 +310,20 @@ public class ScratchJrActivity
         String scheme = projectUri.getScheme();
         Log.i(LOG_TAG, "receiveProject(scheme): " + scheme);
         Log.i(LOG_TAG, "receiveProject(path): " + projectUri.getPath());
-        if (scheme == null || !(scheme.equals(ContentResolver.SCHEME_FILE) || scheme.equals(ContentResolver.SCHEME_CONTENT)) ||
-                !projectUri.getPath().matches(PROJECT_EXTENSION)) {
+
+        // if scheme isn't file or content, skip import
+        if (scheme == null || !(scheme.equals(ContentResolver.SCHEME_FILE) || scheme.equals(ContentResolver.SCHEME_CONTENT))) {
+            return;
+        }
+        // if scheme is file, then skip if filename doesn't have scratchjr project extension
+        if (scheme.equals(ContentResolver.SCHEME_FILE) && !projectUri.getPath().matches(PROJECT_EXTENSION)) {
             return;
         }
         // Read the project one byte at a time into a buffer
         ByteArrayOutputStream projectData = new ByteArrayOutputStream();
         try {
             InputStream is = getContentResolver().openInputStream(projectUri);
-            
+
             byte[] readByte = new byte[1];
             while ((is.read(readByte)) == 1) {
                 projectData.write(readByte[0]);
