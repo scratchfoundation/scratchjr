@@ -45,11 +45,10 @@
                 <!-- These additional pathPattern blocks are to allow for paths with
                 additional periods in them. See:
                 http://stackoverflow.com/questions/3400072/pathpattern-to-match-file-extension-does-not-work-if-a-period-exists-elsewhere-i/8599921 -->
-                <data android:pathPattern="@{`.*\\.` + @string/share_extension_filter}"/>
-                <data android:pathPattern="@{`.*\\..*\\.` + @string/share_extension_filter}"/>
-                <data android:pathPattern="@{`.*\\..*\\..*\\.` + @string/share_extension_filter}"/>
-                <data android:pathPattern="@{`.*\\..*\\..*\\..*\\.` + @string/share_extension_filter}"/>
-                <data android:pathPattern="@{`.*\\..*\\..*\\..*\\..*\\.` + @string/share_extension_filter}"/>
+                <data android:pathPattern=".*\\..*\\.sjr"/>
+                <data android:pathPattern=".*\\..*\\..*\\.sjr"/>
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.sjr"/>
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.sjr"/>
                 <data android:host="*" />
             </intent-filter>
             <intent-filter>
