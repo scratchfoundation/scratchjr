@@ -8,3 +8,5 @@ Here are some ways you can contribute to ScratchJr:
 * [README](https://github.com/LLK/scratchjr/blob/master/README.md)
 * [Scratch Community Guidelines](https://github.com/LLK/scratch-www/wiki/Community-Guidelines)
 * [Issues](https://github.com/LLK/scratchjr/issues)
+* [Translate to other languages](https://en.scratch-wiki.info/wiki/Translating_ScratchJr).  
+  See https://github.com/LLK/scratchjr/wiki/Localization for how to pull in fresh translations.
