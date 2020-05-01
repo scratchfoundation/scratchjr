@@ -130,6 +130,10 @@ export default class Lobby {
         case 'gear':
             ScratchAudio.sndFX('tap.wav');
             Lobby.loadSettings(div);
+            setTimeout(function () {
+                // force webview to refresh the frame
+                gn('htmlcontents').style.minHeight = '50%';
+            }, 20);
             break;
         default:
             break;
