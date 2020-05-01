@@ -21,22 +21,11 @@
 			</array>
 			<key>CFBundleTypeName</key>
 			<string>SJR</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>com.playfulinvention.sjr</string>
-			</array>
-			<key>UTExportedTypeDeclarations</key>
-			<array>
-				<dict>
-					<key>UTTypeConformsTo</key>
-					<array>
-						<string>com.playfulinvention.sjr</string>
-					</array>
-					<key>UTTypeIdentifier</key>
-					<string></string>
-					<key>UTTypeTagSpecification</key>
-					<dict/>
-				</dict>
+				<string>org.scratchfoundation.sjr</string>
 			</array>
 		</dict>
 	</array>
@@ -89,7 +78,7 @@
 			<key>UTTypeDescription</key>
 			<string>ScratchJr Project</string>
 			<key>UTTypeIdentifier</key>
-			<string>com.playfulinvention.sjr</string>
+			<string>org.scratchfoundation.sjr</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
