@@ -164,8 +164,12 @@ export default class Paint {
         let action = '';
         let label = '';
         // Analytics:
-        // md3: name of the asset, an md5 hash for user generated, filename for library items
-        // sname: is not set for a new character (ignored for backgrounds)
+        // * md3: name of the asset, an md5 hash for user generated, filename for library items
+        // * sname: is not set for a new character (ignored for backgrounds)
+        // log two events:
+        // * paint editor is opened
+        // * type of edit (edit_background, edit_character, new_character)
+        iOS.analyticsEvent('paint_editor', 'paint_editor_open');
         if (bkg) {
             action = 'edit_background';
             label = (md5 in MediaLib.keys) ? md5 : 'user_background';
@@ -352,6 +356,7 @@ export default class Paint {
     }
 
     static close () {
+        iOS.analyticsEvent('paint_editor', 'paint_editor_close');
         saving = true;
         paintFrame.className = 'paintframe disappear';
         frame.style.display = 'block';

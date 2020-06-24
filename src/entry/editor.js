@@ -5,6 +5,7 @@ import Record from '../editor/ui/Record';
 
 export function editorMain () {
     iOS.getsettings(doNext);
+    iOS.analyticsEvent('editor', 'project_editor_open');
     function doNext (str) {
         var list = str.split(',');
         iOS.path = list[1] == '0' ? list[0] + '/' : undefined;

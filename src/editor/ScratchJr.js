@@ -381,6 +381,7 @@ export default class ScratchJr {
         ScratchJr.stopStripsFromTop(e);
         ScratchJr.unfocus(e);
         ScratchJr.saveProject(e, ScratchJr.flippage);
+        iOS.analyticsEvent('editor', 'project_editor_close');
     }
 
     static flippage () {
@@ -536,6 +537,7 @@ export default class ScratchJr {
         inFullscreen = false;
         UI.quitFullScreen();
         onBackButtonCallback.pop();
+        iOS.analyticsEvent('editor', 'full_screen_exited');
         document.body.style.background = 'white';
     }
 

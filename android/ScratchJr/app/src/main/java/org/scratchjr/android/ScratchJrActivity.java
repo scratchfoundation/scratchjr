@@ -507,10 +507,9 @@ public class ScratchJrActivity
      */
     public void logAnalyticsEvent(String category, String action, String label) {
         Bundle params = new Bundle();
-        params.putString(FirebaseAnalytics.Param.ITEM_ID, action);
         params.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, category);
         params.putString(FirebaseAnalytics.Param.ITEM_NAME, label);
-        _FirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, params);
+        _FirebaseAnalytics.logEvent(action, params);
     }
 
     /**

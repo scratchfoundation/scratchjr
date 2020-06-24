@@ -716,6 +716,7 @@ export default class Sprite {
         var sprites = JSON.parse(page.sprites);
         sprites.push(this.id);
         page.sprites = JSON.stringify(sprites);
+        iOS.analyticsEvent('editor', 'text_sprite_create');
         if ((this.str == '') && !whenDone) {
             this.setTextBox();
             this.activateInput();
@@ -805,6 +806,7 @@ export default class Sprite {
         document.body.scrollLeft = 0;
         var form = document.forms.activetextbox;
         var changed = (this.oldvalue != form.typing.value);
+        iOS.analyticsEvent('editor', 'text_sprite_close');
         if (this.noChars(form.typing.value)) {
             this.deleteText(this.oldvalue != '');
         } else {
@@ -889,6 +891,7 @@ export default class Sprite {
         var ti = document.forms.activetextbox.typing;
         gn('textbox').style.visibility = 'visible';
         var me = this;
+        iOS.analyticsEvent('editor', 'text_sprite_open');
         ti.onblur = function () {
             me.unfocusText();
         };
