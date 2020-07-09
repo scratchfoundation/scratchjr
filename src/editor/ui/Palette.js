@@ -582,7 +582,7 @@ export default class Palette {
         e.preventDefault();
         switch (Palette.getLandingPlace(element, e)) {
         case 'scripts':
-            iOS.analyticsEvent('editor', 'new_block', element.owner.blocktype);
+            iOS.analyticsEvent('editor', 'new_block_' + element.owner.blocktype);
             var sc = ScratchJr.getActiveScript();
             var dx = localx(sc, element.left);
             var dy = localy(sc, element.top);
