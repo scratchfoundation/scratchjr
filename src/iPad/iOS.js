@@ -3,6 +3,7 @@ import IO from './IO';
 import Lobby from '../lobby/Lobby';
 import Alert from '../editor/ui/Alert';
 import ScratchAudio from '../utils/ScratchAudio';
+import '@babel/polyfill';
 
 //////////////////////////////////////////////////
 //  Tablet interface functions
@@ -17,6 +18,7 @@ let camera;
 let database = 'projects';
 let mediacounter = 0;
 let tabletInterface = null;
+let callbacks = {};
 
 export default class iOS {
     // Getters/setters for properties used in other classes
@@ -70,17 +72,24 @@ export default class iOS {
 
     // Database functions
     static stmt (json, fcn) {
-        var result = tabletInterface.database_stmt(JSON.stringify(json));
-        if (typeof (fcn) !== 'undefined') {
-            fcn(result);
-        }
+        (async () => {
+            var result = await iOS.call('database_stmt', JSON.stringify(json));
+            if (typeof (fcn) !== 'undefined') {
+                fcn(result);
+            }
+        })();
     }
 
     static query (json, fcn) {
-        var result = tabletInterface.database_query(JSON.stringify(json));
-        if (typeof (fcn) !== 'undefined') {
-            fcn(result);
-        }
+        (async () => {
+            var result = await iOS.call('database_query', JSON.stringify(json));
+            if (typeof result == 'object') {
+                result = JSON.stringify(result);
+            }
+            if (typeof (fcn) !== 'undefined') {
+                fcn(result);
+            }
+        })();
     }
 
     static setfield (db, id, fieldname, val, fcn) {
@@ -94,23 +103,28 @@ export default class iOS {
     // IO functions
 
     static cleanassets (ft, fcn) {
-        tabletInterface.io_cleanassets(ft); fcn();
+        iOS.call('io_cleanassets', ft);
+        fcn();
     }
 
     static getmedia (file, fcn) {
         mediacounter++;
         var nextStep = function (file, key, whenDone) {
-            var result = tabletInterface.io_getmedialen(file, key);
-            iOS.processdata(key, 0, result, '', whenDone);
+            (async () => {
+                var result = await iOS.call('io_getmedialen', file, key);
+                iOS.processdata(key, 0, result * 1, '', whenDone);
+            })();
         };
         nextStep(file, mediacounter, fcn);
     }
 
     static getmediadata (key, offset, len, fcn) {
-        var result = tabletInterface.io_getmediadata(key, offset, len);
-        if (fcn) {
-            fcn(result);
-        }
+        (async () => {
+            var result = await iOS.call('io_getmediadata', key, offset, len);
+            if (fcn) {
+                fcn(result);
+            }
+        })();
     }
 
     static processdata (key, off, len, oldstr, fcn) {
@@ -126,82 +140,104 @@ export default class iOS {
     }
 
     static getsettings (fcn) {
-        var result = tabletInterface.io_getsettings();
-        if (fcn) {
-            fcn(result);
-        }
+        (async () => {
+            var result = await iOS.call('io_getsettings');
+            if (fcn) {
+                fcn(result);
+            }
+        })();
     }
 
     static getmediadone (file, fcn) {
-        var result = tabletInterface.io_getmediadone(file);
-        if (fcn) {
-            fcn(result);
-        }
+        (async () => {
+            var result = await iOS.call('io_getmediadone', file);
+            if (fcn) {
+                fcn(result);
+            }
+        })();
     }
 
     static setmedia (str, ext, fcn) {
-        var result = tabletInterface.io_setmedia(str, ext);
-        if (fcn) {
-            fcn(result);
-        }
+        (async () => {
+            var result = await iOS.call('io_setmedia', str, ext);
+            if (fcn) {
+                fcn(result);
+            }
+        })();
     }
 
     static setmedianame (str, name, ext, fcn) {
-        var result = tabletInterface.io_setmedianame(str, name, ext);
-        if (fcn) {
-            fcn(result);
-        }
+        (async () => {
+            var result = await iOS.call('io_setmedianame', str, name, ext);
+            if (fcn) {
+                fcn(result);
+            }
+        })();
     }
 
     static getmd5 (str, fcn) {
-        var result = tabletInterface.io_getmd5(str);
-        if (fcn) {
-            fcn(result);
-        }
+        (async () => {
+            var result = await iOS.call('io_getmd5', str);
+            if (fcn) {
+                fcn(result);
+            }
+        })();
     }
 
     static remove (str, fcn) {
-        var result = tabletInterface.io_remove(str);
-        if (fcn) {
-            fcn(result);
-        }
+        (async () => {
+            var result = await iOS.call('io_remove', str);
+            if (fcn) {
+                fcn(result);
+            }
+        })();
     }
 
     static getfile (str, fcn) {
-        var result = tabletInterface.io_getfile(str);
-        if (fcn) {
-            fcn(result);
-        }
+        (async () => {
+            var result = await iOS.call('io_getfile', str);
+            if (fcn) {
+                fcn(result);
+            }
+        })();
     }
 
     static setfile (name, str, fcn) {
-        var result = tabletInterface.io_setfile(name, btoa(str));
-        if (fcn) {
-            fcn(result);
-        }
+        (async () => {
+            var result = await iOS.call('io_setfile', name, btoa(str));
+            if (fcn) {
+                fcn(result);
+            }
+        })();
     }
 
     // Sound functions
 
     static registerSound (dir, name, fcn) {
-        var result = tabletInterface.io_registersound(dir, name);
-        if (fcn) {
-            fcn(result);
-        }
+        (async () => {
+            var result = await iOS.call('io_registersound', dir, name);
+            if (fcn) {
+                fcn(result);
+            }
+        })();
     }
 
     static playSound (name, fcn) {
-        var result = tabletInterface.io_playsound(name);
-        if (fcn) {
-            fcn(result);
-        }
+        (async () => {
+            var result = await iOS.call('io_playsound', name);
+            if (fcn) {
+                fcn(result);
+            }
+        })();
     }
 
     static stopSound (name, fcn) {
-        var result = tabletInterface.io_stopsound(name);
-        if (fcn) {
-            fcn(result);
-        }
+        (async () => {
+            var result = await iOS.call('io_stopsound', name);
+            if (fcn) {
+                fcn(result);
+            }
+        })();
     }
 
     // Web Wiew delegate call backs
@@ -211,89 +247,115 @@ export default class iOS {
     }
 
     static sndrecord (fcn) {
-        var result = tabletInterface.recordsound_recordstart();
-        if (fcn) {
-            fcn(result);
-        }
+        (async () => {
+            var result = await iOS.call('recordsound_recordstart');
+            if (fcn) {
+                fcn(result);
+            }
+        })();
     }
 
     static recordstop (fcn) {
-        var result = tabletInterface.recordsound_recordstop();
-        if (fcn) {
-            fcn(result);
-        }
+        (async () => {
+            var result = await iOS.call('recordsound_recordstop');
+            if (fcn) {
+                fcn(result);
+            }
+        })();
     }
 
     static volume (fcn) {
-        var result = tabletInterface.recordsound_volume();
-        if (fcn) {
-            fcn(result);
-        }
+        (async () => {
+            var result = await iOS.call('recordsound_volume');
+            if (fcn) {
+                fcn(result);
+            }
+        })();
     }
 
     static startplay (fcn) {
-        var result = tabletInterface.recordsound_startplay();
-        if (fcn) {
-            fcn(result);
-        }
+        (async () => {
+            var result = await iOS.call('recordsound_startplay');
+            if (fcn) {
+                fcn(result);
+            }
+        })();
     }
 
     static stopplay (fcn) {
-        var result = tabletInterface.recordsound_stopplay();
-        if (fcn) {
-            fcn(result);
-        }
+        (async () => {
+            var result = await iOS.call('recordsound_stopplay');
+            if (fcn) {
+                fcn(result);
+            }
+        })();
     }
 
     static recorddisappear (b, fcn) {
-        var result = tabletInterface.recordsound_recordclose(b);
-        if (fcn) {
-            fcn(result);
-        }
+        (async () => {
+            var result = iOS.call('recordsound_recordclose', b);
+            if (fcn) {
+                fcn(result);
+            }
+        })();
     }
 
     // Record state
     static askpermission () {
         if (isiOS) {
-            tabletInterface.askForPermission();
+            iOS.call('askForPermission');
         }
     }
 
     // camera functions
 
     static hascamera () {
-        camera = tabletInterface.scratchjr_cameracheck();
+        (async () => {
+            camera = await iOS.call('scratchjr_cameracheck');
+        })();
     }
 
     static startfeed (data, fcn) {
-        var str = JSON.stringify(data);
-        var result = tabletInterface.scratchjr_startfeed(str);
-        if (fcn) {
-            fcn(result);
-        }
+        (async () => {
+            var str = JSON.stringify(data);
+            var result = await iOS.call('scratchjr_startfeed', str);
+            if (fcn) {
+                fcn(result);
+            }
+        })();
     }
 
     static stopfeed (fcn) {
-        var result = tabletInterface.scratchjr_stopfeed();
-        if (fcn) {
-            fcn(result);
-        }
+        (async () => {
+            var result = await iOS.call('scratchjr_stopfeed');
+            if (fcn) {
+                fcn(result);
+            }
+        })();
     }
 
     static choosecamera (mode, fcn) {
-        var result = tabletInterface.scratchjr_choosecamera(mode);
-        if (fcn) {
-            fcn(result);
-        }
+        (async () => {
+            var result = await iOS.call('scratchjr_choosecamera', mode);
+            if (fcn) {
+                fcn(result);
+            }
+        })();
     }
 
     static captureimage (fcn) {
-        tabletInterface.scratchjr_captureimage(fcn);
+        iOS.call('scratchjr_captureimage', fcn);
     }
 
     static hidesplash (fcn) {
         if (isiOS) {
-            tabletInterface.hideSplash();
+            (async () => {
+                iOS.call('hideSplash');
+                if (fcn) {
+                    fcn();
+                }
+            })();
+            return;
         }
         if (fcn) {
             fcn();
@@ -312,6 +374,60 @@ export default class iOS {
         console.log(atob(str)); // eslint-disable-line no-console
     }
 
+    static getId () {
+        do {
+            var id = 'jr' + ((new Date()).getTime()) + Math.floor(Math.random() * 10000);
+            if (!callbacks[id]) {
+                return id;
+            }
+        } while (true);
+    }
+
+    static call (method) {
+        if (tabletInterface[method]) {
+            switch (arguments.length) {
+                case 1:
+                    return tabletInterface[method]();
+                case 2:
+                    return tabletInterface[method](arguments[1]);
+                case 3:
+                    return tabletInterface[method](arguments[1], arguments[2]);
+                case 4:
+                    return tabletInterface[method](arguments[1], arguments[2], arguments[3]);
+                case 5:
+                    return tabletInterface[method](arguments[1], arguments[2], arguments[3], arguments[4]);
+                case 6:
+                    return tabletInterface[method](arguments[1], arguments[2], arguments[3], arguments[4], arguments[5]);
+            }
+            return;
+        }
+        return new Promise((resolve) => {
+            var id = iOS.getId();
+            callbacks[id] = resolve;
+            var args = [].slice.call(arguments);
+            args.shift();
+            tabletInterface.postMessage({
+                id: id,
+                method: method,
+                params: args,
+            });
+        });
+    }
+
+    static resolve (id, res) {
+        if (!id) {
+            return;
+        }
+        const callbackFn = callbacks[id];
+        if (!callbackFn) {
+            return;
+        }
+        if (typeof callbackFn === 'function') {
+            callbackFn(res);
+        }
+        delete callbacks[id];
+    }
+
     ignore () {
     }
 
@@ -328,7 +444,7 @@ export default class iOS {
     // b64data: base-64 encoded .SJR file to share
 
     static sendSjrToShareDialog (fileName, emailSubject, emailBody, shareType, b64data) {
-        tabletInterface.sendSjrUsingShareDialog(fileName, emailSubject, emailBody, shareType, b64data);
+        iOS.call('sendSjrUsingShareDialog', fileName, emailSubject, emailBody, shareType, b64data);
     }
 
     // Called on the Objective-C side.  The argument is a base64-encoded .SJR file,
@@ -348,15 +464,17 @@ export default class iOS {
     // Name of the device/iPad to display on the sharing dialog page
     // fcn is called with the device name as an arg
     static deviceName (fcn) {
-        fcn(tabletInterface.deviceName());
+        (async () => {
+            fcn(await iOS.call('deviceName'));
+        })();
     }
 
     static analyticsEvent (category, action, label) {
-        tabletInterface.analyticsEvent(category, action, label);
+        iOS.call('analyticsEvent', category, action, label);
     }
 
     static setAnalyticsPlacePref (preferredPlace) {
-        tabletInterface.setAnalyticsPlacePref(preferredPlace);
+        iOS.call('setAnalyticsPlacePref', preferredPlace);
     }
 
     // Web Wiew delegate call backs

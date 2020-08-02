@@ -3,6 +3,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <MessageUI/MessageUI.h>
 #import <JavaScriptCore/JavaScriptCore.h>
+#import <WebKit/WebKit.h>
 
 @interface Database : NSObject
 
@@ -85,54 +86,8 @@
 + (NSString *)recordclose:(NSString *)keep;
 @end
 
-@protocol JSExports <JSExport>
-/* Functions exported to JavaScript */
-- (NSString *)hideSplash:(NSString *)body;
-- (void) askForPermission;
-- (NSString *)database_stmt:(NSString *) json;
-- (NSString *)database_query:(NSString *) json;
-- (NSString *)io_getmd5:(NSString *) str;
-- (NSString *)io_getsettings;
-- (void)io_cleanassets:(NSString *)fileType;
-- (NSString *)io_setfile:(NSString *)filename :(NSString *)base64ContentStr;
-- (NSString *)io_getfile:(NSString *)filename;
-- (NSString *)io_setmedia:(NSString *)base64ContentStr :(NSString *)extension;
-- (NSString *)io_setmedianame:(NSString *)contents :(NSString *)key :(NSString *)ext;
-- (NSString *)io_getmedia:(NSString *)filename;
-- (NSString *)io_getmediadata:(NSString *)filename :(int)offset :(int)length;
-- (NSString *)io_getmedialen:(NSString *)file :(NSString *)key;
-- (NSString *)io_getmediadone:(NSString *)filename;
-- (NSString *)io_remove:(NSString *)filename;
-- (NSString *)io_registersound:(NSString *)dir :(NSString *)name;
-- (NSString *)io_playsound:(NSString *)name;
-- (NSString *)io_stopsound:(NSString *)name;
-
-- (NSString *)recordsound_recordstart;
-- (NSString *)recordsound_recordstop;
-- (NSString *)recordsound_volume;
-- (NSString *)recordsound_startplay;
-- (NSString *)recordsound_stopplay;
-- (NSString *)recordsound_recordclose:(NSString *)keep;
-
-- (NSString *)scratchjr_cameracheck;
-- (bool) scratchjr_has_multiple_cameras;
-- (NSString *)scratchjr_startfeed:(NSString *)str;
-- (NSString *)scratchjr_stopfeed;
-- (NSString *)scratchjr_choosecamera:(NSString *)body;
-- (NSString *)scratchjr_captureimage:(NSString *)onCameraCaptureComplete;
-- (NSString *)sendSjrUsingShareDialog:(NSString *)fileName
-                                     :(NSString *)emailSubject
-                                     :(NSString *)emailBody
-                                     :(int)shareType
-                                     :(NSString *)b64data;
-- (NSString *) deviceName;
-- (NSString *) analyticsEvent:(NSString *)category :(NSString *)action :(NSString *)label;
-- (void) setAnalyticsPlacePref:(NSString *)place;
-@end
-
-@interface ViewController : UIViewController <JSExports,UIWebViewDelegate,MFMailComposeViewControllerDelegate>
-@property (nonatomic, readwrite, strong) JSContext *js;
-+ (UIWebView *)webview;
+@interface ViewController : UIViewController <MFMailComposeViewControllerDelegate, WKNavigationDelegate>
++ (WKWebView *)webview;
 + (UIImageView *)splashScreen;
 - (void)receiveProject:(NSString *)project;
 - (void)registerDefaultsFromSettingsBundle;
@@ -147,6 +102,23 @@
 - (void)showShareAirdrop:(NSURL *)projectURL;
 @end
 
+@interface JsBridge: NSObject <WKScriptMessageHandler>
+
+@property(weak, nonatomic) ViewController *controller;
+
+@end
+
+@interface JsRequest : NSObject
+
+@property(nonatomic, readwrite) NSString* callId;
+@property(nonatomic, readwrite) NSString* method;
+@property(nonatomic, readwrite) NSArray* params;
+
+- (instancetype) initWithDictionary: (NSDictionary *)dictionary;
+
+- (void) callback: (NSString *) res;
+
+@end
 
 @interface IO : NSObject
 

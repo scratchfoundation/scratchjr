@@ -90,11 +90,8 @@ export default class IO {
             IO.requestFromServer(md5, gotit); // get url contents
             return;
         }
-        if ((IO.getExtension(md5) == 'png') && iOS.path) {
-            fcn(iOS.path + md5); // only if it is not in debug mode
-        } else {
-            iOS.getmedia(md5, nextStep);
-        } // get url contents
+
+        iOS.getmedia(md5, nextStep);
 
         function gotit (str) {
             var base64 = IO.getImageDataURL(md5, btoa(str));
@@ -109,14 +106,10 @@ export default class IO {
 
         function nextStep (dataurl) { // iOS 7 requires to read the internal base64 images before returning contents
             var str = atob(dataurl);
-            if ((str.indexOf('xlink:href') < 0) && iOS.path) {
-                fcn(iOS.path + md5); // does not have embedded images
-            } else {
-                var base64 = IO.getImageDataURL(md5, dataurl);
-                IO.getImagesInSVG(str, function () {
-                    fcn(base64);
-                }); // base64 dataurl
-            }
+            var base64 = IO.getImageDataURL(md5, dataurl);
+            IO.getImagesInSVG(str, function () {
+                fcn(base64);
+            });
         }
     }
 
