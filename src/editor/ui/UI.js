@@ -729,7 +729,7 @@ export default class UI {
         UI.creatTopBarClicky(div, 'go', 'go on', UI.toggleRun);
         UI.creatTopBarClicky(div, 'resetall', 'resetall', UI.resetAllSprites);
         UI.creatTopBarClicky(div, 'full', 'fullscreen', ScratchJr.fullScreen);
-        UI.toggleGrid(true);
+        UI.setShowGrid(false);
     }
 
     static resetAllSprites (e) {
@@ -756,11 +756,12 @@ export default class UI {
 
     static switchGrid () {
         ScratchAudio.sndFX('tap.wav');
-        UI.toggleGrid(!Grid.hidden);
+        UI.setShowGrid(Grid.hidden);
+        iOS.analyticsEvent('editor', Grid.hidden ? 'hide_grid' : 'show_grid');
     }
 
-    static toggleGrid (b) {
-        Grid.hide(b);
+    static setShowGrid (b) {
+        Grid.hide(!b);
         gn('grid').className = Grid.hidden ? 'gridToggle off' : 'gridToggle on';
     }
 
