@@ -170,13 +170,11 @@
 }
 
 -(void) analyticsEvent: (JsRequest *) request {
-    [FIRAnalytics logEventWithName:kFIREventViewItem
+    [FIRAnalytics logEventWithName:request.params[1] // action
     parameters:@{
-        kFIRParameterItemID:request.params[1],
-        kFIRParameterItemName:request.params[2],
-        kFIRParameterItemCategory:request.params[0]
+                 kFIRParameterItemName:request.params[2], // label
+                 kFIRParameterItemCategory:request.params[0] // category
     }];
-    [request callback:@"1"];
 }
 
 -(void) setAnalyticsPlacePref: (JsRequest *) request {
