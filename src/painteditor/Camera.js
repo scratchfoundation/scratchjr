@@ -1,5 +1,5 @@
 import ScratchJr from '../editor/ScratchJr';
-import iOS from '../iPad/iOS';
+import OS from '../tablet/OS';
 import ScratchAudio from '../utils/ScratchAudio';
 import Paint from './Paint';
 import PaintUndo from './PaintUndo';
@@ -53,7 +53,7 @@ export default class Camera {
         data.mw = Paint.workspaceWidth;
         data.mh = Paint.workspaceHeight;
         data.image = mask.toDataURL('image/png');
-        iOS.startfeed(data, iOS.trace);
+        OS.startfeed(data, OS.trace);
         Paint.cameraToolsOn();
     }
 
@@ -80,7 +80,7 @@ export default class Camera {
         case 'cameraflip':
             ScratchAudio.sndFX('tap.wav');
             view = (view == 'front') ? 'back' : 'front';
-            iOS.choosecamera(view, Camera.flip);
+            OS.choosecamera(view, Camera.flip);
             break;
         case 'camerasnap':
             Camera.snapShot();
@@ -101,7 +101,7 @@ export default class Camera {
         target = undefined;
         view = 'front';
         Camera.active = false;
-        iOS.stopfeed();
+        OS.stopfeed();
         Paint.cameraToolsOff();
         if (isAndroid) {
             ScratchJr.onBackButtonCallback.pop();
@@ -109,7 +109,7 @@ export default class Camera {
     }
 
     static snapShot () {
-        iOS.captureimage('Camera.processimage'); // javascript call back;
+        OS.captureimage('Camera.processimage'); // javascript call back;
     }
 
     static getLayerMask (elem) {
@@ -197,5 +197,5 @@ export default class Camera {
     }
 }
 
-// Exposing the camera for the tablet callback in iOS.snapShot
+// Exposing the camera for the tablet callback in OS.snapShot
 window.Camera = Camera;

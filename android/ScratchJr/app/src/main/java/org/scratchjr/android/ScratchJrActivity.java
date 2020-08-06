@@ -337,7 +337,7 @@ public class ScratchJrActivity
         }
         // We send the project Base64-encoded to JavaScript where it's processed and unpacked
         String base64Project = Base64.encodeToString(projectData.toByteArray(), Base64.DEFAULT);
-        runJavaScript("iOS.loadProjectFromSjr('" + base64Project + "');");
+        runJavaScript("OS.loadProjectFromSjr('" + base64Project + "');");
     }
 
     public RelativeLayout getContainer() {

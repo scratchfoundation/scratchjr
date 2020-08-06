@@ -3,9 +3,9 @@
 //////////////////////////////////////////////////
 
 import Lobby from './Lobby';
-import IO from '../iPad/IO';
-import iOS from '../iPad/iOS';
-import MediaLib from '../iPad/MediaLib';
+import OS from '../tablet/OS';
+import IO from '../tablet/IO';
+import MediaLib from '../tablet/MediaLib';
 import ScratchAudio from '../utils/ScratchAudio';
 import Localization from '../utils/Localization';
 import {gn, newHTML} from '../utils/lib';
@@ -75,7 +75,7 @@ export default class Samples {
         e.preventDefault();
         e.stopPropagation();
         ScratchAudio.sndFX('tap.wav');
-        iOS.analyticsEvent('samples', 'sample_opened', mt.textContent);
+        OS.analyticsEvent('samples', 'sample_opened', mt.textContent);
         var md5 = mt.md5;
         window.location.href = 'editor.html?pmd5=' + md5 + '&mode='
             + ((window.Settings.useStoryStarters) ? 'storyStarter' : 'look');

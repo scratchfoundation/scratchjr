@@ -1,16 +1,15 @@
 import {preprocessAndLoadCss} from '../utils/lib';
 import Localization from '../utils/Localization';
 import AppUsage from '../utils/AppUsage';
-import iOS from '../iPad/iOS';
-import IO from '../iPad/IO';
-import MediaLib from '../iPad/MediaLib';
+import OS from '../tablet/OS';
+import IO from '../tablet/IO';
+import MediaLib from '../tablet/MediaLib';
 
 import {indexMain} from './index';
 import {homeMain} from './home';
 import {editorMain} from './editor';
 import {gettingStartedMain} from './gettingstarted';
 import {inappInterfaceGuide, inappAbout, inappBlocksGuide, inappPaintEditorGuide} from './inapp';
-
 
 function loadSettings (settingsRoot, whenDone) {
     IO.requestFromServer(settingsRoot + 'settings.json', (result) => {
@@ -42,7 +41,7 @@ window.onload = () => {
         preprocessAndLoadCss('css', 'css/thumbs.css');
         /* For parental gate. These CSS properties should be refactored */
         preprocessAndLoadCss('css', 'css/editor.css');
-        entryFunction = () => iOS.waitForInterface(indexMain);
+        entryFunction = () => OS.waitForInterface(indexMain);
         break;
     case 'home':
         // Lobby pages
@@ -50,7 +49,7 @@ window.onload = () => {
         preprocessAndLoadCss('css', 'css/base.css');
         preprocessAndLoadCss('css', 'css/lobby.css');
         preprocessAndLoadCss('css', 'css/thumbs.css');
-        entryFunction = () => iOS.waitForInterface(homeMain);
+        entryFunction = () => OS.waitForInterface(homeMain);
         break;
     case 'editor':
         // Editor pages
@@ -62,14 +61,14 @@ window.onload = () => {
         preprocessAndLoadCss('css', 'css/editormodal.css');
         preprocessAndLoadCss('css', 'css/librarymodal.css');
         preprocessAndLoadCss('css', 'css/paintlook.css');
-        entryFunction = () => iOS.waitForInterface(editorMain);
+        entryFunction = () => OS.waitForInterface(editorMain);
         break;
     case 'gettingStarted':
         // Getting started video page
         preprocessAndLoadCss('css', 'css/font.css');
         preprocessAndLoadCss('css', 'css/base.css');
         preprocessAndLoadCss('css', 'css/gs.css');
-        entryFunction = () => iOS.waitForInterface(gettingStartedMain);
+        entryFunction = () => OS.waitForInterface(gettingStartedMain);
         break;
     case 'inappAbout':
         // About ScratchJr in-app help frame

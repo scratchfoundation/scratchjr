@@ -1,15 +1,15 @@
 import {gn} from '../utils/lib';
 import Localization from '../utils/Localization';
-import iOS from '../iPad/iOS';
+import OS from '../tablet/OS';
 import Lobby from '../lobby/Lobby';
 
 export function homeMain () {
     gn('logotab').ontouchend = homeGoBack;
     homeStrings();
-    iOS.getsettings(doNext);
+    OS.getsettings(doNext);
     function doNext (str) {
         var list = str.split(',');
-        iOS.path = list[1] == '0' ? list[0] + '/' : undefined;
+        OS.path = list[1] == '0' ? list[0] + '/' : undefined;
         Lobby.appinit(window.Settings.scratchJrVersion);
     }
 }

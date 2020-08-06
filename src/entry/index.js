@@ -1,6 +1,6 @@
 import ScratchAudio from '../utils/ScratchAudio';
 import {gn, getUrlVars, isAndroid, isiOS} from '../utils/lib';
-import iOS from '../iPad/iOS';
+import OS from '../tablet/OS';
 import UI from '../editor/ui/UI';
 import Localization from '../utils/Localization';
 import AppUsage from '../utils/AppUsage';
@@ -49,9 +49,9 @@ function indexFirstTime () {
         gn('blueguy').className = 'blue show';
         gn('redguy').className = 'red show';
     }
-    iOS.askpermission(); // ask for sound recording
+    OS.askpermission(); // ask for sound recording
     setTimeout(function () {
-        iOS.hidesplash(doit);
+        OS.hidesplash(doit);
     }, 500);
     function doit () {
         window.ontouchend = function () {
@@ -94,7 +94,7 @@ function indexLoadStart (afterUsage) {
             gn('usageOther').className = 'usageOther hide';
             gn('usageNoanswer').className = 'usageNoanswer hide';
         }
-        iOS.setAnalyticsPlacePref(AppUsage.currentUsage);
+        OS.setAnalyticsPlacePref(AppUsage.currentUsage);
     }
     gn('gettings').className = 'gettings show';
     gn('startcode').className = 'startcode show';
@@ -133,7 +133,7 @@ function indexLoadUsage () {
 }
 
 function indexGohome () {
-    iOS.setfile('homescroll.sjr', 0, function () {
+    OS.setfile('homescroll.sjr', 0, function () {
         doNext();
     });
     function doNext () {
@@ -171,7 +171,7 @@ function indexSetUsage (e) {
         break;
     }
     // Send one-time analytics event about usage
-    iOS.analyticsEvent('lobby', 'scratchjr_usage', usageText);
+    OS.analyticsEvent('lobby', 'scratchjr_usage', usageText);
     AppUsage.setUsage(usageText);
     ScratchAudio.sndFX('tap.wav');
     indexLoadStart(true);
