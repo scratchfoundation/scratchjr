@@ -6,20 +6,6 @@
 let mediacounter = 0;
 
 export default class Android {
-    // // This will be set up in the OS class
-    // // Wait for the tablet interface to be injected into the webview
-    // static waitForInterface (fcn) {
-    //     // Already loaded the interface
-    //     if (typeof AndroidInterface !== 'undefined') {
-    //         fcn();
-    //         return;
-    //     }
-    //     // interface not yet available, come back in 100ms
-    //     setTimeout(function () {
-    //         Android.waitForInterface(fcn);
-    //     }, 100);
-    // }
-
     // Database functions
     static stmt (json, fcn) {
         var result = AndroidInterface.database_stmt(JSON.stringify(json));

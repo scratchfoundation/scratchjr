@@ -8,23 +8,6 @@ let mediacounter = 0;
 
 export default class iOS {
 
-    // waitForInterface is defined in OS, and should make sure that the correct
-    // interface is available.
-    // static waitForInterface (fcn) {
-    //     // iOS device - interface might not be loaded yet
-    //     if (typeof (window.tablet) != 'object') {
-    //         // Come back in 100ms
-    //         setTimeout(function () {
-    //             iOS.waitForInterface(fcn);
-    //         }, 100);
-    //     } else {
-    //         // All set to run commands
-    //         if (fcn) {
-    //             fcn();
-    //         }
-    //     }
-    // }
-
     // Database functions
     static stmt (json, fcn) {
         var result = window.tablet.database_stmt(JSON.stringify(json));

@@ -82,29 +82,11 @@ export default class OS {
         tabletInterface.getsettings(fcn);
     }
 
+    // note the interfaces (iOS and Android) are responsible for deciding how
+    // to manage getting media (e.g. whether it needs to be done in chunks etc)
     static getmedia (file, fcn) {
         tabletInterface.getmedia(file, fcn);
     }
-
-    // static getmediadata (key, offset, len, fcn) {
-    //     tabletInterface.getmediadata(key, offset, len, fcn);
-    // }
-    //
-    // static processdata (key, off, len, oldstr, fcn) {
-    //     if (len == 0) {
-    //         OS.getmediadone(key);
-    //         fcn(oldstr);
-    //         return;
-    //     }
-    //     var newlen = (len < 100000) ? len : 100000;
-    //     OS.getmediadata(key, off, newlen, function (str) {
-    //         OS.processdata(key, off + newlen, len - newlen, oldstr + str, fcn);
-    //     });
-    // }
-    //
-    // static getmediadone (file, fcn) {
-    //     tabletInterface.getmediadone(file, fcn);
-    // }
 
     static setmedia (str, ext, fcn) {
         tabletInterface.setmedia(str, ext, fcn);

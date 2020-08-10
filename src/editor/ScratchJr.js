@@ -905,26 +905,6 @@ export default class ScratchJr {
     /////////////////
     //Application on the background
 
-
-    // // XXX: does this ever happen?
-    // // I'm pretty sure this is dead code -TM
-    // static saveProjectState () {
-    //     ScratchAudio.sndFX('tap.wav');
-    //     if (frame.style.display == 'none') {
-    //         Paint.saveEditState(ScratchJr.stopServer);
-    //     } else {
-    //         ScratchJr.unfocus();
-    //         ScratchJr.stopStrips();
-    //         if (ScratchJr.isEditable() && currentProject && !Project.error && changed) {
-    //             Project.save(currentProject, ScratchJr.stopServer);
-    //         }
-    //     }
-    // }
-    //
-    // static stopServer () {
-    //     OS.stopserver(OS.trace);
-    // }
-
     /**
      * The functions that are invokved when the Android back button is clicked.
      * Methods are called from the rear and popped off after each invocation.
