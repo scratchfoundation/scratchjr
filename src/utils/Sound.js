@@ -1,5 +1,5 @@
 import {isAndroid} from './lib';
-import iOS from '../iPad/iOS';
+import OS from '../tablet/OS';
 
 export default class Sound {
     constructor (name, time) {
@@ -23,7 +23,7 @@ export default class Sound {
             if (this.playing) {
                 this.stop();
             }
-            iOS.playSound(this.name);
+            OS.playSound(this.name);
             this.playing = true;
         }
     }
@@ -51,7 +51,7 @@ export default class Sound {
             }
             this.soundPlayId = null;
         } else {
-            iOS.stopSound(this.name);
+            OS.stopSound(this.name);
             this.playing = false;
         }
     }

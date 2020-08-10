@@ -5,9 +5,9 @@ import UI from '../ui/UI';
 import Sprite from './Sprite';
 import Palette from '../ui/Palette';
 import BlockSpecs from '../blocks/BlockSpecs';
-import iOS from '../../iPad/iOS';
-import IO from '../../iPad/IO';
-import MediaLib from '../../iPad/MediaLib';
+import OS from '../../tablet/OS';
+import IO from '../../tablet/IO';
+import MediaLib from '../../tablet/MediaLib';
 import Undo from '../ui/Undo';
 import Matrix from '../../geom/Matrix';
 import Vector from '../../geom/Vector';
@@ -125,7 +125,9 @@ export default class Page {
             return;
         }
         var me = this;
-        var url = (MediaLib.keys[name]) ? MediaLib.path + name : (name.indexOf('/') < 0) ? iOS.path + name : name;
+        var url = (MediaLib.keys[name]) ?
+            MediaLib.path + name :
+            (name.indexOf('/') < 0) ? OS.path + name : name;
         var md5 = (MediaLib.keys[name]) ? MediaLib.path + name : name;
 
         if (md5.substr(md5.length - 3) == 'png') {
@@ -137,7 +139,7 @@ export default class Page {
         if (md5.indexOf('/') > -1) {
             IO.requestFromServer(md5, doNext);
         } else {
-            iOS.getmedia(md5, nextStep);
+            OS.getmedia(md5, nextStep);
         }
         function nextStep (base64) {
             doNext(atob(base64));
@@ -145,7 +147,7 @@ export default class Page {
         function doNext (str) {
             str = str.replace(/>\s*</g, '><');
             me.setSVG(str);
-            if ((str.indexOf('xlink:href') < 0) && iOS.path) {
+            if ((str.indexOf('xlink:href') < 0) && OS.path) {
                 me.setBackgroundImage(url, fcn); // does not have embedded images
             } else {
                 var base64 = IO.getImageDataURL(me.md5, btoa(str));

@@ -1,6 +1,6 @@
 import {isAndroid} from './lib';
 import Sound from './Sound';
-import iOS from '../iPad/iOS';
+import OS from '../tablet/OS';
 
 ////////////////////////////////////////////////////
 /// Sound Playing
@@ -64,7 +64,7 @@ export default class ScratchAudio {
                     fcn(name);
                 }
             };
-            iOS.registerSound(url, snd, whenDone);
+            OS.registerSound(url, snd, whenDone);
         } else {
             // In Android, this is handled outside of JavaScript, so just place a stub here.
             dict[snd] = new Sound(url + snd);

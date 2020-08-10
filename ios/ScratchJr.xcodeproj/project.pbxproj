@@ -419,7 +419,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "EDITION=free;\n\n../bin/bundle-compile.sh;\n\nrsync -pvtrlL --cvs-exclude \\\n    ../editions/$EDITION/ios-resources/* \\\n    \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/\";\n\nrsync -pvtrlL --cvs-exclude \\\n    ../editions/$EDITION/src/* \\\n    \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/HTML5\";\n    \nmkdir -p \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/HTML5/pnglibrary\";\n\n../bin/convert-svg-to-png.py -i \"../editions/$EDITION/src/svglibrary/\" -o \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/HTML5/pnglibrary\";";
+			shellScript = "EDITION=free;\n\n../bin/bundle-compile.sh;\n\nrsync -pvtrlL --cvs-exclude \\\n    ../editions/$EDITION/ios-resources/* \\\n    \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/\";\n\nrsync -pvtrlL --cvs-exclude \\\n    ../editions/$EDITION/src/* \\\n    \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/HTML5\";\n    \nmkdir -p \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/HTML5/pnglibrary\";\n\n../bin/convert-svg-to-png.py -i \"../editions/$EDITION/src/svglibrary/\" -o \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/HTML5/pnglibrary\";\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

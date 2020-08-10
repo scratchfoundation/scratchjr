@@ -1,6 +1,6 @@
 import Cookie from './Cookie';
 import Intl from 'intl';
-import IO from '../iPad/IO';
+import IO from '../tablet/IO';
 
 if (!window.Intl) {
     window.Intl = Intl;

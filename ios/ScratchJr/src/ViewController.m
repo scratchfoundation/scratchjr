@@ -164,7 +164,7 @@ JSContext *js;
     NSLog(@"could not load the website caused by error DESC: %@", error);
     NSDictionary *userInfo = [error userInfo];
     NSString *desc = [NSString stringWithFormat:@"%@", ([userInfo objectForKey: @"NSLocalizedDescription"] == NULL)? [error localizedDescription]: [userInfo objectForKey: @"NSLocalizedDescription"]];
-    NSString *callback = [NSString stringWithFormat: @"iOS.pageError('%@');",desc];
+    NSString *callback = [NSString stringWithFormat: @"OS.pageError('%@');",desc];
     UIWebView *webview = [ViewController webview];
     dispatch_async(dispatch_get_main_queue(), ^{
         [webview stringByEvaluatingJavaScriptFromString: callback];
@@ -172,7 +172,7 @@ JSContext *js;
 }
 
 - (void) receiveProject:(NSString *)project{
-    NSString *callback = [NSString stringWithFormat:@"iOS.loadProjectFromSjr('%@');", project];
+    NSString *callback = [NSString stringWithFormat:@"OS.loadProjectFromSjr('%@');", project];
     UIWebView *webview = [ViewController webview];
     dispatch_async(dispatch_get_main_queue(), ^{
         NSString *res = [webview stringByEvaluatingJavaScriptFromString:callback];
@@ -310,7 +310,7 @@ JSContext *js;
     return [ScratchJr captureimage:onCameraCaptureComplete];
 }
 
-//iOS.sendSjrToShareDialog = function(fileName, emailSubject, emailBody, shareType, b64data) {
+//OS.sendSjrToShareDialog = function(fileName, emailSubject, emailBody, shareType, b64data) {
 
 -(NSString*) sendSjrUsingShareDialog:(NSString*) fileName :(NSString*) emailSubject :(NSString*) emailBody :(int) shareType :(NSString*) b64data {
     return [IO sendSjrUsingShareDialog:fileName :emailSubject :emailBody :shareType : b64data];

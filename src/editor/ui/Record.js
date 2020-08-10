@@ -1,7 +1,7 @@
 import ScratchJr from '../ScratchJr';
 import Palette from './Palette';
 import Undo from './Undo';
-import iOS from '../../iPad/iOS';
+import OS from '../../tablet/OS';
 import ScratchAudio from '../../utils/ScratchAudio';
 import {frame, gn, newHTML, isTablet, isAndroid, setProps} from '../../utils/lib';
 
@@ -60,7 +60,7 @@ export default class Record {
 
     // Dialog box hide/show
     static appear () {
-        iOS.analyticsEvent('editor', 'record_dialog_open');
+        OS.analyticsEvent('editor', 'record_dialog_open');
         gn('backdrop').setAttribute('class', 'modal-backdrop fade in');
         setProps(gn('backdrop').style, {
             display: 'block'
@@ -72,7 +72,7 @@ export default class Record {
     }
 
     static disappear () {
-        iOS.analyticsEvent('editor', 'record_dialog_close');
+        OS.analyticsEvent('editor', 'record_dialog_close');
         setTimeout(function () {
             gn('backdrop').setAttribute('class', 'modal-backdrop fade');
             setProps(gn('backdrop').style, {
@@ -148,13 +148,13 @@ export default class Record {
             if (isRecording) {
                 Record.stopRecording(); // Stop if we're already recording
             } else {
-                iOS.sndrecord(Record.startRecording); // Start a recording
+                OS.sndrecord(Record.startRecording); // Start a recording
             }
         }
     }
 
     static startRecording (filename) {
-        iOS.analyticsEvent('editor', 'start_recording');
+        OS.analyticsEvent('editor', 'start_recording');
         if (parseInt(filename) < 0) {
             // Error in getting record filename - go back to editor
             recordedSound = undefined;
@@ -169,7 +169,7 @@ export default class Record {
             Record.soundname = filename;
             Record.toggleButtonUI('record', true);
             var poll = function () {
-                iOS.volume(Record.updateVolume, Record.recordError);
+                OS.volume(Record.updateVolume, Record.recordError);
             };
             interval = setInterval(poll, 33);
             timeLimit = setTimeout(function () {
@@ -202,7 +202,7 @@ export default class Record {
 
     // Start playing the sound and switch UI appropriately
     static startPlaying () {
-        iOS.startplay(Record.timeOutPlay);
+        OS.startplay(Record.timeOutPlay);
         Record.toggleButtonUI('play', true);
         isPlaying = true;
     }
@@ -244,7 +244,7 @@ export default class Record {
 
     // Stop playing the sound and switch UI appropriately
     static stopPlayingSound (fcn) {
-        iOS.stopplay(fcn);
+        OS.stopplay(fcn);
         Record.toggleButtonUI('play', false);
         isPlaying = false;
         window.clearTimeout(playTimeLimit);
@@ -253,7 +253,7 @@ export default class Record {
 
     // Stop the volume monitor and recording
     static stopRecording (fcn) {
-        iOS.analyticsEvent('editor', 'stop_recording');
+        OS.analyticsEvent('editor', 'stop_recording');
         if (timeLimit != null) {
             clearTimeout(timeLimit);
             timeLimit = null;
@@ -272,7 +272,7 @@ export default class Record {
     static volumeCheckStopped (fcn) {
         isRecording = false;
         Record.recordUIoff();
-        iOS.recordstop(fcn);
+        OS.recordstop(fcn);
     }
 
     // Press OK (check)
@@ -293,12 +293,12 @@ export default class Record {
     }
 
     static closeContinueSave () {
-        iOS.recorddisappear('YES', Record.registerProjectSound);
+        OS.recorddisappear('YES', Record.registerProjectSound);
     }
 
     static closeContinueRemove () {
         // don't get the sound - proceed right to tearDown
-        iOS.recorddisappear('NO', Record.tearDownRecorder);
+        OS.recorddisappear('NO', Record.tearDownRecorder);
     }
 
     static registerProjectSound () {
