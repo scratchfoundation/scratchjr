@@ -629,4 +629,11 @@ public class JavaScriptDirectInterface {
             _activity.setAnalyticsPlacePref(place);
         }
     }
+
+    @JavascriptInterface
+    public void setAnalyticsPref(String prefObjStr) {
+        if (prefObjStr != null) {
+            _activity.setAnalyticsPref(prefObjStr);
+        }
+    }
 }

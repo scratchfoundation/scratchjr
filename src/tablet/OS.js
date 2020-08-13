@@ -253,6 +253,10 @@ export default class OS {
         tabletInterface.setAnalyticsPlacePref(preferredPlace);
     }
 
+    static setAnalyticsPref (key, value) {
+        tabletInterface.setAnalyticsPref(JSON.stringify({[key]: value}));
+    }
+
     // Web Wiew delegate call backs
 
     static pageError (desc) {

@@ -268,6 +268,10 @@ export default class iOS {
         window.tablet.setAnalyticsPlacePref(preferredPlace);
     }
 
+    static setAnalyticsPref (jsonStr) {
+        window.tablet.setAnalyticsPref(jsonStr);
+    }
+
     // // Web Wiew delegate call backs
     //
     // static pageError (desc) {
