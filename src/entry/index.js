@@ -3,17 +3,27 @@ import {gn, getUrlVars, isAndroid, isiOS} from '../utils/lib';
 import OS from '../tablet/OS';
 import UI from '../editor/ui/UI';
 import Localization from '../utils/Localization';
-import AppUsage from '../utils/AppUsage';
+import InitialOptions from '../utils/InitialOptions';
+
+/*
+When this code starts up, there are several scenarios:
+* the app was already running: "AlreadyRunning"
+* the app was not already running, but has been opened before: "NewSession"
+* the app has never been opened before: "FirstTimeEver"
+
+*/
+
+let alreadyStartedQuestions = false;
 
 export function indexMain () {
     gn('gettings').ontouchend = indexGettingstarted;
     gn('startcode').ontouchend = indexGohome;
     ScratchAudio.init();
     var urlvars = getUrlVars();
-    if (urlvars.back) {
-        indexLoadOptions();
+    if (urlvars.back && InitialOptions.allQuestionsAnswered()) {
+        indexLoadStart();
     } else {
-        indexFirstTime();
+        indexNewSession();
     }
 
     if (window.Settings.edition == 'PBS') {
@@ -36,7 +46,28 @@ export function indexMain () {
     }, 250);
 }
 
-function indexFirstTime () {
+function startQuestionsIfNotAlreadyStarted () {
+    if (!alreadyStartedQuestions) {
+        alreadyStartedQuestions = true;
+        indexAskRemainingQuestions();
+    }
+    window.removeEventListener('touchend', startQuestionsIfNotAlreadyStarted, false);
+}
+
+function indexNewSession () {
+    showSplash();
+    OS.askpermission(); // ask for sound recording
+    setTimeout(function () {
+        OS.hidesplash(addTouchListener);
+    }, 500);
+    // may be necessary to wait for a touch in some environments
+    function addTouchListener () {
+        window.addEventListener('touchend', startQuestionsIfNotAlreadyStarted, false);
+    }
+    setTimeout(startQuestionsIfNotAlreadyStarted, 2000);
+}
+
+function showSplash () {
     gn('authors').className = 'credits show';
     gn('authorsText').className = 'creditsText show';
     if (window.Settings.edition == 'PBS') {
@@ -49,29 +80,9 @@ function indexFirstTime () {
         gn('blueguy').className = 'blue show';
         gn('redguy').className = 'red show';
     }
-    OS.askpermission(); // ask for sound recording
-    setTimeout(function () {
-        OS.hidesplash(doit);
-    }, 500);
-    function doit () {
-        window.ontouchend = function () {
-            indexLoadOptions();
-        };
-    }
-    setTimeout(function () {
-        indexLoadOptions();
-    }, 2000);
 }
 
-function indexLoadOptions () {
-    if (window.Settings.edition != 'PBS' && AppUsage.askForUsage()) {
-        indexLoadUsage();
-    } else {
-        indexLoadStart();
-    }
-}
-
-function indexLoadStart (afterUsage) {
+function indexHideSplash () {
     gn('authors').className = 'credits hide';
     gn('authorsText').className = 'creditsText hide';
 
@@ -84,18 +95,11 @@ function indexLoadStart (afterUsage) {
         gn('blueguy').className = 'blue hide';
         gn('redguy').className = 'red hide';
         gn('gear').className = 'gear show';
-
-        if (afterUsage) {
-            gn('catface').className = 'catface show';
-            gn('jrlogo').className = 'jrlogo show';
-            gn('usageQuestion').className = 'usageQuestion hide';
-            gn('usageSchool').className = 'usageSchool hide';
-            gn('usageHome').className = 'usageHome hide';
-            gn('usageOther').className = 'usageOther hide';
-            gn('usageNoanswer').className = 'usageNoanswer hide';
-        }
-        OS.setAnalyticsPlacePref(AppUsage.currentUsage);
     }
+}
+
+function indexLoadStart () {
+    indexHideSplash();
     gn('gettings').className = 'gettings show';
     gn('startcode').className = 'startcode show';
     document.ontouchmove = function (e) {
@@ -106,7 +110,17 @@ function indexLoadStart (afterUsage) {
     }
 }
 
-function indexLoadUsage () {
+function indexAskRemainingQuestions () {
+    indexHideSplash();
+    var nextQuestionKey = InitialOptions.nextUnansweredQuestion();
+    if (nextQuestionKey) {
+        indexShowQuestion(nextQuestionKey);
+    } else { // done with questions
+        indexLoadStart();
+    }
+}
+
+function indexAskPlace () {
     gn('authors').className = 'credits show';
     gn('authorsText').className = 'creditsText hide';
     gn('purpleguy').className = 'purple hide';
@@ -126,10 +140,137 @@ function indexLoadUsage () {
     gn('usageHome').className = 'usageHome show';
     gn('usageOther').className = 'usageOther show';
     gn('usageNoanswer').className = 'usageNoanswer show';
-    gn('usageSchool').ontouchend = indexSetUsage;
-    gn('usageHome').ontouchend = indexSetUsage;
-    gn('usageOther').ontouchend = indexSetUsage;
-    gn('usageNoanswer').ontouchend = indexSetUsage;
+    gn('usageSchool').ontouchend = indexSetPlace;
+    gn('usageHome').ontouchend = indexSetPlace;
+    gn('usageOther').ontouchend = indexSetPlace;
+    gn('usageNoanswer').ontouchend = indexSetPlace;
+}
+
+function indexSetPlace (e) {
+    var usageText = '';
+
+    switch (e.target.parentElement.id) {
+    case 'usageSchool':
+        usageText = 'school';
+        break;
+    case 'usageHome':
+        usageText = 'home';
+        break;
+    case 'usageOther':
+        usageText = 'other';
+        break;
+    case 'usageNoanswer':
+    default:
+        usageText = 'noanswer';
+        break;
+    }
+    // Send one-time analytics event about usage
+    OS.analyticsEvent('lobby', 'scratchjr_usage', usageText);
+    InitialOptions.setValue('place', usageText);
+    // we use 'place_preference' for this particular Firebase pref
+    OS.setAnalyticsPref('place_preference', usageText);
+    ScratchAudio.sndFX('tap.wav');
+    indexHidePlaceQuestion();
+    indexAskRemainingQuestions();
+}
+
+function indexHidePlaceQuestion () {
+    gn('catface').className = 'catface show';
+    gn('jrlogo').className = 'jrlogo show';
+    gn('usageQuestion').className = 'usageQuestion hide';
+    gn('usageSchool').className = 'usageSchool hide';
+    gn('usageHome').className = 'usageHome hide';
+    gn('usageOther').className = 'usageOther hide';
+    gn('usageNoanswer').className = 'usageNoanswer hide';
+}
+
+function optionTouched (elem) {
+    var key = elem.target.getAttribute('data-key');
+    var value = elem.target.getAttribute('data-value');
+    // sometimes a touch is registered by a child of the relevant parent
+    if (!key && !value) {
+        var parent = elem.target.parentNode;
+        key = parent.getAttribute('data-key');
+        value = parent.getAttribute('data-value');
+    }
+    // if we still don't have a key and value, something is wrong -- just go
+    // to lobby
+    if (!key && !value) {
+        indexLoadStart();
+        return;
+    }
+    // elem.target.style.backgroundColor = 'purple';
+    // if everything is good, register the selection and advance to next screen
+    indexSelectOption(key, value);
+}
+
+// show the question for a given settings option key
+function indexShowQuestion (key) {
+    var optionType = InitialOptions.optionTypeForKey(key);
+    if (optionType === 'place') {
+        indexAskPlace();
+    } else { // custom question
+        var options = InitialOptions.optionsForKey(key);
+        // if we could not find any options, choose 'n/a'
+        if (!options || !options.length) {
+            indexSelectOption(key, 'n/a');
+            return;
+        }
+        // if there's only one option, don't bother asking, just choose it!
+        if (options.length === 1) {
+            indexSelectOption(key, options[0]);
+            return;
+        }
+        // if we got here, there is more than one option...
+        var instructionText = InitialOptions.instructionForKey(key);
+        var instructionElem = document.getElementById('optionsInstruction');
+        instructionElem.appendChild(document.createTextNode(instructionText));
+        gn('optionsInstruction').className = 'optionsInstruction show';
+
+        var optionsListElem = document.getElementById('optionsList');
+        var optionNum = 0;
+        options.forEach(function (option) {
+            var optionElem = document.createElement('div');
+            optionElem.setAttribute('data-key', key);
+            optionElem.setAttribute('data-value', option);
+            optionElem.setAttribute('id', 'option-' + key + '-' + optionNum);
+            optionElem.ontouchend = optionTouched;
+            optionsListElem.appendChild(optionElem);
+
+            switch (optionType) {
+            case 'image':
+                var imgElem = document.createElement('img');
+                imgElem.setAttribute('src', 'svglibrary/' + option);
+                optionElem.appendChild(imgElem);
+                break;
+            case 'text':
+            default:
+                optionElem.appendChild(document.createTextNode(option));
+                break;
+            }
+            optionNum = optionNum + 1;
+        });
+        gn('optionsList').className = 'optionsList show';
+    }
+}
+
+// store user selection, and show next question
+function indexSelectOption (key, val) {
+    InitialOptions.setValue(key, val);
+    OS.setAnalyticsPref(key, val);
+    ScratchAudio.sndFX('tap.wav');
+
+    // clear out old options instruction
+    var instructionElem = document.getElementById('optionsInstruction');
+    instructionElem.innerHTML = '';
+    gn('optionsInstruction').className = 'optionsInstruction hide';
+    // clear out old options content
+    var optionsListElem = document.getElementById('optionsList');
+    optionsListElem.innerHTML = '';
+    gn('optionsList').className = 'optionsList hide';
+
+    // show next question, or advance to start screen
+    indexAskRemainingQuestions();
 }
 
 function indexGohome () {
@@ -153,29 +294,6 @@ function indexGettingstarted () {
     window.location.href = 'gettingstarted.html?place=home';
 }
 
-function indexSetUsage (e) {
-    var usageText = '';
-
-    switch (e.target.parentElement.id) {
-    case 'usageSchool':
-        usageText = 'school';
-        break;
-    case 'usageHome':
-        usageText = 'home';
-        break;
-    case 'usageOther':
-        usageText = 'other';
-        break;
-    case 'usageNoanswer':
-        usageText = 'noanswer';
-        break;
-    }
-    // Send one-time analytics event about usage
-    OS.analyticsEvent('lobby', 'scratchjr_usage', usageText);
-    AppUsage.setUsage(usageText);
-    ScratchAudio.sndFX('tap.wav');
-    indexLoadStart(true);
-}
 // For PBS KIDS edition only
 function indexInfo () {
     ScratchAudio.sndFX('tap.wav');
