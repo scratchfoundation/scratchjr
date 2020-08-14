@@ -128,6 +128,7 @@
 - (NSString *) deviceName;
 - (NSString *) analyticsEvent:(NSString *)category :(NSString *)action :(NSString *)label;
 - (void) setAnalyticsPlacePref:(NSString *)place;
+- (void) setAnalyticsPref:(NSString *)prefObjStr;
 @end
 
 @interface ViewController : UIViewController <JSExports,UIWebViewDelegate,MFMailComposeViewControllerDelegate>

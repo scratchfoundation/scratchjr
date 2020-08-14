@@ -520,6 +520,15 @@ public class ScratchJrActivity
         _FirebaseAnalytics.setUserProperty("place_preference", place);
     }
 
+    /**
+     * Record a user property
+     * @param key like "school"
+     * @param value like "Central High"
+     */
+    public void setAnalyticsPref(String key, String value) {
+        _FirebaseAnalytics.setUserProperty(key, value);
+    }
+
     public void translateAndScaleRectToContainerCoords(RectF rect, float devicePixelRatio) {
         float wx = _webView.getX();
         float wy = _webView.getY();

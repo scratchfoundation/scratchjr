@@ -333,6 +333,16 @@ JSContext *js;
     [FIRAnalytics setUserPropertyString:place forName:@"place_preference"];
 }
 
+// @param prefObjStr like "{\"place_preference\": \"School\"}"
+-(void) setAnalyticsPref:(NSString*)prefObjStr {
+    NSData* data = [prefObjStr dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:data options:0 error: nil];
+    NSString *key = [[dict allKeys] firstObject];
+    NSString *value = [dict objectForKey: key];
+    [FIRAnalytics setUserPropertyString:value forName:key];
+}
+
+
 // iPad name (used for information in the name/sharing dialog to help people using Airdrop)
 - (NSString*) deviceName {
     return [[UIDevice currentDevice] name];
