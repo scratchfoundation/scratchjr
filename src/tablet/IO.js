@@ -107,16 +107,12 @@ export default class IO {
             } // base64 dataurl
         }
 
-        function nextStep (dataurl) { // iOS 7 requires to read the internal base64 images before returning contents
+        function nextStep (dataurl) {
             var str = atob(dataurl);
-            if ((str.indexOf('xlink:href') < 0) && OS.path) {
-                fcn(OS.path + md5); // does not have embedded images
-            } else {
-                var base64 = IO.getImageDataURL(md5, dataurl);
-                IO.getImagesInSVG(str, function () {
-                    fcn(base64);
-                }); // base64 dataurl
-            }
+            var base64 = IO.getImageDataURL(md5, dataurl);
+            IO.getImagesInSVG(str, function () {
+                fcn(base64);
+            });
         }
     }
 

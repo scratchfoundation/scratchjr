@@ -13,6 +13,9 @@
 		204D80CC18A4140600ECBB8B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 204D80CA18A4140600ECBB8B /* InfoPlist.strings */; };
 		204D80CE18A4140600ECBB8B /* ScratchJrTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 204D80CD18A4140600ECBB8B /* ScratchJrTests.m */; };
 		7465F19843DCA9DDC62CC852 /* libPods-ScratchJr Free.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ACBA0233542F96AC72D4D7E /* libPods-ScratchJr Free.a */; };
+		8F8FEAA724E700FF00571717 /* JsBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8FEAA624E700FF00571717 /* JsBridge.m */; };
+		8F8FEAA924E703B000571717 /* JsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8FEAA824E703B000571717 /* JsRequest.m */; };
+		8F8FEAAB24E7065E00571717 /* View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8FEAAA24E7065E00571717 /* View.xib */; };
 		A7FDEB52BFEDCD9E4520FF89 /* libPods-ScratchJrTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 512C88D0E9938AB5972ACF38 /* libPods-ScratchJrTests.a */; };
 		D92D0F951C33381B00C573AD /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2001BEB918E237AE008E563F /* MessageUI.framework */; };
 		D92D0F961C33381B00C573AD /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20B2227818A53688003BDE44 /* AVFoundation.framework */; };
@@ -22,7 +25,6 @@
 		D92D0F9A1C33381B00C573AD /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 20B2226E18A46327003BDE44 /* libsqlite3.0.dylib */; };
 		D92D0F9D1C33381B00C573AD /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 20B2226818A4404B003BDE44 /* Settings.bundle */; };
 		D92D0F9E1C33381B00C573AD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 204D80B118A4140600ECBB8B /* InfoPlist.strings */; };
-		D92D0F9F1C33381B00C573AD /* View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 204D80DC18A4195E00ECBB8B /* View.xib */; };
 		D92D0FCA1C3346D200C573AD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D92D0FB31C33469A00C573AD /* AppDelegate.m */; };
 		D92D0FCB1C3346D200C573AD /* CameraMask.m in Sources */ = {isa = PBXBuildFile; fileRef = D92D0FB41C33469A00C573AD /* CameraMask.m */; };
 		D92D0FCC1C3346D200C573AD /* CameraView.m in Sources */ = {isa = PBXBuildFile; fileRef = D92D0FB51C33469A00C573AD /* CameraView.m */; };
@@ -62,7 +64,6 @@
 		204D80C918A4140600ECBB8B /* ScratchJrTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ScratchJrTests-Info.plist"; sourceTree = "<group>"; };
 		204D80CB18A4140600ECBB8B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		204D80CD18A4140600ECBB8B /* ScratchJrTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScratchJrTests.m; sourceTree = "<group>"; };
-		204D80DC18A4195E00ECBB8B /* View.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = View.xib; sourceTree = "<group>"; };
 		20B2226818A4404B003BDE44 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = SOURCE_ROOT; };
 		20B2226E18A46327003BDE44 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		20B2227818A53688003BDE44 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -70,6 +71,9 @@
 		5A3230A01AEC02BC09345F16 /* Pods-ScratchJrTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScratchJrTests.debug.xcconfig"; path = "Target Support Files/Pods-ScratchJrTests/Pods-ScratchJrTests.debug.xcconfig"; sourceTree = "<group>"; };
 		72E2C9BF3BE9F67099F0180F /* Pods-ScratchJrTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScratchJrTests.release.xcconfig"; path = "Target Support Files/Pods-ScratchJrTests/Pods-ScratchJrTests.release.xcconfig"; sourceTree = "<group>"; };
 		7ACBA0233542F96AC72D4D7E /* libPods-ScratchJr Free.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ScratchJr Free.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F8FEAA624E700FF00571717 /* JsBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = JsBridge.m; path = src/JsBridge.m; sourceTree = "<group>"; };
+		8F8FEAA824E703B000571717 /* JsRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = JsRequest.m; path = src/JsRequest.m; sourceTree = "<group>"; };
+		8F8FEAAA24E7065E00571717 /* View.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = View.xib; path = src/View.xib; sourceTree = "<group>"; };
 		97A526F2B60190BFC0BD3081 /* Pods-ScratchJr Free.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScratchJr Free.debug.xcconfig"; path = "Target Support Files/Pods-ScratchJr Free/Pods-ScratchJr Free.debug.xcconfig"; sourceTree = "<group>"; };
 		D905DF721C220BA6003DA34A /* free */ = {isa = PBXFileReference; lastKnownFileType = folder; name = free; path = ../editions/free; sourceTree = "<group>"; };
 		D92D0FA61C33381B00C573AD /* ScratchJr Free.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ScratchJr Free.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -166,7 +170,6 @@
 			children = (
 				D92D0FC91C3346AC00C573AD /* src */,
 				204D80AF18A4140600ECBB8B /* Supporting Files */,
-				204D80DC18A4195E00ECBB8B /* View.xib */,
 			);
 			path = ScratchJr;
 			sourceTree = "<group>";
@@ -249,6 +252,9 @@
 				D92D0FBC1C33469A00C573AD /* ViewController.h */,
 				D92D0FBD1C33469A00C573AD /* ViewController.m */,
 				D92D0FB81C33469A00C573AD /* main.m */,
+				8F8FEAA624E700FF00571717 /* JsBridge.m */,
+				8F8FEAA824E703B000571717 /* JsRequest.m */,
+				8F8FEAAA24E7065E00571717 /* View.xib */,
 			);
 			name = App;
 			sourceTree = "<group>";
@@ -310,7 +316,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 1110;
-				ORGANIZATIONNAME = "Playful Invention Company";
+				ORGANIZATIONNAME = "Scratch Foundation";
 				TargetAttributes = {
 					204D80BF18A4140600ECBB8B = {
 						DevelopmentTeam = TTT4R28WVF;
@@ -354,9 +360,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D92D0F9D1C33381B00C573AD /* Settings.bundle in Resources */,
+				8F8FEAAB24E7065E00571717 /* View.xib in Resources */,
 				D965E3971C3EC63A005D792F /* Free-Images.xcassets in Resources */,
 				D92D0F9E1C33381B00C573AD /* InfoPlist.strings in Resources */,
-				D92D0F9F1C33381B00C573AD /* View.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,7 +444,9 @@
 			files = (
 				D92D0FCD1C3346DC00C573AD /* Database.m in Sources */,
 				D92D0FCE1C3346DC00C573AD /* IO.m in Sources */,
+				8F8FEAA724E700FF00571717 /* JsBridge.m in Sources */,
 				D92D0FCF1C3346DC00C573AD /* main.m in Sources */,
+				8F8FEAA924E703B000571717 /* JsRequest.m in Sources */,
 				D92D0FD01C3346DC00C573AD /* RecordSound.m in Sources */,
 				D92D0FD11C3346DC00C573AD /* ScratchJr.m in Sources */,
 				D92D0FD21C3346DC00C573AD /* ViewController.m in Sources */,
