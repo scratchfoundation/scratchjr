@@ -642,10 +642,11 @@ public class JavaScriptDirectInterface {
                 JSONArray jsonArray = jsonObject.names();
                 String key = jsonArray.getString(0);
                 String value = jsonObject.getString(key);
+                _activity.setAnalyticsPref(key, value);
             } catch (JSONException e) {
                 Log.e(LOG_TAG, "JSON error: " + e.getMessage(), e);
+                return;
             }
-            _activity.setAnalyticsPref(key, value);
         }
     }
 }
