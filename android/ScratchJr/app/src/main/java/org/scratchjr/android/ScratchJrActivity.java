@@ -41,9 +41,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.json.JSONObject;
-import org.json.JSONArray;
-import org.json.JSONException;
 /**
  * Main activity for Scratch Jr., consisting of a full-screen landscape WebView.
  *
@@ -525,18 +522,11 @@ public class ScratchJrActivity
 
     /**
      * Record a user property
-     * @param prefObjStr like "{\"school\": \"Central High\"}"
+     * @param key like "school"
+     * @param value like "Central High"
      */
-    public void setAnalyticsPref(String prefObjStr) {
-        try {
-            JSONObject jsonObject = new JSONObject(prefObjStr);
-            JSONArray jsonArray = jsonObject.names();
-            String key = jsonArray.getString(0);
-            String value = jsonObject.getString(key);
-            _FirebaseAnalytics.setUserProperty(key, value);
-        } catch (JSONException e) {
-            // don't log anything to Firebase
-        }
+    public void setAnalyticsPref(String key, String value) {
+        _FirebaseAnalytics.setUserProperty(key, value);
     }
 
     public void translateAndScaleRectToContainerCoords(RectF rect, float devicePixelRatio) {

@@ -254,7 +254,7 @@ export default class OS {
     }
 
     static setAnalyticsPref (key, value) {
-        tabletInterface.setAnalyticsPref(JSON.stringify({[key]: value}));
+        tabletInterface.setAnalyticsPref({[key]: value});
     }
 
     // Web Wiew delegate call backs
