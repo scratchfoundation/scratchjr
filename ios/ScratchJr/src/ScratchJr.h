@@ -152,6 +152,7 @@
 
 @interface ScratchJr : NSObject
 
+
 + (void)sendBase64Image:(NSData *)imagedata;
 + (void)reportImageError;
 + (void)cameraInit;
