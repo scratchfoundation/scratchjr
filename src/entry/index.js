@@ -100,6 +100,7 @@ function indexHideSplash () {
 
 function indexLoadStart () {
     indexHideSplash();
+    showLogo();
     gn('gettings').className = 'gettings show';
     gn('startcode').className = 'startcode show';
     document.ontouchmove = function (e) {
@@ -111,7 +112,6 @@ function indexLoadStart () {
 }
 
 function indexAskRemainingQuestions () {
-    indexHideSplash();
     var nextQuestionKey = InitialOptions.nextUnansweredQuestion();
     if (nextQuestionKey) {
         indexShowQuestion(nextQuestionKey);
@@ -120,14 +120,22 @@ function indexAskRemainingQuestions () {
     }
 }
 
+function hideLogo () {
+    gn('catface').className = 'catface hide';
+    gn('jrlogo').className = 'jrlogo hide';
+}
+
+function showLogo () {
+    gn('catface').className = 'catface show';
+    gn('jrlogo').className = 'jrlogo show';
+}
+
 function indexAskPlace () {
     gn('authors').className = 'credits show';
     gn('authorsText').className = 'creditsText hide';
     gn('purpleguy').className = 'purple hide';
     gn('blueguy').className = 'blue hide';
     gn('redguy').className = 'red hide';
-    gn('catface').className = 'catface hide';
-    gn('jrlogo').className = 'jrlogo hide';
 
     gn('usageQuestion').textContent = Localization.localize('USAGE_QUESTION');
     gn('useSchoolText').textContent = Localization.localize('USAGE_SCHOOL');
@@ -206,6 +214,8 @@ function optionTouched (elem) {
 
 // show the question for a given settings option key
 function indexShowQuestion (key) {
+    indexHideSplash();
+    hideLogo();
     var optionType = InitialOptions.optionTypeForKey(key);
     if (optionType === 'place') {
         indexAskPlace();
@@ -241,6 +251,7 @@ function indexShowQuestion (key) {
             case 'image':
                 var imgElem = document.createElement('img');
                 imgElem.setAttribute('src', 'svglibrary/' + option);
+                imgElem.setAttribute('style', 'max-width: 150px; max-height: 90px');
                 optionElem.appendChild(imgElem);
                 break;
             case 'text':
