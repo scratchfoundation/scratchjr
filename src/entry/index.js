@@ -98,11 +98,24 @@ function indexHideSplash () {
     }
 }
 
+// set analytics prefs for all initial options, whether set in this session
+// or before
+function indexSetAnalyticsPrefs () {
+    var prefs = InitialOptions.getCurrentVals();
+    if (!prefs) return;
+    Object.keys(prefs).map(function (key) {
+        OS.setAnalyticsPref(key, prefs[key]);
+    });
+}
+
 function indexLoadStart () {
     indexHideSplash();
     showLogo();
     gn('gettings').className = 'gettings show';
     gn('startcode').className = 'startcode show';
+
+    indexSetAnalyticsPrefs();
+
     document.ontouchmove = function (e) {
         e.preventDefault();
     };
@@ -174,9 +187,7 @@ function indexSetPlace (e) {
     }
     // Send one-time analytics event about usage
     OS.analyticsEvent('lobby', 'scratchjr_usage', usageText);
-    InitialOptions.setValue('place', usageText);
-    // we use 'place_preference' for this particular Firebase pref
-    OS.setAnalyticsPref('place_preference', usageText);
+    InitialOptions.setValue('place_preference', usageText);
     ScratchAudio.sndFX('tap.wav');
     indexHidePlaceQuestion();
     indexAskRemainingQuestions();
@@ -217,13 +228,13 @@ function indexShowQuestion (key) {
     indexHideSplash();
     hideLogo();
     var optionType = InitialOptions.optionTypeForKey(key);
-    if (optionType === 'place') {
+    if (optionType === 'place_preference') {
         indexAskPlace();
     } else { // custom question
         var options = InitialOptions.optionsForKey(key);
         // if we could not find any options, choose 'n/a'
         if (!options || !options.length) {
-            indexSelectOption(key, 'n/a');
+            indexSelectOption(key, 'none');
             return;
         }
         // if there's only one option, don't bother asking, just choose it!
@@ -232,7 +243,7 @@ function indexShowQuestion (key) {
             return;
         }
         // if we got here, there is more than one option...
-        var instructionText = InitialOptions.instructionForKey(key);
+        var instructionText = Localization.localizeOptional(InitialOptions.instructionForKey(key));
         var instructionElem = document.getElementById('optionsInstruction');
         instructionElem.appendChild(document.createTextNode(instructionText));
         gn('optionsInstruction').className = 'optionsInstruction show';
@@ -256,7 +267,8 @@ function indexShowQuestion (key) {
                 break;
             case 'text':
             default:
-                optionElem.appendChild(document.createTextNode(option));
+                var translatedOption = Localization.localizeOptional(option);
+                optionElem.appendChild(document.createTextNode(translatedOption));
                 break;
             }
             optionNum = optionNum + 1;
@@ -268,7 +280,6 @@ function indexShowQuestion (key) {
 // store user selection, and show next question
 function indexSelectOption (key, val) {
     InitialOptions.setValue(key, val);
-    OS.setAnalyticsPref(key, val);
     ScratchAudio.sndFX('tap.wav');
 
     // clear out old options instruction

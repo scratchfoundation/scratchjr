@@ -79,15 +79,7 @@ export default class InitialOptions {
         if (!settingsSection) return;
         settingsSection.forEach(function (question) {
             // question is like {key: OPTION_NAME, options: [...]}
-            if (question.firstTime && !question.everyTime) {
-                InitialOptions.initKeyFromCookie(question.key);
-            }
-        });
-        settingsSection.forEach(function (question) {
-            // question is like {key: OPTION_NAME, options: [...]}
-            if (question.everyTime) {
-                InitialOptions.initKeyFromCookie(question.key);
-            }
+            InitialOptions.initKeyFromCookie(question.key);
         });
     }
 
@@ -148,19 +140,6 @@ export default class InitialOptions {
     }
 
     /**
-     * Gets array of keys of all questions that still need to be answered
-     * in this app session
-     */
-    // static unansweredQuestions () {
-    //     if (!settingsSection || !settingsSection.length) return [];
-    //     return settingsSection.filter(function (question) {
-    //         return !InitialOptions.isAnswered(question);
-    //     }).map(function (question) {
-    //         return question.key;
-    //     });
-    // }
-
-    /**
      * Gets next question that needs to be asked
      */
     static nextUnansweredQuestion () {
@@ -170,6 +149,13 @@ export default class InitialOptions {
         });
         if (nextUnansweredQuestion) return nextUnansweredQuestion.key;
         return null;
+    }
+
+    /**
+     * Returns the object of current values
+     */
+    static getCurrentVals () {
+        return currentVals;
     }
 
     /**
