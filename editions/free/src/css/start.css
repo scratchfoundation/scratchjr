@@ -344,3 +344,44 @@ div.frame {
     text-align: right;
 }
 
+.optionsInstruction {
+    position: absolute;
+    width: 96%;
+    top: 0;
+    padding: 2%;
+    color: #ffdd44;
+    font-size: 2.75rem;
+    font-weight: 500;
+    text-align: center;
+    text-shadow: 1px 1px 4px #333333;
+    list-style-type: none;
+}
+
+.optionsInstruction.hide {display: none;}
+.optionsInstruction.show {display: block;}
+
+.optionsList {
+    position: absolute;
+    width: 92%;
+    height: 86%;
+    padding: 4%;
+    top: 6%;
+    column-count: 3;
+    column-fill: auto; /* use first column up first */
+    color: white;
+    font-size: 2.25rem;
+    font-weight: 500;
+    text-align: left;
+    text-shadow: 1px 1px 4px #333333;
+    list-style-type: none;
+    z-index: 1000;
+}
+
+.optionsList.hide {display: none;}
+.optionsList.show {display: block;}
+
+.optionsList > div {
+    display: block;
+    padding: .25em;
+    break-inside: avoid-column; /* don't allow column to break inside item */
+}

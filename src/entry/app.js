@@ -1,6 +1,6 @@
 import {preprocessAndLoadCss} from '../utils/lib';
 import Localization from '../utils/Localization';
-import AppUsage from '../utils/AppUsage';
+import InitialOptions from '../utils/InitialOptions';
 import OS from '../tablet/OS';
 import IO from '../tablet/IO';
 import MediaLib from '../tablet/MediaLib';
@@ -110,6 +110,6 @@ window.onload = () => {
             });
         });
         // Initialize currentUsage data
-        AppUsage.initUsage();
+        InitialOptions.initWithSettings(window.Settings.initialOptions);
     });
 };
