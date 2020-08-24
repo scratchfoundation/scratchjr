@@ -174,6 +174,7 @@
                  kFIRParameterItemName:request.params[2], // label
                  kFIRParameterItemCategory:request.params[0] // category
     }];
+    [request callback:@"ok"];
 }
 
 -(void) setAnalyticsPlacePref: (JsRequest *) request {
@@ -186,6 +187,7 @@
     NSString *name = [NSString stringWithFormat:@"%@", request.params[0]];
     NSString *propertyString = [NSString stringWithFormat:@"%@", request.params[1]];
     [FIRAnalytics setUserPropertyString:propertyString forName:name];
+    [request callback:@"ok"];
 }
 
 // iPad name (used for information in the name/sharing dialog to help people using Airdrop)
