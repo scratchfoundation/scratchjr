@@ -147,14 +147,10 @@ export default class Page {
         function doNext (str) {
             str = str.replace(/>\s*</g, '><');
             me.setSVG(str);
-            if ((str.indexOf('xlink:href') < 0) && OS.path) {
-                me.setBackgroundImage(url, fcn); // does not have embedded images
-            } else {
+            IO.getImagesInSVG(str, function () {
                 var base64 = IO.getImageDataURL(me.md5, btoa(str));
-                IO.getImagesInSVG(str, function () {
-                    me.setBackgroundImage(base64, fcn);
-                });
-            }
+                me.setBackgroundImage(base64, fcn);
+            });
         }
     }
 

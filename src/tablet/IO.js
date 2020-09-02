@@ -90,11 +90,8 @@ export default class IO {
             IO.requestFromServer(md5, gotit); // get url contents
             return;
         }
-        if ((IO.getExtension(md5) == 'png') && OS.path) {
-            fcn(OS.path + md5); // only if it is not in debug mode
-        } else {
-            OS.getmedia(md5, nextStep);
-        } // get url contents
+
+        OS.getmedia(md5, nextStep);
 
         function gotit (str) {
             var base64 = IO.getImageDataURL(md5, btoa(str));

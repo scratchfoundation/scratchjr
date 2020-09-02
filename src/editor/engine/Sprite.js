@@ -77,9 +77,6 @@ export default class Sprite {
     getAsset (whenDone) {
         var md5 = this.md5;
         var spr = this;
-        var url = (MediaLib.keys[md5]) ?
-            MediaLib.path + md5 :
-            (md5.indexOf('/') < 0) ? OS.path + md5 : md5;
         md5 = (MediaLib.keys[md5]) ? MediaLib.path + md5 : md5;
         if (md5.indexOf('/') > -1) {
             IO.requestFromServer(md5, doNext);
@@ -92,14 +89,10 @@ export default class Sprite {
         function doNext (str) {
             str = str.replace(/>\s*</g, '><');
             spr.setSVG(str);
-            if ((str.indexOf('xlink:href') < 0) && OS.path) {
-                whenDone(url); // does not have embedded images
-            } else {
+            IO.getImagesInSVG(str, function () {
                 var base64 = IO.getImageDataURL(spr.md5, btoa(str));
-                IO.getImagesInSVG(str, function () {
-                    whenDone(base64);
-                });
-            }
+                whenDone(base64);
+            });
         }
     }
 
