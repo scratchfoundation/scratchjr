@@ -169,9 +169,13 @@
 }
 
 -(void) analyticsEvent: (JsRequest *) request {
+    NSString *label = @"undefined";
+    if (![request.params[2] isEqual:[NSNull null]]) {
+        label = request.params[2];
+    }
     [FIRAnalytics logEventWithName:request.params[1] // action
     parameters:@{
-                 kFIRParameterItemName:request.params[2], // label
+                 kFIRParameterItemName:label, // label
                  kFIRParameterItemCategory:request.params[0] // category
     }];
     [request callback:@"ok"];
