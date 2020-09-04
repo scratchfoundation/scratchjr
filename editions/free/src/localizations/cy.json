@@ -60,7 +60,7 @@
     "BLOCKS_POP": "Pop",
     "BLOCKS_POP_DESCRIPTION": "Yn Chwarae Sain \"Pop\".",
     "BLOCKS_PLAY_RECORDED": "Yn Chwarae Sain Wedi ei Recordio",
-    "BLOCKS_PLAY_RECORDED_DESCRIPTION": "\nYn chwarae sain wedi ei recordio gan y defnyddiwr.",
+    "BLOCKS_PLAY_RECORDED_DESCRIPTION": "Yn chwarae sain wedi ei recordio gan y defnyddiwr.",
     "BLOCKS_CONTROL_BLOCKS": "Blociau Rheoli",
     "BLOCKS_WAIT": "Aros",
     "BLOCKS_WAIT_DESCRIPTION": "Yn oedi'r sgript am amser penodol (mewn degfed o eiliadau).",
