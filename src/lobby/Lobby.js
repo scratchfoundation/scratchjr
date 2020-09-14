@@ -4,7 +4,7 @@
 
 import {libInit, getUrlVars, gn, isAndroid, newHTML} from '../utils/lib';
 import ScratchAudio from '../utils/ScratchAudio';
-import iOS from '../iPad/iOS';
+import OS from '../tablet/OS';
 import Localization from '../utils/Localization';
 import Cookie from '../utils/Cookie';
 
@@ -98,7 +98,7 @@ export default class Lobby {
             var doNext = function (page) {
                 Lobby.changePage(page);
             };
-            iOS.setfile('homescroll.sjr', gn('wrapc').scrollTop, function () {
+            OS.setfile('homescroll.sjr', gn('wrapc').scrollTop, function () {
                 doNext(page);
             });
         } else {
@@ -203,7 +203,7 @@ export default class Lobby {
                 ScratchAudio.sndFX('tap.wav');
                 let newLocale = window.Settings.supportedLocales[e.target.textContent];
                 Cookie.set('localization', newLocale);
-                iOS.analyticsEvent('lobby', 'language_changed', newLocale);
+                OS.analyticsEvent('lobby', 'language_changed', newLocale);
                 window.location = '?place=gear';
             };
         }

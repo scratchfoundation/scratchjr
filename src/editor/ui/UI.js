@@ -13,15 +13,16 @@ import Stage from '../engine/Stage';
 import ScriptsPane from './ScriptsPane';
 import Undo from './Undo';
 import Library from './Library';
-import iOS from '../../iPad/iOS';
-import IO from '../../iPad/IO';
-import MediaLib from '../../iPad/MediaLib';
+import OS from '../../tablet/OS';
+import IO from '../../tablet/IO';
+import MediaLib from '../../tablet/MediaLib';
 import Paint from '../../painteditor/Paint';
 import Events from '../../utils/Events';
 import Localization from '../../utils/Localization';
 import ScratchAudio from '../../utils/ScratchAudio';
-import {frame, gn, CSSTransition, localx, newHTML, scaleMultiplier, fullscreenScaleMultiplier, getIdFor, isTablet, newDiv,
-    newTextInput, isAndroid, getDocumentWidth, getDocumentHeight, setProps, globalx} from '../../utils/lib';
+import {frame, gn, CSSTransition, localx, newHTML, scaleMultiplier, fullscreenScaleMultiplier,
+    getIdFor, isTablet, newDiv, newTextInput, isAndroid, getDocumentWidth, getDocumentHeight,
+    setProps, globalx} from '../../utils/lib';
 
 let projectNameTextInput = null;
 let info = null;
@@ -156,7 +157,7 @@ export default class UI {
                 };
             }
 
-            iOS.deviceName(function (name) {
+            OS.deviceName(function (name) {
                 gn('deviceName').textContent = name;
             });
 
@@ -257,7 +258,7 @@ export default class UI {
 
         setTimeout(saveAndShare, 500); // 500ms delay to wait for loading GIF to show and keyboard to hide
 
-        iOS.analyticsEvent('editor', 'share_button', (shareType == EMAILSHARE) ? 'email' : 'airdrop');
+        OS.analyticsEvent('editor', 'share_button', (shareType == EMAILSHARE) ? 'email' : 'airdrop');
 
         function saveAndShare () {
             // Save the project's new name
@@ -276,7 +277,7 @@ export default class UI {
                     var emailSubject = Localization.localize('SHARING_EMAIL_SUBJECT', {
                         PROJECT_NAME: IO.shareName
                     });
-                    iOS.sendSjrToShareDialog(IO.zipFileName, emailSubject, Localization.localize('SHARING_EMAIL_TEXT'),
+                    OS.sendSjrToShareDialog(IO.zipFileName, emailSubject, Localization.localize('SHARING_EMAIL_TEXT'),
                         shareType, contents);
 
                     shareLoadingGif.style.visibility = 'hidden';
@@ -332,7 +333,7 @@ export default class UI {
     static handleTextFieldSave (dontHide) {
         // Handle story-starter mode project
         if (ScratchJr.isEditable() && ScratchJr.editmode == 'storyStarter' && !Project.error) {
-            iOS.analyticsEvent('samples', 'story_starter_edited', Project.metadata.name);
+            OS.analyticsEvent('samples', 'story_starter_edited', Project.metadata.name);
             // Get the new project name
             var sampleName = Localization.localize('SAMPLE_' + Project.metadata.name);
             IO.uniqueProjectName({
@@ -366,7 +367,7 @@ export default class UI {
         }
         Project.metadata.name = pname;
         ScratchJr.changed = true;
-        iOS.setfield(iOS.database, Project.metadata.id, 'name', pname);
+        OS.setfield(OS.database, Project.metadata.id, 'name', pname);
         if (!dontHide) {
             ScratchAudio.sndFX('exittap.wav');
             gn('infobox').className = 'infobox fade';
@@ -729,7 +730,7 @@ export default class UI {
         UI.creatTopBarClicky(div, 'go', 'go on', UI.toggleRun);
         UI.creatTopBarClicky(div, 'resetall', 'resetall', UI.resetAllSprites);
         UI.creatTopBarClicky(div, 'full', 'fullscreen', ScratchJr.fullScreen);
-        UI.toggleGrid(true);
+        UI.setShowGrid(false);
     }
 
     static resetAllSprites (e) {
@@ -756,11 +757,12 @@ export default class UI {
 
     static switchGrid () {
         ScratchAudio.sndFX('tap.wav');
-        UI.toggleGrid(!Grid.hidden);
+        UI.setShowGrid(Grid.hidden);
+        OS.analyticsEvent('editor', Grid.hidden ? 'hide_grid' : 'show_grid');
     }
 
-    static toggleGrid (b) {
-        Grid.hide(b);
+    static setShowGrid (b) {
+        Grid.hide(!b);
         gn('grid').className = Grid.hidden ? 'gridToggle off' : 'gridToggle on';
     }
 

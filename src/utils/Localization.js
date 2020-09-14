@@ -1,6 +1,6 @@
 import Cookie from './Cookie';
 import Intl from 'intl';
-import IO from '../iPad/IO';
+import IO from '../tablet/IO';
 
 if (!window.Intl) {
     window.Intl = Intl;
@@ -110,6 +110,18 @@ export default class Localization {
             return message.format(formatting);
         }
         return 'String missing: ' + key;
+    }
+
+    // Translate a particular message given the message key and info;
+    // if key not found, assume it's just a raw text string without a translation,
+    // and return that
+    static localizeOptional (keyOrRawText, formatting) {
+        var message;
+        if (keyOrRawText in localizationMessages) {
+            message = new window.IntlMessageFormat(localizationMessages[keyOrRawText], currentLocale);
+            return message.format(formatting);
+        }
+        return keyOrRawText;
     }
 
     // For sample projects, some fields (sprite names, text on stage, and text in say blocks)
