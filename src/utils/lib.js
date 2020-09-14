@@ -8,21 +8,9 @@ export const WINDOW_INNER_WIDTH = window.innerWidth;
 export const scaleMultiplier = WINDOW_INNER_HEIGHT / 768.0;
 export const fullscreenScaleMultiplier = 136;
 
-export function detectOS () {
-    var userAgent = window.navigator.userAgent.toLowerCase();
-    const ios = /iphone|ipod|ipad/.test( userAgent );
-    // safari = /safari/.test( userAgent ), // currently do not need to detect browser vs webview
-    // android = /android/.text.(userAgent);
-
-    if( ios ) {
-        return 'iOS';
-    } else {
-        // for now assume Android, this could be further refined to detect Chromium etc.
-        return 'android';
-    }
-}
-export const isiOS = (detectOS() == 'iOS');
-export const isAndroid = (detectOS() == 'android');
+console.log('setting OS flags');
+export const isiOS = (typeof AndroidInterface == 'undefined');
+export const isAndroid = (typeof AndroidInterface != 'undefined');
 
 export function libInit () {
     frame = document.getElementById('frame');

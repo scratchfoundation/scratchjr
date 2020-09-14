@@ -113,10 +113,10 @@ NSString *oncomplete;
 
 + (void)reportImageError {
     NSString *callback = [NSString stringWithFormat: @"%@('error getting a still');",oncomplete];
-    UIWebView *webview = [ViewController webview];
+    WKWebView *webview = [ViewController webview];
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        [webview stringByEvaluatingJavaScriptFromString: callback];
+        [webview evaluateJavaScript:callback completionHandler:nil];
     });
 }
 
@@ -124,9 +124,9 @@ NSString *oncomplete;
     NSString *base64img = [cameraView getImageBase64:imagedata];
     [self closefeed];
     NSString *callback = [NSString stringWithFormat: @"%@('%@');",oncomplete, base64img];
-    UIWebView *webview = [ViewController webview];
+    WKWebView *webview = [ViewController webview];
     dispatch_async(dispatch_get_main_queue(), ^{
-        [webview stringByEvaluatingJavaScriptFromString: callback];
+        [webview evaluateJavaScript:callback completionHandler:nil];
     });
 }
 

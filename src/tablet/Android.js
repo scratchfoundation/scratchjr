@@ -261,8 +261,8 @@ export default class Android {
         AndroidInterface.setAnalyticsPlacePref(preferredPlace);
     }
 
-    static setAnalyticsPref (obj) {
-        AndroidInterface.setAnalyticsPref(JSON.stringify(obj));
+    static setAnalyticsPref (key, value) {
+        AndroidInterface.setAnalyticsPref(key, value);
     }
 
     // // Web Wiew delegate call backs
