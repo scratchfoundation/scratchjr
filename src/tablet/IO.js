@@ -1,4 +1,4 @@
-import iOS from './iOS';
+import OS from './OS';
 import MediaLib from './MediaLib';
 import JSZip from 'jszip';
 import {setCanvasSize, drawThumbnail, gn} from '../utils/lib';
@@ -90,11 +90,8 @@ export default class IO {
             IO.requestFromServer(md5, gotit); // get url contents
             return;
         }
-        if ((IO.getExtension(md5) == 'png') && iOS.path) {
-            fcn(iOS.path + md5); // only if it is not in debug mode
-        } else {
-            iOS.getmedia(md5, nextStep);
-        } // get url contents
+
+        OS.getmedia(md5, nextStep);
 
         function gotit (str) {
             var base64 = IO.getImageDataURL(md5, btoa(str));
@@ -107,16 +104,12 @@ export default class IO {
             } // base64 dataurl
         }
 
-        function nextStep (dataurl) { // iOS 7 requires to read the internal base64 images before returning contents
+        function nextStep (dataurl) {
             var str = atob(dataurl);
-            if ((str.indexOf('xlink:href') < 0) && iOS.path) {
-                fcn(iOS.path + md5); // does not have embedded images
-            } else {
-                var base64 = IO.getImageDataURL(md5, dataurl);
-                IO.getImagesInSVG(str, function () {
-                    fcn(base64);
-                }); // base64 dataurl
-            }
+            var base64 = IO.getImageDataURL(md5, dataurl);
+            IO.getImagesInSVG(str, function () {
+                fcn(base64);
+            });
         }
     }
 
@@ -210,11 +203,11 @@ export default class IO {
         var json = {};
         json.stmt = 'select * from ' + db + ' where id = ?';
         json.values = [md5];
-        iOS.query(json, fcn);
+        OS.query(json, fcn);
     }
 
     static setMedia (data, type, fcn) {
-        iOS.setmedia(btoa(data), type, fcn);
+        OS.setmedia(btoa(data), type, fcn);
     }
 
     static query (type, obj, fcn) {
@@ -222,14 +215,14 @@ export default class IO {
         json.stmt = 'select ' + obj.items + ' from ' + type +
             ' where ' + obj.cond + (obj.order ? ' order by ' + obj.order : '');
         json.values = obj.values;
-        iOS.query(json, fcn);
+        OS.query(json, fcn);
     }
 
     static deleteobject (type, id, fcn) {
         var json = {};
         json.stmt = 'delete from ' + type + ' where id = ?';
         json.values = [id];
-        iOS.stmt(json, fcn);
+        OS.stmt(json, fcn);
     }
 
     ////////////////////////
@@ -258,7 +251,7 @@ export default class IO {
             addValue('thumbnail', JSON.stringify(obj.thumbnail));
         }
         json.stmt = 'insert into ' + database + ' (' + keylist.toString() + ') values (' + values + ')';
-        iOS.stmt(json, fcn);
+        OS.stmt(json, fcn);
         function addValue (key, str) {
             keylist.push(key);
             values += ',?';
@@ -272,7 +265,7 @@ export default class IO {
         json.values = [obj.version, obj.deleted, obj.name, JSON.stringify(obj.json),
             JSON.stringify(obj.thumbnail), (new Date()).getTime().toString()];
         json.stmt = 'update ' + database + ' set ' + keylist.toString() + ' where id = ' + obj.id;
-        iOS.stmt(json, fcn);
+        OS.stmt(json, fcn);
     }
 
     // Since saveProject is changing the modified time of the project,
@@ -282,7 +275,7 @@ export default class IO {
         var keylist = ['isgift = ?'];
         json.values = [obj.isgift];
         json.stmt = 'update ' + database + ' set ' + keylist.toString() + ' where id = ' + obj.id;
-        iOS.stmt(json, fcn);
+        OS.stmt(json, fcn);
     }
 
     static getExtension (str) {
@@ -407,7 +400,7 @@ export default class IO {
                     });
                 } else {
                     // User file
-                    iOS.getmedia(md5, addB64ToZip);
+                    OS.getmedia(md5, addB64ToZip);
                 }
             };
 
@@ -496,7 +489,7 @@ export default class IO {
         json.cond = 'deleted = ? AND gallery IS NULL';
         json.items = ['name'];
         json.values = ['NO'];
-        IO.query(iOS.database, json, function (existingProjects) {
+        IO.query(OS.database, json, function (existingProjects) {
             var newNumber = null;
 
             existingProjects = JSON.parse(existingProjects);
@@ -613,14 +606,14 @@ export default class IO {
 
             if (subFolder == 'thumbnails' || subFolder == 'sounds') {
                 // Save these immediately to the filesystem - no additional processing necessary
-                iOS.setmedianame(b2data, name, ext, function () {
+                OS.setmedianame(b2data, name, ext, function () {
                     saveActual++;
                 });
             } else if (subFolder == 'characters') {
                 // This code is messy - needs a refactor sometime for all the database calls/duplication for bkgs...
 
                 // Save the character, generate its thumbnail, and add entry to the database
-                iOS.setmedianame(b2data, name, ext, function () { // Saves the SVG
+                OS.setmedianame(b2data, name, ext, function () { // Saves the SVG
                     // Parse SVG to determine width/height
                     var svgParser = new DOMParser().parseFromString(data, 'text/xml');
                     var width = svgParser.getElementsByTagName('svg')[0].width.baseVal.value;
@@ -636,7 +629,7 @@ export default class IO {
 
                         var charName = characterNames[fullName];
 
-                        iOS.setmedia(thumbnailPngBase64, 'png', function (thumbnailMD5) {
+                        OS.setmedia(thumbnailPngBase64, 'png', function (thumbnailMD5) {
                             // Sprite thumbnail is saved - save character to the DB
 
                             // First ensure that this character doesn't already exist in the exact form
@@ -660,7 +653,7 @@ export default class IO {
                                     json.stmt = 'insert into usershapes ('
                                         + keylist.toString() + ') values (' + values + ')';
 
-                                    iOS.stmt(json, function () {
+                                    OS.stmt(json, function () {
                                         saveActual++;
                                     });
                                 } else {
@@ -672,13 +665,13 @@ export default class IO {
                 });
             } else if (subFolder == 'backgrounds') {
                 // Same idea as characters, but the dimensions are fixed
-                iOS.setmedianame(b2data, name, ext, function () {
+                OS.setmedianame(b2data, name, ext, function () {
                     IO.getImagesInSVG(data, gotSVGImages);
 
                     function gotSVGImages () {
                         var thumbnailDataURL = IO.getThumbnail(data, 480, 360, 120, 90);
                         var thumbnailPngBase64 = thumbnailDataURL.split(',')[1];
-                        iOS.setmedia(thumbnailPngBase64, 'png', function (thumbnailMD5) {
+                        OS.setmedia(thumbnailPngBase64, 'png', function (thumbnailMD5) {
 
                             // First ensure that this bg doesn't already exist in the exact form
                             var json = {};
@@ -696,7 +689,7 @@ export default class IO {
                                     json.values = [fullName, thumbnailMD5, 'iOSv01', '480', '360', 'svg'];
                                     json.stmt = 'insert into userbkgs (' + keylist.toString() +
                                         ') values (' + values + ')';
-                                    iOS.stmt(json, function () {
+                                    OS.stmt(json, function () {
                                         saveActual++;
                                     });
                                 } else {

@@ -362,6 +362,7 @@
     "SHARING_BY_AIRDROP": "用 Airdrop 分享",
     "SHARING_EMAIL_SUBJECT": "ScratchJr 專案： {PROJECT_NAME}",
     "SHARING_EMAIL_TEXT": "點按圖示可以在你的 iPad 或 Android 平板上嘗試我的 ScratchJr 專案！<br><br>如果你還沒有 ScratchJr App，你可以從 Apple App Store 或 Google Play 商店上下載。<br><br>有了 ScratchJr，小朋友可以製作自己的互動故事和遊戲。若想深入瞭解，請見 <a href='http://www.scratchjr.org'>scratchjr.org</a>。",
+    "FOR_PARENTS": "致家長",
     "PARENTAL_GATE_EXPLANATION": "為什麼我們要問這個問題？因為必須要大人同意的情況下才可以在線上分享。",
     "GRID_NUMBER": "{N, number}",
     "NEW_PROJECT_PREFIX": "專案",

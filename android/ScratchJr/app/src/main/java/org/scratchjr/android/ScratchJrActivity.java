@@ -337,7 +337,7 @@ public class ScratchJrActivity
         }
         // We send the project Base64-encoded to JavaScript where it's processed and unpacked
         String base64Project = Base64.encodeToString(projectData.toByteArray(), Base64.DEFAULT);
-        runJavaScript("iOS.loadProjectFromSjr('" + base64Project + "');");
+        runJavaScript("OS.loadProjectFromSjr('" + base64Project + "');");
     }
 
     public RelativeLayout getContainer() {
@@ -507,10 +507,9 @@ public class ScratchJrActivity
      */
     public void logAnalyticsEvent(String category, String action, String label) {
         Bundle params = new Bundle();
-        params.putString(FirebaseAnalytics.Param.ITEM_ID, action);
         params.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, category);
         params.putString(FirebaseAnalytics.Param.ITEM_NAME, label);
-        _FirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, params);
+        _FirebaseAnalytics.logEvent(action, params);
     }
 
     /**
@@ -519,6 +518,15 @@ public class ScratchJrActivity
      */
     public void setAnalyticsPlacePref(String place) {
         _FirebaseAnalytics.setUserProperty("place_preference", place);
+    }
+
+    /**
+     * Record a user property
+     * @param key like "school"
+     * @param value like "Central High"
+     */
+    public void setAnalyticsPref(String key, String value) {
+        _FirebaseAnalytics.setUserProperty(key, value);
     }
 
     public void translateAndScaleRectToContainerCoords(RectF rect, float devicePixelRatio) {

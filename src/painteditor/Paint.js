@@ -3,9 +3,9 @@ import BlockSpecs from '../editor/blocks/BlockSpecs';
 import SVGTools from './SVGTools';
 import SVG2Canvas from '../utils/SVG2Canvas';
 import Ghost from './Ghost';
-import iOS from '../iPad/iOS';
-import IO from '../iPad/IO';
-import MediaLib from '../iPad/MediaLib';
+import OS from '../tablet/OS';
+import IO from '../tablet/IO';
+import MediaLib from '../tablet/MediaLib';
 import Localization from '../utils/Localization';
 import Alert from '../editor/ui/Alert';
 import PaintAction from './PaintAction';
@@ -164,8 +164,12 @@ export default class Paint {
         let action = '';
         let label = '';
         // Analytics:
-        // md3: name of the asset, an md5 hash for user generated, filename for library items
-        // sname: is not set for a new character (ignored for backgrounds)
+        // * md3: name of the asset, an md5 hash for user generated, filename for library items
+        // * sname: is not set for a new character (ignored for backgrounds)
+        // log two events:
+        // * paint editor is opened
+        // * type of edit (edit_background, edit_character, new_character)
+        OS.analyticsEvent('paint_editor', 'paint_editor_open');
         if (bkg) {
             action = 'edit_background';
             label = (md5 in MediaLib.keys) ? md5 : 'user_background';
@@ -173,7 +177,7 @@ export default class Paint {
             action = sname ? 'edit_character' : 'new_character';
             label = (md5 in MediaLib.keys) ? md5 : 'user_character';
         }
-        iOS.analyticsEvent('paint_editor', action, label);
+        OS.analyticsEvent('paint_editor', action, label);
         PaintUndo.buffer = [];
         PaintUndo.index = 0;
         maxZoom = 5;
@@ -352,6 +356,7 @@ export default class Paint {
     }
 
     static close () {
+        OS.analyticsEvent('paint_editor', 'paint_editor_close');
         saving = true;
         paintFrame.className = 'paintframe disappear';
         frame.style.display = 'block';
@@ -769,7 +774,7 @@ export default class Paint {
         Paint.addSidePalette(rightpal, 'selectortools', ['select', 'rotate']);
         Paint.addSidePalette(rightpal, 'edittools', ['stamper', 'scissors']);
         Paint.addSidePalette(rightpal, 'filltools',
-            (iOS.camera == '1' && Camera.available) ? ['camera', 'paintbucket'] : ['paintbucket']);
+            (OS.camera == '1' && Camera.available) ? ['camera', 'paintbucket'] : ['paintbucket']);
     }
 
     static addSidePalette (p, id, list) {
@@ -1093,7 +1098,7 @@ export default class Paint {
             Paint.loadChar(md5);
         } else if (!MediaLib.keys[md5]) {
             // Load user asset
-            iOS.getmedia(md5, nextStep);
+            OS.getmedia(md5, nextStep);
         } else {
             // Load library asset
             Paint.getBkg(MediaLib.path + md5);
@@ -1180,7 +1185,7 @@ export default class Paint {
             Paint.loadChar(md5);
         } else if (!MediaLib.keys[md5]) {
             // Load user asset
-            iOS.getmedia(md5, nextStep);
+            OS.getmedia(md5, nextStep);
         } else {
             // Load library asset
             Paint.loadChar(MediaLib.path + md5);
@@ -1272,14 +1277,14 @@ export default class Paint {
     static addToBkgLib (fcn) {
         var dataurl = IO.getThumbnail(svgdata, 480, 360, 120, 90);
         var pngBase64 = dataurl.split(',')[1];
-        iOS.setmedia(pngBase64, 'png', setBkgRecord);
+        OS.setmedia(pngBase64, 'png', setBkgRecord);
         function setBkgRecord (pngmd5) {
             var json = {};
             var keylist = ['md5', 'altmd5', 'version', 'width', 'height', 'ext'];
             var values = '?,?,?,?,?,?';
             json.values = [saveMD5, pngmd5, ScratchJr.version, '480', '360', 'svg'];
             json.stmt = 'insert into userbkgs (' + keylist.toString() + ') values (' + values + ')';
-            iOS.stmt(json, fcn);
+            OS.stmt(json, fcn);
         }
     }
 
@@ -1359,14 +1364,14 @@ export default class Paint {
         var h = box.height.toString();
         var dataurl = IO.getThumbnail(svgdata, w, h, 120, 90);
         var pngBase64 = dataurl.split(',')[1];
-        iOS.setmedia(pngBase64, 'png', setCostumeRecord);
+        OS.setmedia(pngBase64, 'png', setCostumeRecord);
         function setCostumeRecord (pngmd5) {
             var json = {};
             var keylist = ['scale', 'md5', 'altmd5', 'version', 'width', 'height', 'ext', 'name'];
             var values = '?,?,?,?,?,?,?,?';
             json.values = [scale, saveMD5, pngmd5, ScratchJr.version, w, h, 'svg', cname];
             json.stmt = 'insert into usershapes (' + keylist.toString() + ') values (' + values + ')';
-            iOS.stmt(json, fcn);
+            OS.stmt(json, fcn);
         }
     }
 

@@ -629,4 +629,24 @@ public class JavaScriptDirectInterface {
             _activity.setAnalyticsPlacePref(place);
         }
     }
+
+    /**
+     * Record a user property
+     * @param prefObjStr single key-value JSON string, like "{\"school\": \"Central High\"}"
+     */
+    @JavascriptInterface
+    public void setAnalyticsPref(String prefObjStr) {
+        if (prefObjStr != null) {
+            try {
+                JSONObject jsonObject = new JSONObject(prefObjStr);
+                JSONArray jsonArray = jsonObject.names();
+                String key = jsonArray.getString(0);
+                String value = jsonObject.getString(key);
+                _activity.setAnalyticsPref(key, value);
+            } catch (JSONException e) {
+                Log.e(LOG_TAG, "JSON error: " + e.getMessage(), e);
+                return;
+            }
+        }
+    }
 }

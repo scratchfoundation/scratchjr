@@ -8,6 +8,7 @@ import Page from '../engine/Page';
 import ScriptsPane from './ScriptsPane';
 import Undo from './Undo';
 import UI from './UI';
+import OS from '../../tablet/OS';
 import Events from '../../utils/Events';
 import ScratchAudio from '../../utils/ScratchAudio';
 import {frame, gn, localx, newHTML, scaleMultiplier, getIdFor,
@@ -82,6 +83,7 @@ export default class Thumbs {
         var tb = Thumbs.getType(Thumbs.t, 'pagethumb');
         if (ScratchJr.shaking && (e.target.className == 'deletethumb')) {
             ScratchJr.clearSelection();
+            OS.analyticsEvent('editor', 'delete_scene');
             ScratchJr.stage.deletePage(tb.owner);
             return;
         }
@@ -376,6 +378,7 @@ export default class Thumbs {
             sc.owner.deactivate();
         }
         ScratchJr.unfocus(e);
+        OS.analyticsEvent('editor', 'add_scene');
         new Page(getIdFor('page'));
     }
 
