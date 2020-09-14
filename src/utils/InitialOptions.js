@@ -143,7 +143,7 @@ export default class InitialOptions {
      * Gets next question that needs to be asked
      */
     static nextUnansweredQuestion () {
-        if (!settingsSection || !settingsSection.length) return [];
+        if (!settingsSection || !settingsSection.length) return null;
         var nextUnansweredQuestion = settingsSection.find(function (question) {
             return !InitialOptions.isAnswered(question);
         });
