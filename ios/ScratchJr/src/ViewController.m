@@ -66,6 +66,49 @@ NSDate *startDate;
                                     [UIImage imageNamed:@"Default.png"],
                                     nil];
     [self.view addSubview:splashScreen];
+
+    // align splashScreen image to superview
+    splashScreen.translatesAutoresizingMaskIntoConstraints = NO;
+    // Trailing
+    NSLayoutConstraint *trailing = [NSLayoutConstraint
+                                    constraintWithItem:splashScreen
+                                    attribute:NSLayoutAttributeTrailing
+                                    relatedBy:NSLayoutRelationEqual
+                                    toItem:self.view
+                                    attribute:NSLayoutAttributeTrailing
+                                    multiplier:1.0f
+                                    constant:0.f];
+    // Leading
+    NSLayoutConstraint *leading = [NSLayoutConstraint
+                                       constraintWithItem:splashScreen
+                                       attribute:NSLayoutAttributeLeading
+                                       relatedBy:NSLayoutRelationEqual
+                                       toItem:self.view
+                                       attribute:NSLayoutAttributeLeading
+                                       multiplier:1.0f
+                                       constant:0.f];
+    // Top
+    NSLayoutConstraint *top = [NSLayoutConstraint
+                                     constraintWithItem:splashScreen
+                                     attribute:NSLayoutAttributeTop
+                                     relatedBy:NSLayoutRelationEqual
+                                     toItem:self.view
+                                     attribute:NSLayoutAttributeTop
+                                     multiplier:1.0f
+                                     constant:0.f];
+    // Bottom
+    NSLayoutConstraint *bottom = [NSLayoutConstraint
+                                     constraintWithItem:splashScreen
+                                     attribute:NSLayoutAttributeBottom
+                                     relatedBy:NSLayoutRelationEqual
+                                     toItem:self.view
+                                     attribute:NSLayoutAttributeBottom
+                                     multiplier:1.0f
+                                     constant:0.f];
+    [self.view addConstraint:leading];
+    [self.view addConstraint:trailing];
+    [self.view addConstraint:top];
+    [self.view addConstraint:bottom];
 }
 
 - (void)didReceiveMemoryWarning
