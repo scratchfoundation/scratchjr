@@ -20,10 +20,10 @@ android {
         free {
             dimension = 'scratchjrversion'
             applicationId "org.scratchjr.androidfree"
-            minSdkVersion 19
-            targetSdkVersion 28
-            versionCode 21
-            versionName "1.2.0"
+            minSdkVersion 21
+            targetSdkVersion 29
+            versionCode 22
+            versionName "1.2.11"
         }
     }
 }
