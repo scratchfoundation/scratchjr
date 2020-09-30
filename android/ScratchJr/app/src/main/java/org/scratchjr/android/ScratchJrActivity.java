@@ -40,6 +40,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
+import java.util.Vector;
 
 /**
  * Main activity for Scratch Jr., consisting of a full-screen landscape WebView.
@@ -103,6 +105,7 @@ public class ScratchJrActivity
     private final int SCRATCHJR_CAMERA_MIC_PERMISSION = 1;
     public int cameraPermissionResult = PackageManager.PERMISSION_DENIED;
     public int micPermissionResult = PackageManager.PERMISSION_DENIED;
+    public int readExtPermissionResult = PackageManager.PERMISSION_DENIED;
 
     /* Firebase analytics tracking */
     private FirebaseAnalytics _FirebaseAnalytics;
@@ -172,33 +175,32 @@ public class ScratchJrActivity
         requestPermissions();
     }
 
-    private void requestExtStoragePermissions() {
-        int readExtPermissionResult = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
-        if (readExtPermissionResult != PackageManager.PERMISSION_GRANTED) {
-            int requestCode = 2;
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, requestCode);
-        }
-    }
-
+     /*
+    Ask for all permissions when ScratchJr is first launched so that we are not asking a 5-7 year old to give permission
+     */
     public void requestPermissions() {
-        requestExtStoragePermissions();
         cameraPermissionResult = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
         micPermissionResult = ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO);
+        readExtPermissionResult = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
 
-        String[] desiredPermissions;
-        if (cameraPermissionResult != PackageManager.PERMISSION_GRANTED
-                && micPermissionResult != PackageManager.PERMISSION_GRANTED) {
-            desiredPermissions = new String[]{
-                    Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO
-            };
-        } else if (cameraPermissionResult != PackageManager.PERMISSION_GRANTED) {
-            desiredPermissions = new String[]{Manifest.permission.CAMERA};
-        } else if (micPermissionResult != PackageManager.PERMISSION_GRANTED) {
-            desiredPermissions = new String[]{Manifest.permission.RECORD_AUDIO};
-        } else {
+        if (cameraPermissionResult == PackageManager.PERMISSION_GRANTED
+            && micPermissionResult == PackageManager.PERMISSION_GRANTED
+            && readExtPermissionResult == PackageManager.PERMISSION_GRANTED) {
             return;
         }
+
+        Vector<String> tmp = new Vector<String>(3);
+        if (cameraPermissionResult != PackageManager.PERMISSION_GRANTED) {
+            tmp.add(Manifest.permission.CAMERA);
+        }
+        if (micPermissionResult != PackageManager.PERMISSION_GRANTED) {
+            tmp.add(Manifest.permission.RECORD_AUDIO);
+        }
+        if (readExtPermissionResult != PackageManager.PERMISSION_GRANTED) {
+            tmp.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        }
+        Object[] tmpArray = tmp.toArray();
+        String[] desiredPermissions = Arrays.copyOf(tmpArray, tmpArray.length, String[].class);
 
         ActivityCompat.requestPermissions(this,
                 desiredPermissions,
@@ -216,6 +218,9 @@ public class ScratchJrActivity
                 }
                 if (permission.equals(Manifest.permission.RECORD_AUDIO)) {
                     micPermissionResult = grantResults[permissionId];
+                }
+                if (permission.equals(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                    readExtPermissionResult = grantResults[permissionId];
                 }
                 permissionId++;
             }
