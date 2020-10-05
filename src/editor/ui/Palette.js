@@ -498,7 +498,7 @@ export default class Palette {
             (sc.flowCaret.next != null) || (sc.flowCaret.inside != null))) {
             return 'scripts';
         }
-        if (box2.overlapElemBy(box, 0.66) && box2.hitRect({x: el.left / scale, y: el.top / scale})) {
+        if (box2.overlapElemBy(box, 0.4) && box2.hitRect({x: el.left / scale, y: el.top / scale})) {
             return 'palette';
         }
         if (pt && box2.hitRect(pt)) {

@@ -66,6 +66,49 @@ NSDate *startDate;
                                     [UIImage imageNamed:@"Default.png"],
                                     nil];
     [self.view addSubview:splashScreen];
+
+    // align splashScreen image to superview
+    splashScreen.translatesAutoresizingMaskIntoConstraints = NO;
+    // Trailing
+    NSLayoutConstraint *trailing = [NSLayoutConstraint
+                                    constraintWithItem:splashScreen
+                                    attribute:NSLayoutAttributeTrailing
+                                    relatedBy:NSLayoutRelationEqual
+                                    toItem:self.view
+                                    attribute:NSLayoutAttributeTrailing
+                                    multiplier:1.0f
+                                    constant:0.f];
+    // Leading
+    NSLayoutConstraint *leading = [NSLayoutConstraint
+                                       constraintWithItem:splashScreen
+                                       attribute:NSLayoutAttributeLeading
+                                       relatedBy:NSLayoutRelationEqual
+                                       toItem:self.view
+                                       attribute:NSLayoutAttributeLeading
+                                       multiplier:1.0f
+                                       constant:0.f];
+    // Top
+    NSLayoutConstraint *top = [NSLayoutConstraint
+                                     constraintWithItem:splashScreen
+                                     attribute:NSLayoutAttributeTop
+                                     relatedBy:NSLayoutRelationEqual
+                                     toItem:self.view
+                                     attribute:NSLayoutAttributeTop
+                                     multiplier:1.0f
+                                     constant:0.f];
+    // Bottom
+    NSLayoutConstraint *bottom = [NSLayoutConstraint
+                                     constraintWithItem:splashScreen
+                                     attribute:NSLayoutAttributeBottom
+                                     relatedBy:NSLayoutRelationEqual
+                                     toItem:self.view
+                                     attribute:NSLayoutAttributeBottom
+                                     multiplier:1.0f
+                                     constant:0.f];
+    [self.view addConstraint:leading];
+    [self.view addConstraint:trailing];
+    [self.view addConstraint:top];
+    [self.view addConstraint:bottom];
 }
 
 - (void)didReceiveMemoryWarning
@@ -118,27 +161,6 @@ NSDate *startDate;
     startDate = [NSDate date];
 }
 
-// Disables iOS 9 webview touch tooltip by disabling the long-press gesture recognizer in subviews
-// Thanks to Rye:
-// http://stackoverflow.com/questions/32687368/how-to-completely-disable-magnifying-glass-for-uiwebview-ios9
-- (void) disableWebViewLongPressGestures:(WKWebView *)webview {
-    for(id subView in webview.subviews) {
-        if([subView isKindOfClass:[UIScrollView class]]) {
-            UIScrollView *scrollView = (UIScrollView *)subView;
-            for(id ssView in scrollView.subviews) {
-                if([NSStringFromClass([ssView class]) isEqualToString:@"UIWebBrowserView"]) {
-                    for(UIGestureRecognizer *gs in [ssView gestureRecognizers]) {
-                        if ([gs isKindOfClass:[UILongPressGestureRecognizer class]])
-                        {
-                            gs.enabled = NO;
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
 - (void) receiveProject:(NSString *)project{
     NSString *callback = [NSString stringWithFormat:@"OS.loadProjectFromSjr('%@');", project];
     WKWebView *webview = [ViewController webview];
@@ -171,7 +193,7 @@ NSDate *startDate;
 
 - (void) webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     [webview evaluateJavaScript:@"window.tablet = window.webkit.messageHandlers.jsBridge" completionHandler:nil];
-    [self disableWebViewLongPressGestures:webView];
+    [webview evaluateJavaScript:@"document.body.style.webkitTouchCallout='none';" completionHandler:nil];
 
     NSString *debugChoice =[[NSUserDefaults standardUserDefaults] stringForKey:@"debugstate"];
 
