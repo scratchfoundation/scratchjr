@@ -334,10 +334,12 @@ public class ScratchJrActivity
         try {
             InputStream is = getContentResolver().openInputStream(projectUri);
 
-            byte[] readByte = new byte[1];
-            while ((is.read(readByte)) == 1) {
-                projectData.write(readByte[0]);
+            byte[] readByte = new byte[1024];
+            int length;
+            while ((length = is.read(readByte)) != -1) {
+                projectData.write(readByte, 0, length);
             }
+            is.close();
         } catch (FileNotFoundException e) {
             Log.i(LOG_TAG, "File not found in project load");
             return;
