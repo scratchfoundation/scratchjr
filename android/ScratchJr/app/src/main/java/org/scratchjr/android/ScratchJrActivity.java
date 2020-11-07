@@ -110,6 +110,11 @@ public class ScratchJrActivity
     /* Firebase analytics tracking */
     private FirebaseAnalytics _FirebaseAnalytics;
 
+    /**
+     * Project uri that need to be imported.
+     */
+    private Uri projectUri = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -152,7 +157,7 @@ public class ScratchJrActivity
 
         Intent it = getIntent();
         if (it != null && it.getData() != null) {
-            receiveProject(it.getData());
+            projectUri = it.getData();
         }
 
         _FirebaseAnalytics = FirebaseAnalytics.getInstance(this);
@@ -306,7 +311,7 @@ public class ScratchJrActivity
     protected void onNewIntent(Intent it) {
         super.onNewIntent(it);
         if (it != null && it.getData() != null) {
-            receiveProject(it.getData());
+            projectUri = it.getData();
         }
     }
 
@@ -483,6 +488,10 @@ public class ScratchJrActivity
 
     public void setSplashDone(boolean done) {
         _splashDone = done;
+        if (this.projectUri != null) {
+            receiveProject(this.projectUri);
+        }
+        this.projectUri = null;
     }
 
     /**
