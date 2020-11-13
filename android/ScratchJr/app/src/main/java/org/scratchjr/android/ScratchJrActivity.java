@@ -311,7 +311,7 @@ public class ScratchJrActivity
     protected void onNewIntent(Intent it) {
         super.onNewIntent(it);
         if (it != null && it.getData() != null) {
-            projectUri = it.getData();
+            receiveProject(it.getData());
         }
     }
 
