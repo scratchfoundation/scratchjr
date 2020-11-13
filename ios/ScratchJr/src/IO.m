@@ -1,5 +1,6 @@
 #import "ScratchJr.h"
 #import <CommonCrypto/CommonDigest.h>
+#import <ZipArchive.h>
 ViewController* HTML;
 MFMailComposeViewController *emailDialog;
 NSMutableDictionary *mediastrings;
@@ -202,29 +203,57 @@ NSMutableDictionary *soundtimers;
     return @"1";
 }
 
-// Receive a .sjr file from inside the app.  Send using native UI - Airdrop or Email
-
-+ (NSString*) sendSjrUsingShareDialog:(NSString *)fullname :(NSString*)emailSubject :(NSString*)emailBody :(int)shareType :(NSString*)contents {
-
++ (NSString *) createZipForProject: (NSString *) projectData :(NSDictionary *) metadata :(NSString *) zipName {
+    // create a temperary folder for project
+    NSString *tempDir = [[[NSString alloc] initWithString:NSTemporaryDirectory()] stringByAppendingPathComponent: [[NSUUID alloc] init].UUIDString];
+    // NSLog(@"%@", tempDir);
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    [fileManager createDirectoryAtPath:tempDir withIntermediateDirectories:true attributes:nil error:nil];
+    // save project.json
+    NSString *dataPath = [tempDir stringByAppendingPathComponent:@"data.json"];
+    [[[NSData alloc] initWithData: [projectData dataUsingEncoding:NSUTF8StringEncoding]] writeToFile:dataPath atomically:YES];
+    // copy assets to target temp folder
+    for (NSString *key in [metadata allKeys]) {
+        NSString *subDir = [tempDir stringByAppendingPathComponent:key];
+        [fileManager createDirectoryAtPath:subDir withIntermediateDirectories:true attributes:nil error:nil];
+        for (NSString *file in [metadata valueForKey:key]) {
+            // copy file to target folder
+            // NSLog(@"%@ %@", key, file);
+            NSString *srcPath = [[IO getpath] stringByAppendingPathComponent:file];
+            NSString *toPath = [subDir stringByAppendingPathComponent:file];
+            if ([fileManager fileExistsAtPath:srcPath]) {
+                [fileManager copyItemAtPath:srcPath toPath:toPath error:nil];
+            }
+        }
+    }
+    
     NSString* extensionFormat =  @"%@.sjr";
 
     #if PBS
         extensionFormat =  @"%@.psjr";
     #endif
+    
+    NSString *fullName = [NSString stringWithFormat:extensionFormat, zipName];
+    NSURL *url = [self getDocumentPath:fullName];
+    NSString *zipPath = url.path;
+    NSLog(@"target zip path %@", zipPath);
+    if ([fileManager fileExistsAtPath:zipPath]) {
+        [fileManager removeItemAtPath:zipPath error:nil];
+    }
+    [SSZipArchive createZipFileAtPath:zipPath withContentsOfDirectory: tempDir];
+    // delete temp folder
+    [fileManager removeItemAtPath:tempDir error:nil];
+    return fullName;
+}
 
-    NSString *filename = [NSString stringWithFormat:extensionFormat, fullname];
-    NSURL *url = [self getDocumentPath:filename];
-    NSData *plaindata = [IO decodeBase64:contents];
-    BOOL ok =  [plaindata writeToURL:url atomically:NO];
+// Receive a .sjr file from inside the app.  Send using native UI - Airdrop or Email
 
-    if (ok) {
-        if (shareType == 0) {
-            [HTML showShareEmail:url withName:filename withSubject:emailSubject withBody:emailBody];
-        } else {
-            [HTML showShareAirdrop:url];
-        }
++ (NSString*) sendSjrUsingShareDialog:(NSString *)fileName :(NSString*)emailSubject :(NSString*)emailBody :(int)shareType {
+    NSURL *url = [self getDocumentPath:fileName];
+    if (shareType == 0) {
+        [HTML showShareEmail:url withName:fileName withSubject:emailSubject withBody:emailBody];
     } else {
-        NSLog(@"couldn't save file");
+        [HTML showShareAirdrop:url];
     }
     return @"1";
 }

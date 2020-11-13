@@ -140,11 +140,11 @@
 + (NSString *)getmedialen:(NSString *)file :(NSString *)key;
 + (NSString *)getmediadone:(NSString *)filename;
 + (NSString *)remove:(NSString *)filename;
++ (NSString *)createZipForProject: (NSString *)projectData :(NSDictionary *)metadata :(NSString *)name;
 + (NSString *)sendSjrUsingShareDialog:(NSString *)fileName
                                      :(NSString *)emailSubject
                                      :(NSString *)emailBody
-                                     :(int)shareType
-                                     :(NSString *)b64data;
+                                     :(int)shareType;
 + (NSString *)registerSound:(NSString *)dir :(NSString *)name;
 + (NSString *)playSound:(NSString *)name;
 + (NSString *)stopSound:(NSString *)name;

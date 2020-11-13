@@ -272,13 +272,17 @@ export default class UI {
                 Alert.close();
 
                 // Package the project as a .sjr file
-                IO.zipProject(ScratchJr.currentProject, function (contents) {
+                IO.compressProject(ScratchJr.currentProject, function (fullName) {
                     ScratchJr.onHold = false; // Unfreeze the editing UI
                     var emailSubject = Localization.localize('SHARING_EMAIL_SUBJECT', {
                         PROJECT_NAME: IO.shareName
                     });
-                    OS.sendSjrToShareDialog(IO.zipFileName, emailSubject, Localization.localize('SHARING_EMAIL_TEXT'),
-                        shareType, contents);
+                    OS.sendSjrToShareDialog(
+                        fullName,
+                        emailSubject, 
+                        Localization.localize('SHARING_EMAIL_TEXT'),
+                        shareType
+                    );
 
                     shareLoadingGif.style.visibility = 'hidden';
                 });

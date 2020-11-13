@@ -3,6 +3,7 @@ platform :ios, '8.0'
 
 # add the Firebase pod for Google Analytics
 pod 'Firebase/Analytics'
+pod 'SSZipArchive', '~> 2.1.4'
 
 target 'ScratchJr Free' do
 end

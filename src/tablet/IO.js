@@ -298,7 +298,7 @@ export default class IO {
     // Sharing
     ////////////////////
 
-    static zipProject (projectReference, finished) {
+    static compressProject (projectReference, finished) {
         IO.getObject(projectReference, function (projectFromDB) {
             var projectMetadata = {
                 'thumbnails': [],
@@ -372,59 +372,6 @@ export default class IO {
                 }
             }
 
-            // Get the media in projectMetadata and add it to a zip file
-            zipFile = new JSZip();
-            zipFile.folder('project');
-
-            var projectDataForZip = JSON.stringify(jsonData);
-            zipFile.file('project/data.json', projectDataForZip, {});
-
-            zipAssetsExpected = 0;
-            zipAssetsActual = 0;
-
-            // Generic function for adding media to the zip file
-            var addMediaToZip = function (folder, md5) {
-                var addB64ToZip = function (b64data) {
-                    zipFile.file('project/' + folder + '/' + md5, b64data, {
-                        base64: true,
-                        createFolders: true
-                    });
-                    zipAssetsActual++;
-                };
-                // Determine if the md5 is a MediaLib file or a user one, and download it appropriately
-                // See also, Sprite.getAsset
-                if (md5 in MediaLib.keys) {
-                    // Library character
-                    IO.requestFromServer(MediaLib.path + md5, function (raw) {
-                        addB64ToZip(btoa(raw));
-                    });
-                } else {
-                    // User file
-                    OS.getmedia(md5, addB64ToZip);
-                }
-            };
-
-            // Add each type of media
-            for (var j = 0; j < projectMetadata.thumbnails.length; j++) {
-                addMediaToZip('thumbnails', projectMetadata.thumbnails[j]);
-                zipAssetsExpected++;
-            }
-
-            for (var k = 0; k < projectMetadata.characters.length; k++) {
-                addMediaToZip('characters', projectMetadata.characters[k]);
-                zipAssetsExpected++;
-            }
-
-            for (var l = 0; l < projectMetadata.backgrounds.length; l++) {
-                addMediaToZip('backgrounds', projectMetadata.backgrounds[l]);
-                zipAssetsExpected++;
-            }
-
-            for (var m = 0; m < projectMetadata.sounds.length; m++) {
-                addMediaToZip('sounds', projectMetadata.sounds[m]);
-                zipAssetsExpected++;
-            }
-
             // Now the UI should wait for actual media count to equal expected media count
             // This could pause if getmedia takes a long time, for example,
             // if we have many large sprites or large sounds
@@ -446,16 +393,10 @@ export default class IO {
                 .replace(windowsTrailingRe, '_');
             shareName = jsonData.name;
 
-            function checkStatus () {
-                if ((zipAssetsActual / zipAssetsExpected) == 1) {
-                    finished(zipFile.generate({
-                        'compression': 'STORE'
-                    }));
-                } else {
-                    setTimeout(checkStatus, 200);
-                }
-            }
-            checkStatus();
+            // create zip natively
+            OS.createZipForProject(JSON.stringify(jsonData), projectMetadata, zipFileName, function (name) {
+                finished(name);
+            });
         });
     }
 
