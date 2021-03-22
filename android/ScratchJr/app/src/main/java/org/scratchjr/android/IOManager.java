@@ -40,6 +40,24 @@ public class IOManager {
     }
 
     /**
+     * clean up sharing zips in cache dir.
+     */
+    public void cleanZips() {
+        String suffix = ScratchJrUtil.getExtension();
+        File dir = _application.getCacheDir();
+        Log.i(LOG_TAG, "Cleaning files of type '" + suffix + "' in dir: " + dir.getAbsolutePath());
+        for (File file : dir.listFiles()) {
+            String filename = file.getName();
+            Log.i(LOG_TAG, filename);
+            if (!filename.endsWith(suffix)) {
+                continue;
+            }
+            Log.i(LOG_TAG, "removing file: " + filename);
+            file.delete();
+        }
+    }
+
+    /**
      * Clean any assets that are not referenced in the database
      * 
      * @param fileType The extension of the type of file to clean

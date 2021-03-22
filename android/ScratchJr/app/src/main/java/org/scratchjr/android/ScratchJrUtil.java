@@ -40,6 +40,55 @@ public class ScratchJrUtil {
         return result;
     }
 
+    /**
+     * get sharing file extension based on APPLICATION_ID
+     * @return extension
+     */
+    public static String getExtension() {
+        String extension;
+        if (BuildConfig.APPLICATION_ID.equals("org.pbskids.scratchjr")) {
+            extension = ".psjr";
+        } else {
+            extension = ".sjr";
+        }
+        return extension;
+    }
+
+    /**
+     * get sharing file mime-type based on APPLICATION_ID
+     * @return mime type
+     */
+    public static String getMimeType() {
+        String mimetype;
+        if (BuildConfig.APPLICATION_ID.equals("org.pbskids.scratchjr")) {
+            mimetype = "application/x-pbskids-scratchjr-project";
+        } else {
+            mimetype = "application/x-scratchjr-project";
+        }
+        return mimetype;
+    }
+
+    /**
+     * remove file or folder
+     * if `file` is a folder, it will be cleaned up before removing
+     * @param file to be removed
+     */
+    public static void removeFile(File file) {
+        if (file.isDirectory()) {
+            for (File f : file.listFiles()) {
+                removeFile(f);
+            }
+        }
+        file.delete();
+    }
+
+    /**
+     * Copy file from a location to target location
+     *
+     * @param sourceLocation file path to be copied
+     * @param targetLocation file path bo be copied to
+     * @throws IOException
+     */
     public static void copyFile(File sourceLocation, File targetLocation)
         throws IOException
     {
@@ -56,8 +105,17 @@ public class ScratchJrUtil {
         out.close();
     }
 
+    /**
+     * zip a folder to target location
+     * @param sourcePath folder to compress
+     * @param toLocation the target location to save the zip
+     * @return successful or not
+     */
     public static boolean zipFileAtPath(String sourcePath, String toLocation) {
         File sourceFile = new File(sourcePath);
+        if (sourceFile.exists()) {
+            sourceFile.delete();
+        }
         try {
             BufferedInputStream origin;
             FileOutputStream dest = new FileOutputStream(toLocation);
@@ -86,9 +144,7 @@ public class ScratchJrUtil {
     }
 
     /*
-     *
      * Zips a subfolder
-     *
      */
     private static void zipSubFolder(ZipOutputStream out, File folder, int basePathLength)
         throws IOException

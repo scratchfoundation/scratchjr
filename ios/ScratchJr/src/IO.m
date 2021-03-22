@@ -203,9 +203,32 @@ NSMutableDictionary *soundtimers;
     return @"1";
 }
 
++ (void) cleanZips{
+    NSString *dir = NSTemporaryDirectory();
+    NSError *error;
+    NSFileManager *filemgr = [NSFileManager defaultManager];
+    NSDirectoryEnumerator *dirEnumerator = [filemgr enumeratorAtURL:[NSURL fileURLWithPath:dir]
+                        includingPropertiesForKeys:@[NSURLNameKey]
+                        options:NSDirectoryEnumerationSkipsHiddenFiles | NSDirectoryEnumerationSkipsSubdirectoryDescendants
+                        errorHandler:nil];
+    
+    NSString* extension =  @".sjr";
+
+    #if PBS
+        extension =  @".psjr";
+    #endif
+    for (NSURL *theURL in dirEnumerator) {
+        if ([theURL.lastPathComponent hasSuffix:extension]) {
+            NSLog(@"remove file %@", theURL.path);
+            [filemgr removeItemAtURL:theURL error:&error];
+        }
+    }
+}
+
 + (NSString *) createZipForProject: (NSString *) projectData :(NSDictionary *) metadata :(NSString *) zipName {
+    [self cleanZips];
     // create a temperary folder for project
-    NSString *tempDir = [[[NSString alloc] initWithString:NSTemporaryDirectory()] stringByAppendingPathComponent: [[NSUUID alloc] init].UUIDString];
+    NSString *tempDir = [self getTmpPath:[NSUUID alloc].UUIDString].path;
     // NSLog(@"%@", tempDir);
     NSFileManager *fileManager = [NSFileManager defaultManager];
     [fileManager createDirectoryAtPath:tempDir withIntermediateDirectories:true attributes:nil error:nil];
@@ -234,8 +257,7 @@ NSMutableDictionary *soundtimers;
     #endif
     
     NSString *fullName = [NSString stringWithFormat:extensionFormat, zipName];
-    NSURL *url = [self getDocumentPath:fullName];
-    NSString *zipPath = url.path;
+    NSString *zipPath = [self getTmpPath:fullName].path;
     NSLog(@"target zip path %@", zipPath);
     if ([fileManager fileExistsAtPath:zipPath]) {
         [fileManager removeItemAtPath:zipPath error:nil];
@@ -249,7 +271,7 @@ NSMutableDictionary *soundtimers;
 // Receive a .sjr file from inside the app.  Send using native UI - Airdrop or Email
 
 + (NSString*) sendSjrUsingShareDialog:(NSString *)fileName :(NSString*)emailSubject :(NSString*)emailBody :(int)shareType {
-    NSURL *url = [self getDocumentPath:fileName];
+    NSURL *url = [self getTmpPath:fileName];
     if (shareType == 0) {
         [HTML showShareEmail:url withName:fileName withSubject:emailSubject withBody:emailBody];
     } else {
@@ -340,6 +362,10 @@ NSMutableDictionary *soundtimers;
 + (NSURL*)getDocumentPath:(NSString *)name{
     NSString *dir = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
     return  [NSURL fileURLWithPath: [dir stringByAppendingPathComponent: name]];
+}
+
++ (NSURL*)getTmpPath:(NSString *)name{
+    return  [NSURL fileURLWithPath: [NSTemporaryDirectory() stringByAppendingPathComponent: name]];
 }
 
 ///////////////////////////////

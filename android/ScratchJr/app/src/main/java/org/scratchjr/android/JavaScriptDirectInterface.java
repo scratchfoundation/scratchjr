@@ -1,8 +1,6 @@
 package org.scratchjr.android;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -578,10 +576,12 @@ public class JavaScriptDirectInterface {
 
     @JavascriptInterface
     public String createZipForProject(String projectData, String metadataJson, String name) {
+        // clean up old zip files
+        _activity.getIOManager().cleanZips();
         // create a temp folder
         File tempPath = new File(_activity.getCacheDir() + File.separator + UUID.randomUUID().toString());
         tempPath.mkdir();
-        // save project.json
+        // save data.json
         // Log.d(LOG_TAG, "writing data.json");
         File dataFile = new File(tempPath.getAbsolutePath() + File.separator + "data.json");
         try {
@@ -605,7 +605,6 @@ public class JavaScriptDirectInterface {
         Iterator<String> keys = metadata.keys();
         while (keys.hasNext()) {
             String key = keys.next();
-            Log.d(LOG_TAG, key);
             File folder = new File(tempPath.getAbsolutePath() + File.separator + key);
             if (!folder.exists()) {
                 folder.mkdir();
@@ -633,21 +632,15 @@ public class JavaScriptDirectInterface {
                 }
             }
         }
-        // Log.d(LOG_TAG, "copy assets done");
         // create zip file
-        String extension;
-        if (BuildConfig.APPLICATION_ID.equals("org.pbskids.scratchjr")) {
-            extension = ".psjr";
-        } else {
-            extension = ".sjr";
-        }
+        String extension = ScratchJrUtil.getExtension();
         String fullName = name + extension;
-        File file = new File(_activity.getCacheDir() + File.separator + fullName);
-        file.deleteOnExit();
-        // Log.d(LOG_TAG, "creating zip");
-        ScratchJrUtil.zipFileAtPath(tempPath.getAbsolutePath(), file.getAbsolutePath());
+        ScratchJrUtil.zipFileAtPath(
+            tempPath.getAbsolutePath(),
+            _activity.getCacheDir() + File.separator + fullName
+        );
         // remove the temp folder
-        tempPath.deleteOnExit();
+        ScratchJrUtil.removeFile(tempPath);
         return fullName;
     }
 
@@ -655,12 +648,7 @@ public class JavaScriptDirectInterface {
     public void sendSjrUsingShareDialog(String fileName, String emailSubject,
                                         String emailBody, int shareType) {
         // Write a temporary file with the project data passed in from JS
-        String mimetype;
-        if (BuildConfig.APPLICATION_ID.equals("org.pbskids.scratchjr")) {
-            mimetype = "application/x-pbskids-scratchjr-project";
-        } else {
-            mimetype = "application/x-scratchjr-project";
-        }
+        String mimetype = ScratchJrUtil.getMimeType();
         File file = new File(_activity.getCacheDir() + File.separator + fileName);
         Log.d(LOG_TAG, file.getAbsolutePath());
         final Intent it = new Intent(Intent.ACTION_SEND);
