@@ -12,6 +12,7 @@
 		204D80C418A4140600ECBB8B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 204D80AC18A4140600ECBB8B /* UIKit.framework */; };
 		204D80CC18A4140600ECBB8B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 204D80CA18A4140600ECBB8B /* InfoPlist.strings */; };
 		204D80CE18A4140600ECBB8B /* ScratchJrTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 204D80CD18A4140600ECBB8B /* ScratchJrTests.m */; };
+		40AF1E492619DB10000F853E /* NSDictionary+JSONString.m in Sources */ = {isa = PBXBuildFile; fileRef = 40AF1E482619DB10000F853E /* NSDictionary+JSONString.m */; };
 		7465F19843DCA9DDC62CC852 /* libPods-ScratchJr Free.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ACBA0233542F96AC72D4D7E /* libPods-ScratchJr Free.a */; };
 		8F8FEAA724E700FF00571717 /* JsBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8FEAA624E700FF00571717 /* JsBridge.m */; };
 		8F8FEAA924E703B000571717 /* JsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8FEAA824E703B000571717 /* JsRequest.m */; };
@@ -67,6 +68,8 @@
 		20B2226818A4404B003BDE44 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = SOURCE_ROOT; };
 		20B2226E18A46327003BDE44 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		20B2227818A53688003BDE44 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		40AF1E472619DB10000F853E /* NSDictionary+JSONString.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+JSONString.h"; path = "src/NSDictionary+JSONString.h"; sourceTree = "<group>"; };
+		40AF1E482619DB10000F853E /* NSDictionary+JSONString.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+JSONString.m"; path = "src/NSDictionary+JSONString.m"; sourceTree = "<group>"; };
 		512C88D0E9938AB5972ACF38 /* libPods-ScratchJrTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ScratchJrTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A3230A01AEC02BC09345F16 /* Pods-ScratchJrTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScratchJrTests.debug.xcconfig"; path = "Target Support Files/Pods-ScratchJrTests/Pods-ScratchJrTests.debug.xcconfig"; sourceTree = "<group>"; };
 		72E2C9BF3BE9F67099F0180F /* Pods-ScratchJrTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScratchJrTests.release.xcconfig"; path = "Target Support Files/Pods-ScratchJrTests/Pods-ScratchJrTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -255,6 +258,8 @@
 				8F8FEAA624E700FF00571717 /* JsBridge.m */,
 				8F8FEAA824E703B000571717 /* JsRequest.m */,
 				8F8FEAAA24E7065E00571717 /* View.xib */,
+				40AF1E472619DB10000F853E /* NSDictionary+JSONString.h */,
+				40AF1E482619DB10000F853E /* NSDictionary+JSONString.m */,
 			);
 			name = App;
 			sourceTree = "<group>";
@@ -446,6 +451,7 @@
 				D92D0FCE1C3346DC00C573AD /* IO.m in Sources */,
 				8F8FEAA724E700FF00571717 /* JsBridge.m in Sources */,
 				D92D0FCF1C3346DC00C573AD /* main.m in Sources */,
+				40AF1E492619DB10000F853E /* NSDictionary+JSONString.m in Sources */,
 				8F8FEAA924E703B000571717 /* JsRequest.m in Sources */,
 				D92D0FD01C3346DC00C573AD /* RecordSound.m in Sources */,
 				D92D0FD11C3346DC00C573AD /* ScratchJr.m in Sources */,

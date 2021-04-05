@@ -124,6 +124,30 @@ NSString* dberror() {return [NSString stringWithFormat:@"SQL error: %s", sqlite3
     return (NSDictionary*) result;
 }
 
++ (NSString *)insert:(NSString *)table with:(NSDictionary *)data {
+    NSString *keys = [[data allKeys] componentsJoinedByString:@","];
+    NSMutableArray *placeholders = [[NSMutableArray alloc] init];
+    for (int i = 0; i < data.count; i++) {
+        [placeholders addObject:@"?"];
+    }
+    sqlite3_stmt *stmt;
+    NSString *stmtstr = [NSString stringWithFormat:@"INSERT INTO %@ (%@) VALUES (%@)", table, keys, [placeholders componentsJoinedByString:@","]];
+    NSArray *values = [data allValues];
+    // NSLog(@"stmt %@", stmtstr);
+    if (sqlite3_prepare_v2(db, [stmtstr UTF8String], -1, &stmt, NULL) != SQLITE_OK) {
+        return dberror();
+    }
+    for(int i=0;i<[values count];i++) {
+        sqlite3_bind_text(stmt, i+1, [[values objectAtIndex: i] UTF8String], -1, SQLITE_TRANSIENT);
+    }
+    // NSLog(@"stmt done %@", stmtstr);
+    if (sqlite3_step(stmt) != SQLITE_DONE) {
+        return dberror();
+    }
+    sqlite3_finalize(stmt);
+    return [NSString stringWithFormat:@"%lld", sqlite3_last_insert_rowid(db)];
+}
+
 @end
 
 

@@ -16,6 +16,7 @@
 // Exports
 + (NSString *)stmt:(NSString *)json;
 + (NSString *)query:(NSString *)json;
++ (NSString *)insert:(NSString *)table with:(NSDictionary *)data;
 @end
 
 @interface CameraMask : UIView
@@ -125,6 +126,7 @@
 + (NSString *)getpath;
 + (NSString *)removeFile:(NSString *)str;
 + (NSURL *)getDocumentPath:(NSString *)name;
++ (NSURL *)getTmpPath:(NSString *)name;
 + (NSString *)encodeBase64:(NSData *)theData;
 
 // Exports
@@ -145,6 +147,7 @@
                                      :(NSString *)emailSubject
                                      :(NSString *)emailBody
                                      :(int)shareType;
++ (void) receiveProject: (NSURL *) url;
 + (NSString *)registerSound:(NSString *)dir :(NSString *)name;
 + (NSString *)playSound:(NSString *)name;
 + (NSString *)stopSound:(NSString *)name;

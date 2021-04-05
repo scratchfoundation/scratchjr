@@ -65,8 +65,7 @@
 
 - (BOOL) application:(UIApplication *)application openURL:(NSURL *) url sourceApplication:(NSString *) sourceApplication annotation:(id) annotation {
     if (url) {
-        NSString *str = [IO encodeBase64: [[NSData alloc] initWithContentsOfURL:url]];
-        [(ViewController*) self.window.rootViewController receiveProject:str];
+        [IO receiveProject:url];
     }
     return YES;
 }
