@@ -20,7 +20,7 @@ import Paint from '../../painteditor/Paint';
 import Events from '../../utils/Events';
 import Localization from '../../utils/Localization';
 import ScratchAudio from '../../utils/ScratchAudio';
-import {frame, gn, CSSTransition, localx, newHTML, scaleMultiplier, fullscreenScaleMultiplier,
+import {frame, gn, CSSTransition, localx, newHTML, hideHTML, showHTML, scaleMultiplier, fullscreenScaleMultiplier,
     getIdFor, isTablet, newDiv, newTextInput, isAndroid, getDocumentWidth, getDocumentHeight,
     setProps, globalx} from '../../utils/lib';
 
@@ -722,15 +722,22 @@ export default class UI {
         div.setAttribute('id', 'stageframe');
         ScratchJr.stage = new Stage(div);
         Grid.init(div);
-        if (ScratchJr.isEditable()) {
-            UI.creatTopBarClicky(div, 'addtext', 'addText', UI.addText);
-            UI.creatTopBarClicky(div, 'setbkg', 'changeBkg', UI.addBackground);
-        }
-        UI.creatTopBarClicky(div, 'grid', 'gridToggle off', UI.switchGrid);
+
+         // Green Flag
         UI.creatTopBarClicky(div, 'go', 'go on', UI.toggleRun);
-        UI.creatTopBarClicky(div, 'resetall', 'resetall', UI.resetAllSprites);
-        UI.creatTopBarClicky(div, 'full', 'fullscreen', ScratchJr.fullScreen);
-        UI.setShowGrid(false);
+
+        if (!ScratchJr.isMartyMode()) { 
+            if (ScratchJr.isEditable()) {
+                UI.creatTopBarClicky(div, 'addtext', 'addText', UI.addText);
+                UI.creatTopBarClicky(div, 'setbkg', 'changeBkg', UI.addBackground);
+            }
+
+            UI.creatTopBarClicky(div, 'grid', 'gridToggle off', UI.switchGrid);
+            UI.creatTopBarClicky(div, 'full', 'fullscreen', ScratchJr.fullScreen);
+            
+            UI.creatTopBarClicky(div, 'resetall', 'resetall', UI.resetAllSprites);
+            UI.setShowGrid(false);
+        }
     }
 
     static resetAllSprites (e) {
@@ -747,6 +754,7 @@ export default class UI {
     }
 
     static toggleRun (e) {
+        UI.toggleMartyUI();
         var isOff = ScratchJr.runtime.inactive();
         if (isOff) {
             ScratchJr.runStrips(e);
@@ -758,7 +766,9 @@ export default class UI {
     static switchGrid () {
         ScratchAudio.sndFX('tap.wav');
         UI.setShowGrid(Grid.hidden);
+
         OS.analyticsEvent('editor', Grid.hidden ? 'hide_grid' : 'show_grid');
+        console.log('build updated')
     }
 
     static setShowGrid (b) {
@@ -766,11 +776,40 @@ export default class UI {
         gn('grid').className = Grid.hidden ? 'gridToggle off' : 'gridToggle on';
     }
 
+    // UI.creatTopBarClicky(div, 'grid', 'gridToggle off', UI.switchGrid);
     static creatTopBarClicky (p, str, mstyle, fcn) {
         var toggle = newHTML('div', mstyle, p);
         toggle.ontouchstart = fcn;
         toggle.setAttribute('id', str);
     }
+
+    static toggleMartyUI () {
+
+        if(ScratchJr.isMartyMode()){
+            showHTML('full');
+            showHTML('grid');
+            showHTML('addtext');
+            showHTML('setbkg');
+            showHTML('resetall');
+            ScratchJr.toggleMartyMode();
+
+        } else if(!ScratchJr.isMartyMode()){
+
+            hideHTML('library');
+            hideHTML('pages');
+            // hideHTML('full');
+            // hideHTML('grid');
+            // hideHTML('addtext');
+            // hideHTML('setbkg');
+            // hideHTML('resetall');
+            ScratchJr.toggleMartyMode();
+        }  
+    }
+
+        // ndiv.setAttribute('id', 'pagecc');
+
+
+
 
     static fullscreenControls () {
         UI.nextpage = newHTML('div', 'nextpage off', frame);

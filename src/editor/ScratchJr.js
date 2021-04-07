@@ -48,6 +48,7 @@ let dragginLayer = 7000;
 
 let currentProject = undefined;
 let editmode;
+let martymode;
 
 let isDebugging = false;
 let time;
@@ -132,6 +133,11 @@ export default class ScratchJr {
         return editmode;
     }
 
+    //returns bool martymode
+    static get martymode () {
+        return martymode;
+    }
+
     static set editmode (newEditmode) {
         editmode = newEditmode;
     }
@@ -191,6 +197,7 @@ export default class ScratchJr {
         ScratchJr.log('blocks init', ScratchJr.getTime(), 'sec', BlockSpecs.loadCount);
         currentProject = urlvars.pmd5;
         editmode = urlvars.mode;
+        martymode = false;
         libInit();
         Project.init();
         ScratchJr.log('Start ui init', ScratchJr.getTime(), 'sec');
@@ -312,9 +319,21 @@ export default class ScratchJr {
     static isSampleOrStarter () {
         return editmode == 'look' || editmode == 'storyStarter';
     }
+
     static isEditable () {
         return editmode != 'look';
     }
+
+    //to manage the toggle between regular mode and sprite mode
+    static isMartyMode () {
+        return martymode;
+    }
+
+    static toggleMartyMode () {
+        martymode = !martymode;
+    }
+
+
 
     // Called when ScratchJr is brought back to focus
     // Here, we fix up some UI elements that may not have been properly shut down when the app was paused.

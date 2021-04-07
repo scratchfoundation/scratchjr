@@ -128,6 +128,15 @@ export function newHTML (type, c, p) {
     return e;
 }
 
+//hide an element 
+export function hideHTML(id) {
+  document.getElementById(id).style.visibility = "hidden";
+}
+//un-hide an element
+export function showHTML(id) {
+  document.getElementById(id).style.visibility = "visible";
+}
+
 export function newP (parent, text, styles) {
     var p = document.createElement('p');
     p.appendChild(document.createTextNode(text));
