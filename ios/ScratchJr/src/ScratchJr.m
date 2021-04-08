@@ -27,10 +27,10 @@ NSString *oncomplete;
         [splashScreen removeFromSuperview];
     });
     // import projects
-    if (zipUrls != nil && zipUrls.count > 0) {
-        for (int i = 0; i < zipUrls.count; i++) {
-            NSURL *url = zipUrls[i];
-            [zipUrls removeObjectAtIndex:i];
+    if (zipUrls != nil) {
+        while (zipUrls.count > 0) {
+            NSURL *url = zipUrls[0];
+            [zipUrls removeObjectAtIndex:0];
             [ScratchJr importProject:url];
         }
     }
