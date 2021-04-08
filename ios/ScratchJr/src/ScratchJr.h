@@ -167,4 +167,7 @@
 + (NSString *)stopfeed;
 + (NSString *)choosecamera:(NSString *)body;
 + (NSString *)captureimage:(NSString *)onCameraCaptureComplete;
+
+// Imports
++ (void) receiveProject:(NSURL *) url;
 @end

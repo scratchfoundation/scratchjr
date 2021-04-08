@@ -65,7 +65,8 @@
 
 - (BOOL) application:(UIApplication *)application openURL:(NSURL *) url sourceApplication:(NSString *) sourceApplication annotation:(id) annotation {
     if (url) {
-        [IO receiveProject:url];
+        NSLog(@"openg url: %@", url.absoluteURL);
+        [ScratchJr receiveProject:url];
     }
     return YES;
 }

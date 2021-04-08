@@ -282,118 +282,126 @@ NSMutableDictionary *soundtimers;
 }
 
 + (void) receiveProject: (NSURL *) url {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        NSString *tempDir = [[IO getTmpPath:[[NSUUID alloc] init].UUIDString].path stringByAppendingString:@"/"];
-        // uncompress
-        [SSZipArchive unzipFileAtPath:url.path toDestination:tempDir];
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        // remove zip
-        // [fileManager removeItemAtURL:url error:nil];
-        NSString *projectPath = [tempDir stringByAppendingString:@"/project/data.json"];
+    NSString *tempDir = [[IO getTmpPath:[[NSUUID alloc] init].UUIDString].path stringByAppendingString:@"/"];
+    // uncompress
+    [SSZipArchive unzipFileAtPath:url.path toDestination:tempDir];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    // remove zip
+    [fileManager removeItemAtURL:url error:nil];
+    NSString *projectPath = [tempDir stringByAppendingString:@"/project/data.json"];
+    
+    if (![fileManager fileExistsAtPath:projectPath]) {
+        // project data file doesn't exist
+        return;
+    }
+    NSData *data = [[NSData alloc] initWithContentsOfFile:projectPath];
+    NSError *error = nil;
+    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingFragmentsAllowed error:&error];
+    if (error != nil) {
+        // invalid json
+        return;
+    }
+    
+    NSMutableDictionary *project = [[NSMutableDictionary alloc] init];
+    [project setValue:@"1" forKey:@"isgift"];
+    [project setValue:@"NO" forKey:@"deleted"];
+    NSDictionary *json = [dictionary valueForKey:@"json"];
+    [project setValue:[json jsonString] forKey:@"json"];
+    NSDictionary *thumbnail = [dictionary valueForKey:@"thumbnail"];
+    [project setValue:[thumbnail jsonString] forKey:@"thumbnail"];
+    [project setValue:@"iOSv01" forKey:@"version"];
+    [project setValue:[dictionary valueForKey:@"name"] forKey:@"name"];
+    // save project to database
+    [Database insert:@"projects" with:project];
+    NSMutableDictionary *sprites = [[NSMutableDictionary alloc] init];
+    for (NSString *name in [json valueForKey:@"pages"]) {
+        NSDictionary *page = [json valueForKey:name];
+        for (NSString *spriteName in [page valueForKey:@"sprites"]) {
+            NSDictionary *sprite = [page valueForKey:spriteName];
+            [sprites setValue:sprite forKey:[sprite valueForKey:@"md5"]];
+        }
+    }
+    
+    // read project data
+    // create project
+    NSDirectoryEnumerator<NSString *> * enumerator = [fileManager enumeratorAtPath:tempDir];
+    NSString *path;
+    while ((path = [enumerator nextObject]) != nil) {
+        // only copy image and sounds
+        if (![path hasSuffix:@".png"] && ![path hasSuffix:@".wav"] && ![path hasSuffix:@".svg"]) {
+            continue;
+        }
+        NSString *fileName = [path lastPathComponent];
+        NSArray *parts = [path componentsSeparatedByString:@"/"];
+        if (parts.count < 2) {
+            continue;
+        }
+        NSString *folder = parts[1];
+        // extract files
+        NSString *toPath = [[IO getpath] stringByAppendingPathComponent:fileName];
+        if (![fileManager fileExistsAtPath: toPath]) {
+            // NSLog(@"copy file to path %@", toPath);
+            NSString *fromPath = [tempDir stringByAppendingString:path];
+            [fileManager copyItemAtPath:fromPath toPath:toPath error:&error];
+            if (error != nil) {
+                continue;
+            }
+        }
+        if ([folder isEqualToString:@"sounds"] || [folder isEqualToString:@"thumbnails"]) {
+            // process for sounds and thumbnails is done
+            continue;
+        }
+        // save background or shape to database.
+        NSString *table = [folder isEqualToString:@"characters"] ? @"usershapes" : @"userbkgs";
+        NSMutableArray *values = [[NSMutableArray alloc] init];
+        [values addObject:fileName];
+        // check database
+        NSString *stmt = [NSString stringWithFormat:@"SELECT id FROM %@ WHERE md5 = ?", table];
+        NSArray *res = [Database findDataIn:stmt with:values];
+        // TODO: if query encounter an error, res.count will also be greater than 0
+        if (res.count > 0) {
+            continue;
+        }
+        // insert into database
+        NSLog(@"%@ not exists, creating", fileName);
+        NSMutableDictionary *asset = [[NSMutableDictionary alloc] init];
         
-        if (![fileManager fileExistsAtPath:projectPath]) {
-            // project data file doesn't exist
-            return;
-        }
-        NSData *data = [[NSData alloc] initWithContentsOfFile:projectPath];
-        NSError *error = nil;
-        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingFragmentsAllowed error:&error];
-        if (error != nil) {
-            // invalid json
-            return;
+        NSString *pngName = [fileName stringByReplacingOccurrencesOfString:@".svg" withString:@".png"];
+        
+        [asset setValue:@"iOSv01" forKey:@"version"];
+        [asset setValue:pngName forKey:@"altmd5"];
+        [asset setValue:fileName forKey:@"md5"];
+        [asset setValue:[fileName pathExtension] forKey:@"ext"];
+        [asset setValue:@"480" forKey:@"width"];
+        [asset setValue:@"360" forKey:@"height"];
+        
+        if ([folder isEqualToString:@"characters"]) {
+            // create shape
+            NSDictionary *sprite = [sprites valueForKey:fileName];
+            if (sprite == nil) {
+                continue;
+            }
+            // we need all values to be NSString
+            NSString *width = [sprite valueForKey:@"w"];
+            NSString *height = [sprite valueForKey:@"h"];
+            NSString *scale = [sprite valueForKey:@"scale"];
+            [asset setValue:[NSString stringWithFormat:@"%@", width] forKey:@"width"];
+            [asset setValue:[NSString stringWithFormat:@"%@", height] forKey:@"height"];
+            [asset setValue:[NSString stringWithFormat:@"%@", scale] forKey:@"scale"];
+            [asset setValue:[sprite valueForKey:@"id"] forKey:@"name"];
         }
         
-        NSMutableDictionary *project = [[NSMutableDictionary alloc] init];
-        [project setValue:@"1" forKey:@"isgift"];
-        [project setValue:@"NO" forKey:@"deleted"];
-        NSDictionary *json = [dictionary valueForKey:@"json"];
-        [project setValue:[json jsonString] forKey:@"json"];
-        NSDictionary *thumbnail = [dictionary valueForKey:@"thumbnail"];
-        [project setValue:[thumbnail jsonString] forKey:@"thumbnail"];
-        [project setValue:@"iOSv01" forKey:@"version"];
-        [project setValue:[dictionary valueForKey:@"name"] forKey:@"name"];
-        // save project to database
-        [Database insert:@"projects" with:project];
-        NSMutableDictionary *sprites = [[NSMutableDictionary alloc] init];
-        for (NSString *name in [json valueForKey:@"pages"]) {
-            NSDictionary *page = [json valueForKey:name];
-            for (NSString *spriteName in [page valueForKey:@"sprites"]) {
-                NSDictionary *sprite = [page valueForKey:spriteName];
-                [sprites setValue:sprite forKey:[sprite valueForKey:@"md5"]];
-            }
+        // check thumbnail or create
+        if (![fileManager fileExistsAtPath:[[IO getpath] stringByAppendingPathComponent:pngName]]) {
+            NSString *js = [NSString stringWithFormat:@"ScratchJr.makeThumb('%@', %@, %@);", fileName, [asset valueForKey:@"width"], [asset valueForKey:@"height"]];
+            [ViewController.webview evaluateJavaScript:js completionHandler:nil];
         }
-        
-        // read project data
-        // create project
-        NSDirectoryEnumerator<NSString *> * enumerator = [fileManager enumeratorAtPath:tempDir];
-        NSString *path;
-        while ((path = [enumerator nextObject]) != nil) {
-            // only copy image and sounds
-            if (![path hasSuffix:@".png"] && ![path hasSuffix:@".wav"] && ![path hasSuffix:@".svg"]) {
-                continue;
-            }
-            NSString *fileName = [path lastPathComponent];
-            // NSLog(@"%@", path);
-            NSArray *parts = [path componentsSeparatedByString:@"/"];
-            if (parts.count < 2) {
-                continue;
-            }
-            NSString *folder = parts[1];
-            // extract files
-            NSString *toPath = [[IO getpath] stringByAppendingPathComponent:fileName];
-            if (![fileManager fileExistsAtPath: toPath]) {
-                NSLog(@"copy file to path %@", toPath);
-                NSString *fromPath = [tempDir stringByAppendingString:path];
-                [fileManager copyItemAtPath:fromPath toPath:toPath error:&error];
-                if (error != nil) {
-                    continue;
-                }
-            }
-            if ([folder isEqualToString:@"sounds"] || [folder isEqualToString:@"thumbnails"]) {
-                // process for sounds and thumbnails is done
-                continue;
-            }
-            // save background or shape to database.
-            NSString *table = [folder isEqualToString:@"characters"] ? @"usershapes" : @"userbkgs";
-            NSMutableArray *values = [[NSMutableArray alloc] init];
-            [values addObject:fileName];
-            // check database
-            NSString *stmt = [NSString stringWithFormat:@"SELECT id FROM %@ WHERE md5 = ?", table];
-            NSArray *res = [Database findDataIn:stmt with:values];
-            if (res.count > 0) {
-                continue;
-            }
-            // insert into database
-            NSLog(@"%@ not exists, creating", fileName);
-            NSMutableDictionary *asset = [[NSMutableDictionary alloc] init];
-            
-            [asset setValue:@"iOSv01" forKey:@"version"];
-            [asset setValue:nil forKey:@"altmd5"];
-            [asset setValue:fileName forKey:@"md5"];
-            [asset setValue:[fileName pathExtension] forKey:@"ext"];
-            [asset setValue:@"480" forKey:@"width"];
-            [asset setValue:@"360" forKey:@"height"];
-            
-            if ([folder isEqualToString:@"characters"]) {
-                // create shape
-                NSDictionary *sprite = [sprites valueForKey:fileName];
-                if (sprite == nil) {
-                    continue;
-                }
-                NSString *width = [sprite valueForKey:@"w"];
-                NSString *height = [sprite valueForKey:@"h"];
-                [asset setValue:[NSString stringWithFormat:@"%@", width] forKey:@"width"];
-                [asset setValue:[NSString stringWithFormat:@"%@", height] forKey:@"height"];
-                [asset setValue:[sprite valueForKey:@"scale"] forKey:@"scale"];
-                [asset setValue:[sprite valueForKey:@"id"] forKey:@"name"];
-            }
-            [Database insert:table with:asset];
-        }
-        // delete temp folder
-        [fileManager removeItemAtPath:tempDir error:nil];
-        // refresh lobby
-        [ViewController.webview evaluateJavaScript:@"Lobby.refresh();" completionHandler:nil];
-    });
+        [Database insert:table with:asset];
+    }
+    // delete temp folder
+    [fileManager removeItemAtPath:tempDir error:nil];
+    // refresh lobby
+    [ViewController.webview evaluateJavaScript:@"Lobby.refresh();" completionHandler:nil];
 }
 
 ////////////////////////////
