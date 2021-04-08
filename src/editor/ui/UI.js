@@ -20,7 +20,7 @@ import Paint from '../../painteditor/Paint';
 import Events from '../../utils/Events';
 import Localization from '../../utils/Localization';
 import ScratchAudio from '../../utils/ScratchAudio';
-import {frame, gn, CSSTransition, localx, newHTML, hideHTML, showHTML, scaleMultiplier, fullscreenScaleMultiplier,
+import {frame, gn, CSSTransition, localx, newHTML, getIDByClass, hideHTML, showHTML, scaleMultiplier, fullscreenScaleMultiplier,
     getIdFor, isTablet, newDiv, newTextInput, isAndroid, getDocumentWidth, getDocumentHeight,
     setProps, globalx} from '../../utils/lib';
 
@@ -470,23 +470,32 @@ export default class UI {
     static layoutLibrary (sl) {
         var sprites = newHTML('div', 'thumbpanel', sl);
         sprites.setAttribute('id', 'library');
+
+        var stdmode = newHTML('div', 'stdmodewrapper', sprites);
+        stdmode.setAttribute('id', 'libwrapper');
         //scrolling area
-        var p = newHTML('div', 'spritethumbs', sprites);
+        var p = newHTML('div', 'spritethumbs', stdmode);
         var div = newHTML('div', 'spritecc', p);
         div.setAttribute('id', 'spritecc');
         div.ontouchstart = UI.spriteThumbsActions;
 
         // scrollbar
-        var sb = newHTML('div', 'scrollbar', sprites);
+        var sb = newHTML('div', 'scrollbar', stdmode);
         sb.setAttribute('id', 'scrollbar');
         var sbthumb = newHTML('div', 'sbthumb', sb);
         sbthumb.setAttribute('id', 'sbthumb');
 
         // new sprite
         if (ScratchJr.isEditable()) {
-            var ns = newHTML('div', 'addsprite', sprites);
+            var ns = newHTML('div', 'addsprite', stdmode);
             ns.ontouchstart = UI.addSprite;
         }
+
+        var btnwrapper = newHTML('div', 'buttonwrapper', sprites);
+        var mmode = newHTML('div', 'martymode', btnwrapper);
+        mmode.ontouchstart = UI.martyUIOn;
+        var stdmode = newHTML('div', 'standardmode', btnwrapper);
+        stdmode.ontouchstart = UI.martyUIOff;
     }
 
     static mascotData (page) {
@@ -754,7 +763,6 @@ export default class UI {
     }
 
     static toggleRun (e) {
-        UI.toggleMartyUI();
         var isOff = ScratchJr.runtime.inactive();
         if (isOff) {
             ScratchJr.runStrips(e);
@@ -783,32 +791,45 @@ export default class UI {
         toggle.setAttribute('id', str);
     }
 
-    static toggleMartyUI () {
+    static martyUIOn () {
+        if(!ScratchJr.isMartyMode()){
+            //left hand elements
+            hideHTML('libwrapper');
+            //right hand elements
+            hideHTML('pages');
+            //toolbar elements
+            hideHTML('full');
+            hideHTML('grid');
+            hideHTML('addtext');
+            hideHTML('setbkg');
+            hideHTML('resetall');
+            hideHTML('pages');
 
+            //workspace
+            //TODO WE SHOULD SET WATERMARK TO MARTY RATHER THAN HIDE IT
+            hideHTML('watermark');
+            ScratchJr.toggleMartyMode();
+        }  
+    }
+
+    static martyUIOff () {
         if(ScratchJr.isMartyMode()){
+            //left hand elements
+            showHTML('libwrapper');
+            //right hand elements
+            showHTML('pages');
+            //toolbar elements
             showHTML('full');
             showHTML('grid');
             showHTML('addtext');
             showHTML('setbkg');
             showHTML('resetall');
+            showHTML('watermark');
+
             ScratchJr.toggleMartyMode();
 
-        } else if(!ScratchJr.isMartyMode()){
-
-            hideHTML('library');
-            hideHTML('pages');
-            // hideHTML('full');
-            // hideHTML('grid');
-            // hideHTML('addtext');
-            // hideHTML('setbkg');
-            // hideHTML('resetall');
-            ScratchJr.toggleMartyMode();
-        }  
+        } 
     }
-
-        // ndiv.setAttribute('id', 'pagecc');
-
-
 
 
     static fullscreenControls () {

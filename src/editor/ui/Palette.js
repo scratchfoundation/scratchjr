@@ -299,6 +299,9 @@ export default class Palette {
         var div = newDiv(parent, dx, dy, pxWidth, pxHeight, {
             position: 'absolute'
         });
+        div.setAttribute('id', spec[3]);
+
+
         div.index = n;
         var officon = spec[1].cloneNode(true);
         officon.width = pxWidth;

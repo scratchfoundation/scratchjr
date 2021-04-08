@@ -25,7 +25,8 @@
     top: 0px;
     left: ${css_vh(32.29)};
     width: ${css_vh(1.04)};
-    height: ${css_vh(40.63)};
+    /*height: ${css_vh(40.63)};*/
+    height: ${css_vh(30.47)};
     background: rgba(255,255,255,0.5);
 }
 
@@ -52,6 +53,8 @@
     overflow-x: hidden;
 }
 
+
+
 #library .spritethumbs {
     position: relative;
     margin: 0px;
@@ -60,7 +63,8 @@
     overflow-y: scroll;
     overflow-x: hidden;
     width: ${css_vh(33.85)};
-    max-height: ${css_vh(40.63)};
+    /*max-height: ${css_vh(40.63)};*/
+    max-height: ${css_vh(30.47)};
 }
 
 .spritethumbs::-webkit-scrollbar {
@@ -83,6 +87,37 @@
     height: ${css_vh(10.29)};
     margin: 0px ${css_vh(2.34)} 0px;
 }
+
+#library .martymode {
+    position: relative;
+    display: inline-block;
+    background:  url('../assets/ui/frontMarty.png') no-repeat left top;
+    background-size: 100%;
+    width: ${css_vh(10.29)};
+    height: ${css_vh(10.29)};
+    margin: 0px ${css_vh(2.34)} 0px;
+}
+
+#library .buttonwrapper {
+    position: fixed;
+    top: ${css_vh(50)};
+    left: ${css_vh(2.34)};
+}
+
+
+
+
+#library .standardmode {
+    position: relative;
+    display: inline-block;
+    background:  url('../assets/ui/scatchJrLogo.png') no-repeat left top;
+    background-size: 100%;
+    width: ${css_vh(10.29)};
+    /*height: ${css_vh(8.33)};*/
+    height: ${css_vh(10.29)};
+    margin: 0px ${css_vh(2.34)} 0px;
+}
+
 
 
 /* sprites thumbnails */

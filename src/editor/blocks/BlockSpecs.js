@@ -143,44 +143,76 @@ export default class BlockSpecs {
             [
                 BlockSpecs.getImageFrom('assets/categories/StartOn', 'svg'),
                 BlockSpecs.getImageFrom('assets/categories/StartOff', 'svg'),
-                window.Settings.categoryStartColor
+                window.Settings.categoryStartColor,
+                'start'
             ],
             [
                 BlockSpecs.getImageFrom('assets/categories/MotionOn', 'svg'),
                 BlockSpecs.getImageFrom('assets/categories/MotionOff', 'svg'),
-                window.Settings.categoryMotionColor
-            ],
-            [
-                BlockSpecs.getImageFrom('assets/categories/LooksOn', 'svg'),
-                BlockSpecs.getImageFrom('assets/categories/LooksOff', 'svg'),
-                window.Settings.categoryLooksColor
-            ],
-            [
-                BlockSpecs.getImageFrom('assets/categories/SoundOn', 'svg'),
-                BlockSpecs.getImageFrom('assets/categories/SoundOff', 'svg'),
-                window.Settings.categorySoundColor
-            ],
-            [
-                BlockSpecs.getImageFrom('assets/categories/FlowOn', 'svg'),
-                BlockSpecs.getImageFrom('assets/categories/FlowOff', 'svg'),
-                window.Settings.categoryFlowColor
+                window.Settings.categoryMotionColor,
+                'motion'
             ],
             [
                 BlockSpecs.getImageFrom('assets/categories/StopOn', 'svg'),
                 BlockSpecs.getImageFrom('assets/categories/StopOff', 'svg'),
-                window.Settings.categoryStopColor
+                window.Settings.categoryStopColor,
+                'stop'
             ]
         );
     }
 
+    // static setupCategories () {
+    //     return new Array(
+    //         [
+    //             BlockSpecs.getImageFrom('assets/categories/StartOn', 'svg'),
+    //             BlockSpecs.getImageFrom('assets/categories/StartOff', 'svg'),
+    //             window.Settings.categoryStartColor,
+    //             'start'
+    //         ],
+    //         [
+    //             BlockSpecs.getImageFrom('assets/categories/MotionOn', 'svg'),
+    //             BlockSpecs.getImageFrom('assets/categories/MotionOff', 'svg'),
+    //             window.Settings.categoryMotionColor,
+    //             'motion'
+    //         ],
+    //         [
+    //             BlockSpecs.getImageFrom('assets/categories/LooksOn', 'svg'),
+    //             BlockSpecs.getImageFrom('assets/categories/LooksOff', 'svg'),
+    //             window.Settings.categoryLooksColor,
+    //             'looks'
+    //         ],
+    //         [
+    //             BlockSpecs.getImageFrom('assets/categories/SoundOn', 'svg'),
+    //             BlockSpecs.getImageFrom('assets/categories/SoundOff', 'svg'),
+    //             window.Settings.categorySoundColor,
+    //             'sound'
+    //         ],
+    //         [
+    //             BlockSpecs.getImageFrom('assets/categories/FlowOn', 'svg'),
+    //             BlockSpecs.getImageFrom('assets/categories/FlowOff', 'svg'),
+    //             window.Settings.categoryFlowColor,
+    //             'flow'
+    //         ],
+    //         [
+    //             BlockSpecs.getImageFrom('assets/categories/StopOn', 'svg'),
+    //             BlockSpecs.getImageFrom('assets/categories/StopOff', 'svg'),
+    //             window.Settings.categoryStopColor,
+    //             'stop'
+    //         ]
+    //     );
+    // }
+
 
     static setupPalettesDef () {
-        return [['onflag', 'onclick', 'ontouch', 'onmessage', 'message'],
-            ['forward', 'back', 'up', 'down', 'right', 'left', 'hop', 'home'],
-            ['say', 'space', 'grow', 'shrink', 'same', 'space', 'hide', 'show'],
-            [],
-            ['wait', 'stopmine', 'setspeed', 'repeat'],
+        return [['onflag'],
+            ['forward', 'back', 'up', 'down', 'right', 'left'],
             ['endstack', 'forever']];
+        // return [['onflag', 'onclick', 'ontouch', 'onmessage', 'message'],
+        //     ['forward', 'back', 'up', 'down', 'right', 'left', 'hop', 'home'],
+        //     ['say', 'space', 'grow', 'shrink', 'same', 'space', 'hide', 'show'],
+        //     [],
+        //     ['wait', 'stopmine', 'setspeed', 'repeat'],
+        //     ['endstack', 'forever']];
     }
 
     ///////////////////////////////

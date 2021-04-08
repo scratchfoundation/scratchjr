@@ -18,6 +18,7 @@ let timeoutEvent;
 
 export default class Home {
     static init () {
+        console.log("INITIALISING HOME");
         version = Lobby.version;
         frame = gn('htmlcontents');
         var inner = newHTML('div', 'inner', frame);

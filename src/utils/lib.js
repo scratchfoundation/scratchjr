@@ -128,6 +128,11 @@ export function newHTML (type, c, p) {
     return e;
 }
 
+export function getIDByClass(c) {
+    var e = document.getElementsByClassName(c)[0].id;
+    return e;
+}
+
 //hide an element 
 export function hideHTML(id) {
   document.getElementById(id).style.visibility = "hidden";

@@ -27,6 +27,8 @@ export default class ScriptsPane {
         var div = newHTML('div', 'scripts', parent);
         div.setAttribute('id', 'scripts');
         watermark = newHTML('div', 'watermark', div);
+        watermark.setAttribute('id', 'watermark');
+        
         var h = Math.max(getDocumentHeight(), frame.offsetHeight);
         setCanvasSize(div, div.offsetWidth, h - div.offsetTop);
         scroll = new Scroll(div, 'scriptscontainer', div.offsetWidth,

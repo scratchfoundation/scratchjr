@@ -45,6 +45,7 @@
     background-size: 100.5%; /* webview pixelates the image unless we do this */
 }
 
+
 .addText:active {
     background:  url('../assets/ui/addTextPressed.svg');
     background-size: 100.5%; /* webview pixelates the image unless we do this */
