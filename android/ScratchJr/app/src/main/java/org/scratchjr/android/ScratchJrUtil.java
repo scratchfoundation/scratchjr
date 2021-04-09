@@ -193,16 +193,10 @@ public class ScratchJrUtil {
         return segments[segments.length - 1];
     }
 
-    public static List<String> unzip(String zipPath, String toPath) {
+    public static List<String> unzip(InputStream inputStream, String toPath) {
         List<String> entries = new ArrayList<>();
-        File zipFile = new File(zipPath);
         ZipInputStream zin;
-        try {
-            zin = new ZipInputStream(new FileInputStream(zipFile));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return entries;
-        }
+        zin = new ZipInputStream(inputStream);
         try {
             ZipEntry ze;
             while ((ze = zin.getNextEntry()) != null) {

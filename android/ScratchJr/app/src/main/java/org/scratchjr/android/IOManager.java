@@ -278,12 +278,17 @@ public class IOManager {
     }
 
     public void receiveProject(ScratchJrActivity activity, Uri uri) throws JSONException, IOException, DatabaseException {
+        // open database first
+        if (!_databaseManager.isOpen()) {
+            _databaseManager.open();
+        }
         File tempDir = new File(activity.getCacheDir() + File.separator + UUID.randomUUID().toString());
         tempDir.mkdir();
-        List<String> entries = ScratchJrUtil.unzip(uri.getPath(), tempDir.getPath());
+        List<String> entries = ScratchJrUtil.unzip(activity.getContentResolver().openInputStream(uri), tempDir.getPath());
         if (entries.isEmpty()) {
             Log.e(LOG_TAG, "no entries found");
             // no files
+            ScratchJrUtil.removeFile(tempDir);
             return;
         }
         // read project json
@@ -367,6 +372,8 @@ public class IOManager {
             }
             _databaseManager.insert(table, asset);
         }
+        // clean up
+        ScratchJrUtil.removeFile(tempDir);
         // refresh lobby
         activity.runJavaScript("Lobby.refresh();");
     }

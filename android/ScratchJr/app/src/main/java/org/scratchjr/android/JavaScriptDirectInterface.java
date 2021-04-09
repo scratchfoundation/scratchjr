@@ -579,11 +579,12 @@ public class JavaScriptDirectInterface {
         // clean up old zip files
         _activity.getIOManager().cleanZips();
         // create a temp folder
-        File tempPath = new File(_activity.getCacheDir() + File.separator + UUID.randomUUID().toString());
-        tempPath.mkdir();
+        File tempFolder = new File(_activity.getCacheDir() + File.separator + UUID.randomUUID().toString());
+        File projectFolder = new File(tempFolder.getPath() + File.separator + "project");
+        projectFolder.mkdirs();
         // save data.json
         // Log.d(LOG_TAG, "writing data.json");
-        File dataFile = new File(tempPath.getAbsolutePath() + File.separator + "data.json");
+        File dataFile = new File(projectFolder.getAbsolutePath() + File.separator + "data.json");
         try {
             FileOutputStream outputStream = new FileOutputStream(dataFile);
             outputStream.write(projectData.getBytes());
@@ -605,7 +606,7 @@ public class JavaScriptDirectInterface {
         Iterator<String> keys = metadata.keys();
         while (keys.hasNext()) {
             String key = keys.next();
-            File folder = new File(tempPath.getAbsolutePath() + File.separator + key);
+            File folder = new File(projectFolder.getAbsolutePath() + File.separator + key);
             if (!folder.exists()) {
                 folder.mkdir();
             }
@@ -636,11 +637,11 @@ public class JavaScriptDirectInterface {
         String extension = ScratchJrUtil.getExtension();
         String fullName = name + extension;
         ScratchJrUtil.zipFileAtPath(
-            tempPath.getAbsolutePath(),
+            projectFolder.getAbsolutePath(),
             _activity.getCacheDir() + File.separator + fullName
         );
         // remove the temp folder
-        ScratchJrUtil.removeFile(tempPath);
+        ScratchJrUtil.removeFile(tempFolder);
         return fullName;
     }
 
