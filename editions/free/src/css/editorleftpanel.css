@@ -91,7 +91,7 @@
 #library .martymode {
     position: relative;
     display: inline-block;
-    background:  url('../assets/ui/frontMarty.png') no-repeat left top;
+    background:  url('../assets/ui/martyMode.png') no-repeat left top;
     background-size: 100%;
     width: ${css_vh(10.29)};
     height: ${css_vh(10.29)};
