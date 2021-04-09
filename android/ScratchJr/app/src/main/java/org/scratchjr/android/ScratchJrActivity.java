@@ -17,7 +17,6 @@ import android.os.Handler;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -36,10 +35,7 @@ import android.widget.RelativeLayout;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Vector;
 
@@ -109,6 +105,11 @@ public class ScratchJrActivity
 
     /* Firebase analytics tracking */
     private FirebaseAnalytics _FirebaseAnalytics;
+
+    /**
+     * Project uri that need to be imported.
+     */
+    private ArrayList<Uri> projectUris = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -310,7 +311,15 @@ public class ScratchJrActivity
         }
     }
 
-    private void receiveProject(Uri projectUri) {
+    private void receiveProject(final Uri projectUri) {
+        if (!isSplashDone()) {
+            projectUris.add(projectUri);
+            return;
+        }
+        importProject(projectUri);
+    }
+
+    private void importProject(final Uri projectUri) {
         String PROJECT_EXTENSION = getApplicationContext().getString(R.string.share_extension_filter);
         String scheme = projectUri.getScheme();
         Log.i(LOG_TAG, "receiveProject(scheme): " + scheme);
@@ -324,25 +333,16 @@ public class ScratchJrActivity
         if (scheme.equals(ContentResolver.SCHEME_FILE) && !projectUri.getPath().matches(PROJECT_EXTENSION)) {
             return;
         }
-        // Read the project one byte at a time into a buffer
-        ByteArrayOutputStream projectData = new ByteArrayOutputStream();
-        try {
-            InputStream is = getContentResolver().openInputStream(projectUri);
-
-            byte[] readByte = new byte[1];
-            while ((is.read(readByte)) == 1) {
-                projectData.write(readByte[0]);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    _ioManager.receiveProject(ScratchJrActivity.this, projectUri);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-        } catch (FileNotFoundException e) {
-            Log.i(LOG_TAG, "File not found in project load");
-            return;
-        } catch (IOException e) {
-            Log.i(LOG_TAG, "IOException in project load");
-            return;
-        }
-        // We send the project Base64-encoded to JavaScript where it's processed and unpacked
-        String base64Project = Base64.encodeToString(projectData.toByteArray(), Base64.DEFAULT);
-        runJavaScript("OS.loadProjectFromSjr('" + base64Project + "');");
+        });
     }
 
     public RelativeLayout getContainer() {
@@ -483,6 +483,10 @@ public class ScratchJrActivity
 
     public void setSplashDone(boolean done) {
         _splashDone = done;
+        while (projectUris.size() > 0) {
+            Uri uri = projectUris.remove(0);
+            importProject(uri);
+        }
     }
 
     /**

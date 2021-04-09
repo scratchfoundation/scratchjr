@@ -2,16 +2,22 @@ package org.scratchjr.android;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 /**
@@ -185,5 +191,78 @@ public class ScratchJrUtil {
             return "";
         }
         return segments[segments.length - 1];
+    }
+
+    public static List<String> unzip(String zipPath, String toPath) {
+        List<String> entries = new ArrayList<>();
+        File zipFile = new File(zipPath);
+        ZipInputStream zin;
+        try {
+            zin = new ZipInputStream(new FileInputStream(zipFile));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return entries;
+        }
+        try {
+            ZipEntry ze;
+            while ((ze = zin.getNextEntry()) != null) {
+                String path = toPath + File.separator + ze.getName();
+                File unzipFile = new File(path);
+                if (ze.isDirectory()) {
+                    if(!unzipFile.isDirectory()) {
+                        unzipFile.mkdirs();
+                    }
+                    continue;
+                }
+                File folder = unzipFile.getParentFile();
+                if (!folder.isDirectory()) {
+                    folder.mkdirs();
+                }
+                FileOutputStream fout = new FileOutputStream(path, false);
+                BufferedOutputStream bout = new BufferedOutputStream(fout);
+                try {
+                    byte[] buffer = new byte[1024];
+                    int read;
+                    while ((read = zin.read(buffer)) != -1) {
+                        bout.write(buffer, 0, read);
+                    }
+                    bout.flush();
+                    zin.closeEntry();
+                    entries.add(ze.getName());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    fout.close();
+                    bout.close();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            zin.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return entries;
+    }
+
+    public static JSONObject readJson(String path) throws IOException, JSONException {
+        byte[] data;
+        InputStream in = new FileInputStream(new File(path));
+
+        try {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            int len;
+            byte[] buffer = new byte[1024];
+            while ((len = in.read(buffer)) != -1) {
+                bos.write(buffer, 0, len);
+            }
+            bos.close();
+            data = bos.toByteArray();
+        } finally {
+            in.close();
+        }
+        return new JSONObject(new String(data));
     }
 }

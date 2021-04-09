@@ -8,12 +8,16 @@ import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Base64;
 import android.util.Log;
 
@@ -271,5 +275,99 @@ public class IOManager {
             hexChars[j * 2 + 1] = HEX_ARRAY[v & 0x0F];
         }
         return new String(hexChars);
+    }
+
+    public void receiveProject(ScratchJrActivity activity, Uri uri) throws JSONException, IOException, DatabaseException {
+        File tempDir = new File(activity.getCacheDir() + File.separator + UUID.randomUUID().toString());
+        tempDir.mkdir();
+        List<String> entries = ScratchJrUtil.unzip(uri.getPath(), tempDir.getPath());
+        if (entries.isEmpty()) {
+            Log.e(LOG_TAG, "no entries found");
+            // no files
+            return;
+        }
+        // read project json
+        JSONObject json = ScratchJrUtil.readJson(tempDir + "/project/data.json");
+        JSONObject projectData = json.optJSONObject("json");
+        JSONObject projectJson = new JSONObject();
+        projectJson.put("isgift", "1");
+        projectJson.put("deleted", "NO");
+        projectJson.put("json", projectData.toString());
+        JSONObject thumbnail = json.optJSONObject("thumbnail");
+        projectJson.put("thumbnail", thumbnail.toString());
+        projectJson.put("version", "iOSv01");
+        projectJson.put("name", projectData.optString("name"));
+        _databaseManager.insert("projects", projectJson);
+
+        HashMap<String, JSONObject> spriteMap = new HashMap<>();
+        JSONArray pages = projectData.optJSONArray("pages");
+        for (int i = 0; i < pages.length(); i++) {
+            String pageName = pages.optString(i);
+            if (pageName == null) {
+                continue;
+            }
+            JSONObject page = projectData.optJSONObject(pageName);
+            JSONArray spriteNames = page.optJSONArray("sprites");
+            for (int j = 0; j < spriteNames.length(); j++) {
+                String spriteName = spriteNames.optString(j);
+                JSONObject sprite = page.optJSONObject(spriteName);
+                spriteMap.put(sprite.optString("md5"), sprite);
+            }
+        }
+        for (int i = 0; i < entries.size(); i++) {
+            String entry = entries.get(i);
+            if (entry == null) {
+                continue;
+            }
+            if (!(entry.endsWith(".png") || entry.endsWith(".wav") || entry.endsWith(".svg"))) {
+                continue;
+            }
+            // copy file to target file
+            File sourceFile = new File(tempDir + File.separator + entry);
+
+            String fileName = sourceFile.getName();
+            File targetFile = new File(activity.getFilesDir().getPath() + File.separator + fileName);
+            if (!targetFile.exists()) {
+                ScratchJrUtil.copyFile(sourceFile, targetFile);
+            }
+            String folderName = sourceFile.getParentFile().getName();
+            if ("thumbnails".equals(folderName) || "sounds".equals(folderName)) {
+                continue;
+            }
+            String table = "characters".equals(folderName) ? "usershapes" : "userbkgs";
+            String statement = String.format("SELECT id FROM %s WHERE md5 = ?", table);
+            JSONArray rows = _databaseManager.query(statement, new String[]{fileName});
+            if (rows.length() > 0) {
+                Log.e(LOG_TAG, "asset for " + fileName + "exists");
+                continue;
+            }
+            String pngName = fileName.replace(".svg", ".png");
+            JSONObject asset = new JSONObject();
+            asset.put("version", "iOSv01");
+            asset.put("md5", fileName);
+            asset.put("altmd5", pngName);
+            asset.put("width", "480");
+            asset.put("height", "360");
+            asset.put("ext", fileName.split("\\.")[1]);
+            if ("characters".equals(folderName)) {
+                JSONObject sprite = spriteMap.get(fileName);
+                if (sprite == null) {
+                    continue;
+                }
+                asset.put("width", sprite.optString("w"));
+                asset.put("height", sprite.optString("h"));
+                asset.put("scale", sprite.optString("scale"));
+                asset.put("name", sprite.optString("name"));
+            }
+            File png = new File(activity.getFilesDir().getPath() + File.separator + pngName);
+            if (!png.exists()) {
+                String js = String.format("ScratchJr.makeThumb('%s', %s, %s)", fileName, asset.optString("width"), asset.optString("height"));
+                Log.d(LOG_TAG, js);
+                activity.runJavaScript(js);
+            }
+            _databaseManager.insert(table, asset);
+        }
+        // refresh lobby
+        activity.runJavaScript("Lobby.refresh();");
     }
 }

@@ -1,6 +1,8 @@
 package org.scratchjr.android;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 import org.json.JSONArray;
@@ -14,6 +16,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.text.TextUtils;
 import android.util.Log;
 
 /**
@@ -198,6 +201,27 @@ public class DatabaseManager {
         long id = cursor.getLong(0);
         cursor.close();
         return Long.toString(id);
+    }
+
+    public String insert(String table, JSONObject data) throws DatabaseException {
+        List<String> values = new ArrayList<>();
+        List<String> keys = new ArrayList<>();
+        List<String> placeholders = new ArrayList<>();
+        JSONArray names = data.names();
+        for (int i = 0; i < names.length(); i++) {
+            String key = names.optString(i);
+            keys.add(key);
+            placeholders.add("?");
+            values.add(data.optString(key));
+        }
+        String statement = String.format(
+            "INSERT INTO %s (%s) VALUES (%s)",
+            table,
+            TextUtils.join(",", keys),
+            TextUtils.join(",", placeholders)
+        );
+
+        return stmt(statement, values.toArray(new String[0]));
     }
 
     private JSONObject getRowDataAsJsonObject(Cursor cursor)
