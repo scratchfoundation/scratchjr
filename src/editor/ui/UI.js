@@ -792,6 +792,8 @@ export default class UI {
     }
 
     static martyUIOn () {
+
+        ScratchAudio.sndFX('keydown.wav');
         if(!ScratchJr.isMartyMode()){
             //left hand elements
             hideHTML('libwrapper');
@@ -813,7 +815,10 @@ export default class UI {
     }
 
     static martyUIOff () {
+        
+        ScratchAudio.sndFX('keydown.wav');
         if(ScratchJr.isMartyMode()){
+            
             //left hand elements
             showHTML('libwrapper');
             //right hand elements

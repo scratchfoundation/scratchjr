@@ -138,7 +138,8 @@ export default class BlockSpecs {
         }
     }
 
-    static setupCategories () {
+
+static setupCategories () {
         return new Array(
             [
                 BlockSpecs.getImageFrom('assets/categories/StartOn', 'svg'),
@@ -153,6 +154,12 @@ export default class BlockSpecs {
                 'motion'
             ],
             [
+                BlockSpecs.getImageFrom('assets/categories/FlowOn', 'svg'),
+                BlockSpecs.getImageFrom('assets/categories/FlowOff', 'svg'),
+                window.Settings.categoryFlowColor,
+                'flow'
+            ],
+            [
                 BlockSpecs.getImageFrom('assets/categories/StopOn', 'svg'),
                 BlockSpecs.getImageFrom('assets/categories/StopOff', 'svg'),
                 window.Settings.categoryStopColor,
@@ -160,6 +167,7 @@ export default class BlockSpecs {
             ]
         );
     }
+
 
     // static setupCategories () {
     //     return new Array(
@@ -203,17 +211,26 @@ export default class BlockSpecs {
     // }
 
 
+
     static setupPalettesDef () {
+
         return [['onflag'],
             ['forward', 'back', 'up', 'down', 'right', 'left'],
+            ['wait', 'stopmine', 'repeat'],
             ['endstack', 'forever']];
-        // return [['onflag', 'onclick', 'ontouch', 'onmessage', 'message'],
-        //     ['forward', 'back', 'up', 'down', 'right', 'left', 'hop', 'home'],
-        //     ['say', 'space', 'grow', 'shrink', 'same', 'space', 'hide', 'show'],
-        //     [],
-        //     ['wait', 'stopmine', 'setspeed', 'repeat'],
-        //     ['endstack', 'forever']];
     }
+
+
+    // static setupPalettesDef () {
+
+
+    //     return [['onflag', 'onclick', 'ontouch', 'onmessage', 'message'],
+    //         ['forward', 'back', 'up', 'down', 'right', 'left', 'hop', 'home'],
+    //         ['say', 'space', 'grow', 'shrink', 'same', 'space', 'hide', 'show'],
+    //         [],
+    //         ['wait', 'stopmine', 'setspeed', 'repeat'],
+    //         ['endstack', 'forever']];
+    // }
 
     ///////////////////////////////
     // Data Structure
