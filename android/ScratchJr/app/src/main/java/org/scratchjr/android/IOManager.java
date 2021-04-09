@@ -296,7 +296,7 @@ public class IOManager {
         JSONObject thumbnail = json.optJSONObject("thumbnail");
         projectJson.put("thumbnail", thumbnail.toString());
         projectJson.put("version", "iOSv01");
-        projectJson.put("name", projectData.optString("name"));
+        projectJson.put("name", json.optString("name"));
         _databaseManager.insert("projects", projectJson);
 
         HashMap<String, JSONObject> spriteMap = new HashMap<>();
