@@ -229,16 +229,17 @@ NSMutableDictionary *soundtimers;
 + (NSString *) createZipForProject: (NSString *) projectData :(NSDictionary *) metadata :(NSString *) zipName {
     [self cleanZips];
     // create a temperary folder for project
-    NSString *tempDir = [self getTmpPath:[[[NSUUID alloc] init].UUIDString stringByAppendingString:@"/project"]].path;
+    NSString *tempDir = [self getTmpPath:[[NSUUID alloc] init].UUIDString].path;
+    NSString *projectDir = [tempDir stringByAppendingPathComponent:@"/project"];
     // NSLog(@"%@", tempDir);
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    [fileManager createDirectoryAtPath:tempDir withIntermediateDirectories:true attributes:nil error:nil];
+    [fileManager createDirectoryAtPath:projectDir withIntermediateDirectories:true attributes:nil error:nil];
     // save project.json
-    NSString *dataPath = [tempDir stringByAppendingPathComponent:@"data.json"];
+    NSString *dataPath = [projectDir stringByAppendingPathComponent:@"data.json"];
     [[[NSData alloc] initWithData: [projectData dataUsingEncoding:NSUTF8StringEncoding]] writeToFile:dataPath atomically:YES];
     // copy assets to target temp folder
     for (NSString *key in [metadata allKeys]) {
-        NSString *subDir = [tempDir stringByAppendingPathComponent:key];
+        NSString *subDir = [projectDir stringByAppendingPathComponent:key];
         [fileManager createDirectoryAtPath:subDir withIntermediateDirectories:true attributes:nil error:nil];
         for (NSString *file in [metadata valueForKey:key]) {
             // copy file to target folder
@@ -292,6 +293,7 @@ NSMutableDictionary *soundtimers;
     
     if (![fileManager fileExistsAtPath:projectPath]) {
         // project data file doesn't exist
+        [fileManager removeItemAtPath:tempDir error:nil];
         return;
     }
     NSData *data = [[NSData alloc] initWithContentsOfFile:projectPath];
@@ -299,6 +301,7 @@ NSMutableDictionary *soundtimers;
     NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingFragmentsAllowed error:&error];
     if (error != nil) {
         // invalid json
+        [fileManager removeItemAtPath:tempDir error:nil];
         return;
     }
     
