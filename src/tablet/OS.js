@@ -58,6 +58,11 @@ export default class OS {
         return;
     }
 
+    // Marty test
+    static martyTest (json, fcn) {
+        tabletInterface.martyTest(json, fcn);
+    }
+
     // Database functions
     static stmt (json, fcn) {
         tabletInterface.stmt(json, fcn);

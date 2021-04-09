@@ -48,6 +48,15 @@ export default class iOS {
         delete callbacks[id];
     }
 
+    static martyTest (json, fcn) {
+        (async () => {
+            var result = await iOS.call('marty_test', JSON.stringify(json));
+            if (typeof (fcn) !== 'undefined') {
+                fcn(result);
+            }
+        })();
+    }
+
     // Database functions
     static stmt (json, fcn) {
         (async () => {
