@@ -90,6 +90,12 @@ export default class UI {
     static leftPanel (div) {
         // sprite library
         var sl = newHTML('div', 'leftpanel', div);
+        var martyConn = newHTML('div', 'martyConnection', sl);
+        martyConn.setAttribute('id', 'martyConnection');
+        martyConn.ontouchstart = function(evt) {
+          document.getElementById('martyConnection').innerHTML = "pressed";
+          OS.martyTest({cmd: 'connect'});
+        }
         var flip = newHTML('div', 'flipme', sl);
         flip.setAttribute('id', 'flip');
         flip.ontouchstart = function (evt) {
@@ -735,7 +741,7 @@ export default class UI {
          // Green Flag
         UI.creatTopBarClicky(div, 'go', 'go on', UI.toggleRun);
 
-        if (!ScratchJr.isMartyMode()) { 
+        if (!ScratchJr.isMartyMode()) {
             if (ScratchJr.isEditable()) {
                 UI.creatTopBarClicky(div, 'addtext', 'addText', UI.addText);
                 UI.creatTopBarClicky(div, 'setbkg', 'changeBkg', UI.addBackground);
@@ -743,7 +749,7 @@ export default class UI {
 
             UI.creatTopBarClicky(div, 'grid', 'gridToggle off', UI.switchGrid);
             UI.creatTopBarClicky(div, 'full', 'fullscreen', ScratchJr.fullScreen);
-            
+
             UI.creatTopBarClicky(div, 'resetall', 'resetall', UI.resetAllSprites);
             UI.setShowGrid(false);
         }
@@ -811,7 +817,7 @@ export default class UI {
             //TODO WE SHOULD SET WATERMARK TO MARTY RATHER THAN HIDE IT
             hideHTML('watermark');
             ScratchJr.toggleMartyMode();
-        }  
+        }
     }
 
     static martyUIOff () {
@@ -833,7 +839,7 @@ export default class UI {
 
             ScratchJr.toggleMartyMode();
 
-        } 
+        }
     }
 
 
