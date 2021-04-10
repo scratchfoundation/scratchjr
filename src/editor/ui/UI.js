@@ -90,17 +90,22 @@ export default class UI {
     static leftPanel (div) {
         // sprite library
         var sl = newHTML('div', 'leftpanel', div);
-        var martyConn = newHTML('div', 'martyConnection', sl);
-        martyConn.setAttribute('id', 'martyConnection');
-        martyConn.ontouchstart = function(evt) {
-          document.getElementById('martyConnection').innerHTML = "pressed";
-          OS.martyTest({cmd: 'connect'});
-        }
         var flip = newHTML('div', 'flipme', sl);
         flip.setAttribute('id', 'flip');
         flip.ontouchstart = function (evt) {
             ScratchJr.saveAndFlip(evt);
         }; // move to project
+        var martyConn = newHTML('div', 'martyConnection', sl);
+        martyConn.setAttribute('id', 'martyConnection');
+        martyConn.ontouchstart = function(evt) {
+          //document.getElementById('martyConnection').innerHTML = "pressed";
+          const command = mv2.isConnected ? 'disconnect' : 'connect';
+          OS.martyCmd({cmd: command}, connCB);
+        }
+        function connCB(str){
+          mv2.updateConnectionInfo();
+        }
+
         UI.layoutLibrary(sl);
     }
 
@@ -821,10 +826,10 @@ export default class UI {
     }
 
     static martyUIOff () {
-        
+
         ScratchAudio.sndFX('keydown.wav');
         if(ScratchJr.isMartyMode()){
-            
+
             //left hand elements
             showHTML('libwrapper');
             //right hand elements

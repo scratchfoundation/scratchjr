@@ -59,8 +59,8 @@ export default class OS {
     }
 
     // Marty test
-    static martyTest (json, fcn) {
-        tabletInterface.martyTest(json, fcn);
+    static martyCmd (json, fcn) {
+        tabletInterface.martyCmd(json, fcn);
     }
 
     // Database functions
