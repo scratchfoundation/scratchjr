@@ -53,13 +53,9 @@ class Marty2 extends EventDispatcher {
         this.rssi = 0;
         this.servos = 0;
         this.accel = 0;
-        this.commandPromise = null;
-        this.onCommandReply = this.onCommandReply.bind(this);
-        this.sendCommand = this.sendCommand.bind(this);
-        this.saveScratchFile = this.saveScratchFile.bind(this);
-        this.loadScratchFile = this.loadScratchFile.bind(this);
-        this.listSavedScratchFiles = this.listSavedScratchFiles.bind(this);
-        this.deleteScratchFile = this.deleteScratchFile.bind(this);
+//        this.commandPromise = null;
+//        this.onCommandReply = this.onCommandReply.bind(this);
+//        this.sendCommand = this.sendCommand.bind(this);
         this.setRSSI = this.setRSSI.bind(this);
     }
 
