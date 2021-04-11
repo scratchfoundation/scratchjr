@@ -50,7 +50,7 @@ class Marty2 extends EventDispatcher {
         this.martyName = null;
         this.demo_sensor = 0;
         this.battRemainCapacityPercent = 0;
-        this.rssi = 0;
+        this.rssi = -100;
         this.servos = 0;
         this.accel = 0;
 //        this.commandPromise = null;
@@ -87,14 +87,89 @@ class Marty2 extends EventDispatcher {
     updateConnectionInfo(){
       let newHTML = "";
       if (this.isConnected){
-        newHTML = "Connected to " + this.martyName + "<br />Battery " + this.battRemainCapacityPercent + "%, signal " + this.rssi;
+        newHTML = this.martyName +  "<div style='display:flex;height:50%'>" + this.battery_render() + this.signal_render() + "</div>";
         document.getElementById('martyConnection').classList.add("martyConnected");
       } else {
-        newHTML = "Not connected";
+        newHTML = "Not connected<br /><span style='font-weight:normal'>Tap to connect</span>";
         document.getElementById('martyConnection').classList.remove("martyConnected");
       }
       document.getElementById('martyConnection').innerHTML = newHTML;
     }
+
+    battery_getBorderColor (batteryPercent) {
+        if (batteryPercent >= 70) {
+            return 'black';
+        }
+        if (batteryPercent >= 30) {
+            return 'black';
+        }
+        return 'rgb(255,69,0)';
+    }
+
+    battery_getFillColor (batteryPercent) {
+        if (batteryPercent >= 70) {
+            return 'lime';
+        }
+        if (batteryPercent >= 30) {
+            return 'orange';
+        }
+        return 'red';
+    }
+
+    battery_render () {
+        const batteryPercent = this.battRemainCapacityPercent;
+        const borderColor = this.battery_getBorderColor(batteryPercent);
+        const fillColor = this.battery_getFillColor(batteryPercent);
+        const flash = batteryPercent < 20 ? 'battery-flash' : '';
+        return `
+            <div
+                class="${flash} battery-container"
+            >
+                <div
+                    class="battery-cap"
+                    style="background-color: ${borderColor}"
+                ></div>
+                <div
+                    class="battery-cylinder"
+                    style="border-color: ${borderColor}"
+                >
+                    <div
+                        style="background-color: ${fillColor}; width: 100%; height: ${Math.round(batteryPercent)}%"
+                    ></div>
+                </div>
+            </div>`;
+    }
+
+    signal_render () {
+        const rssi = this.rssi;
+        const flash = rssi == 0 ? 'signal-flash': '';
+        return `
+            <div
+                class="${flash} signal-strength-container"
+            >
+                <div
+                    class="signal-bar"
+                    style="background-color: ${rssi >= -100 ? 'black' : 'lightgray'}; height: 20%"
+                ></div>
+                <div
+                    class="signal-bar"
+                    style="background-color: ${rssi >= -80 ? 'black' : 'lightgray'}; height: 40%"
+                ></div>
+                <div
+                    class="signal-bar"
+                    style="background-color: ${rssi >= -70 ? 'black' : 'lightgray'}; height: 60%"
+                ></div>
+                <div
+                    class="signal-bar"
+                    style="background-color: ${rssi >= -60 ? 'black' : 'lightgray'}; height: 80%"
+                ></div>
+                <div
+                    class="signal-bar"
+                    style="background-color: ${rssi >= -50 ? 'black' : 'lightgray'}; height: 100%"
+                ></div>
+            </div>`;
+    }
+
 }
 
 module.exports = Marty2;

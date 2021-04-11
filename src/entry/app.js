@@ -61,6 +61,8 @@ window.onload = () => {
         preprocessAndLoadCss('css', 'css/editormodal.css');
         preprocessAndLoadCss('css', 'css/librarymodal.css');
         preprocessAndLoadCss('css', 'css/paintlook.css');
+        preprocessAndLoadCss('css', 'css/marty-battery-level.css');
+        preprocessAndLoadCss('css', 'css/marty-signal-strength.css');
         entryFunction = () => OS.waitForInterface(editorMain);
         break;
     case 'gettingStarted':

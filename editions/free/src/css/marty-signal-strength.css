@@ -1,0 +1,27 @@
+.signal-flash {
+    opacity: 1;
+    animation: fade 2s linear infinite;
+}
+
+
+@keyframes fade {
+  0%,100% { opacity: 0 }
+  50% { opacity: 1 }
+}
+
+
+.signal-strength-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: center;
+    height: 100%;
+    padding: 5px;
+}
+
+
+.signal-bar {
+    width: 3px;
+    margin-left: 1px;
+    margin-right: 1px;
+}
