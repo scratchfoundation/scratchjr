@@ -402,6 +402,10 @@ export default class Prims {
     static Left (strip) {
         var s = strip.spr;
         var num = Number(strip.thisblock.getArgValue()) * 30;
+        alert('Left');
+
+        OS.martyTest({ cmd: 'left', steps: num });
+
         if (strip.count < 0) {
             strip.count = Math.floor(Math.abs(num) / s.speed * 0.25);
             strip.angleStep = -s.speed * 4 * Math.abs(num) / num;

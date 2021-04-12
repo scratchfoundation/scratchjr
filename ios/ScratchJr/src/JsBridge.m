@@ -31,6 +31,14 @@
     func(self, selector, request);
 }
 
+-(void) marty_cmd: (JsRequest *) request {
+  static int i = 0;
+  i++;
+  NSString* response = @"";
+  response = [NSString stringWithFormat:@"%d",i];
+  [request callback:response];
+}
+
 -(void) askForPermission: (JsRequest *) request
 {
     [RecordSound setPermission];

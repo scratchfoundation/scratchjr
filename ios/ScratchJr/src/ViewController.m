@@ -208,7 +208,7 @@ NSDate *startDate;
     NSString* page = [[[parts lastObject] componentsSeparatedByString:@"?"] firstObject];
 
     // Track pageview in Firebase?
-    [FIRAnalytics setScreenName:page screenClass:NULL];
+    //[FIRAnalytics setScreenName:page screenClass:NULL];
 }
 
 - (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {

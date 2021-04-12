@@ -95,6 +95,17 @@ export default class UI {
         flip.ontouchstart = function (evt) {
             ScratchJr.saveAndFlip(evt);
         }; // move to project
+        var martyConn = newHTML('div', 'martyConnection', sl);
+        martyConn.setAttribute('id', 'martyConnection');
+        martyConn.ontouchstart = function(evt) {
+          //document.getElementById('martyConnection').innerHTML = "pressed";
+          const command = mv2.isConnected ? 'disconnect' : 'connect';
+          OS.martyCmd({cmd: command}, connCB);
+        }
+        function connCB(str){
+          mv2.updateConnectionInfo();
+        }
+
         UI.layoutLibrary(sl);
     }
 
@@ -735,7 +746,7 @@ export default class UI {
          // Green Flag
         UI.creatTopBarClicky(div, 'go', 'go on', UI.toggleRun);
 
-        if (!ScratchJr.isMartyMode()) { 
+        if (!ScratchJr.isMartyMode()) {
             if (ScratchJr.isEditable()) {
                 UI.creatTopBarClicky(div, 'addtext', 'addText', UI.addText);
                 UI.creatTopBarClicky(div, 'setbkg', 'changeBkg', UI.addBackground);
@@ -743,7 +754,7 @@ export default class UI {
 
             UI.creatTopBarClicky(div, 'grid', 'gridToggle off', UI.switchGrid);
             UI.creatTopBarClicky(div, 'full', 'fullscreen', ScratchJr.fullScreen);
-            
+
             UI.creatTopBarClicky(div, 'resetall', 'resetall', UI.resetAllSprites);
             UI.setShowGrid(false);
         }
@@ -811,14 +822,14 @@ export default class UI {
             //TODO WE SHOULD SET WATERMARK TO MARTY RATHER THAN HIDE IT
             hideHTML('watermark');
             ScratchJr.toggleMartyMode();
-        }  
+        }
     }
 
     static martyUIOff () {
-        
+
         ScratchAudio.sndFX('keydown.wav');
         if(ScratchJr.isMartyMode()){
-            
+
             //left hand elements
             showHTML('libwrapper');
             //right hand elements
@@ -833,7 +844,7 @@ export default class UI {
 
             ScratchJr.toggleMartyMode();
 
-        } 
+        }
     }
 
 

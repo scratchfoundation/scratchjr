@@ -6,15 +6,43 @@
     padding: 0px;
     top: ${css_vh(0.13)};
     left: ${css_vh(1.69)};
-    background:  url('../assets/ui/fliplogo.svg');
+    background:  url('../assets/ui/scratchjr-home.svg');
+    background-repeat: no-repeat;
     background-size: 100.5%; /* webview pixelates the image unless we do this */
-    width: ${css_vh(29.95)};
+    /*width: ${css_vh(29.95)};*/
+    width: ${css_vh(9.95)};
     height: ${css_vh(8.20)};
 }
 
 .flipme:active {
     background:  url('../assets/ui/fliplogoPressed.svg');
     background-size: 100.5%;  /* webview pixelates the image unless we do this */
+}
+
+.martyConnection {
+    position: absolute;
+    margin: 0px;
+    padding: 0px;
+    background-color: #f9e3e5;
+    background-image: url('../assets/ui/marty-not-connected.svg');
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: contain;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 10px;
+    font-size: 1em;
+    font-weight: bold;
+    top: ${css_vh(0.13)};
+    left: ${css_vh(1.69+10)};
+    /*width: ${css_vh(29.95)};*/
+    width: ${css_vh(19.95)};
+    height: ${css_vh(5.20)};
+}
+
+.martyConnected {
+  background-color: #afdde9;
+  background-image: url('../assets/ui/marty-connected.svg');
 }
 
 .scrollbar {

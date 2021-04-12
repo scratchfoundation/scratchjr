@@ -19,6 +19,7 @@ import Runtime from './engine/Runtime';
 import Localization from '../utils/Localization';
 import {libInit, gn, scaleMultiplier, newHTML,
     isAndroid, isTablet, getUrlVars, CSSTransition3D, frame} from '../utils/lib';
+import Marty2 from '../utils/Marty2';
 
 let workingCanvas = document.createElement('canvas');
 let workingCanvas2 = document.createElement('canvas');
@@ -954,3 +955,4 @@ export default class ScratchJr {
 
 // Expose ScratchJr to global
 window.ScratchJr = ScratchJr;
+window.mv2 = new Marty2();
