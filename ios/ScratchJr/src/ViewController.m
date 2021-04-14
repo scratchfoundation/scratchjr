@@ -42,7 +42,6 @@ NSDate *startDate;
     [self reload];
     [self showSplash];
     [IO init: self];
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:NO];
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
     [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
 }
