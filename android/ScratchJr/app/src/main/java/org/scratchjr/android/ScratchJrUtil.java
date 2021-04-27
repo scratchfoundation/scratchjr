@@ -119,11 +119,11 @@ public class ScratchJrUtil {
      */
     public static boolean zipFileAtPath(String sourcePath, String toLocation) {
         File sourceFile = new File(sourcePath);
-        if (sourceFile.exists()) {
-            sourceFile.delete();
-        }
         try {
             BufferedInputStream origin;
+            // we don't need to remove file at `toLocation`
+            // because `FileOutputStream` will overwrite the file
+            // if no `append` parameter is passed
             FileOutputStream dest = new FileOutputStream(toLocation);
             ZipOutputStream out = new ZipOutputStream(new BufferedOutputStream(
                 dest));
