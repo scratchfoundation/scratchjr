@@ -347,7 +347,7 @@ export default class iOS {
     // Sharing
     ///////////////
 
-    static createZipForProject(projectData, metadata, name, fcn) {
+    static createZipForProject (projectData, metadata, name, fcn) {
         (async () => {
             const fullName = await iOS.call('createZipForProject', projectData, metadata, name);
             if (fcn) {

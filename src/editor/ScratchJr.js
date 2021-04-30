@@ -902,16 +902,13 @@ export default class ScratchJr {
         return str;
     }
 
-    static makeThumb(svgName, width, height) {
+    static makeThumb (svgName, width, height) {
         IO.getAsset(svgName, function (svgDataUrl) {
             var svgBase64 = svgDataUrl.split(',')[1];
             var dataurl = IO.getThumbnail(atob(svgBase64), width, height, 120, 90);
             var pngBase64 = dataurl.split(',')[1];
             var name = svgName.split('.')[0];
-            OS.setmedianame(pngBase64, name, 'png', function () {
-                // we don't need result here.
-                console.log(`thumbnail for ${svgName} generated.`)
-            });
+            OS.setmedianame(pngBase64, name, 'png');
         });
     }
 

@@ -221,9 +221,9 @@ export default class Android {
     // Sharing
     ///////////////
 
-    static createZipForProject(projectData, metadata, name, fcn) {
+    static createZipForProject (projectData, metadata, name, fcn) {
         const fullName = AndroidInterface.createZipForProject(projectData, JSON.stringify(metadata), name);
-        console.log(fullName);
+        // console.log(fullName);
         if (fcn) {
             fcn(fullName);
         }

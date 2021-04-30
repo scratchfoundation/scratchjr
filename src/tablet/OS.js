@@ -217,7 +217,7 @@ export default class OS {
     // Sharing
     ///////////////
 
-    static createZipForProject(projectData, metadata, name, fcn) {
+    static createZipForProject (projectData, metadata, name, fcn) {
         tabletInterface.createZipForProject(projectData, metadata, name, fcn);
     }
 

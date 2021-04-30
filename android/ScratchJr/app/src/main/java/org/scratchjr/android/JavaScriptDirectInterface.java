@@ -636,7 +636,7 @@ public class JavaScriptDirectInterface {
         // create zip file
         String extension = ScratchJrUtil.getExtension();
         String fullName = name + extension;
-        ScratchJrUtil.zipFileAtPath(
+        ScratchJrUtil.zipProject(
             projectFolder.getAbsolutePath(),
             _activity.getCacheDir() + File.separator + fullName
         );

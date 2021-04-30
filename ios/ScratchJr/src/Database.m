@@ -54,6 +54,11 @@ NSString* dberror() {return [NSString stringWithFormat:@"SQL error: %s", sqlite3
     return res;
 }
 
+/**
+ * @brief Run SQL in database, This is mostly called from JavaScript
+ * @param body is encoded JSON with the sql statment `stmt` and `values`
+ * @return id of the new created record or error string
+ */
 + (NSString*)stmt:(NSString *)body {
     NSData* data = [body dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:data options: 0  error: nil];
@@ -64,6 +69,12 @@ NSString* dberror() {return [NSString stringWithFormat:@"SQL error: %s", sqlite3
     return [Database stmt:stmtstr with:values];
 }
 
+/**
+ * @brief Run SQL in the database
+ * @param stmtstr sql statment string
+ * @param values sql parameters that will be bound to statement
+ * @return id of the new created record or error string
+ */
 + (NSString*) stmt: (NSString *)stmtstr with:(NSArray *) values {
     sqlite3_stmt *stmt;
     // NSLog(@"stmt %@", stmtstr);
@@ -130,6 +141,12 @@ NSString* dberror() {return [NSString stringWithFormat:@"SQL error: %s", sqlite3
     return (NSDictionary*) result;
 }
 
+/**
+ * @brief Add a new record to the table
+ * @param table name of the table
+ * @param data key and value pairs
+ * @return id of the new created record or error string
+ */
 + (NSString *)insert:(NSString *)table with:(NSDictionary *)data {
     NSString *keys = [[data allKeys] componentsJoinedByString:@","];
     NSMutableArray *placeholders = [[NSMutableArray alloc] init];
@@ -142,5 +159,3 @@ NSString* dberror() {return [NSString stringWithFormat:@"SQL error: %s", sqlite3
 }
 
 @end
-
-

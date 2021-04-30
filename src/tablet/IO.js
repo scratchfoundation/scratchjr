@@ -1,16 +1,12 @@
 import OS from './OS';
 import MediaLib from './MediaLib';
-import {setCanvasSize, drawThumbnail, gn} from '../utils/lib';
-import Lobby from '../lobby/Lobby';
+import {setCanvasSize, drawThumbnail} from '../utils/lib';
 import SVG2Canvas from '../utils/SVG2Canvas';
 
 const database = 'projects';
 const collectLibraryAssets = false;
 
 // Sharing state
-let zipFile = null;
-let zipAssetsExpected = 0;
-let zipAssetsActual = 0;
 let zipFileName = '';
 let shareName = '';
 

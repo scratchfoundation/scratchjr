@@ -330,7 +330,7 @@ export default class Lobby {
         }
     }
 
-    static refresh() {
+    static refresh () {
         if (gn('hometab') !== null) { // Check if we're on the lobby page
             Lobby.setPage('home');
         }

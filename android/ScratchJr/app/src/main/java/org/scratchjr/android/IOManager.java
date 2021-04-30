@@ -343,7 +343,7 @@ public class IOManager {
             String statement = String.format("SELECT id FROM %s WHERE md5 = ?", table);
             JSONArray rows = _databaseManager.query(statement, new String[]{fileName});
             if (rows.length() > 0) {
-                Log.e(LOG_TAG, "asset for " + fileName + "exists");
+                Log.e(LOG_TAG, "asset for " + fileName + " exists");
                 continue;
             }
             String pngName = fileName.replace(".svg", ".png");
