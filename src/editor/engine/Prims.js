@@ -3,6 +3,7 @@ import ScratchAudio from '../../utils/ScratchAudio';
 import Grid from '../ui/Grid';
 import Vector from '../../geom/Vector';
 import {gn} from '../../utils/lib';
+import OS from '../../tablet/OS';
 
 let tinterval = 1;
 let hopList = [-48, -30, -22, -14, -6, 0, 6, 14, 22, 30, 48];
@@ -383,6 +384,9 @@ export default class Prims {
     static Right (strip) {
         var s = strip.spr;
         var num = Number(strip.thisblock.getArgValue()) * 30;
+
+        OS.martyCmd({ cmd: 'rotate_right', steps: num });
+
         if (strip.count < 0) {
             strip.count = Math.floor(Math.abs(num) / s.speed * 0.25);
             strip.angleStep = s.speed * 4 * Math.abs(num) / num;
@@ -402,9 +406,8 @@ export default class Prims {
     static Left (strip) {
         var s = strip.spr;
         var num = Number(strip.thisblock.getArgValue()) * 30;
-        alert('Left');
 
-        OS.martyTest({ cmd: 'left', steps: num });
+        OS.martyCmd({ cmd: 'rotate_left', steps: num });
 
         if (strip.count < 0) {
             strip.count = Math.floor(Math.abs(num) / s.speed * 0.25);

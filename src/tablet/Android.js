@@ -21,6 +21,15 @@ export default class Android {
         }
     }
 
+    // marty functions
+    static martyCmd (json, fcn) {
+        const result = AndroidInterface.marty_cmd(JSON.stringify(json));
+        if (typeof (fcn) !== 'undefined') {
+            fcn(result);
+        }
+    }
+
+
     // IO functions
 
     static cleanassets (ft, fcn) {
