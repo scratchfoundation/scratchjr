@@ -64,9 +64,11 @@ PODS:
     - nanopb/encode (= 0.3.901)
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
+  - SSZipArchive (2.1.5)
 
 DEPENDENCIES:
   - Firebase/Analytics
+  - SSZipArchive (~> 2.1.4)
 
 SPEC REPOS:
   trunk:
@@ -81,6 +83,7 @@ SPEC REPOS:
     - GoogleDataTransportCCTSupport
     - GoogleUtilities
     - nanopb
+    - SSZipArchive
 
 SPEC CHECKSUMS:
   Firebase: 5e6b7b12bf9adb90986688edc06b156c37e109cd
@@ -94,7 +97,8 @@ SPEC CHECKSUMS:
   GoogleDataTransportCCTSupport: f6ab1962e9dc05ab1fb938b795e5b310209edeec
   GoogleUtilities: f895fde57977df4e0233edda0dbeac490e3703b6
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
+  SSZipArchive: cefe1364104a0231268a5deb8495bdf2861f52f0
 
-PODFILE CHECKSUM: d5c223883d3d06483e7e9d419cc9560fba5781d5
+PODFILE CHECKSUM: 43eaf7714849e36c6216d378a51f3dc168eda736
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.3

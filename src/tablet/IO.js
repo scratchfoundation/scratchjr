@@ -1,17 +1,12 @@
 import OS from './OS';
 import MediaLib from './MediaLib';
-import JSZip from 'jszip';
-import {setCanvasSize, drawThumbnail, gn} from '../utils/lib';
-import Lobby from '../lobby/Lobby';
+import {setCanvasSize, drawThumbnail} from '../utils/lib';
 import SVG2Canvas from '../utils/SVG2Canvas';
 
 const database = 'projects';
 const collectLibraryAssets = false;
 
 // Sharing state
-let zipFile = null;
-let zipAssetsExpected = 0;
-let zipAssetsActual = 0;
 let zipFileName = '';
 let shareName = '';
 
@@ -298,7 +293,7 @@ export default class IO {
     // Sharing
     ////////////////////
 
-    static zipProject (projectReference, finished) {
+    static compressProject (projectReference, finished) {
         IO.getObject(projectReference, function (projectFromDB) {
             var projectMetadata = {
                 'thumbnails': [],
@@ -372,59 +367,6 @@ export default class IO {
                 }
             }
 
-            // Get the media in projectMetadata and add it to a zip file
-            zipFile = new JSZip();
-            zipFile.folder('project');
-
-            var projectDataForZip = JSON.stringify(jsonData);
-            zipFile.file('project/data.json', projectDataForZip, {});
-
-            zipAssetsExpected = 0;
-            zipAssetsActual = 0;
-
-            // Generic function for adding media to the zip file
-            var addMediaToZip = function (folder, md5) {
-                var addB64ToZip = function (b64data) {
-                    zipFile.file('project/' + folder + '/' + md5, b64data, {
-                        base64: true,
-                        createFolders: true
-                    });
-                    zipAssetsActual++;
-                };
-                // Determine if the md5 is a MediaLib file or a user one, and download it appropriately
-                // See also, Sprite.getAsset
-                if (md5 in MediaLib.keys) {
-                    // Library character
-                    IO.requestFromServer(MediaLib.path + md5, function (raw) {
-                        addB64ToZip(btoa(raw));
-                    });
-                } else {
-                    // User file
-                    OS.getmedia(md5, addB64ToZip);
-                }
-            };
-
-            // Add each type of media
-            for (var j = 0; j < projectMetadata.thumbnails.length; j++) {
-                addMediaToZip('thumbnails', projectMetadata.thumbnails[j]);
-                zipAssetsExpected++;
-            }
-
-            for (var k = 0; k < projectMetadata.characters.length; k++) {
-                addMediaToZip('characters', projectMetadata.characters[k]);
-                zipAssetsExpected++;
-            }
-
-            for (var l = 0; l < projectMetadata.backgrounds.length; l++) {
-                addMediaToZip('backgrounds', projectMetadata.backgrounds[l]);
-                zipAssetsExpected++;
-            }
-
-            for (var m = 0; m < projectMetadata.sounds.length; m++) {
-                addMediaToZip('sounds', projectMetadata.sounds[m]);
-                zipAssetsExpected++;
-            }
-
             // Now the UI should wait for actual media count to equal expected media count
             // This could pause if getmedia takes a long time, for example,
             // if we have many large sprites or large sounds
@@ -446,16 +388,10 @@ export default class IO {
                 .replace(windowsTrailingRe, '_');
             shareName = jsonData.name;
 
-            function checkStatus () {
-                if ((zipAssetsActual / zipAssetsExpected) == 1) {
-                    finished(zipFile.generate({
-                        'compression': 'STORE'
-                    }));
-                } else {
-                    setTimeout(checkStatus, 200);
-                }
-            }
-            checkStatus();
+            // create zip natively
+            OS.createZipForProject(JSON.stringify(jsonData), projectMetadata, zipFileName, function (name) {
+                finished(name);
+            });
         });
     }
 
@@ -518,202 +454,4 @@ export default class IO {
         });
     }
 
-    // Receive a base64-encoded zip from iOS (upon open a project)
-    static loadProjectFromSjr (b64data) {
-        // Together, these two provide a "progress" indication
-        // that lets us know when to refresh the lobby (when sE/sA = 1)
-        var saveExpected = 0; // How many assets we expect to save - updated as we process the zip
-        var saveActual = 0; // How many assets actually saved - updated as we make IO saves
-
-        var receivedZip = JSZip();
-        receivedZip.load(b64data, {
-            'base64': true
-        });
-
-        // To store character MD5 -> character name map
-        // The character name is stored in the project JSON; when we load
-        // the actual SVG asset, we need the associated name for storage in the DB
-        var characterNames = {};
-
-        // First find the data.json project file
-        receivedZip.filter(function (relativePath, file) {
-            if (file.dir) {
-                return;
-            }
-            var fullName = relativePath.split('/').pop();
-            if (fullName == 'data.json') {
-                var jsonData = JSON.parse(file.asText());
-
-                // To require an upgrade, change the major version numbers in .html files and here...
-                var currentVersion = 1;
-                var projectVersion = parseInt(jsonData.version.replace('iOSv', '')) || 0;
-
-                if (projectVersion > currentVersion) {
-                    throw new Error('Project created in a new version of ScratchJr. Please upgrade ScratchJr.');
-                }
-
-                IO.uniqueProjectName(jsonData, function (jsonData) {
-                    jsonData.isgift = '1'; // Project will display with a bow and ribbon
-                    IO.createProject(jsonData, function () {});
-                });
-
-                // Build map of character filename -> character name
-                var projectData = jsonData.json;
-                for (var p = 0; p < projectData.pages.length; p++) {
-                    var pageReference = projectData.pages[p];
-                    var page = projectData[pageReference];
-                    for (var s = 0; s < page.sprites.length; s++) {
-                        var spriteReference = page.sprites[s];
-                        var sprite = page[spriteReference];
-                        // Store a database-friendly sprite name
-                        if (sprite.type == 'sprite') {
-                            characterNames[sprite.md5] = (
-                                ((unescape(sprite.name)).replace(/[0-9]/g, '')).replace(/\s*/g, '')
-                            );
-                        }
-                    }
-                }
-            }
-        });
-
-        // Filter out each asset type for storage
-        receivedZip.filter(function (relativePath, file) {
-            if (file.dir) {
-                return;
-            }
-            saveExpected++; // We expect to save something for each non-directory
-
-            var subFolder = relativePath.split('/')[1]; // should be {backgrounds, characters, thumbnails, sounds}
-
-            // Filename processing
-            var fullName = relativePath.split('/').pop(); // e.g. Cat.svg
-            var name = fullName.split('.')[0]; // e.g. Cat
-            var ext = fullName.split('.').pop(); // e.g. svg
-
-            if (!name || !ext) {
-                return;
-            }
-
-            // Don't save items we already have in the MediaLib
-            if (fullName in MediaLib.keys) {
-                saveActual++;
-                return;
-            }
-
-            // File data and base64-encoded data
-            var data = file.asBinary();
-            var b2data = btoa(data);
-
-            if (subFolder == 'thumbnails' || subFolder == 'sounds') {
-                // Save these immediately to the filesystem - no additional processing necessary
-                OS.setmedianame(b2data, name, ext, function () {
-                    saveActual++;
-                });
-            } else if (subFolder == 'characters') {
-                // This code is messy - needs a refactor sometime for all the database calls/duplication for bkgs...
-
-                // Save the character, generate its thumbnail, and add entry to the database
-                OS.setmedianame(b2data, name, ext, function () { // Saves the SVG
-                    // Parse SVG to determine width/height
-                    var svgParser = new DOMParser().parseFromString(data, 'text/xml');
-                    var width = svgParser.getElementsByTagName('svg')[0].width.baseVal.value;
-                    var height = svgParser.getElementsByTagName('svg')[0].height.baseVal.value;
-                    var scale = '0.5'; // fixed value - see PaintIO
-
-                    IO.getImagesInSVG(data, gotSVGImages);
-
-                    function gotSVGImages () {
-                        var thumbnailDataURL = IO.getThumbnail(data, width, height, 120, 90);
-
-                        var thumbnailPngBase64 = thumbnailDataURL.split(',')[1];
-
-                        var charName = characterNames[fullName];
-
-                        OS.setmedia(thumbnailPngBase64, 'png', function (thumbnailMD5) {
-                            // Sprite thumbnail is saved - save character to the DB
-
-                            // First ensure that this character doesn't already exist in the exact form
-                            var json = {};
-                            json.cond = ('ext = ? AND md5 = ? AND altmd5 = ? AND name = ? ' +
-                                'AND scale = ? AND width = ? AND height = ?');
-                            json.items = ['*'];
-                            json.values = ['svg', fullName, thumbnailMD5,
-                                charName, scale, width.toString(), height.toString()];
-                            json.order = 'ctime desc';
-                            IO.query('usershapes', json, function (results) {
-                                results = JSON.parse(results);
-                                if (results.length == 0) {
-                                    // This character doesn't already exist - insert it
-                                    var json = {};
-                                    var keylist = ['scale', 'md5', 'altmd5',
-                                        'version', 'width', 'height', 'ext', 'name'];
-                                    var values = '?,?,?,?,?,?,?,?';
-                                    json.values = [scale, fullName, thumbnailMD5, 'iOSv01',
-                                        width.toString(), height.toString(), 'svg', charName];
-                                    json.stmt = 'insert into usershapes ('
-                                        + keylist.toString() + ') values (' + values + ')';
-
-                                    OS.stmt(json, function () {
-                                        saveActual++;
-                                    });
-                                } else {
-                                    saveActual++;
-                                }
-                            });
-                        });
-                    }
-                });
-            } else if (subFolder == 'backgrounds') {
-                // Same idea as characters, but the dimensions are fixed
-                OS.setmedianame(b2data, name, ext, function () {
-                    IO.getImagesInSVG(data, gotSVGImages);
-
-                    function gotSVGImages () {
-                        var thumbnailDataURL = IO.getThumbnail(data, 480, 360, 120, 90);
-                        var thumbnailPngBase64 = thumbnailDataURL.split(',')[1];
-                        OS.setmedia(thumbnailPngBase64, 'png', function (thumbnailMD5) {
-
-                            // First ensure that this bg doesn't already exist in the exact form
-                            var json = {};
-                            json.cond = 'ext = ? AND md5 = ? AND altmd5 = ?';
-                            json.items = ['*'];
-                            json.values = ['svg', fullName, thumbnailMD5];
-                            json.order = 'ctime desc';
-                            IO.query('userbkgs', json, function (results) {
-                                results = JSON.parse(results);
-                                if (results.length == 0) {
-                                    // Background is unique, insert into the library
-                                    var json = {};
-                                    var keylist = ['md5', 'altmd5', 'version', 'width', 'height', 'ext'];
-                                    var values = '?,?,?,?,?,?';
-                                    json.values = [fullName, thumbnailMD5, 'iOSv01', '480', '360', 'svg'];
-                                    json.stmt = 'insert into userbkgs (' + keylist.toString() +
-                                        ') values (' + values + ')';
-                                    OS.stmt(json, function () {
-                                        saveActual++;
-                                    });
-                                } else {
-                                    saveActual++;
-                                }
-                            });
-                        });
-                    }
-                });
-            } else {
-                saveActual++; // Ignore this file - someone messed with the SJR...
-            }
-        });
-
-        // For updating the Lobby UI - if we're on the lobby page when receiving a project, refresh it
-        function refreshLobby () {
-            if (gn('hometab') !== null) { // Check if we're on the lobby page
-                if (saveActual == saveExpected) {
-                    Lobby.setPage('home');
-                } else { // Waiting for assets to be saved
-                    setTimeout(refreshLobby, 100);
-                }
-            }
-        }
-        refreshLobby();
-    }
 }

@@ -1,5 +1,7 @@
 #import "ScratchJr.h"
+#import "NSDictionary+JSONString.h"
 #import <CommonCrypto/CommonDigest.h>
+#import <ZipArchive.h>
 ViewController* HTML;
 MFMailComposeViewController *emailDialog;
 NSMutableDictionary *mediastrings;
@@ -202,31 +204,257 @@ NSMutableDictionary *soundtimers;
     return @"1";
 }
 
-// Receive a .sjr file from inside the app.  Send using native UI - Airdrop or Email
++ (void) cleanZips{
+    NSString *dir = NSTemporaryDirectory();
+    NSError *error;
+    NSFileManager *filemgr = [NSFileManager defaultManager];
+    NSDirectoryEnumerator *dirEnumerator = [filemgr enumeratorAtURL:[NSURL fileURLWithPath:dir]
+                        includingPropertiesForKeys:@[NSURLNameKey]
+                        options:NSDirectoryEnumerationSkipsHiddenFiles | NSDirectoryEnumerationSkipsSubdirectoryDescendants
+                        errorHandler:nil];
+    
+    NSString* extension =  @".sjr";
 
-+ (NSString*) sendSjrUsingShareDialog:(NSString *)fullname :(NSString*)emailSubject :(NSString*)emailBody :(int)shareType :(NSString*)contents {
+    #if PBS
+        extension =  @".psjr";
+    #endif
+    for (NSURL *theURL in dirEnumerator) {
+        if ([theURL.lastPathComponent hasSuffix:extension]) {
+            NSLog(@"remove file %@", theURL.path);
+            [filemgr removeItemAtURL:theURL error:&error];
+        }
+    }
+}
 
++ (NSString *) createZipForProject: (NSString *) projectData :(NSDictionary *) metadata :(NSString *) zipName {
+    [self cleanZips];
+    // create a temperary folder for project
+    NSString *tempDir = [self getTmpPath:[[NSUUID alloc] init].UUIDString].path;
+    NSString *projectDir = [tempDir stringByAppendingPathComponent:@"/project"];
+    // NSLog(@"%@", tempDir);
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    [fileManager createDirectoryAtPath:projectDir withIntermediateDirectories:true attributes:nil error:nil];
+    // save project.json
+    NSString *dataPath = [projectDir stringByAppendingPathComponent:@"data.json"];
+    [[[NSData alloc] initWithData: [projectData dataUsingEncoding:NSUTF8StringEncoding]] writeToFile:dataPath atomically:YES];
+    // copy assets to target temp folder
+    for (NSString *key in [metadata allKeys]) {
+        NSString *subDir = [projectDir stringByAppendingPathComponent:key];
+        [fileManager createDirectoryAtPath:subDir withIntermediateDirectories:true attributes:nil error:nil];
+        for (NSString *file in [metadata valueForKey:key]) {
+            // copy file to target folder
+            // NSLog(@"%@ %@", key, file);
+            NSString *srcPath = [[IO getpath] stringByAppendingPathComponent:file];
+            NSString *toPath = [subDir stringByAppendingPathComponent:file];
+            if ([fileManager fileExistsAtPath:srcPath]) {
+                [fileManager copyItemAtPath:srcPath toPath:toPath error:nil];
+            }
+        }
+    }
+    
     NSString* extensionFormat =  @"%@.sjr";
 
     #if PBS
         extensionFormat =  @"%@.psjr";
     #endif
+    
+    NSString *fullName = [NSString stringWithFormat:extensionFormat, zipName];
+    NSString *zipPath = [self getTmpPath:fullName].path;
+    NSLog(@"target zip path %@", zipPath);
+    if ([fileManager fileExistsAtPath:zipPath]) {
+        [fileManager removeItemAtPath:zipPath error:nil];
+    }
+    [SSZipArchive createZipFileAtPath:zipPath withContentsOfDirectory: tempDir];
+    // delete temp folder
+    [fileManager removeItemAtPath:tempDir error:nil];
+    return fullName;
+}
 
-    NSString *filename = [NSString stringWithFormat:extensionFormat, fullname];
-    NSURL *url = [self getDocumentPath:filename];
-    NSData *plaindata = [IO decodeBase64:contents];
-    BOOL ok =  [plaindata writeToURL:url atomically:NO];
+// Receive a .sjr file from inside the app.  Send using native UI - Airdrop or Email
 
-    if (ok) {
-        if (shareType == 0) {
-            [HTML showShareEmail:url withName:filename withSubject:emailSubject withBody:emailBody];
-        } else {
-            [HTML showShareAirdrop:url];
-        }
++ (NSString*) sendSjrUsingShareDialog:(NSString *)fileName :(NSString*)emailSubject :(NSString*)emailBody :(int)shareType {
+    NSURL *url = [self getTmpPath:fileName];
+    if (shareType == 0) {
+        [HTML showShareEmail:url withName:fileName withSubject:emailSubject withBody:emailBody];
     } else {
-        NSLog(@"couldn't save file");
+        [HTML showShareAirdrop:url];
     }
     return @"1";
+}
+
++ (void) receiveProject: (NSURL *)url {
+    NSString *tempDir = [[IO getTmpPath:[[NSUUID alloc] init].UUIDString].path stringByAppendingString:@"/"];
+    // uncompress
+    [SSZipArchive unzipFileAtPath:url.path toDestination:tempDir];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    // remove zip
+    [fileManager removeItemAtURL:url error:nil];
+    NSString *projectPath = [tempDir stringByAppendingString:@"/project/data.json"];
+    
+    if (![fileManager fileExistsAtPath:projectPath]) {
+        // project data file doesn't exist
+        [fileManager removeItemAtPath:tempDir error:nil];
+        return;
+    }
+    NSData *data = [[NSData alloc] initWithContentsOfFile:projectPath];
+    NSError *error = nil;
+    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingFragmentsAllowed error:&error];
+    if (error != nil) {
+        // invalid json
+        [fileManager removeItemAtPath:tempDir error:nil];
+        return;
+    }
+    [IO saveProjectData:dictionary];
+    NSDictionary *json = [dictionary valueForKey:@"json"];
+    
+    // find sprites saved in project data
+    NSMutableDictionary *sprites = [[NSMutableDictionary alloc] init];
+    for (NSString *name in [json valueForKey:@"pages"]) {
+        NSDictionary *page = [json valueForKey:name];
+        for (NSString *spriteName in [page valueForKey:@"sprites"]) {
+            NSDictionary *sprite = [page valueForKey:spriteName];
+            [sprites setValue:sprite forKey:[sprite valueForKey:@"md5"]];
+        }
+    }
+    
+    NSDirectoryEnumerator<NSString *> *enumerator = [fileManager enumeratorAtPath:tempDir];
+    NSString *path;
+    while ((path = [enumerator nextObject]) != nil) {
+        // we are only interested in images and sounds
+        if ([path hasSuffix:@".png"] || [path hasSuffix:@".wav"] || [path hasSuffix:@".svg"]) {
+            NSString *fileName = [path lastPathComponent];
+            // extract file
+            NSString *toPath = [[IO getpath] stringByAppendingPathComponent:fileName];
+            if (![fileManager fileExistsAtPath: toPath]) {
+                // NSLog(@"copy file to path %@", toPath);
+                NSString *fromPath = [tempDir stringByAppendingString:path];
+                [fileManager copyItemAtPath:fromPath toPath:toPath error:nil];
+            }
+            
+            NSArray *parts = [path componentsSeparatedByString:@"/"];
+            if (parts.count > 1) {
+                NSString *folder = parts[1];
+                if ([folder isEqual:@"characters"]) {
+                    NSDictionary *sprite = [sprites valueForKey:fileName];
+                    if (sprite != nil) {
+                        [IO processCharacter:sprite :fileName];
+                    }
+                } else if ([folder isEqual:@"backgrounds"]) {
+                    [IO processBackground:fileName];
+                }
+            }
+        }
+    }
+
+    // delete temp folder
+    [fileManager removeItemAtPath:tempDir error:nil];
+    // refresh lobby
+    [ViewController.webview evaluateJavaScript:@"Lobby.refresh();" completionHandler:nil];
+}
+
+/**
+ * @brief save project data to database
+ * @param dictionary project data
+ */
++ (void) saveProjectData:(NSDictionary*)dictionary {
+    NSMutableDictionary *project = [[NSMutableDictionary alloc] init];
+    [project setValue:@"1" forKey:@"isgift"];
+    [project setValue:@"NO" forKey:@"deleted"];
+    NSDictionary *json = [dictionary valueForKey:@"json"];
+    [project setValue:[json jsonString] forKey:@"json"];
+    NSDictionary *thumbnail = [dictionary valueForKey:@"thumbnail"];
+    [project setValue:[thumbnail jsonString] forKey:@"thumbnail"];
+    [project setValue:@"iOSv01" forKey:@"version"];
+    [project setValue:[dictionary valueForKey:@"name"] forKey:@"name"];
+    // save to database
+    [Database insert:@"projects" with:project];
+}
+
+/**
+ * @brief save character to database and make a thumb
+ * @param sprite character json data
+ * @param fileName character file name
+ */
++ (void) processCharacter:(NSDictionary*)sprite :(NSString*)fileName {
+    // save to database.
+    NSString *table = @"usershapes";
+    NSMutableArray *values = [[NSMutableArray alloc] init];
+    [values addObject:fileName];
+    // check database
+    NSString *stmt = [NSString stringWithFormat:@"SELECT id FROM %@ WHERE md5 = ?", table];
+    NSArray *res = [Database findDataIn:stmt with:values];
+    // TODO: if query encounter an error, res.count will also be greater than 0
+    if (res.count > 0) {
+        return;
+    }
+    // insert into database
+    NSLog(@"creating character %@", fileName);
+    NSMutableDictionary *asset = [[NSMutableDictionary alloc] init];
+    
+    NSString *pngName = [fileName stringByReplacingOccurrencesOfString:@".svg" withString:@".png"];
+    
+    [asset setValue:@"iOSv01" forKey:@"version"];
+    [asset setValue:pngName forKey:@"altmd5"];
+    [asset setValue:fileName forKey:@"md5"];
+    [asset setValue:[fileName pathExtension] forKey:@"ext"];
+    [asset setValue:[sprite valueForKey:@"id"] forKey:@"name"];
+    
+    // width, height and scale are long
+    // we need all values to be NSString
+    NSString *width = [NSString stringWithFormat:@"%@", [sprite valueForKey:@"w"]];
+    NSString *height = [NSString stringWithFormat:@"%@", [sprite valueForKey:@"h"]];
+    NSString *scale = [NSString stringWithFormat:@"%@", [sprite valueForKey:@"scale"]];
+    [asset setValue:width forKey:@"width"];
+    [asset setValue:height forKey:@"height"];
+    [asset setValue:scale forKey:@"scale"];
+    
+    // check thumbnail or create
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if (![fileManager fileExistsAtPath:[[IO getpath] stringByAppendingPathComponent:pngName]]) {
+        NSString *js = [NSString stringWithFormat:@"ScratchJr.makeThumb('%@', %@, %@);", fileName, width, height];
+        [ViewController.webview evaluateJavaScript:js completionHandler:nil];
+    }
+    [Database insert:table with:asset];
+}
+
+/**
+ * @brief save background to database and make a thumb
+ * @param fileName backgound file name
+ */
++ (void) processBackground:(NSString*)fileName {
+    NSString *table = @"userbkgs";
+    NSMutableArray *values = [[NSMutableArray alloc] init];
+    [values addObject:fileName];
+    // check database
+    NSString *stmt = [NSString stringWithFormat:@"SELECT id FROM %@ WHERE md5 = ?", table];
+    NSArray *res = [Database findDataIn:stmt with:values];
+    // TODO: if query encounter an error, res.count will also be greater than 0
+    if (res.count > 0) {
+        return;
+    }
+    // insert into database
+    NSLog(@"creating background %@", fileName);
+    NSMutableDictionary *asset = [[NSMutableDictionary alloc] init];
+    
+    NSString *pngName = [fileName stringByReplacingOccurrencesOfString:@".svg" withString:@".png"];
+    
+    [asset setValue:@"iOSv01" forKey:@"version"];
+    [asset setValue:pngName forKey:@"altmd5"];
+    [asset setValue:fileName forKey:@"md5"];
+    [asset setValue:[fileName pathExtension] forKey:@"ext"];
+
+    NSString *width = @"480";
+    NSString *height = @"360";
+    [asset setValue:width forKey:@"width"];
+    [asset setValue:height forKey:@"height"];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    // check thumbnail or create
+    if (![fileManager fileExistsAtPath:[[IO getpath] stringByAppendingPathComponent:pngName]]) {
+        NSString *js = [NSString stringWithFormat:@"ScratchJr.makeThumb('%@', %@, %@);", fileName, width, height];
+        [ViewController.webview evaluateJavaScript:js completionHandler:nil];
+    }
+    [Database insert:table with:asset];
 }
 
 ////////////////////////////
@@ -311,6 +539,10 @@ NSMutableDictionary *soundtimers;
 + (NSURL*)getDocumentPath:(NSString *)name{
     NSString *dir = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
     return  [NSURL fileURLWithPath: [dir stringByAppendingPathComponent: name]];
+}
+
++ (NSURL*)getTmpPath:(NSString *)name{
+    return  [NSURL fileURLWithPath: [NSTemporaryDirectory() stringByAppendingPathComponent: name]];
 }
 
 ///////////////////////////////

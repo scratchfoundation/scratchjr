@@ -161,30 +161,6 @@ NSDate *startDate;
     startDate = [NSDate date];
 }
 
-- (void) receiveProject:(NSString *)project{
-    NSString *callback = [NSString stringWithFormat:@"OS.loadProjectFromSjr('%@');", project];
-    WKWebView *webview = [ViewController webview];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [webview evaluateJavaScript:callback completionHandler:^(id result, NSError * _Nullable error) {
-            if (error != nil) {
-                return;
-            }
-            NSString *res = [NSString stringWithFormat:@"%@", result];
-            if ([res isEqualToString:@"1"]) {
-                // Success
-                return;
-            } else if ([res isEqualToString:@"0"]) {
-                // Processing error
-                return;
-            } else {
-                // Loading the project failed - reschedule for a time when the WebView has hopefully loaded
-                // A little bit roundabout, but simpler than queueing projects to be loaded
-                [self performSelector:@selector(receiveProject:) withObject:project afterDelay:2.0];
-            }
-        }];
-    });
-}
-
 - (BOOL)prefersStatusBarHidden{
     return YES;
 }

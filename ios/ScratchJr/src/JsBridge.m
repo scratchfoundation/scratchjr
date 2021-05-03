@@ -158,9 +158,17 @@
     [request callback:[ScratchJr captureimage:request.params[0]]];
 }
 
+-(void) createZipForProject: (JsRequest *) request {
+    NSString *projectData = request.params[0];
+    NSDictionary* metadata = request.params[1];
+    NSString* name = request.params[2];
+    NSString * fullName = [IO createZipForProject:projectData :metadata :name];
+    [request callback:fullName];
+}
+
 -(void) sendSjrUsingShareDialog: (JsRequest *) request {
     int shareType = [request.params[3] intValue];
-    NSString *res = [IO sendSjrUsingShareDialog:request.params[0] :request.params[1] :request.params[2] :shareType : request.params[4]];
+    NSString *res = [IO sendSjrUsingShareDialog:request.params[0] :request.params[1] :request.params[2] :shareType];
     [request callback:res];
 }
 
