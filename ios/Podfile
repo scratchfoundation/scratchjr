@@ -1,5 +1,5 @@
 # Uncomment this line to define a global platform for your project
-platform :ios, '8.0'
+platform :ios, '9.3'
 
 # add the Firebase pod for Google Analytics
 pod 'Firebase/Analytics'
@@ -10,4 +10,14 @@ end
 
 target 'ScratchJrTests' do
 
+end
+
+use_frameworks! :linkage => :static
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings.delete 'IPHONEOS_DEPLOYMENT_TARGET'
+    end
+  end
 end

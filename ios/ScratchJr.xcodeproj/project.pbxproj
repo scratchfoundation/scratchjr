@@ -13,11 +13,11 @@
 		204D80CC18A4140600ECBB8B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 204D80CA18A4140600ECBB8B /* InfoPlist.strings */; };
 		204D80CE18A4140600ECBB8B /* ScratchJrTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 204D80CD18A4140600ECBB8B /* ScratchJrTests.m */; };
 		40AF1E492619DB10000F853E /* NSDictionary+JSONString.m in Sources */ = {isa = PBXBuildFile; fileRef = 40AF1E482619DB10000F853E /* NSDictionary+JSONString.m */; };
-		7465F19843DCA9DDC62CC852 /* libPods-ScratchJr Free.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ACBA0233542F96AC72D4D7E /* libPods-ScratchJr Free.a */; };
+		4EAB81224584032A47662586 /* Pods_ScratchJrTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D12DC0AEC3637EED6B9594F2 /* Pods_ScratchJrTests.framework */; };
+		513B88D680021479BA878356 /* Pods_ScratchJr_Free.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E84856E56AAB5BE16AE59F5 /* Pods_ScratchJr_Free.framework */; };
 		8F8FEAA724E700FF00571717 /* JsBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8FEAA624E700FF00571717 /* JsBridge.m */; };
 		8F8FEAA924E703B000571717 /* JsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8FEAA824E703B000571717 /* JsRequest.m */; };
 		8F8FEAAB24E7065E00571717 /* View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8FEAAA24E7065E00571717 /* View.xib */; };
-		A7FDEB52BFEDCD9E4520FF89 /* libPods-ScratchJrTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 512C88D0E9938AB5972ACF38 /* libPods-ScratchJrTests.a */; };
 		D92D0F951C33381B00C573AD /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2001BEB918E237AE008E563F /* MessageUI.framework */; };
 		D92D0F961C33381B00C573AD /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20B2227818A53688003BDE44 /* AVFoundation.framework */; };
 		D92D0F971C33381B00C573AD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 204D80AC18A4140600ECBB8B /* UIKit.framework */; };
@@ -70,14 +70,14 @@
 		20B2227818A53688003BDE44 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		40AF1E472619DB10000F853E /* NSDictionary+JSONString.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+JSONString.h"; path = "src/NSDictionary+JSONString.h"; sourceTree = "<group>"; };
 		40AF1E482619DB10000F853E /* NSDictionary+JSONString.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+JSONString.m"; path = "src/NSDictionary+JSONString.m"; sourceTree = "<group>"; };
-		512C88D0E9938AB5972ACF38 /* libPods-ScratchJrTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ScratchJrTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A3230A01AEC02BC09345F16 /* Pods-ScratchJrTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScratchJrTests.debug.xcconfig"; path = "Target Support Files/Pods-ScratchJrTests/Pods-ScratchJrTests.debug.xcconfig"; sourceTree = "<group>"; };
 		72E2C9BF3BE9F67099F0180F /* Pods-ScratchJrTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScratchJrTests.release.xcconfig"; path = "Target Support Files/Pods-ScratchJrTests/Pods-ScratchJrTests.release.xcconfig"; sourceTree = "<group>"; };
-		7ACBA0233542F96AC72D4D7E /* libPods-ScratchJr Free.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ScratchJr Free.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E84856E56AAB5BE16AE59F5 /* Pods_ScratchJr_Free.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScratchJr_Free.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F8FEAA624E700FF00571717 /* JsBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = JsBridge.m; path = src/JsBridge.m; sourceTree = "<group>"; };
 		8F8FEAA824E703B000571717 /* JsRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = JsRequest.m; path = src/JsRequest.m; sourceTree = "<group>"; };
 		8F8FEAAA24E7065E00571717 /* View.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = View.xib; path = src/View.xib; sourceTree = "<group>"; };
 		97A526F2B60190BFC0BD3081 /* Pods-ScratchJr Free.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScratchJr Free.debug.xcconfig"; path = "Target Support Files/Pods-ScratchJr Free/Pods-ScratchJr Free.debug.xcconfig"; sourceTree = "<group>"; };
+		D12DC0AEC3637EED6B9594F2 /* Pods_ScratchJrTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScratchJrTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D905DF721C220BA6003DA34A /* free */ = {isa = PBXFileReference; lastKnownFileType = folder; name = free; path = ../editions/free; sourceTree = "<group>"; };
 		D92D0FA61C33381B00C573AD /* ScratchJr Free.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ScratchJr Free.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D92D0FB21C33469A00C573AD /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = src/AppDelegate.h; sourceTree = "<group>"; };
@@ -107,7 +107,7 @@
 				204D80C218A4140600ECBB8B /* XCTest.framework in Frameworks */,
 				204D80C418A4140600ECBB8B /* UIKit.framework in Frameworks */,
 				204D80C318A4140600ECBB8B /* Foundation.framework in Frameworks */,
-				A7FDEB52BFEDCD9E4520FF89 /* libPods-ScratchJrTests.a in Frameworks */,
+				4EAB81224584032A47662586 /* Pods_ScratchJrTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,7 +121,7 @@
 				D92D0F981C33381B00C573AD /* Foundation.framework in Frameworks */,
 				D92D0F991C33381B00C573AD /* CoreGraphics.framework in Frameworks */,
 				D92D0F9A1C33381B00C573AD /* libsqlite3.0.dylib in Frameworks */,
-				7465F19843DCA9DDC62CC852 /* libPods-ScratchJr Free.a in Frameworks */,
+				513B88D680021479BA878356 /* Pods_ScratchJr_Free.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -162,8 +162,8 @@
 				204D80AA18A4140600ECBB8B /* CoreGraphics.framework */,
 				204D80AC18A4140600ECBB8B /* UIKit.framework */,
 				204D80C118A4140600ECBB8B /* XCTest.framework */,
-				7ACBA0233542F96AC72D4D7E /* libPods-ScratchJr Free.a */,
-				512C88D0E9938AB5972ACF38 /* libPods-ScratchJrTests.a */,
+				7E84856E56AAB5BE16AE59F5 /* Pods_ScratchJr_Free.framework */,
+				D12DC0AEC3637EED6B9594F2 /* Pods_ScratchJrTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
