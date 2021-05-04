@@ -10,11 +10,6 @@ Platform | Status
 iOS      | Released in App Store
 Android  | Released in Google Play
 
-## Release Schedule
-
-As of this writing, the Android version now supports Android 4.4
-and above.
-
 ## Architecture Overview
 The diagram below illustrates the architecture of ScratchJr and
 how the iOS (functional), Android (functional) and pure HTML5 (future)
@@ -44,7 +39,7 @@ Regardless of whether you are doing iOS development or Android development, you 
 *These instructions assume you are building both versions on Mac OSX, with [Homebrew](http://brew.sh) installed.*
 
 1. Clone or update the code for this repo
-2. Ensure you have node and npm [installed](http://blog.npmjs.org/post/85484771375/how-to-install-npm).
+2. Ensure you have node and npm [installed](https://www.npmjs.com/get-npm).
 3. Run <tt>sudo easy_install pysvg</tt> to install python svg libraries
 4. Run <tt>brew install librsvg</tt> to install commandline `rsvg-convert`
 5. Run <tt>brew install imagemagick</tt> to install commandline `magick`
