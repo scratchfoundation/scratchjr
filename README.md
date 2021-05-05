@@ -3,7 +3,7 @@ This is the official git repository hosting the source code for the
 [ScratchJr](http://scratchjr.org/) project.
 
 ScratchJr can be built both for iOS and Android.
-A pure-web version is planned to follow at some point in the future.
+A purely web-based version is planned to follow at some point in the future.
 
 Platform | Status
 -------- | -------------
@@ -67,7 +67,7 @@ set up your own [app analytics](https://firebase.google.com/products/analytics) 
 2. In Android Studio, open the project <tt>android/ScratchJr</tt>
 3. Choose the appropriate flavor/build variant in Android Studio
 
-*Note: you can still do Android development on Ubuntu. Instead of the install commands above, run:*
+*Note: you can still do Android development on Ubuntu. Instead of the above install commands, run:*
 
 1. <tt>sudo easy_install pysvg</tt> to install python svg libraries
 2. <tt>sudo apt-get install librsvg2-bin</tt> to install rsvg-convert
