@@ -347,6 +347,14 @@ export default class iOS {
     // Sharing
     ///////////////
 
+    static createZipForProject (projectData, metadata, name, fcn) {
+        (async () => {
+            const fullName = await iOS.call('createZipForProject', projectData, metadata, name);
+            if (fcn) {
+                fcn(fullName);
+            }
+        })();
+    }
 
     // Called on the JS side to trigger native UI for project sharing.
     // fileName: name for the file to share
@@ -355,8 +363,8 @@ export default class iOS {
     // shareType: 0 for Email; 1 for Airdrop
     // b64data: base-64 encoded .SJR file to share
 
-    static sendSjrToShareDialog (fileName, emailSubject, emailBody, shareType, b64data) {
-        iOS.call('sendSjrUsingShareDialog', fileName, emailSubject, emailBody, shareType, b64data);
+    static sendSjrToShareDialog (fileName, emailSubject, emailBody, shareType) {
+        iOS.call('sendSjrUsingShareDialog', fileName, emailSubject, emailBody, shareType);
     }
 
     // Name of the device/iPad to display on the sharing dialog page

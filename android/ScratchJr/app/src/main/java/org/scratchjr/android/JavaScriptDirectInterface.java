@@ -1,12 +1,13 @@
 package org.scratchjr.android;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Iterator;
 import java.util.Locale;
+import java.util.UUID;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -574,34 +575,83 @@ public class JavaScriptDirectInterface {
     }
 
     @JavascriptInterface
-    public void sendSjrUsingShareDialog(String fileName, String emailSubject,
-                                        String emailBody, int shareType, String b64data) {
-        // Write a temporary file with the project data passed in from JS
-        File tempFile;
-
-        String extension;
-        String mimetype;
-        if (BuildConfig.APPLICATION_ID.equals("org.pbskids.scratchjr")) {
-            extension = ".psjr";
-            mimetype = "application/x-pbskids-scratchjr-project";
-        } else {
-            extension = ".sjr";
-            mimetype = "application/x-scratchjr-project";
-        }
-
+    public String createZipForProject(String projectData, String metadataJson, String name) {
+        // clean up old zip files
+        _activity.getIOManager().cleanZips();
+        // create a temp folder
+        File tempFolder = new File(_activity.getCacheDir() + File.separator + UUID.randomUUID().toString());
+        File projectFolder = new File(tempFolder.getPath() + File.separator + "project");
+        projectFolder.mkdirs();
+        // save data.json
+        // Log.d(LOG_TAG, "writing data.json");
+        File dataFile = new File(projectFolder.getAbsolutePath() + File.separator + "data.json");
         try {
-            fileName = fileName + extension;
-            tempFile = new File(_activity.getCacheDir() + File.separator + fileName);
-            tempFile.createNewFile();
-            BufferedOutputStream bw = new BufferedOutputStream(new FileOutputStream(tempFile));
-            // Decode and write the data
-            bw.write(Base64.decode(b64data, Base64.DEFAULT));
-            bw.flush();
-            bw.close();
+            FileOutputStream outputStream = new FileOutputStream(dataFile);
+            outputStream.write(projectData.getBytes());
+            outputStream.close();
         } catch (IOException e) {
-            return;
+            e.printStackTrace();
+            return "error";
         }
+        // Log.d(LOG_TAG, "writing data.json done");
+        // copy assets to target folder
+        JSONObject metadata;
+        try {
+            metadata = new JSONObject(metadataJson);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return "error";
+        }
+        // Log.d(LOG_TAG, "copying assets");
+        Iterator<String> keys = metadata.keys();
+        while (keys.hasNext()) {
+            String key = keys.next();
+            File folder = new File(projectFolder.getAbsolutePath() + File.separator + key);
+            if (!folder.exists()) {
+                folder.mkdir();
+            }
+            JSONArray files = metadata.optJSONArray(key);
+            if (files == null) {
+                continue;
+            }
+            for (int i = 0; i < files.length(); i++) {
+                String file = files.optString(i);
+                if (file == null) {
+                    continue;
+                }
+                File srcFile = new File(_activity.getFilesDir() + File.separator + file);
+                if (!srcFile.exists()) {
+                    Log.e(LOG_TAG, "src file not exists" + file);
+                    continue;
+                }
+                File targetFile = new File(folder.getAbsolutePath() + File.separator + file);
+                // Log.d(LOG_TAG, "copying assets" + file);
+                try {
+                    ScratchJrUtil.copyFile(srcFile, targetFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        // create zip file
+        String extension = ScratchJrUtil.getExtension();
+        String fullName = name + extension;
+        ScratchJrUtil.zipProject(
+            projectFolder.getAbsolutePath(),
+            _activity.getCacheDir() + File.separator + fullName
+        );
+        // remove the temp folder
+        ScratchJrUtil.removeFile(tempFolder);
+        return fullName;
+    }
 
+    @JavascriptInterface
+    public void sendSjrUsingShareDialog(String fileName, String emailSubject,
+                                        String emailBody, int shareType) {
+        // Write a temporary file with the project data passed in from JS
+        String mimetype = ScratchJrUtil.getMimeType();
+        File file = new File(_activity.getCacheDir() + File.separator + fileName);
+        Log.d(LOG_TAG, file.getAbsolutePath());
         final Intent it = new Intent(Intent.ACTION_SEND);
         it.setType(mimetype);
         it.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {});

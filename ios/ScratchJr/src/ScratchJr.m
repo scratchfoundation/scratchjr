@@ -6,6 +6,10 @@ CameraView* cameraView;
 CameraMask* cameraMask;
 NSString *cameraAvailable;
 
+// prepare for opening multiple files
+NSMutableArray *zipUrls;
+bool appReady = false;
+
 AVCaptureVideoPreviewLayer* captureVideoPreviewLayer;
 
 @implementation ScratchJr : NSObject
@@ -16,13 +20,39 @@ NSString *oncomplete;
 // Init functions
 /////////////////////////
 
-
 + (NSString *) hideSplash :(NSString *)body{
     UIImageView* splashScreen = [ViewController splashScreen];
+    appReady = true;
     dispatch_async(dispatch_get_main_queue(), ^{
         [splashScreen removeFromSuperview];
     });
+    // import projects
+    if (zipUrls != nil) {
+        while (zipUrls.count > 0) {
+            NSURL *url = zipUrls[0];
+            [zipUrls removeObjectAtIndex:0];
+            [ScratchJr importProject:url];
+        }
+    }
     return @"1";
+}
+
++ (void) receiveProject:(NSURL *)url {
+    if (zipUrls == nil) {
+        zipUrls = [[NSMutableArray alloc] init];
+    }
+    if (appReady) {
+        [ScratchJr importProject:url];
+    } else {
+        [zipUrls addObject:url];
+    }
+}
+
++ (void) importProject:(NSURL *) url {
+    NSLog(@"importing project at %@", url.absoluteString);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [IO receiveProject:url];
+    });
 }
 
 //////////////////////////

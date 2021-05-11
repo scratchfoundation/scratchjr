@@ -54,18 +54,35 @@ NSString* dberror() {return [NSString stringWithFormat:@"SQL error: %s", sqlite3
     return res;
 }
 
+/**
+ * @brief Run SQL in database, This is mostly called from JavaScript
+ * @param body is encoded JSON with the sql statment `stmt` and `values`
+ * @return id of the new created record or error string
+ */
 + (NSString*)stmt:(NSString *)body {
     NSData* data = [body dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:data options: 0  error: nil];
  //   NSLog(@"stmt %@", dict);
-    sqlite3_stmt *stmt;
+    
     NSString *stmtstr = [dict objectForKey: @"stmt"];
     NSArray *values = [dict objectForKey: @"values"];
- //   NSLog(@"stmt %@", stmtstr);
+    return [Database stmt:stmtstr with:values];
+}
+
+/**
+ * @brief Run SQL in the database
+ * @param stmtstr sql statment string
+ * @param values sql parameters that will be bound to statement
+ * @return id of the new created record or error string
+ */
++ (NSString*) stmt: (NSString *)stmtstr with:(NSArray *) values {
+    sqlite3_stmt *stmt;
+    // NSLog(@"stmt %@", stmtstr);
     if (!(sqlite3_prepare_v2(db, [stmtstr UTF8String], -1, &stmt, NULL) == SQLITE_OK)) return dberror();
-    for(int i=0;i<[values count];i++)
+    for(int i=0;i<[values count];i++) {
         sqlite3_bind_text(stmt, i+1, [[values objectAtIndex: i] UTF8String], -1, SQLITE_TRANSIENT);
- //   NSLog(@"stmt done %@", stmtstr);
+    }
+    // NSLog(@"stmt done %@", stmtstr);
     if (!(sqlite3_step(stmt) == SQLITE_DONE)) return dberror();
     sqlite3_finalize(stmt);
     return [NSString stringWithFormat:@"%lld",sqlite3_last_insert_rowid(db)];
@@ -124,6 +141,21 @@ NSString* dberror() {return [NSString stringWithFormat:@"SQL error: %s", sqlite3
     return (NSDictionary*) result;
 }
 
+/**
+ * @brief Add a new record to the table
+ * @param table name of the table
+ * @param data key and value pairs
+ * @return id of the new created record or error string
+ */
++ (NSString *)insert:(NSString *)table with:(NSDictionary *)data {
+    NSString *keys = [[data allKeys] componentsJoinedByString:@","];
+    NSMutableArray *placeholders = [[NSMutableArray alloc] init];
+    for (int i = 0; i < data.count; i++) {
+        [placeholders addObject:@"?"];
+    }
+    NSString *stmtstr = [NSString stringWithFormat:@"INSERT INTO %@ (%@) VALUES (%@)", table, keys, [placeholders componentsJoinedByString:@","]];
+    NSArray *values = [data allValues];
+    return [Database stmt:stmtstr with:values];
+}
+
 @end
-
-

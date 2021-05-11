@@ -63,10 +63,10 @@
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
 }
 
-- (BOOL) application:(UIApplication *)application openURL:(NSURL *) url sourceApplication:(NSString *) sourceApplication annotation:(id) annotation {
+- (BOOL) application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
     if (url) {
-        NSString *str = [IO encodeBase64: [[NSData alloc] initWithContentsOfURL:url]];
-        [(ViewController*) self.window.rootViewController receiveProject:str];
+        NSLog(@"openg url: %@", url.absoluteURL);
+        [ScratchJr receiveProject:url];
     }
     return YES;
 }

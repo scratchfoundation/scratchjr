@@ -272,13 +272,17 @@ export default class UI {
                 Alert.close();
 
                 // Package the project as a .sjr file
-                IO.zipProject(ScratchJr.currentProject, function (contents) {
+                IO.compressProject(ScratchJr.currentProject, function (fullName) {
                     ScratchJr.onHold = false; // Unfreeze the editing UI
                     var emailSubject = Localization.localize('SHARING_EMAIL_SUBJECT', {
                         PROJECT_NAME: IO.shareName
                     });
-                    OS.sendSjrToShareDialog(IO.zipFileName, emailSubject, Localization.localize('SHARING_EMAIL_TEXT'),
-                        shareType, contents);
+                    OS.sendSjrToShareDialog(
+                        fullName,
+                        emailSubject,
+                        Localization.localize('SHARING_EMAIL_TEXT'),
+                        shareType
+                    );
 
                     shareLoadingGif.style.visibility = 'hidden';
                 });
@@ -831,7 +835,10 @@ export default class UI {
             gn(list[i]).className = gn(list[i]).className + ' presentationmode';
             frame.appendChild(gn(list[i]));
         }
-        var scale = Math.min((w - (fullscreenScaleMultiplier * scaleMultiplier)) / gn('stage').owner.width, h / gn('stage').owner.height);
+        var scale = Math.min(
+            (w - (fullscreenScaleMultiplier * scaleMultiplier)) / gn('stage').owner.width,
+            h / gn('stage').owner.height
+        );
         var dx = Math.floor((w - (gn('stage').owner.width * scale)) / 2);
         var dy = Math.floor((h - (gn('stage').owner.height * scale)) / 2);
 

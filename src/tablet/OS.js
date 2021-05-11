@@ -217,6 +217,10 @@ export default class OS {
     // Sharing
     ///////////////
 
+    static createZipForProject (projectData, metadata, name, fcn) {
+        tabletInterface.createZipForProject(projectData, metadata, name, fcn);
+    }
+
 
     // Called on the JS side to trigger native UI for project sharing.
     // fileName: name for the file to share
