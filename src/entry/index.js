@@ -111,6 +111,7 @@ function indexSetAnalyticsPrefs () {
 function indexLoadStart () {
     indexHideSplash();
     showLogo();
+    showGear();
     gn('gettings').className = 'gettings show';
     gn('startcode').className = 'startcode show';
 
@@ -141,6 +142,14 @@ function hideLogo () {
 function showLogo () {
     gn('catface').className = 'catface show';
     gn('jrlogo').className = 'jrlogo show';
+}
+
+function hideGear () {
+    gn('gear').className = 'gear hide';
+}
+
+function showGear () {
+    gn('gear').className = 'gear show';
 }
 
 function indexAskPlace () {
@@ -227,6 +236,7 @@ function optionTouched (elem) {
 function indexShowQuestion (key) {
     indexHideSplash();
     hideLogo();
+    hideGear();
     var optionType = InitialOptions.optionTypeForKey(key);
     if (optionType === 'place_preference') {
         indexAskPlace();
