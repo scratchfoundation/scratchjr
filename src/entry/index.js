@@ -273,6 +273,15 @@ function indexShowQuestion (key) {
             }
             optionNum = optionNum + 1;
         });
+        // iPad mini has the minimum screen size, it can show 13 items in one column
+        // and we use 3 columns as default
+        if (optionNum > 13 * 5) {
+            gn('optionsList').style['column-count'] = 8;
+        } else if (optionNum > 13 * 3) {
+            gn('optionsList').style['column-count'] = 5;
+        } else {
+            gn('optionsList').style['column-count'] = 3;
+        }
         gn('optionsList').className = 'optionsList show';
     }
 }
