@@ -212,7 +212,6 @@ function optionSelected (elem) {
         key = parent.getAttribute('data-key');
         value = parent.getAttribute('data-value');
     }
-    console.log(key, value)
     // if we still don't have a key and value, something is wrong -- just go
     // to lobby
     if (!key && !value) {
