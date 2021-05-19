@@ -49,17 +49,20 @@ export default class Library {
         libFrame.className = 'libframe appear';
         libFrame.focus();
         selectedOne = undefined;
-        gn('okbut').ontouchstart = (type == 'costumes') ? Library.closeSpriteSelection : Library.closeBkgSelection;
+        gn('okbut').onclick = (type == 'costumes') ? Library.closeSpriteSelection : Library.closeBkgSelection;
         Library.clean();
         Library.createScrollPanel();
         Library.addThumbnails(type);
         window.ontouchstart = undefined;
         window.ontouchend = undefined;
+        window.onmousedown = undefined;
+        window.onmouseup = undefined;
         document.ontouchmove = undefined;
+        document.onmousemove = undefined;
         window.onresize = undefined;
 
         gn('library_paintme').style.opacity = 1;
-        gn('library_paintme').ontouchstart = Library.editResource;
+        gn('library_paintme').onclick = Library.editResource;
 
         // Set the back button callback
         ScratchJr.onBackButtonCallback.push(function () {
@@ -92,11 +95,11 @@ export default class Library {
         var buttons = newHTML('div', 'bkgbuttons', gn('libactions'));
         var paintme = newHTML('div', 'painticon', buttons);
         paintme.id = 'library_paintme';
-        paintme.ontouchstart = Library.editResource;
+        paintme.onclick = Library.editResource;
         var okbut = newHTML('div', 'okicon', buttons);
         okbut.setAttribute('id', 'okbut');
         var cancelbut = newHTML('div', 'cancelicon', buttons);
-        cancelbut.ontouchstart = Library.cancelPick;
+        cancelbut.onclick = Library.cancelPick;
     }
 
     static cancelPick (e) {
@@ -207,6 +210,9 @@ export default class Library {
         tb.ontouchstart = function (evt) {
             fcn(evt, tb);
         };
+        tb.onmousedown = function (evt) {
+            fcn(evt, tb);
+        };
         return tb;
     }
 
@@ -234,6 +240,9 @@ export default class Library {
         img.src = pngPath + IO.getFilename(md5) + '.png';
 
         tb.ontouchstart = function (evt) {
+            fcn(evt, tb);
+        };
+        tb.onmousedown = function (evt) {
             fcn(evt, tb);
         };
         return tb;
@@ -264,6 +273,9 @@ export default class Library {
         ctx.fillRect(0, 0, w, h);
         parent.appendChild(tb);
         tb.ontouchstart = function (evt) {
+            Library.selectAsset(evt, tb);
+        };
+        tb.onmousedown = function (evt) {
             Library.selectAsset(evt, tb);
         };
     }
@@ -326,10 +338,8 @@ export default class Library {
             }
             timeoutEvent = undefined;
             tb.ontouchend = undefined;
-            window.onmouseup = function () {
-                window.onmousemove = undefined;
-                window.onmouseup = undefined;
-            };
+            window.onmousemove = undefined;
+            window.onmouseup = undefined;
         }
         function clickMe (e, tb) {
             if (timeoutEvent) {
@@ -437,10 +447,10 @@ export default class Library {
             var thumbType = thumbID.substr(thumbID.length - 3);
             if (thumbType == 'png') {
                 gn('library_paintme').style.opacity = 0;
-                gn('library_paintme').ontouchstart = null;
+                gn('library_paintme').onclick = null;
             } else {
                 gn('library_paintme').style.opacity = 1;
-                gn('library_paintme').ontouchstart = Library.editResource;
+                gn('library_paintme').onclick = Library.editResource;
             }
 
             tb.className = 'assetbox on';

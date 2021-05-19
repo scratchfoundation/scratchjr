@@ -69,21 +69,18 @@ export default class Menu {
         } else {
             drawThumbnail(img, micon);
         }
-        if (isTablet) {
-            cs.ontouchstart = function (evt) {
-                handleTouchStart(evt);
-            };
-        } else {
-            cs.onmouseover = function (evt) {
-                Menu.highlightdot(evt);
-            };
-            cs.onmouseout = function (evt) {
-                Menu.unhighlightdot(evt);
-            };
-            cs.onmousedown = function (evt) {
-                fcn(evt, mu, block, c);
-            };
-        }
+        cs.ontouchstart = function (evt) {
+            handleTouchStart(evt);
+        };
+        cs.onmouseover = function (evt) {
+            Menu.highlightdot(evt);
+        };
+        cs.onmouseout = function (evt) {
+            Menu.unhighlightdot(evt);
+        };
+        cs.onmousedown = function (evt) {
+            fcn(evt, mu, block, c);
+        };
         function handleTouchStart (e) {
             if (isTablet && e.touches && (e.touches.length > 1)) {
                 return;

@@ -76,6 +76,7 @@ export function inappInterfaceGuide () {
         }
     };
     document.addEventListener('touchstart', switchHelp, false);
+    document.addEventListener('click', switchHelp, false);
 }
 
 export function inappPaintEditorGuide () {
@@ -126,6 +127,7 @@ export function inappPaintEditorGuide () {
         }
     };
     document.addEventListener('touchstart', switchHelp, false);
+    document.addEventListener('click', switchHelp, false);
 }
 
 export function inappBlocksGuide () {

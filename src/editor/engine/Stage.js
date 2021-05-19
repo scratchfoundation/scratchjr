@@ -31,6 +31,9 @@ export default class Stage {
         this.div.ontouchstart = function (evt) {
             me.mouseDown(evt);
         };
+        this.div.onmousedown = function (evt) {
+            me.mouseDown(evt);
+        };
         this.div.owner = this;
         this.currentZoom = 1;
         this.initialPoint = {
@@ -423,6 +426,12 @@ export default class Stage {
             me.mouseMove(evt);
         };
         window.ontouchend = function (evt) {
+            me.mouseUp(evt);
+        };
+        window.onmousemove = function (evt) {
+            me.mouseMove(evt);
+        };
+        window.onmouseup = function (evt) {
             me.mouseUp(evt);
         };
     }

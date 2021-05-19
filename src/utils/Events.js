@@ -211,15 +211,12 @@ export default class Events {
     }
 
     static clearEvents () {
-        if (isTablet) { // clearEvents
-            window.ontouchmove = undefined;
-            window.ontouchend = undefined;
-        } else {
-            window.onmousemove = function (e) {
-                e.preventDefault();
-            };
-            window.onmouseup = undefined;
-        }
+        window.ontouchmove = undefined;
+        window.ontouchend = undefined;
+        window.onmousemove = function (e) {
+            e.preventDefault();
+        };
+        window.onmouseup = undefined;
     }
 
     static performMouseUpAction (e) {

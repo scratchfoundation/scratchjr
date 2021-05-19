@@ -200,6 +200,7 @@ export default class Paint {
             Paint.initSprite(sw, sh);
         }
         window.ontouchstart = Paint.detectGesture;
+        window.onmousedown = Paint.detectGesture;
         window.ondevicemotion = undefined;
 
         // Set the back button callback
@@ -241,6 +242,8 @@ export default class Paint {
     static clearEvents (e) {
         window.ontouchmove = undefined;
         window.ontouchend = undefined;
+        window.onmousemove = undefined;
+        window.onmouseup = undefined;
         if (PaintAction.currentshape) {
             PaintAction.stopAction(e);
         }
@@ -269,6 +272,14 @@ export default class Paint {
             Paint.setCanvasTransform(currentZoom);
             PaintAction.clearEvents();
         };
+        window.onmousemove = function (evt) {
+            Paint.dragBackground(evt);
+        };
+        window.onmouseup = function () {
+            Paint.bounceBack();
+            Paint.setCanvasTransform(currentZoom);
+            PaintAction.clearEvents();
+        };
     }
 
     static pinchStart (e) {
@@ -280,10 +291,14 @@ export default class Paint {
         window.ontouchmove = function () {
             Paint.gestureStart(e);
         };
+        window.onmousemove = function () {
+            Paint.gestureStart(e);
+        };
     }
 
     static gestureStart (e) {
         window.ontouchmove = undefined;
+        window.onmousemove = undefined;
         var skipmodes = ['path', 'ellipse', 'rect'];
         if (skipmodes.indexOf(mode) > -1) {
             if (PaintAction.currentshape && PaintAction.currentshape.parentNode) {
@@ -298,6 +313,8 @@ export default class Paint {
         Events.clearDragAndDrop();
         window.ontouchmove = Paint.gestureChange;
         window.ontouchend = Paint.gestureEnd;
+        window.onmousemove = Paint.gestureChange;
+        window.onmouseup = Paint.gestureEnd;
     }
 
     static gestureChange (e) {
@@ -321,6 +338,8 @@ export default class Paint {
         e.preventDefault();
         window.ontouchmove = undefined;
         window.ontouchend = undefined;
+        window.onmousemove = undefined;
+        window.onmouseup = undefined;
         var scale = Math.min(maxZoom, Events.scaleStartsAt * Events.zoomScale(e));
         scale = Math.max(minZoom, scale);
         Paint.updateZoomScale(scale);
@@ -364,6 +383,7 @@ export default class Paint {
         window.ontouchmove = undefined;
         window.ontouchend = undefined;
         window.onmousemove = undefined;
+        window.onmouseup = undefined;
         Alert.close();
         Paint.clearWorkspace();
         PaintUndo.buffer = [];
@@ -600,11 +620,8 @@ export default class Paint {
     static checkMark (pt) {
         var clicky = newHTML('div', 'paintdone', pt);
         clicky.id = 'donecheck';
-        if (isTablet) {
-            clicky.ontouchstart = Paint.backToProject;
-        } else {
-            clicky.onmousedown = Paint.backToProject;
-        }
+        clicky.ontouchstart = Paint.backToProject;
+        clicky.onmousedown = Paint.backToProject;
     }
 
     static nameOfcostume (p) {
@@ -617,6 +634,7 @@ export default class Paint {
         ti.maxLength = 25;
         ti.firstTime = true;
         ti.ontouchstart = () => {};
+        ti.onmousedown = () => {};
         ti.onfocus = Paint.nameFocus;
         ti.onblur = Paint.nameBlur;
         ti.onkeypress = Paint.handleNamePress;
@@ -705,11 +723,8 @@ export default class Paint {
             var but = newHTML('div', 'element off', section);
             var icon = newHTML('div', 'tool ' + list[i] + ' off', but);
             icon.setAttribute('key', list[i]);
-            if (isTablet) {
-                icon.ontouchstart = Paint.setMode;
-            } else {
-                icon.onmousedown = Paint.setMode;
-            }
+            icon.ontouchstart = Paint.setMode;
+            icon.onmousedown = Paint.setMode;
         }
     }
 
@@ -719,7 +734,9 @@ export default class Paint {
         for (var i = 0; i < pensizes.length; i++) {
             var ps = newHTML('div', 'pensizeholder', section);
             ps.key = i;
-            ps.ontouchstart = function (e) {
+            ps.ontouchstart = setSize;
+            ps.onmousedown = setSize;
+            var setSize = function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 var n = Number(this.key);
@@ -785,6 +802,7 @@ export default class Paint {
             var icon = newHTML('div', 'tool ' + list[i] + ' off', but);
             icon.setAttribute('key', list[i]);
             icon.ontouchstart = Paint.setMode;
+            icon.onmousedown = Paint.setMode;
         }
     }
 
@@ -805,15 +823,18 @@ export default class Paint {
         }
 
         fc.ontouchstart = Paint.setMode;
+        fc.onmousedown = Paint.setMode;
         var captureContainer = newHTML('div', 'snapshot-container', gn('backdrop'));
         captureContainer.setAttribute('id', 'capture-container');
         var capture = newHTML('div', 'snapshot', captureContainer);
         capture.setAttribute('id', 'capture');
         capture.setAttribute('key', 'camerasnap');
         capture.ontouchstart = Paint.setMode;
+        capture.onmousedown = Paint.setMode;
         var cc = newHTML('div', 'cameraclose', topbar);
         cc.setAttribute('id', 'cameraclose');
         cc.ontouchstart = Paint.closeCameraMode;
+        cc.onmousedown = Paint.closeCameraMode;
     }
 
     static closeCameraMode () {
@@ -888,6 +909,7 @@ export default class Paint {
             Paint.setSplashColor(sf, splash, swatchlist[i]);
             Paint.addImageUrl(sf, splashshade);
             colour.ontouchstart = Paint.selectSwatch;
+            colour.onmousedown = Paint.selectSwatch;
         }
         Paint.setSwatchColor(gn('swatches').childNodes[swatchlist.indexOf('#1C1C1C')]);
     }

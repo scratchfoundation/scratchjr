@@ -25,6 +25,8 @@ export default class Home {
         div.setAttribute('id', 'scrollarea');
         frame.ontouchstart = Home.handleTouchStart;
         frame.ontouchend = Home.handleTouchEnd;
+        frame.onmousedown = Home.handleTouchStart;
+        frame.onmouseup = Home.handleTouchEnd;
         Home.displayYourProjects();
     }
 
@@ -57,6 +59,7 @@ export default class Home {
         }
         function holdit () {
             frame.ontouchmove = Home.handleMove;
+            frame.onmousemove = Home.handleMove;
             var repeat = function () {
                 if (Home.actionTarget && (Home.actionTarget.childElementCount > 2)) {
                     Home.actionTarget.childNodes[Home.actionTarget.childElementCount - 1].style.visibility = 'visible';
@@ -300,6 +303,9 @@ export default class Home {
         if (md5) {
             IO.getAsset(md5, drawMe);
         }
+        img.ondragstart = function () {
+            return false;
+        };
         function drawMe (url) {
             img.src = url;
         }
