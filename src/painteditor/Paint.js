@@ -225,16 +225,16 @@ export default class Paint {
     }
 
     static detectGesture (e) {
-        if (!e.touches) {
-            return;
-        }
         if (Camera.active) {
             return;
         }
         Paint.clearEvents(e);
         initialPoint = PaintAction.getScreenPt(e);
         deltaPoint = PaintAction.getScreenPt(e);
-        var n = Math.min(3, e.touches.length);
+        var n = 1;
+        if (e.touches) {
+            n = Math.min(3, e.touches.length);
+        }
         var cmdForGesture = [Paint.ignore, Paint.mouseDown, Paint.pinchStart, Paint.Scroll];
         cmdForGesture[n](e);
     }
@@ -734,8 +734,6 @@ export default class Paint {
         for (var i = 0; i < pensizes.length; i++) {
             var ps = newHTML('div', 'pensizeholder', section);
             ps.key = i;
-            ps.ontouchstart = setSize;
-            ps.onmousedown = setSize;
             var setSize = function (e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -743,6 +741,8 @@ export default class Paint {
                 strokewidth = pensizes[Number(this.key)];
                 Paint.selectPenSize(n);
             };
+            ps.ontouchstart = setSize;
+            ps.onmousedown = setSize;
             var c = newHTML('div', 'line t' + i, ps);
             Paint.drawPenSizeInColor(c);
         }

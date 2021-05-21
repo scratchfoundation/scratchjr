@@ -67,7 +67,7 @@ export default class Thumbs {
     }
 
     static pageMouseDown (e) {
-        if (isTablet && e.touches && (e.touches.length > 1)) {
+        if (e.touches && (e.touches.length > 1)) {
             return;
         }
         if (ScratchJr.onHold) {
@@ -353,15 +353,9 @@ export default class Thumbs {
         }
         img.setAttribute('class', 'unselectable');
         tb.setAttribute('id', 'emptypage');
-        if (isTablet) {
-            tb.ontouchstart = function (evt) {
-                Thumbs.clickOnEmptyPage(evt);
-            };
-        } else {
-            tb.onmousedown = function (evt) {
-                Thumbs.clickOnEmptyPage(evt);
-            };
-        }
+        tb.onclick = function (evt) {
+            Thumbs.clickOnEmptyPage(evt);
+        };
         return tb;
     }
 
