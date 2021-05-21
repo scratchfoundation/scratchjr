@@ -454,7 +454,10 @@ export default class Library {
             }
 
             tb.className = 'assetbox on';
-            selectedOne = tb.id;
+            // to avoid double click
+            setTimeout(function () {
+                selectedOne = tb.id;
+            }, 200);
             clickThumb = tb;
             if (tb.fieldname) {
                 gn('assetname').textContent = tb.fieldname;
