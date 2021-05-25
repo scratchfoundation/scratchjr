@@ -300,6 +300,9 @@ export default class Home {
         if (md5) {
             IO.getAsset(md5, drawMe);
         }
+        img.ondragstart = function () {
+            return false;
+        }
         function drawMe (url) {
             img.src = url;
         }

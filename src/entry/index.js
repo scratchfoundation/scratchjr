@@ -111,6 +111,7 @@ function indexSetAnalyticsPrefs () {
 function indexLoadStart () {
     indexHideSplash();
     showLogo();
+    showGear();
     gn('gettings').className = 'gettings show';
     gn('startcode').className = 'startcode show';
 
@@ -141,6 +142,14 @@ function hideLogo () {
 function showLogo () {
     gn('catface').className = 'catface show';
     gn('jrlogo').className = 'jrlogo show';
+}
+
+function hideGear () {
+    gn('gear').className = 'gear hide';
+}
+
+function showGear () {
+    gn('gear').className = 'gear show';
 }
 
 function indexAskPlace () {
@@ -203,7 +212,7 @@ function indexHidePlaceQuestion () {
     gn('usageNoanswer').className = 'usageNoanswer hide';
 }
 
-function optionTouched (elem) {
+function optionSelected (elem) {
     var key = elem.target.getAttribute('data-key');
     var value = elem.target.getAttribute('data-value');
     // sometimes a touch is registered by a child of the relevant parent
@@ -227,6 +236,7 @@ function optionTouched (elem) {
 function indexShowQuestion (key) {
     indexHideSplash();
     hideLogo();
+    hideGear();
     var optionType = InitialOptions.optionTypeForKey(key);
     if (optionType === 'place_preference') {
         indexAskPlace();
@@ -255,7 +265,7 @@ function indexShowQuestion (key) {
             optionElem.setAttribute('data-key', key);
             optionElem.setAttribute('data-value', option);
             optionElem.setAttribute('id', 'option-' + key + '-' + optionNum);
-            optionElem.ontouchend = optionTouched;
+            optionElem.onclick = optionSelected;
             optionsListElem.appendChild(optionElem);
 
             switch (optionType) {
@@ -273,6 +283,15 @@ function indexShowQuestion (key) {
             }
             optionNum = optionNum + 1;
         });
+        // iPad mini has the minimum screen size, it can show 13 items in one column
+        // and we use 3 columns as default
+        if (optionNum > 13 * 5) {
+            gn('optionsList').style['column-count'] = 8;
+        } else if (optionNum > 13 * 3) {
+            gn('optionsList').style['column-count'] = 5;
+        } else {
+            gn('optionsList').style['column-count'] = 3;
+        }
         gn('optionsList').className = 'optionsList show';
     }
 }
