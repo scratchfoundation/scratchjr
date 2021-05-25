@@ -12,7 +12,7 @@ import Undo from '../ui/Undo';
 import Matrix from '../../geom/Matrix';
 import Vector from '../../geom/Vector';
 import {newHTML, newDiv, gn,
-    setCanvasSizeScaledToWindowDocumentHeight,
+    setCanvasSizeScaledToWindowDocumentHeight, eventDispatch,
     DEGTOR, getIdFor, setProps, isTablet} from '../../utils/lib';
 
 export default class Page {
@@ -233,15 +233,7 @@ export default class Page {
         var pq = newHTML('p', undefined, num);
         pq.textContent = this.num;
         newHTML('div', 'deletethumb', tb);
-        if (isTablet) {
-            tb.ontouchstart = function (evt) {
-                Thumbs.pageMouseDown(evt);
-            };
-        } else {
-            tb.onmousedown = function (evt) {
-                Thumbs.pageMouseDown(evt);
-            };
-        }
+        tb[eventDispatch["start"]] = function (evt) {Thumbs.pageMouseDown(evt);};
         this.thumbnail = tb;
         return tb;
     }

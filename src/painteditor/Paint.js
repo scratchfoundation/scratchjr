@@ -16,7 +16,7 @@ import Camera from './Camera';
 import Events from '../utils/Events';
 import Transform from './Transform';
 import Vector from '../geom/Vector';
-import {gn, newHTML, setCanvasSize, isTablet, getIdFor, isAndroid, setProps, hitRect, frame} from '../utils/lib';
+import {gn, newHTML, eventDispatch, setCanvasSize, isTablet, getIdFor, isAndroid, setProps, hitRect, frame} from '../utils/lib';
 
 // Originally several files (Paint.js, PaintIO.js, PaintLayout.js)
 // were all contributing utility functions to the Paint object.
@@ -199,7 +199,8 @@ export default class Paint {
         } else {
             Paint.initSprite(sw, sh);
         }
-        window.ontouchstart = Paint.detectGesture;
+        if (isTablet) window.ontouchstart = Paint.detectGesture;
+        else window.onmousedown = Paint.mouseDown;
         window.ondevicemotion = undefined;
 
         // Set the back button callback
@@ -240,7 +241,7 @@ export default class Paint {
 
     static clearEvents (e) {
         window.ontouchmove = undefined;
-        window.ontouchend = undefined;
+        window[eventDispatch["end"]] = undefined;
         if (PaintAction.currentshape) {
             PaintAction.stopAction(e);
         }
@@ -264,7 +265,7 @@ export default class Paint {
         window.ontouchmove = function (evt) {
             Paint.dragBackground(evt);
         };
-        window.ontouchend = function () {
+        window[eventDispatch["end"]] = function () {
             Paint.bounceBack();
             Paint.setCanvasTransform(currentZoom);
             PaintAction.clearEvents();
@@ -297,7 +298,7 @@ export default class Paint {
         Events.clearEvents();
         Events.clearDragAndDrop();
         window.ontouchmove = Paint.gestureChange;
-        window.ontouchend = Paint.gestureEnd;
+        window[eventDispatch["end"]] = Paint.gestureEnd;
     }
 
     static gestureChange (e) {
@@ -320,7 +321,7 @@ export default class Paint {
     static gestureEnd (e) {
         e.preventDefault();
         window.ontouchmove = undefined;
-        window.ontouchend = undefined;
+        window[eventDispatch["end"]] = undefined;
         var scale = Math.min(maxZoom, Events.scaleStartsAt * Events.zoomScale(e));
         scale = Math.max(minZoom, scale);
         Paint.updateZoomScale(scale);
@@ -362,7 +363,7 @@ export default class Paint {
         frame.style.display = 'block';
         ScratchJr.editorEvents();
         window.ontouchmove = undefined;
-        window.ontouchend = undefined;
+        window[eventDispatch["end"]] = undefined;
         window.onmousemove = undefined;
         Alert.close();
         Paint.clearWorkspace();
@@ -600,11 +601,7 @@ export default class Paint {
     static checkMark (pt) {
         var clicky = newHTML('div', 'paintdone', pt);
         clicky.id = 'donecheck';
-        if (isTablet) {
-            clicky.ontouchstart = Paint.backToProject;
-        } else {
-            clicky.onmousedown = Paint.backToProject;
-        }
+        clicky[eventDispatch["start"]] = Paint.backToProject;
     }
 
     static nameOfcostume (p) {
@@ -616,7 +613,7 @@ export default class Paint {
         ti.name = 'name';
         ti.maxLength = 25;
         ti.firstTime = true;
-        ti.ontouchstart = () => {};
+        ti[eventDispatch["start"]] = () => {};
         ti.onfocus = Paint.nameFocus;
         ti.onblur = Paint.nameBlur;
         ti.onkeypress = Paint.handleNamePress;
@@ -705,11 +702,7 @@ export default class Paint {
             var but = newHTML('div', 'element off', section);
             var icon = newHTML('div', 'tool ' + list[i] + ' off', but);
             icon.setAttribute('key', list[i]);
-            if (isTablet) {
-                icon.ontouchstart = Paint.setMode;
-            } else {
-                icon.onmousedown = Paint.setMode;
-            }
+            icon[eventDispatch["start"]] = Paint.setMode;
         }
     }
 
@@ -719,7 +712,7 @@ export default class Paint {
         for (var i = 0; i < pensizes.length; i++) {
             var ps = newHTML('div', 'pensizeholder', section);
             ps.key = i;
-            ps.ontouchstart = function (e) {
+            ps[eventDispatch["start"]] = function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 var n = Number(this.key);
@@ -784,7 +777,7 @@ export default class Paint {
             var but = newHTML('div', 'element off', pal);
             var icon = newHTML('div', 'tool ' + list[i] + ' off', but);
             icon.setAttribute('key', list[i]);
-            icon.ontouchstart = Paint.setMode;
+            icon[eventDispatch["start"]] = Paint.setMode;
         }
     }
 
@@ -804,16 +797,16 @@ export default class Paint {
             fc.style.display = 'none';
         }
 
-        fc.ontouchstart = Paint.setMode;
+        fc[eventDispatch["start"]] = Paint.setMode;
         var captureContainer = newHTML('div', 'snapshot-container', gn('backdrop'));
         captureContainer.setAttribute('id', 'capture-container');
         var capture = newHTML('div', 'snapshot', captureContainer);
         capture.setAttribute('id', 'capture');
         capture.setAttribute('key', 'camerasnap');
-        capture.ontouchstart = Paint.setMode;
+        capture[eventDispatch["start"]] = Paint.setMode;
         var cc = newHTML('div', 'cameraclose', topbar);
         cc.setAttribute('id', 'cameraclose');
-        cc.ontouchstart = Paint.closeCameraMode;
+        cc[eventDispatch["start"]] = Paint.closeCameraMode;
     }
 
     static closeCameraMode () {
@@ -887,7 +880,7 @@ export default class Paint {
             sf = newHTML('div', 'splasharea off', colour);
             Paint.setSplashColor(sf, splash, swatchlist[i]);
             Paint.addImageUrl(sf, splashshade);
-            colour.ontouchstart = Paint.selectSwatch;
+            colour[eventDispatch["start"]] = Paint.selectSwatch;
         }
         Paint.setSwatchColor(gn('swatches').childNodes[swatchlist.indexOf('#1C1C1C')]);
     }

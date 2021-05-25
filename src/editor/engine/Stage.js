@@ -11,7 +11,7 @@ import Vector from '../../geom/Vector';
 import Page from './Page';
 import {newHTML, newDiv, gn,
     getIdFor, setProps,
-    scaleMultiplier, setCanvasSize,
+    scaleMultiplier, setCanvasSize, eventDispatch,
     globaly, globalx} from '../../utils/lib';
 
 export default class Stage {
@@ -28,7 +28,7 @@ export default class Stage {
             position: 'absolute'
         });
         var me = this;
-        this.div.ontouchstart = function (evt) {
+        this.div[eventDispatch["start"]] = function (evt) {
             me.mouseDown(evt);
         };
         this.div.owner = this;
@@ -419,10 +419,10 @@ export default class Stage {
 
     setEvents () {
         var me = this;
-        window.ontouchmove = function (evt) {
+        window[eventDispatch["move"]] = function (evt) {
             me.mouseMove(evt);
         };
-        window.ontouchend = function (evt) {
+        window[eventDispatch["end"]] = function (evt) {
             me.mouseUp(evt);
         };
     }

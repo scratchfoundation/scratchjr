@@ -147,9 +147,11 @@ NSDate *startDate;
     NSString *location = [[NSUserDefaults standardUserDefaults] stringForKey:@"html"];
     if ([location length] > 3) location = [location substringFromIndex:3];
     NSString *path = [[NSBundle mainBundle]  pathForResource: @"HTML5/index" ofType:@"html"];
+    NSLog(@"url path %@", path);
     NSURL *url = [NSURL fileURLWithPath:path];
     NSURLRequest* request = [NSURLRequest requestWithURL:url];
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
+   
     [webview loadRequest:request];
 }
 

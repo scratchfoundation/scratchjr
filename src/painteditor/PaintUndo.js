@@ -3,7 +3,7 @@ import Path from './Path';
 import Paint from './Paint';
 import Camera from './Camera';
 import SVGTools from './SVGTools';
-import {newHTML, gn, isTablet} from '../utils/lib';
+import {newHTML, gn, eventDispatch} from '../utils/lib';
 import ScratchAudio from '../utils/ScratchAudio';
 //////////////////////////////////
 // Undo / Redo Functions
@@ -47,17 +47,7 @@ export default class PaintUndo {
         newHTML('div', key + ' off', button);
         button.setAttribute('type', 'toggleclicky');
         button.setAttribute('id', prefix + key);
-        if (fcn) {
-            if (isTablet) {
-                button.ontouchstart = function (evt) {
-                    fcn(evt);
-                };
-            } else {
-                button.onmousedown = function (evt) {
-                    fcn(evt);
-                };
-            }
-        }
+        if (fcn) button[eventDispatch["start"]] = fcn
         return button;
     }
 

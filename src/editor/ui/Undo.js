@@ -8,7 +8,7 @@ import Project from './Project';
 import Palette from './Palette';
 import UI from './UI';
 import ScratchAudio from '../../utils/ScratchAudio';
-import {newHTML, isTablet, gn} from '../../utils/lib';
+import {newHTML, isTablet, eventDispatch, gn} from '../../utils/lib';
 
 let buffer = [];
 let index = 0;
@@ -34,17 +34,7 @@ export default class Undo {
         var div = newHTML('div', key + 'button', p);
         div.setAttribute('type', 'toggleclicky');
         div.setAttribute('id', prefix + key);
-        if (fcn) {
-            if (isTablet) {
-                div.ontouchstart = function (evt) {
-                    fcn(evt);
-                };
-            } else {
-                div.onmousedown = function (evt) {
-                    fcn(evt);
-                };
-            }
-        }
+        if (fcn)  div[eventDispatch["start"]] = fcn
         return div;
     }
 

@@ -9,7 +9,7 @@ import Project from '../editor/ui/Project';
 import Localization from '../utils/Localization';
 import ScratchAudio from '../utils/ScratchAudio';
 import Vector from '../geom/Vector';
-import {gn, newHTML, isTablet} from '../utils/lib';
+import {gn, newHTML, isTablet, eventDispatch, initEvents} from '../utils/lib';
 
 let frame;
 let scrollvalue;
@@ -20,11 +20,12 @@ export default class Home {
     static init () {
         version = Lobby.version;
         frame = gn('htmlcontents');
+        initEvents();
         var inner = newHTML('div', 'inner', frame);
         var div = newHTML('div', 'scrollarea', inner);
         div.setAttribute('id', 'scrollarea');
-        frame.ontouchstart = Home.handleTouchStart;
-        frame.ontouchend = Home.handleTouchEnd;
+        frame[eventDispatch["start"]] = Home.handleTouchStart;
+        frame[eventDispatch["end"]] = Home.handleTouchEnd;
         Home.displayYourProjects();
     }
 
@@ -56,7 +57,7 @@ export default class Home {
             holdit(Home.actionTarget);
         }
         function holdit () {
-            frame.ontouchmove = Home.handleMove;
+            frame[eventDispatch["move"]] = Home.handleMove;
             var repeat = function () {
                 if (Home.actionTarget && (Home.actionTarget.childElementCount > 2)) {
                     Home.actionTarget.childNodes[Home.actionTarget.childElementCount - 1].style.visibility = 'visible';
@@ -104,11 +105,7 @@ export default class Home {
         if (e.touches && (e.touches.length > 1)) {
             return;
         }
-        if (isTablet) {
-            frame.ontouchmove = undefined;
-        } else {
-            frame.onmousemove = undefined;
-        }
+        frame[eventDispatch["move"]] = undefined;
         if (timeoutEvent) {
             clearTimeout(timeoutEvent);
         }

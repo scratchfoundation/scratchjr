@@ -2,7 +2,7 @@
 // Home Screen
 //////////////////////////////////////////////////
 
-import {libInit, getUrlVars, gn, isAndroid, newHTML} from '../utils/lib';
+import {libInit, getUrlVars, gn, isAndroid, newHTML, eventDispatch} from '../utils/lib';
 import ScratchAudio from '../utils/ScratchAudio';
 import OS from '../tablet/OS';
 import Localization from '../utils/Localization';
@@ -45,42 +45,42 @@ export default class Lobby {
             gn('settings').style.visibility = 'hidden';
         }
 
-        gn('hometab').ontouchstart = function () {
+        gn('hometab')[eventDispatch["start"]] = function () {
             if (gn('hometab').className != 'home on') {
                 Lobby.setPage('home');
             }
         };
-        gn('helptab').ontouchstart = function () {
+        gn('helptab')[eventDispatch["start"]] = function () {
             if (gn('helptab').className != 'help on') {
                 Lobby.setPage('help');
             }
         };
-        gn('booktab').ontouchstart = function () {
+        gn('booktab')[eventDispatch["start"]] = function () {
             if (gn('booktab').className != 'book on') {
                 Lobby.setPage('book');
             }
         };
-        gn('geartab').ontouchstart = function () {
+        gn('geartab')[eventDispatch["start"]] = function () {
             if (gn('geartab').className != 'gear on') {
                 Lobby.setPage('gear');
             }
         };
-        gn('abouttab').ontouchstart = function () {
+        gn('abouttab')[eventDispatch["start"]] = function () {
             if (gn('abouttab').className != 'tab on') {
                 Lobby.setSubMenu('about');
             }
         };
-        gn('interfacetab').ontouchstart = function () {
+        gn('interfacetab')[eventDispatch["start"]] = function () {
             if (gn('interfacetab').className != 'tab on') {
                 Lobby.setSubMenu('interface');
             }
         };
-        gn('painttab').ontouchstart = function () {
+        gn('painttab')[eventDispatch["start"]] = function () {
             if (gn('painttab').className != 'tab on') {
                 Lobby.setSubMenu('paint');
             }
         };
-        gn('blockstab').ontouchstart = function () {
+        gn('blockstab')[eventDispatch["start"]] = function () {
             if (gn('booktab').className != 'tab2 on') {
                 Lobby.setSubMenu('blocks');
             }
@@ -199,7 +199,7 @@ export default class Lobby {
             languageButton = newHTML('div', 'localizationselect' + selected, languageButtons);
             languageButton.textContent = l;
 
-            languageButton.ontouchstart = function (e) {
+            languageButton[eventDispatch["start"]] = function (e) {
                 ScratchAudio.sndFX('tap.wav');
                 let newLocale = window.Settings.supportedLocales[e.target.textContent];
                 Cookie.set('localization', newLocale);

@@ -17,7 +17,7 @@ import Events from '../utils/Events';
 import BlockSpecs from './blocks/BlockSpecs';
 import Runtime from './engine/Runtime';
 import Localization from '../utils/Localization';
-import {libInit, gn, scaleMultiplier, newHTML,
+import {libInit, gn, scaleMultiplier, newHTML, eventDispatch,
     isAndroid, isTablet, getUrlVars, CSSTransition3D, frame} from '../utils/lib';
 
 let workingCanvas = document.createElement('canvas');
@@ -226,12 +226,8 @@ export default class ScratchJr {
 
     static editorEvents () {
         document.ongesturestart = undefined;
-        window.ontouchstart = ScratchJr.unfocus;
-        if (isTablet) {
-            window.ontouchend = undefined;
-        } else {
-            window.onmouseup = undefined;
-        }
+        window[eventDispatch["start"]] = ScratchJr.unfocus;
+        window[eventDispatch["end"]] = undefined;
     }
 
     static unfocus (evt) {
@@ -676,7 +672,7 @@ export default class ScratchJr {
 
     static setupKeypad () {
         keypad = newHTML('div', 'picokeyboard', frame);
-        keypad.ontouchstart = ScratchJr.eatEvent;
+        keypad[eventDispatch["start"]] = ScratchJr.eatEvent;
         var pad = newHTML('div', 'insidekeyboard', keypad);
         for (var i = 1; i < 10; i++) {
             ScratchJr.keyboardAddKey(pad, i, 'onekey');
@@ -697,7 +693,7 @@ export default class ScratchJr {
         var keym = newHTML('div', c, p);
         var mk = newHTML('span', undefined, keym);
         mk.textContent = str ? str : '';
-        keym.ontouchstart = ScratchJr.numEditKey;
+        keym[eventDispatch["start"]] = ScratchJr.numEditKey;
     }
 
 

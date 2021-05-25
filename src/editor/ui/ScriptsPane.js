@@ -8,7 +8,7 @@ import Events from '../../utils/Events';
 import Scroll from './Scroll';
 import Menu from '../blocks/Menu';
 import ScratchAudio from '../../utils/ScratchAudio';
-import {gn, localx, localy, newHTML, isTablet,
+import {gn, localx, localy, newHTML, isTablet, eventDispatch,
     globalx, globaly, setCanvasSize, getDocumentHeight, frame} from '../../utils/lib';
 
 let scroll = undefined;
@@ -41,7 +41,7 @@ export default class ScriptsPane {
         }
         ScratchJr.stage.currentPage.setCurrentSprite(gn(sprname).owner);
         currentsc.owner.activate();
-        currentsc.parentNode.ontouchstart = function (evt) {
+        currentsc.parentNode[eventDispatch["start"]] = function (evt) {
             currentsc.owner.scriptsMouseDown(evt);
         };
         scroll.update();
@@ -267,21 +267,8 @@ export default class ScriptsPane {
     }
 
     static setDragBackgroundEvents (fcnmove, fcnup) {
-        if (isTablet) { // setDragBackgroundEvents
-            window.ontouchmove = function (evt) {
-                fcnmove(evt);
-            };
-            window.ontouchend = function (evt) {
-                fcnup(evt);
-            };
-        } else {
-            window.onmousemove = function (evt) {
-                fcnmove(evt);
-            };
-            window.onmouseup = function (evt) {
-                fcnup(evt);
-            };
-        }
+         window[eventDispatch["move"]] = function (evt) {fcnmove(evt);};
+         window[eventDispatch["end"]] = function (evt) {fcnup(evt);};  
     }
 
     static dragMove (e) {

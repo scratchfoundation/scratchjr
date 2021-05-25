@@ -8,7 +8,7 @@ import BlockSpecs from '../blocks/BlockSpecs';
 import ScriptsPane from './ScriptsPane';
 import Events from '../../utils/Events';
 import ScratchAudio from '../../utils/ScratchAudio';
-import {gn, newHTML, setCanvasSize, setProps,
+import {gn, newHTML, setCanvasSize, setProps, eventDispatch,
     localx, localy, scaleMultiplier, hit3DRect, isTablet} from '../../utils/lib';
 
 export default class Scripts {

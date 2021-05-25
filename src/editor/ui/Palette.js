@@ -15,7 +15,7 @@ import DrawPath from '../../utils/DrawPath';
 import ScratchAudio from '../../utils/ScratchAudio';
 import Record from './Record';
 import {frame, gn, localx, newHTML, scaleMultiplier, isTablet, newDiv,
-    setProps, globalx, localy, globaly, drawScaled, newCanvas,
+    setProps, globalx, localy, globaly, drawScaled, newCanvas, eventDispatch,
     setCanvasSize, hitRect, writeText, getStringSize} from '../../utils/lib';
 
 
@@ -48,7 +48,7 @@ export default class Palette {
         Palette.createCategorySelectors(parent);
         var div = newHTML('div', 'palette', parent);
         div.setAttribute('id', 'palette');
-        div.ontouchstart = function (evt) {
+        div[eventDispatch["start"]] = function (evt) {
             Palette.paletteMouseDown(evt);
         };
         var pc = newHTML('div', 'papercut', parent);
@@ -319,7 +319,7 @@ export default class Palette {
             zIndex: 8,
             visibility: 'hidden'
         });
-        div.ontouchstart = function (evt) {
+        div[eventDispatch["start"]] = function (evt) {
             Palette.clickOnCategory(evt);
         };
     }
@@ -465,9 +465,7 @@ export default class Palette {
                 drawScaled(BlockSpecs.mic, cnv);
             };
         }
-        if (isTablet) {
-            div.ontouchstart = Palette.recordSound;
-        }
+        div[eventDispatch["start"]] = Palette.recordSound;
     }
 
     static recordSound (e) {

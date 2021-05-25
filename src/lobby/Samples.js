@@ -8,7 +8,7 @@ import IO from '../tablet/IO';
 import MediaLib from '../tablet/MediaLib';
 import ScratchAudio from '../utils/ScratchAudio';
 import Localization from '../utils/Localization';
-import {gn, newHTML} from '../utils/lib';
+import {gn, newHTML, eventDispatch} from '../utils/lib';
 
 let frame;
 // Should ScratchJr projects be saved when the sample project is changed?
@@ -18,7 +18,7 @@ let frame;
 export default class Samples {
     static init () {
         frame = gn('htmlcontents');
-        gn('tabicon').ontouchstart = Samples.playHowTo;
+        gn('tabicon')[eventDispatch["start"]] = Samples.playHowTo;
         var div = newHTML('div', 'samples off', frame);
         div.setAttribute('id', 'samples');
         Samples.display('samples');

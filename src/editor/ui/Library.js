@@ -7,7 +7,7 @@ import Paint from '../../painteditor/Paint';
 import Events from '../../utils/Events';
 import Localization from '../../utils/Localization';
 import ScratchAudio from '../../utils/ScratchAudio';
-import {gn, newHTML, scaleMultiplier,
+import {gn, newHTML, scaleMultiplier, eventDispatch,
     getDocumentWidth, getDocumentHeight, setProps, newCanvas, frame} from '../../utils/lib';
 
 let selectedOne;
@@ -49,17 +49,17 @@ export default class Library {
         libFrame.className = 'libframe appear';
         libFrame.focus();
         selectedOne = undefined;
-        gn('okbut').ontouchstart = (type == 'costumes') ? Library.closeSpriteSelection : Library.closeBkgSelection;
+        gn('okbut')[eventDispatch["start"]] = (type == 'costumes') ? Library.closeSpriteSelection : Library.closeBkgSelection;
         Library.clean();
         Library.createScrollPanel();
         Library.addThumbnails(type);
-        window.ontouchstart = undefined;
-        window.ontouchend = undefined;
+        window[eventDispatch["start"]] = undefined;
+        window[eventDispatch["end"]] = undefined;
         document.ontouchmove = undefined;
         window.onresize = undefined;
 
         gn('library_paintme').style.opacity = 1;
-        gn('library_paintme').ontouchstart = Library.editResource;
+        gn('library_paintme')[eventDispatch["start"]] = Library.editResource;
 
         // Set the back button callback
         ScratchJr.onBackButtonCallback.push(function () {
@@ -92,11 +92,11 @@ export default class Library {
         var buttons = newHTML('div', 'bkgbuttons', gn('libactions'));
         var paintme = newHTML('div', 'painticon', buttons);
         paintme.id = 'library_paintme';
-        paintme.ontouchstart = Library.editResource;
+        paintme[eventDispatch["start"]] = Library.editResource;
         var okbut = newHTML('div', 'okicon', buttons);
         okbut.setAttribute('id', 'okbut');
         var cancelbut = newHTML('div', 'cancelicon', buttons);
-        cancelbut.ontouchstart = Library.cancelPick;
+        cancelbut[eventDispatch["start"]] = Library.cancelPick;
     }
 
     static cancelPick (e) {
@@ -204,7 +204,7 @@ export default class Library {
         function drawMe (dataurl) {
             img.src = dataurl;
         }
-        tb.ontouchstart = function (evt) {
+        tb[eventDispatch["start"]] = function (evt) {
             fcn(evt, tb);
         };
         return tb;
@@ -233,7 +233,7 @@ export default class Library {
         var pngPath = MediaLib.path.replace('svg', 'png');
         img.src = pngPath + IO.getFilename(md5) + '.png';
 
-        tb.ontouchstart = function (evt) {
+        tb[eventDispatch["start"]] = function (evt) {
             fcn(evt, tb);
         };
         return tb;
@@ -263,7 +263,7 @@ export default class Library {
         ctx.fillStyle = ScratchJr.stagecolor;
         ctx.fillRect(0, 0, w, h);
         parent.appendChild(tb);
-        tb.ontouchstart = function (evt) {
+        tb[eventDispatch["start"]] = function (evt) {
             Library.selectAsset(evt, tb);
         };
     }
@@ -289,7 +289,7 @@ export default class Library {
         if (tb.byme && (tb.id != 'none')) {
             holdit(tb);
         }
-        tb.ontouchend = function (evt) {
+        tb[eventDispatch["end"]] = function (evt) {
             clickMe(evt, tb);
         };
         window.onmouseup = function (evt) {
@@ -300,7 +300,7 @@ export default class Library {
         };
         function holdit () {
             var repeat = function () {
-                tb.ontouchend = undefined;
+                tb[eventDispatch["end"]] = undefined;
                 window.onmouseup = undefined;
                 window.onmousemove = undefined;
                 timeoutEvent = undefined;
@@ -325,7 +325,7 @@ export default class Library {
                 Library.unSelect(clickThumb);
             }
             timeoutEvent = undefined;
-            tb.ontouchend = undefined;
+            tb[eventDispatch["end"]] = undefined;
             window.onmouseup = function () {
                 window.onmousemove = undefined;
                 window.onmouseup = undefined;
@@ -337,7 +337,7 @@ export default class Library {
             }
             Library.selectThisAsset(e, tb);
             timeoutEvent = undefined;
-            tb.ontouchend = undefined;
+            tb[eventDispatch["end"]] = undefined;
             tb.onmouseup = undefined;
             window.onmousemove = undefined;
             window.onmouseup = undefined;
@@ -437,10 +437,10 @@ export default class Library {
             var thumbType = thumbID.substr(thumbID.length - 3);
             if (thumbType == 'png') {
                 gn('library_paintme').style.opacity = 0;
-                gn('library_paintme').ontouchstart = null;
+                gn('library_paintme')[eventDispatch["start"]] = null;
             } else {
                 gn('library_paintme').style.opacity = 1;
-                gn('library_paintme').ontouchstart = Library.editResource;
+                gn('library_paintme')[eventDispatch["start"]] = Library.editResource;
             }
 
             tb.className = 'assetbox on';

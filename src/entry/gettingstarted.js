@@ -1,10 +1,10 @@
-import {gn, isiOS, getUrlVars} from '../utils/lib';
+import {gn, isiOS, eventDispatch, getUrlVars} from '../utils/lib';
 
 let place;
 
 export function gettingStartedMain () {
     gn('closeHelp').onclick = gettingStartedCloseMe;
-    gn('closeHelp').ontouchstart = gettingStartedCloseMe;
+    gn('closeHelp')[eventDispatch["start"]] = gettingStartedCloseMe;
     var videoObj = gn('myVideo');
     if (isiOS) {
         // On iOS we can load from server

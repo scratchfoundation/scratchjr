@@ -11,7 +11,7 @@ import UI from './UI';
 import OS from '../../tablet/OS';
 import Events from '../../utils/Events';
 import ScratchAudio from '../../utils/ScratchAudio';
-import {frame, gn, localx, newHTML, scaleMultiplier, getIdFor,
+import {frame, gn, localx, newHTML, scaleMultiplier, getIdFor, eventDispatch,
     isTablet, newImage, localy, setProps} from '../../utils/lib';
 
 let caret = undefined;
@@ -353,15 +353,7 @@ export default class Thumbs {
         }
         img.setAttribute('class', 'unselectable');
         tb.setAttribute('id', 'emptypage');
-        if (isTablet) {
-            tb.ontouchstart = function (evt) {
-                Thumbs.clickOnEmptyPage(evt);
-            };
-        } else {
-            tb.onmousedown = function (evt) {
-                Thumbs.clickOnEmptyPage(evt);
-            };
-        }
+        tb[eventDispatch["start"]] = Thumbs.clickOnEmptyPage;
         return tb;
     }
 

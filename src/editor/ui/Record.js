@@ -3,7 +3,7 @@ import Palette from './Palette';
 import Undo from './Undo';
 import OS from '../../tablet/OS';
 import ScratchAudio from '../../utils/ScratchAudio';
-import {frame, gn, newHTML, isTablet, isAndroid, setProps} from '../../utils/lib';
+import {frame, gn, newHTML, eventDispatch, isAndroid, setProps} from '../../utils/lib';
 
 let interval = null;
 let recordedSound = null;
@@ -37,11 +37,7 @@ export default class Record {
         newHTML('div', 'microphone', actions);
         var buttons = newHTML('div', 'recordbuttons', actions);
         var okbut = newHTML('div', 'recorddone', buttons);
-        if (isTablet) {
-            okbut.ontouchstart = Record.saveSoundAndClose;
-        } else {
-            okbut.onmousedown = Record.saveSoundAndClose;
-        }
+        okbut[eventDispatch["start"]] = Record.saveSoundAndClose;
         var sc = newHTML('div', 'soundbox', modal);
         sc.setAttribute('id', 'soundbox');
         var sv = newHTML('div', 'soundvolume', sc);
@@ -90,17 +86,7 @@ export default class Record {
         newHTML('div', key + 'snd off', button);
         button.setAttribute('type', 'toggleclicky');
         button.setAttribute('id', prefix + key);
-        if (fcn) {
-            if (isTablet) {
-                button.ontouchstart = function (evt) {
-                    fcn(evt);
-                };
-            } else {
-                button.onmousedown = function (evt) {
-                    fcn(evt);
-                };
-            }
-        }
+        if (fcn)  button[eventDispatch["start"]] = fcn;
         return button;
     }
 

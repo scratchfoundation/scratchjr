@@ -1,5 +1,5 @@
 import ScratchAudio from '../utils/ScratchAudio';
-import {gn, getUrlVars, isAndroid, isiOS} from '../utils/lib';
+import {gn, getUrlVars, isAndroid, isiOS, eventDispatch, initEvents} from '../utils/lib';
 import OS from '../tablet/OS';
 import UI from '../editor/ui/UI';
 import Localization from '../utils/Localization';
@@ -16,8 +16,9 @@ When this code starts up, there are several scenarios:
 let alreadyStartedQuestions = false;
 
 export function indexMain () {
-    gn('gettings').ontouchend = indexGettingstarted;
-    gn('startcode').ontouchend = indexGohome;
+    initEvents()
+    gn('gettings')[eventDispatch["end"]] = indexGettingstarted;
+    gn('startcode')[eventDispatch["end"]] = indexGohome;
     ScratchAudio.init();
     var urlvars = getUrlVars();
     if (urlvars.back && InitialOptions.allQuestionsAnswered()) {
@@ -31,14 +32,14 @@ export function indexMain () {
         gn('startButton').textContent = Localization.localize('PBS_START');
         gn('gettings').textContent = Localization.localize('PBS_HOW_TO');
 
-        gn('startButton').ontouchend = indexGohome;
-        gn('pbschars').ontouchend = indexGohome;
+        gn('startButton')[eventDispatch["end"]] = indexGohome;
+        gn('pbschars')[eventDispatch["end"]] = indexGohome;
 
-        gn('topbar-moreapps').ontouchstart = indexMoreApps;
-        gn('topbar-settings').ontouchstart = indexGoSettings;
-        gn('topbar-info').ontouchstart = indexInfo;
+        gn('topbar-moreapps')[eventDispatch["start"]] = indexMoreApps;
+        gn('topbar-settings')[eventDispatch["start"]] = indexGoSettings;
+        gn('topbar-info')[eventDispatch["start"]] = indexInfo;
     } else {
-        gn('gear').ontouchstart = indexGoSettings;
+        gn('gear')[eventDispatch["start"]] = indexGoSettings;
     }
 
     setTimeout(function () {
@@ -161,10 +162,10 @@ function indexAskPlace () {
     gn('usageHome').className = 'usageHome show';
     gn('usageOther').className = 'usageOther show';
     gn('usageNoanswer').className = 'usageNoanswer show';
-    gn('usageSchool').ontouchend = indexSetPlace;
-    gn('usageHome').ontouchend = indexSetPlace;
-    gn('usageOther').ontouchend = indexSetPlace;
-    gn('usageNoanswer').ontouchend = indexSetPlace;
+    gn('usageSchool')[eventDispatch["end"]] = indexSetPlace;
+    gn('usageHome')[eventDispatch["end"]] = indexSetPlace;
+    gn('usageOther')[eventDispatch["end"]] = indexSetPlace;
+    gn('usageNoanswer')[eventDispatch["end"]] = indexSetPlace;
 }
 
 function indexSetPlace (e) {
@@ -255,7 +256,7 @@ function indexShowQuestion (key) {
             optionElem.setAttribute('data-key', key);
             optionElem.setAttribute('data-value', option);
             optionElem.setAttribute('id', 'option-' + key + '-' + optionNum);
-            optionElem.ontouchend = optionTouched;
+            optionElem[eventDispatch["end"]] = optionTouched;
             optionsListElem.appendChild(optionElem);
 
             switch (optionType) {

@@ -4,7 +4,7 @@ import OS from '../tablet/OS';
 import Lobby from '../lobby/Lobby';
 
 export function homeMain () {
-    gn('logotab').ontouchend = homeGoBack;
+    gn('logotab')[eventDispatch["end"]] = homeGoBack;
     homeStrings();
     OS.getsettings(doNext);
     function doNext (str) {
