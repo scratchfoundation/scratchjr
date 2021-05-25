@@ -203,7 +203,7 @@ function indexHidePlaceQuestion () {
     gn('usageNoanswer').className = 'usageNoanswer hide';
 }
 
-function optionTouched (elem) {
+function optionSelected (elem) {
     var key = elem.target.getAttribute('data-key');
     var value = elem.target.getAttribute('data-value');
     // sometimes a touch is registered by a child of the relevant parent
@@ -255,7 +255,7 @@ function indexShowQuestion (key) {
             optionElem.setAttribute('data-key', key);
             optionElem.setAttribute('data-value', option);
             optionElem.setAttribute('id', 'option-' + key + '-' + optionNum);
-            optionElem.ontouchend = optionTouched;
+            optionElem.onclick = optionSelected;
             optionsListElem.appendChild(optionElem);
 
             switch (optionType) {
