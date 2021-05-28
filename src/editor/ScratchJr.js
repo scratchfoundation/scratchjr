@@ -83,6 +83,10 @@ export default class ScratchJr {
         changed = newChanged;
     }
 
+    static get changed () {
+        return changed;
+    }
+
     static set storyStarted (newStoryStarted) {
         storyStarted = newStoryStarted;
     }

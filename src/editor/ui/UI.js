@@ -336,7 +336,7 @@ export default class UI {
 
     static handleTextFieldSave (dontHide) {
         // Handle story-starter mode project
-        if (ScratchJr.isEditable() && ScratchJr.editmode == 'storyStarter' && !Project.error) {
+        if (ScratchJr.isEditable() && ScratchJr.editmode == 'storyStarter' && !Project.error && ScratchJr.changed) {
             OS.analyticsEvent('samples', 'story_starter_edited', Project.metadata.name);
             // Get the new project name
             var sampleName = Localization.localize('SAMPLE_' + Project.metadata.name);
@@ -370,7 +370,6 @@ export default class UI {
             ScratchJr.storyStart('UI.handleTextFieldSave');
         }
         Project.metadata.name = pname;
-        ScratchJr.changed = true;
         OS.setfield(OS.database, Project.metadata.id, 'name', pname);
         if (!dontHide) {
             ScratchAudio.sndFX('exittap.wav');
@@ -388,6 +387,9 @@ export default class UI {
         if (ScratchJr.onHold) {
             return;
         }
+
+        var canShare = ScratchJr.editmode != 'storyStarter' || ScratchJr.changed;
+        gn('infoboxParentsSectionButton').style.display = canShare ? 'block' : 'none';
 
         // Prevent button from thrashing
         setTimeout(function () {
