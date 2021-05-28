@@ -313,7 +313,10 @@ NSMutableDictionary *soundtimers;
         NSDictionary *page = [json valueForKey:name];
         for (NSString *spriteName in [page valueForKey:@"sprites"]) {
             NSDictionary *sprite = [page valueForKey:spriteName];
-            [sprites setValue:sprite forKey:[sprite valueForKey:@"md5"]];
+            NSString *md5 = [sprite valueForKey:@"md5"];
+            if (md5 != nil) {
+                [sprites setValue:sprite forKey:md5];
+            }
         }
     }
     
