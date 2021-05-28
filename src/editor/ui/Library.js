@@ -200,7 +200,7 @@ export default class Library {
         img.style.height = (data.height * scale) + 'px';
         img.ondragstart = function () {
             return false;
-        }
+        };
         if (data.altmd5) {
             IO.getAsset(data.altmd5, drawMe);
         }

@@ -302,7 +302,7 @@ export default class Home {
         }
         img.ondragstart = function () {
             return false;
-        }
+        };
         function drawMe (url) {
             img.src = url;
         }
