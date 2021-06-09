@@ -301,6 +301,13 @@ export default class Library {
         window.onmousemove = function (evt) {
             clearEvents(evt, tb);
         };
+        window.ontouchmove = function (evt) {
+            tb.ontouchend = undefined;
+            if (timeoutEvent) {
+                clearTimeout(timeoutEvent);
+            }
+            timeoutEvent = undefined;
+        }
         function holdit () {
             var repeat = function () {
                 tb.ontouchend = undefined;
