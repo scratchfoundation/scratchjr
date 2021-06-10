@@ -46,7 +46,7 @@ export default class Home {
     //////////////////////////
 
     static handleTouchStart (e) {
-        // On my android tablet, when touching a project, 
+        // On my android tablet, when touching a project,
         // the tablet triggers the mousedown event
         // after touchstart event about 600ms
         // --Donald

@@ -107,6 +107,9 @@ export default class Sprite {
 
     setCostume (dataurl, fcn) {
         var img = document.createElement('img');
+        img.ondragstart = function () {
+            return false;
+        };
         img.src = dataurl;
         this.img = img;
         // Make a copy that is not affected by zoom transformation
