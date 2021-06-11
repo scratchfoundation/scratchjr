@@ -41,6 +41,7 @@ export default class Stage {
             x: 0,
             y: 0
         };
+        this.sd();
     }
 
     setStageScaleAndPosition (scale, x, y) {
@@ -314,14 +315,14 @@ export default class Stage {
         }
         var pt = this.getStagePt(e);
         setCanvasSize(ScratchJr.workingCanvas, 480, 360);
-        var ctx = ScratchJr.workingCanvas.getContext('2d');
         var target = (e.target.nodeName == 'CANVAS') ? this.checkShaking(pt, e.target) : e.target;
         if (ScratchJr.shaking && (target.id == 'deletesprite')) {
             this.removeSprite(ScratchJr.shaking.owner);
             return;
         }
-        ctx.clearRect(0, 0, 480, 360);
-        var hitobj = this.whoIsIt(ctx, pt);
+        // var hitobj = this.whoIsIt(pt);
+        var hitobj = this.whoIsIt2(e);
+        console.log(hitobj)
         if (ScratchJr.shaking && hitobj && (hitobj.id == ScratchJr.shaking.id)) { // check grid case
             var sprname = ScratchJr.shaking.id;
             if (((pt.x - gn(sprname).owner.screenLeft()) < 45) && ((pt.y - gn(sprname).owner.screenTop()) < 45)) {
@@ -365,7 +366,60 @@ export default class Stage {
         this.setEvents();
     }
 
-    whoIsIt (ctx, pt) {
+    whoIsIt (pt) {
+        var ctx = ScratchJr.workingCanvas.getContext('2d');
+        ctx.clearRect(0, 0, 480, 360);
+        var page = this.currentPage.div;
+        var spr, pixel;
+        for (var i = page.childElementCount - 1; i > -1; i--) {
+            spr = page.childNodes[i].owner;
+            if (!spr) {
+                continue;
+            }
+            if (!spr.shown) {
+                continue;
+            }
+            spr.stamp(ctx);
+            pixel = ctx.getImageData(pt.x, pt.y, 1, 1).data;
+            if (pixel[3] != 0) {
+                return spr;
+            }
+        }
+        var fuzzy = 5;
+        ctx.clearRect(0, 0, 480, 360);
+        for (var j = page.childElementCount - 1; j > -1; j--) {
+            spr = page.childNodes[j].owner;
+            if (!spr) {
+                continue;
+            }
+            if (!spr.shown) {
+                continue;
+            }
+            spr.stamp(ctx);
+            spr.stamp(ctx, fuzzy, 0);
+            spr.stamp(ctx, 0, fuzzy);
+            spr.stamp(ctx, -fuzzy, 0);
+            spr.stamp(ctx, 0, -fuzzy);
+            pixel = ctx.getImageData(pt.x, pt.y, 1, 1).data;
+            if (pixel[3] != 0) {
+                return spr;
+            }
+        }
+        return undefined;
+    }
+
+    whoIsIt2 (evt) {
+        var ctx = ScratchJr.workingCanvas.getContext('2d');
+        ctx.clearRect(0, 0, 480, 360);
+        var pt = Events.getTargetPoint(evt)
+        var elem = document.elementFromPoint(pt.x, pt.y)
+        if (elem.tagName == 'IMG') {
+            elem = elem.parentNode;
+        }
+        if (elem && elem.owner) {
+            return elem.owner;
+        }
+        pt = this.getStagePt(evt)
         var page = this.currentPage.div;
         var spr, pixel;
         for (var i = page.childElementCount - 1; i > -1; i--) {
@@ -693,12 +747,15 @@ export default class Stage {
 
     sd () {
         var stg = gn('stage');
-        var mask = newDiv(gn('stageframe'), stg.offsetLeft + 1, stg.offsetTop + 1, 482, 362,
+        var mask = newDiv(gn('frame'), stg.offsetLeft + 1, stg.offsetTop + 1, 482, 362,
             {
                 position: 'absolute',
                 zIndex: ScratchJr.layerTop + 20,
-                visibility: 'hidden'
             });
+        mask.style.top = 'initial';
+        mask.style.bottom = '1px';
+        // mask.style.border = '1px solid red';
+        mask.style.background = 'red';
         mask.setAttribute('id', 'pagemask');
         mask.appendChild(ScratchJr.workingCanvas);
     }
