@@ -64,8 +64,12 @@ export function preprocessAndLoad (url) {
  */
 export function preprocessAndLoadCss (baseUrl, url) {
     var cssData = preprocessAndLoad(url);
+    // search for url("../images") pattern
+    cssData = cssData.replace(/url\("/g, 'url(\"' + baseUrl + '/');
+    // search for url('../images') pattern
     cssData = cssData.replace(/url\('/g, 'url(\'' + baseUrl + '/');
-    cssData = cssData.replace(/url\(([^'])/g, 'url(' + baseUrl + '/$1');
+    // search for url(../images) pattern
+    cssData = cssData.replace(/url\(([^'"])/g, 'url(' + baseUrl + '/$1');
 
     const head = document.head;
     let style = document.createElement('style');
