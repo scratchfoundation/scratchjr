@@ -15,6 +15,9 @@ let dialogOpen = false;
 let timeLimit = null;
 let playTimeLimit = null;
 
+let volumeIndex = 0;
+let volumes = [];
+
 export default class Record {
     static get available () {
         return available;
@@ -116,7 +119,7 @@ export default class Record {
     static updateVolume (f) {
         var num = Math.round(f * 13);
         var div = gn('soundvolume');
-        if (!isRecording) {
+        if (!isRecording && !isPlaying) {
             num = 0;
         }
         for (var i = 0; i < 13; i++) {
@@ -155,6 +158,7 @@ export default class Record {
 
     static startRecording (filename) {
         OS.analyticsEvent('editor', 'start_recording');
+        volumes = [];
         if (parseInt(filename) < 0) {
             // Error in getting record filename - go back to editor
             recordedSound = undefined;
@@ -169,7 +173,10 @@ export default class Record {
             Record.soundname = filename;
             Record.toggleButtonUI('record', true);
             var poll = function () {
-                OS.volume(Record.updateVolume, Record.recordError);
+                OS.volume(function (f) {
+                    volumes.push(f);
+                    Record.updateVolume(f);
+                });
             };
             interval = setInterval(poll, 33);
             timeLimit = setTimeout(function () {
@@ -205,6 +212,16 @@ export default class Record {
         OS.startplay(Record.timeOutPlay);
         Record.toggleButtonUI('play', true);
         isPlaying = true;
+        volumeIndex = 0;
+        var poll = function () {
+            let f = 0;
+            if (volumeIndex < volumes.length) {
+                f = volumes[volumeIndex];
+                volumeIndex++;
+            }
+            Record.updateVolume(f);
+        };
+        interval = setInterval(poll, 33);
     }
 
     // Gets the sound duration from iOS and changes play UI state after time
@@ -215,6 +232,10 @@ export default class Record {
         playTimeLimit = setTimeout(function () {
             Record.toggleButtonUI('play', false);
             isPlaying = false;
+            if (interval) {
+                clearTimeout(interval);
+                interval = null;
+            }
         }, timeout * 1000);
     }
 
