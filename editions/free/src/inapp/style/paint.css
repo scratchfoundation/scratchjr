@@ -385,6 +385,7 @@ body {
 
 #paint-key {
     width: ${css_vh(36.35)};
+    height: ${css_vh(72.53)};
     float: left;
     margin-left: ${css_vh(9.05)};
     background-image: url("../images/keybackground.png");

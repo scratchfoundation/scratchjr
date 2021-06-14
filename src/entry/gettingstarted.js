@@ -6,6 +6,12 @@ export function gettingStartedMain () {
     gn('closeHelp').onclick = gettingStartedCloseMe;
     gn('closeHelp').ontouchstart = gettingStartedCloseMe;
     var videoObj = gn('myVideo');
+    videoObj.poster = 'assets/lobby/poster.png';
+    var image = document.createElement('img');
+    image.src = videoObj.poster;
+    image.onload = function () {
+        videoObj.style.display = 'block';
+    };
     if (isiOS) {
         // On iOS we can load from server
         videoObj.src = 'assets/lobby/intro.mp4';
@@ -16,8 +22,6 @@ export function gettingStartedMain () {
             videoObj.src = AndroidInterface.scratchjr_getgettingstartedvideopath();
         }, 1000);
     }
-    videoObj.poster = 'assets/lobby/poster.png';
-
     var urlvars = getUrlVars();
     place = urlvars['place'];
     document.ontouchmove = function (e) {
