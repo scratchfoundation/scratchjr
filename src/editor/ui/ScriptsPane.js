@@ -44,6 +44,9 @@ export default class ScriptsPane {
         currentsc.parentNode.ontouchstart = function (evt) {
             currentsc.owner.scriptsMouseDown(evt);
         };
+        currentsc.parentNode.onmousedown = function (evt) {
+            currentsc.owner.scriptsMouseDown(evt);
+        };
         scroll.update();
     }
 

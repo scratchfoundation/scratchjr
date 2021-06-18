@@ -75,7 +75,7 @@ export function inappInterfaceGuide () {
             window.parent.ScratchAudio.sndFXWithVolume('keydown.wav', 0.3);
         }
     };
-    document.addEventListener('touchstart', switchHelp, false);
+    document.addEventListener('click', switchHelp, false);
 }
 
 export function inappPaintEditorGuide () {
@@ -125,7 +125,7 @@ export function inappPaintEditorGuide () {
             window.parent.ScratchAudio.sndFXWithVolume('keydown.wav', 0.3);
         }
     };
-    document.addEventListener('touchstart', switchHelp, false);
+    document.addEventListener('click', switchHelp, false);
 }
 
 export function inappBlocksGuide () {
