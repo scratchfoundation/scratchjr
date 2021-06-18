@@ -97,20 +97,20 @@ class Marty2 extends EventDispatcher {
     }
 
     battery_getBorderColor (batteryPercent) {
-        if (batteryPercent >= 70) {
+        if (batteryPercent >= 30) {
             return 'black';
         }
-        if (batteryPercent >= 30) {
+        if (batteryPercent >= 10) {
             return 'black';
         }
         return 'rgb(255,69,0)';
     }
 
     battery_getFillColor (batteryPercent) {
-        if (batteryPercent >= 70) {
+        if (batteryPercent >= 30) {
             return 'lime';
         }
-        if (batteryPercent >= 30) {
+        if (batteryPercent >= 10) {
             return 'orange';
         }
         return 'red';
