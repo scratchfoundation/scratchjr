@@ -16,8 +16,8 @@ When this code starts up, there are several scenarios:
 let alreadyStartedQuestions = false;
 
 export function indexMain () {
-    gn('gettings').ontouchend = indexGettingstarted;
-    gn('startcode').ontouchend = indexGohome;
+    gn('gettings').onclick = indexGettingstarted;
+    gn('startcode').onclick = indexGohome;
     ScratchAudio.init();
     var urlvars = getUrlVars();
     if (urlvars.back && InitialOptions.allQuestionsAnswered()) {
@@ -31,14 +31,14 @@ export function indexMain () {
         gn('startButton').textContent = Localization.localize('PBS_START');
         gn('gettings').textContent = Localization.localize('PBS_HOW_TO');
 
-        gn('startButton').ontouchend = indexGohome;
-        gn('pbschars').ontouchend = indexGohome;
+        gn('startButton').onclick = indexGohome;
+        gn('pbschars').onclick = indexGohome;
 
-        gn('topbar-moreapps').ontouchstart = indexMoreApps;
-        gn('topbar-settings').ontouchstart = indexGoSettings;
-        gn('topbar-info').ontouchstart = indexInfo;
+        gn('topbar-moreapps').onclick = indexMoreApps;
+        gn('topbar-settings').onclick = indexGoSettings;
+        gn('topbar-info').onclick = indexInfo;
     } else {
-        gn('gear').ontouchstart = indexGoSettings;
+        gn('gear').onclick = indexGoSettings;
     }
 
     setTimeout(function () {
@@ -120,6 +120,9 @@ function indexLoadStart () {
     document.ontouchmove = function (e) {
         e.preventDefault();
     };
+    document.onmousemove = function (e) {
+        e.preventDefault();
+    };
     if (isAndroid) {
         AndroidInterface.notifySplashDone();
     }
@@ -170,10 +173,10 @@ function indexAskPlace () {
     gn('usageHome').className = 'usageHome show';
     gn('usageOther').className = 'usageOther show';
     gn('usageNoanswer').className = 'usageNoanswer show';
-    gn('usageSchool').ontouchend = indexSetPlace;
-    gn('usageHome').ontouchend = indexSetPlace;
-    gn('usageOther').ontouchend = indexSetPlace;
-    gn('usageNoanswer').ontouchend = indexSetPlace;
+    gn('usageSchool').onclick = indexSetPlace;
+    gn('usageHome').onclick = indexSetPlace;
+    gn('usageOther').onclick = indexSetPlace;
+    gn('usageNoanswer').onclick = indexSetPlace;
 }
 
 function indexSetPlace (e) {

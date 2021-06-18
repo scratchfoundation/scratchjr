@@ -45,42 +45,42 @@ export default class Lobby {
             gn('settings').style.visibility = 'hidden';
         }
 
-        gn('hometab').ontouchstart = function () {
+        gn('hometab').onclick = function () {
             if (gn('hometab').className != 'home on') {
                 Lobby.setPage('home');
             }
         };
-        gn('helptab').ontouchstart = function () {
+        gn('helptab').onclick = function () {
             if (gn('helptab').className != 'help on') {
                 Lobby.setPage('help');
             }
         };
-        gn('booktab').ontouchstart = function () {
+        gn('booktab').onclick = function () {
             if (gn('booktab').className != 'book on') {
                 Lobby.setPage('book');
             }
         };
-        gn('geartab').ontouchstart = function () {
+        gn('geartab').onclick = function () {
             if (gn('geartab').className != 'gear on') {
                 Lobby.setPage('gear');
             }
         };
-        gn('abouttab').ontouchstart = function () {
+        gn('abouttab').onclick = function () {
             if (gn('abouttab').className != 'tab on') {
                 Lobby.setSubMenu('about');
             }
         };
-        gn('interfacetab').ontouchstart = function () {
+        gn('interfacetab').onclick = function () {
             if (gn('interfacetab').className != 'tab on') {
                 Lobby.setSubMenu('interface');
             }
         };
-        gn('painttab').ontouchstart = function () {
+        gn('painttab').onclick = function () {
             if (gn('painttab').className != 'tab on') {
                 Lobby.setSubMenu('paint');
             }
         };
-        gn('blockstab').ontouchstart = function () {
+        gn('blockstab').onclick = function () {
             if (gn('booktab').className != 'tab2 on') {
                 Lobby.setSubMenu('blocks');
             }
@@ -139,6 +139,7 @@ export default class Lobby {
 
     static loadProjects (p) {
         document.ontouchmove = undefined;
+        document.onmousemove = undefined;
         gn('topsection').className = 'topsection home';
         gn('tabheader').textContent = Localization.localize('MY_PROJECTS');
         gn('subtitle').textContent = '';
@@ -160,6 +161,9 @@ export default class Lobby {
         var div = newHTML('div', 'htmlcontents help', p);
         div.setAttribute('id', 'htmlcontents');
         document.ontouchmove = function (e) {
+            e.preventDefault();
+        };
+        document.onmousemove = function (e) {
             e.preventDefault();
         };
         Samples.init();
@@ -199,7 +203,7 @@ export default class Lobby {
             languageButton = newHTML('div', 'localizationselect' + selected, languageButtons);
             languageButton.textContent = l;
 
-            languageButton.ontouchstart = function (e) {
+            languageButton.onclick = function (e) {
                 ScratchAudio.sndFX('tap.wav');
                 let newLocale = window.Settings.supportedLocales[e.target.textContent];
                 Cookie.set('localization', newLocale);
@@ -214,6 +218,7 @@ export default class Lobby {
             return;
         }
         document.ontouchmove = undefined;
+        document.onmousemove = undefined;
         busy = true;
         ScratchAudio.sndFX('tap.wav');
         Lobby.selectSubButton(page);
@@ -233,11 +238,17 @@ export default class Lobby {
             document.ontouchmove = function (e) {
                 e.preventDefault();
             };
+            document.onmousemove = function (e) {
+                e.preventDefault();
+            };
             url = host + 'interface.html';
             Lobby.loadLink(div, url, 'contentwrap noscroll', 'htmlcontents fixed');
             break;
         case 'paint':
             document.ontouchmove = function (e) {
+                e.preventDefault();
+            };
+            document.onmousemove = function (e) {
                 e.preventDefault();
             };
             url = host + 'paint.html';
