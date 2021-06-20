@@ -8,14 +8,14 @@
     left: ${css_vh(4.95)};
     width: ${css_vh(8.33)};
     height: ${css_vh(8.33)};
-    background:  url('../assets/ui/fullOff2.svg');
+    background:  url('../assets/ui/fullOff2.png');
     background-size: 100%;
 }
 
 .fullscreen.presentationmode#full {
     left: 0px;
     top: 0px;
-    background:  url('../assets/ui/fullOn2.svg');
+    background:  url('../assets/ui/fullOn2.png');
     background-size: 100%;
 }
 
@@ -29,8 +29,8 @@
     height: ${css_vh(8.33)};
 }
 
-.gridToggle.off {background:  url('../assets/ui/gridOn.svg'); background-size: 100%; }
-.gridToggle.on {background:  url('../assets/ui/gridOff.svg'); background-size: 100%; }
+.gridToggle.off {background:  url('../assets/ui/gridOn.png'); background-size: 100%; }
+.gridToggle.on {background:  url('../assets/ui/gridOff.png'); background-size: 100%; }
 
 .addText {
     position: absolute;
@@ -41,12 +41,12 @@
 
     width: ${css_vh(8.33)};
     height: ${css_vh(8.33)};
-    background:  url('../assets/ui/addText.svg');
+    background:  url('../assets/ui/addText.png');
     background-size: 100.5%; /* webview pixelates the image unless we do this */
 }
 
 .addText:active {
-    background:  url('../assets/ui/addTextPressed.svg');
+    background:  url('../assets/ui/addTextPressed.png');
     background-size: 100.5%; /* webview pixelates the image unless we do this */
 }
 
@@ -59,11 +59,11 @@
 
     width: ${css_vh(8.33)};
     height: ${css_vh(8.33)};
-    background:  url('../assets/ui/scene1.svg');
+    background:  url('../assets/ui/scene1.png');
     background-size: 100%;
 }
 
-.changeBkg:active {background:  url('../assets/ui/scenePressed1.svg'); background-size: 100%; }
+.changeBkg:active {background:  url('../assets/ui/scenePressed1.png'); background-size: 100%; }
 
 
 .resetall {
@@ -72,14 +72,14 @@
     padding: 0px;
     top: ${css_vh(0.65)};
     left: ${css_vh(53.13)};
-    background:  url('../assets/ui/resetAll.svg');
+    background:  url('../assets/ui/resetAll.png');
     background-size: 100.5%; /* webview pixelates the image unless we do this */
     width: ${css_vh(8.33)};
     height: ${css_vh(8.33)};
 }
 
 .resetall:active {
-    background:  url('../assets/ui/resetAllPressed.svg');
+    background:  url('../assets/ui/resetAllPressed.png');
     background-size: 100.5%; /* webview pixelates the image unless we do this */
 }
 
@@ -102,17 +102,17 @@
     left: ${css_vh(61.72)};
     width: ${css_vh(8.33)};
     height: ${css_vh(8.33)};
-    background:  url('../assets/ui/go.svg');
+    background:  url('../assets/ui/go.png');
     background-size: 100%;
 }
 
-.go.on {background:  url('../assets/ui/go.svg'); background-size: 100%; }
+.go.on {background:  url('../assets/ui/go.png'); background-size: 100%; }
 
-.go.off:active {background:  url('../assets/ui/goPressed.svg'); background-size: 100%; }
+.go.off:active {background:  url('../assets/ui/goPressed.png'); background-size: 100%; }
 
-.go.off {background:  url('../assets/ui/stop1.svg'); background-size: 100%; }
+.go.off {background:  url('../assets/ui/stop1.png'); background-size: 100%; }
 
-.go.on:active {background:  url('../assets/ui/stopPressed1.svg'); background-size: 100%; }
+.go.on:active {background:  url('../assets/ui/stopPressed1.png'); background-size: 100%; }
 
 .go.on.presentationmode, .go.off.presentationmode {
     position: absolute;
@@ -230,8 +230,8 @@
     height: ${css_vh(8.59)};
 }
 
-.fontsizeText.off {	background:  url('../assets/ui/WordSizeOff.svg'); background-size: 102%; }
-.fontsizeText.on {	background:  url('../assets/ui/WordSizeOn.svg'); background-size: 102%; }
+.fontsizeText.off {	background:  url('../assets/ui/WordSizeOff.png'); background-size: 102%; }
+.fontsizeText.on {	background:  url('../assets/ui/WordSizeOn.png'); background-size: 102%; }
 
 .changecolorText {
     position: absolute;
@@ -242,8 +242,8 @@
     height: ${css_vh(8.59)};
 }
 
-.changecolorText.off {	background:  url('../assets/ui/PaintcanOff.svg'); background-size: 103%; }
-.changecolorText.on {	background:  url('../assets/ui/PaintcanOn.svg'); background-size: 103%; }
+.changecolorText.off {	background:  url('../assets/ui/PaintcanOff.png'); background-size: 103%; }
+.changecolorText.on {	background:  url('../assets/ui/PaintcanOn.png'); background-size: 103%; }
 
 .textuisize {
     display: inline-block;
@@ -368,12 +368,12 @@
     width: ${css_vh(6.51)};
     height: ${css_vh(6.51)};
     z-index: 10;
-    background: url('../assets/ui/nextpage.svg');
+    background: url('../assets/ui/nextpage.png');
     background-size: 100%;
     -webkit-user-select: none;
 }
 
-.nextpage:active {background: url('../assets/ui/nextpagePressed.svg'); background-size: 100%; }
+.nextpage:active {background: url('../assets/ui/nextpagePressed.png'); background-size: 100%; }
 
 .nextpage.on {display: block;}
 
@@ -387,12 +387,12 @@
     width: ${css_vh(6.51)};
     height: ${css_vh(6.51)};
     z-index: 10;
-    background: url('../assets/ui/prevpage.svg');
+    background: url('../assets/ui/prevpage.png');
     background-size: 100%;
     -webkit-user-select: none;
 }
 
-.prevpage:active {background: url('../assets/ui/prevpagePressed.svg'); background-size: 100%; }
+.prevpage:active {background: url('../assets/ui/prevpagePressed.png'); background-size: 100%; }
 
 .prevpage.on {display: block;}
 

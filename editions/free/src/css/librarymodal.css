@@ -95,7 +95,7 @@
     margin: ${css_vh(0.00)} ${css_vh(0.91)} ${css_vh(0.00)};
     width: ${css_vh(8.46)};
     height: ${css_vh(8.46)};
-    background: url('../assets/paint/paintbrush.svg');
+    background: url('../assets/paint/paintbrush.png');
     background-size: ${css_vh(8.46)} ${css_vh(8.46)};
     background-size: 100%;
     -webkit-tap-highlight-color: transparent;
@@ -107,7 +107,7 @@
     margin: ${css_vh(0.00)} ${css_vh(0.91)} ${css_vh(0.00)};
     width: ${css_vh(8.46)};
     height: ${css_vh(8.46)};
-    background: url('../assets/paint/ok.svg');
+    background: url('../assets/paint/ok.png');
     background-size: 100%;
     -webkit-tap-highlight-color: transparent;
 }
@@ -118,21 +118,21 @@
     margin: ${css_vh(0.00)} ${css_vh(0.91)} ${css_vh(0.00)};
     width: ${css_vh(8.46)};
     height: ${css_vh(8.46)};
-    background: url('../assets/paint/cancel.svg');
+    background: url('../assets/paint/cancel.png');
     background-size: 100.5%; /* webview pixelates the image unless we do this */
     -webkit-tap-highlight-color: transparent;
 }
 
 .okicon:active {
-     background: url('../assets/paint/okPressed.svg');
+     background: url('../assets/paint/okPressed.png');
      background-size: 100%;
 }
 .cancelicon:active {
-     background: url('../assets/paint/cancelPressed.svg');
+     background: url('../assets/paint/cancelPressed.png');
      background-size: 100.5%; /* webview pixelates the image unless we do this */
 }
 .painticon:active {
-     background: url('../assets/paint/paintbrushPressed.svg');
+     background: url('../assets/paint/paintbrushPressed.png');
      background-size: 100%;
 }
 

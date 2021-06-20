@@ -6,14 +6,14 @@
     padding: 0px;
     top: ${css_vh(0.13)};
     left: ${css_vh(1.69)};
-    background:  url('../assets/ui/fliplogo.svg');
+    background:  url('../assets/ui/fliplogo.png');
     background-size: 100.5%; /* webview pixelates the image unless we do this */
     width: ${css_vh(29.95)};
     height: ${css_vh(8.20)};
 }
 
 .flipme:active {
-    background:  url('../assets/ui/fliplogoPressed.svg');
+    background:  url('../assets/ui/fliplogoPressed.png');
     background-size: 100.5%;  /* webview pixelates the image unless we do this */
 }
 
@@ -137,7 +137,7 @@
     left: 0px;
     width: ${css_vh(5.86)};
     height: ${css_vh(5.73)};
-    background: url('../assets/ui/closeit.svg');
+    background: url('../assets/ui/closeit.png');
     background-size: 100.5%; /* webview pixelates the image unless we do this */
     z-index: 5;
     -webkit-user-select: none;
@@ -149,7 +149,7 @@
     left: 0px;
     width: ${css_vh(5.86)};
     height: ${css_vh(5.73)};
-    background: url('../assets/ui/closeit.svg');
+    background: url('../assets/ui/closeit.png');
     background-size: 100.5%; /* webview pixelates the image unless we do this */
     z-index: 5;
     -webkit-user-select: none;
@@ -207,7 +207,7 @@
 
 .spritethumb .brush {
     position: absolute;
-    background:  url('../assets/paint/paintbrush.svg');
+    background:  url('../assets/paint/paintbrush.png');
     background-size: ${css_vh(7.03)} ${css_vh(7.03)};
     width: ${css_vh(7.03)};
     height: ${css_vh(7.03)};
@@ -217,6 +217,6 @@
     padding: 0px;
 }
 
-.spritethumb .brush:active { background:  url('../assets/paint/paintbrushPressed.svg'); background-size: 100%; }
+.spritethumb .brush:active { background:  url('../assets/paint/paintbrushPressed.png'); background-size: 100%; }
 .spritethumb.off .brush{ display: none;}
 .spritethumb.noneditable .brush{ display: none;}

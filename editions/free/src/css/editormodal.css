@@ -125,7 +125,7 @@
     width: ${65 * scaleMultiplier}px;
     height: ${65 * scaleMultiplier}px;
     zoom: 75%;
-    background: url('../assets/paint/ok.svg') no-repeat left top;
+    background: url('../assets/paint/ok.png') no-repeat left top;
     background-size: 101%;
 }
 

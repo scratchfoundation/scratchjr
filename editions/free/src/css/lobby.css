@@ -318,7 +318,7 @@ div.localizationselect.selected {
 div.localizationselect.selected:after {
     display: block;
     content: ' ';
-    background-image: url('../assets/ui/languageConfirm.svg');
+    background-image: url('../assets/ui/languageConfirm.png');
     background-size: 45px 45px;
     height: 45px;
     width: 45px;

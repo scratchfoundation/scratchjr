@@ -47,7 +47,7 @@ video::-webkit-media-controls-fullscreen-button {
     width: ${79 * scaleMultiplier}px;
     height: ${79 * scaleMultiplier}px;
     z-index: 1000;
-    background: url('../assets/paint/cameraExit.svg');
+    background: url('../assets/paint/cameraExit.png');
     background-size: 100%;
 }
 

@@ -151,7 +151,7 @@
     visibility: hidden;
     width: ${css_vh(5.86)};
     height: ${css_vh(5.73)};
-    background:  url('../assets/ui/closeit.svg');
+    background:  url('../assets/ui/closeit.png');
     background-size: 101%;
 }
 
@@ -162,7 +162,7 @@
     z-index: 5;
     width: ${css_vw(5.47)};
     height: ${css_vh(6.51)};
-    background: url('../assets/ui/share-bow.svg');
+    background: url('../assets/ui/share-bow.png');
     background-size: 101%;
     visibility: hidden;
 }
