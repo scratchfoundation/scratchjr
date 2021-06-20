@@ -78,14 +78,14 @@ spriteform.off {visibility: hidden; };
     padding: ${css_vh(0.00)};
     width: ${css_vh(8.46)};
     height: ${css_vh(8.46)};
-    background: url('../assets/paint/ok.svg');
+    background: url('../assets/paint/ok.png');
     background-size: 100%;
     -webkit-user-select: none;
     z-index: 1000;
 }
 
 .paintdone:active {
-    background: url('../assets/paint/okPressed.svg');
+    background: url('../assets/paint/okPressed.png');
     background-size: 100%;
 }
 
@@ -120,12 +120,12 @@ spriteform.off {visibility: hidden; };
     width: ${css_vh(10.29)};
     height: ${css_vh(10.29)};
     margin: ${css_vh(0.65)};
-    background: url('../assets/paint/cameraFlip.svg');
+    background: url('../assets/paint/cameraFlip.png');
     background-size: 100%;
 }
 
 .flipcamera:active {
-    background: url('../assets/paint/cameraFlipPressed.svg');
+    background: url('../assets/paint/cameraFlipPressed.png');
     background-size: 100%;
 }
 
@@ -136,12 +136,12 @@ spriteform.off {visibility: hidden; };
     width: ${css_vh(10.29)};
     height: ${css_vh(10.29)};
     margin: ${css_vh(0.65)};
-    background: url('../assets/paint/cameraExit.svg');
+    background: url('../assets/paint/cameraExit.png');
     background-size: 100%;
 }
 
 .cameraclose:active {
-    background: url('../assets/paint/cameraExitOn.svg');
+    background: url('../assets/paint/cameraExitOn.png');
     background-size: 100%; }
 
 .snapshot-container {
@@ -158,12 +158,12 @@ spriteform.off {visibility: hidden; };
     margin-left: auto;
     margin-right: auto;
     padding: 0;
-    background: url('../assets/paint/cameraSnap.svg');
+    background: url('../assets/paint/cameraSnap.png');
     background-size: 100%;
 }
 
 .snapshot:active {
-    background: url('../assets/paint/cameraExitOn.svg');
+    background: url('../assets/paint/cameraExitOn.png');
     background-size: 100%;
 }
 
@@ -192,7 +192,7 @@ spriteform.off {visibility: hidden; };
     position: relative;
     width: ${css_vh(8.46)};
     height: ${css_vh(8.33)};
-    background: url('../assets/paint/undoOff.svg');
+    background: url('../assets/paint/undoOff.png');
     background-size: 100%;
     -webkit-user-select: none;
 }
@@ -201,48 +201,48 @@ spriteform.off {visibility: hidden; };
     position: relative;
     width: ${css_vh(8.46)};
     height: ${css_vh(8.33)};
-    background: url('../assets/paint/redoOff.svg');
+    background: url('../assets/paint/redoOff.png');
     background-size: 100%;
     -webkit-user-select: none;
 }
 
 .undo.on {
-    background: url('../assets/paint/undoOn.svg');
+    background: url('../assets/paint/undoOn.png');
     background-size: 100%;
 }
 
 .undo.off {
-    background: url('../assets/paint/undoOff.svg');
+    background: url('../assets/paint/undoOff.png');
     background-size: 100%;
 }
 
 .redo.on {
-    background: url('../assets/paint/redoOn.svg');
+    background: url('../assets/paint/redoOn.png');
     background-size: 100%;
 }
 
 .redo.off {
-    background: url('../assets/paint/redoOff.svg');
+    background: url('../assets/paint/redoOff.png');
     background-size: 100%;
 }
 
 .undo.on:active {
-    background: url('../assets/paint/undoOnPressed.svg');
+    background: url('../assets/paint/undoOnPressed.png');
     background-size: 100%;
 }
 
 .undo.off:active {
-    background: url('../assets/paint/undoOffPressed.svg');
+    background: url('../assets/paint/undoOffPressed.png');
     background-size: 100%;
 }
 
 .redo.on:active {
-    background: url('../assets/paint/redoOnPressed.svg');
+    background: url('../assets/paint/redoOnPressed.png');
     background-size: 100%;
 }
 
 .redo.off:active {
-    background: url('../assets/paint/redoOffPressed.svg');
+    background: url('../assets/paint/redoOffPressed.png');
     background-size: 100%;
 }
 
@@ -357,84 +357,84 @@ spriteform.off {visibility: hidden; };
 }
 
 *.tool.path.on {
-    background: url('../assets/paint/pathOn.svg') no-repeat center top;
+    background: url('../assets/paint/pathOn.png') no-repeat center top;
     background-size: 100%;
 }
 *.tool.path.off {
-    background: url('../assets/paint/pathOff.svg') no-repeat center top;
+    background: url('../assets/paint/pathOff.png') no-repeat center top;
     background-size: 100%;
 }
 *.tool.tri.on {
-    background: url('../assets/paint/triOn.svg') no-repeat center top;
+    background: url('../assets/paint/triOn.png') no-repeat center top;
     background-size: 100%;
 }
 *.tool.tri.off {
-    background: url('../assets/paint/triOff.svg') no-repeat center top;
+    background: url('../assets/paint/triOff.png') no-repeat center top;
     background-size: 100%;
 }
 *.tool.rect.on {
-    background: url('../assets/paint/rectOn.svg') no-repeat center top;
+    background: url('../assets/paint/rectOn.png') no-repeat center top;
     background-size: 100%;
 }
 *.tool.rect.off {
-    background: url('../assets/paint/rectOff.svg') no-repeat center top;
+    background: url('../assets/paint/rectOff.png') no-repeat center top;
     background-size: 100%;
 }
 *.tool.ellipse.on {
-    background: url('../assets/paint/ellipseOn.svg') no-repeat center top;
+    background: url('../assets/paint/ellipseOn.png') no-repeat center top;
     background-size: 100%;
 }
 *.tool.ellipse.off {
-    background: url('../assets/paint/ellipseOff.svg') no-repeat center top;
+    background: url('../assets/paint/ellipseOff.png') no-repeat center top;
     background-size: 100%;
 }
 
 *.tool.paintbucket.off {
-    background: url('../assets/paint/paintbucketOff.svg') no-repeat center top;
+    background: url('../assets/paint/paintbucketOff.png') no-repeat center top;
     background-size: 100%;
 }
 *.tool.paintbucket.on {
-    background: url('../assets/paint/paintbucketOn.svg') no-repeat center top;
+    background: url('../assets/paint/paintbucketOn.png') no-repeat center top;
     background-size: 100%;
 }
 *.tool.select.on {
-    background: url('../assets/paint/selectOn.svg') no-repeat center top;
+    background: url('../assets/paint/selectOn.png') no-repeat center top;
     background-size: 100%;
 }
 *.tool.select.off {
-    background: url('../assets/paint/selectOff.svg') no-repeat center top;
+    background: url('../assets/paint/selectOff.png') no-repeat center top;
     background-size: 100%;
 }
 *.tool.rotate.on {
-    background: url('../assets/paint/rotateOn.svg') no-repeat center top;
+    background: url('../assets/paint/rotateOn.png') no-repeat center top;
     background-size: 100%;
 }
 *.tool.rotate.off {
-    background: url('../assets/paint/rotateOff.svg') no-repeat center top;
+    background: url('../assets/paint/rotateOff.png') no-repeat center top;
     background-size: 100%;
 }
 *.tool.stamper.on {
-    background: url('../assets/paint/stamperOn.svg')no-repeat center top;
+    background: url('../assets/paint/stamperOn.png')no-repeat center top;
     background-size: 100%;
 }
 *.tool.stamper.off {
-    background: url('../assets/paint/stamperOff.svg') no-repeat center top;
+    background: url('../assets/paint/stamperOff.png') no-repeat center top;
     background-size: 100%;
 }
 *.tool.scissors.off {
-    background: url('../assets/paint/scissorsOff.svg')no-repeat center top;
+    background: url('../assets/paint/scissorsOff.png')no-repeat center top;
     background-size: 100%;
 }
 *.tool.scissors.on {
-    background: url('../assets/paint/scissorsOn.svg') no-repeat center top;
+    background: url('../assets/paint/scissorsOn.png') no-repeat center top;
     background-size: 100%;
 }
 *.tool.camera.off {
-    background: url('../assets/paint/snapOff.svg') no-repeat center top;
+    background: url('../assets/paint/snapOff.png') no-repeat center top;
     background-size: 100%;
 }
 *.tool.camera.on {
-    background: url('../assets/paint/snapOn.svg') no-repeat center top;
+    background: url('../assets/paint/snapOn.png') no-repeat center top;
     background-size: 100%;
 }
 
@@ -459,7 +459,7 @@ spriteform.off {visibility: hidden; };
 *.paintpalette .pensizeholder.off {background: none;}
 
 *.paintpalette .pensizeholder.on {
-    background:  url('../assets/paint/pensizeselect.svg');
+    background:  url('../assets/paint/pensizeselect.png');
     background-size: 100%;
 }
 
