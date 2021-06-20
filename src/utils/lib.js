@@ -102,12 +102,21 @@ export function newDiv (parent, x, y, w, h, styles) {
     return el;
 }
 
-export function newImage (parent, src, styles) {
+export function newImage (parent, src, styles, loadFcn) {
     var img = document.createElement('img');
     img.src = src;
     setProps(img.style, styles);
     if (parent) {
         parent.appendChild(img);
+    }
+    if (loadFcn) {
+        if (!img.complete) {
+            img.onload = function () {
+                loadFcn(img);
+            };
+        } else {
+            loadFcn(img);
+        }
     }
     return img;
 }

@@ -13,7 +13,7 @@ import Matrix from '../../geom/Matrix';
 import Vector from '../../geom/Vector';
 import {newHTML, newDiv, gn,
     setCanvasSizeScaledToWindowDocumentHeight,
-    DEGTOR, getIdFor, setProps} from '../../utils/lib';
+    DEGTOR, getIdFor, setProps, newImage, newCanvas} from '../../utils/lib';
 
 export default class Page {
     constructor (id, data, fcn) {
@@ -164,35 +164,22 @@ export default class Page {
     }
 
     setBackgroundImage (url, fcn) {
-        var img = document.createElement('img');
-        img.src = url;
-        this.bkg.originalImg = img.cloneNode(false);
-        this.bkg.appendChild(img);
-        setProps(img.style, {
-            position: 'absolute',
-            left: '0px',
-            top: '0px',
-            width: '100%',
-            height: '100%'
-        });
-        this.bkg.img = img;
-        if (!img.complete) {
-            img.onload = function () {
-                if (gn('backdrop').className == 'modal-backdrop fade in') {
-                    Project.setProgress(Project.getMediaLoadRatio(70));
-                }
-                if (fcn) {
-                    fcn();
-                }
-            };
-        } else {
+        var self = this;
+        var img = newImage(null, url, null, function (img) {
+            self.bkg.originalImg = img.cloneNode(false);
+            var canvas = newCanvas(self.bkg, 0, 0, img.naturalWidth, img.naturalHeight, {
+                width: '100%',
+                height: '100%'
+            });
+            var context = canvas.getContext('2d');
+            context.drawImage(img, 0, 0);
             if (gn('backdrop').className == 'modal-backdrop fade in') {
                 Project.setProgress(Project.getMediaLoadRatio(70));
             }
             if (fcn) {
                 fcn();
             }
-        }
+        });
     }
 
     setPageSprites (showstate) {

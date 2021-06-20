@@ -28,7 +28,7 @@ import {newHTML, newDiv, newP, gn,
     setCanvasSizeScaledToWindowDocumentHeight,
     DEGTOR, getIdFor, setProps, isTablet, isiOS,
     isAndroid, fitInRect, scaleMultiplier, setCanvasSize,
-    globaly, globalx, rgbToHex} from '../../utils/lib';
+    globaly, globalx, rgbToHex, newImage, newCanvas} from '../../utils/lib';
 
 export default class Sprite {
     constructor (attr, whenDone) {
@@ -106,28 +106,16 @@ export default class Sprite {
     }
 
     setCostume (dataurl, fcn) {
-        var img = document.createElement('img');
-        img.ondragstart = function () {
-            return false;
-        };
-        img.src = dataurl;
-        this.img = img;
-        // Make a copy that is not affected by zoom transformation
-        this.originalImg = img.cloneNode(false);
-        setProps(this.img.style, {
-            position: 'absolute',
-            left: '0px',
-            top: '0px'
-        });
-        this.div.appendChild(img);
         var sprite = this;
-        if (!img.complete) {
-            img.onload = function () {
-                sprite.displaySprite(fcn);
-            };
-        } else {
+        newImage(null, dataurl, null, function (img) {
+            var canvas = newCanvas(sprite.div, 0, 0, img.naturalWidth, img.naturalHeight);
+            var context = canvas.getContext('2d');
+            context.drawImage(img, 0, 0);
+            sprite.img = canvas;
+            // Make a copy that is not affected by zoom transformation
+            sprite.originalImg = img.cloneNode(false);
             sprite.displaySprite(fcn);
-        }
+        });
     }
 
     displaySprite (whenDone) {
@@ -218,14 +206,7 @@ export default class Sprite {
             return;
         }
         setCanvasSize(cnv, w, h);
-
-        // TODO: Merge these to get better thumbnail rendering on iOS
-        var img;
-        if (isAndroid) {
-            img = this.originalImg;
-        } else {
-            img = this.img;
-        }
+        var img = this.originalImg;
         var imgw = img.naturalWidth ? img.naturalWidth : img.width;
         var imgh = img.naturalHeight ? img.naturalHeight : img.height;
         var scale = Math.min(w / imgw, h / imgh);
