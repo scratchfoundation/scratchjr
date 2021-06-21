@@ -13,7 +13,7 @@ import Matrix from '../../geom/Matrix';
 import Vector from '../../geom/Vector';
 import {newHTML, newDiv, gn,
     setCanvasSizeScaledToWindowDocumentHeight,
-    DEGTOR, getIdFor, setProps, newImage, newCanvas} from '../../utils/lib';
+    DEGTOR, getIdFor, newImage, newCanvas} from '../../utils/lib';
 
 export default class Page {
     constructor (id, data, fcn) {
@@ -165,7 +165,7 @@ export default class Page {
 
     setBackgroundImage (url, fcn) {
         var self = this;
-        var img = newImage(null, url, null, function (img) {
+        newImage(null, url, null, function (img) {
             self.bkg.originalImg = img.cloneNode(false);
             var canvas = newCanvas(self.bkg, 0, 0, img.naturalWidth, img.naturalHeight, {
                 width: '100%',
