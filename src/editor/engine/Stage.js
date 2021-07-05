@@ -472,6 +472,12 @@ export default class Stage {
             return;
         }
         var pt = this.getStagePt(e);
+        // if pointer is outside stage
+        // cancel the dragging event
+        if (pt.x < 0 || pt.x > this.width || pt.y < 0 || pt.y > this.height) {
+            Events.dragged = false;
+            return;
+        }
         var delta = Vector.diff(pt, this.initialPoint);
         var dist = ScratchJr.inFullscreen ? 15 : 5;
         if (!Events.dragged && (Vector.len(delta) > dist)) {
