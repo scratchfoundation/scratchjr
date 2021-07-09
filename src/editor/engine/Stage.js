@@ -474,8 +474,16 @@ export default class Stage {
         var pt = this.getStagePt(e);
         // if pointer is outside stage
         // cancel the dragging event
-        if (pt.x < 0 || pt.x > this.width || pt.y < 0 || pt.y > this.height) {
+        var threshold = 15;
+        if (
+            pt.x < -threshold
+            || pt.y < -threshold
+            || pt.x > (this.width + threshold)
+            || pt.y > (this.height + threshold)
+        ) {
+            Events.clearEvents();
             Events.dragged = false;
+            Events.dragthumbnail = undefined;
             return;
         }
         var delta = Vector.diff(pt, this.initialPoint);
