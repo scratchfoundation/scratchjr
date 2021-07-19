@@ -7,8 +7,6 @@ html {
 
 body {
     margin-top: ${css_vh(6)};
-    padding: ${css_vh(2)} ${css_vw(6.05)} ${css_vh(2)};
-    margin: ${css_vh(2.6)} auto;
 }
 
 #content {
