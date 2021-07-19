@@ -10,7 +10,6 @@
 
     <uses-feature android:name="android.hardware.camera" android:required="false" />
     <uses-feature android:name="android.hardware.microphone" android:required="false" />
-    <uses-feature android:name="android.hardware.touchscreen" android:required="true" />
 
     <supports-screens android:requiresSmallestWidthDp="600" />
     <application
@@ -18,7 +17,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
-        android:hardwareAccelerated="true">
+        android:hardwareAccelerated="true"
+        android:resizeableActivity="false">
         <provider android:name="ShareContentProvider"
                   android:grantUriPermissions="true"
                   android:authorities="${applicationId}.ShareContentProvider">
