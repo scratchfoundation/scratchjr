@@ -26,7 +26,7 @@ import ScratchAudio from '../../utils/ScratchAudio';
 import Scripts from '../ui/Scripts';
 import {newHTML, newDiv, newP, gn,
     setCanvasSizeScaledToWindowDocumentHeight,
-    DEGTOR, getIdFor, setProps, isTablet, isiOS,
+    DEGTOR, getIdFor, setProps, isiOS,
     isAndroid, fitInRect, scaleMultiplier, setCanvasSize,
     globaly, globalx, rgbToHex} from '../../utils/lib';
 
@@ -911,13 +911,9 @@ export default class Sprite {
                 me.unfocusText();
             });
         } else {
-            if (isTablet) {
+            setTimeout(function () {
                 ti.focus();
-            } else {
-                setTimeout(function () {
-                    ti.focus();
-                }, 100);
-            }
+            }, 100);
         }
     }
 

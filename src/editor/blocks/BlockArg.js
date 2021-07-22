@@ -3,7 +3,7 @@ import BlockSpecs from './BlockSpecs';
 import Menu from './Menu';
 import Undo from '../ui/Undo';
 import {setCanvasSize, setProps, writeText, scaleMultiplier,
-    newHTML, newDiv, newCanvas, getStringSize, isTablet,
+    newHTML, newDiv, newCanvas, getStringSize,
     newP, globalx, globaly} from '../../utils/lib';
 import Localization from '../../utils/Localization';
 
@@ -295,7 +295,7 @@ export default class BlockArg {
     }
 
     pressDropDown (e, fcn) {
-        if (isTablet && e.touches && (e.touches.length > 1)) {
+        if (e.touches && (e.touches.length > 1)) {
             return;
         }
         if (ScratchJr.onHold) {

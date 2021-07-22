@@ -8,7 +8,7 @@ import Project from './Project';
 import Palette from './Palette';
 import UI from './UI';
 import ScratchAudio from '../../utils/ScratchAudio';
-import {newHTML, isTablet, gn} from '../../utils/lib';
+import {newHTML, gn} from '../../utils/lib';
 
 let buffer = [];
 let index = 0;
@@ -72,7 +72,7 @@ export default class Undo {
     ////////////////////////////////
 
     static prevStep (e) {
-        if (isTablet && e.touches && (e.touches.length > 1)) {
+        if (e.touches && (e.touches.length > 1)) {
             return;
         }
         e.preventDefault();
@@ -93,7 +93,7 @@ export default class Undo {
     }
 
     static nextStep (e) {
-        if (isTablet && e.touches && (e.touches.length > 1)) {
+        if (e.touches && (e.touches.length > 1)) {
             return;
         }
         e.preventDefault();

@@ -9,7 +9,7 @@ import ScriptsPane from './ScriptsPane';
 import Events from '../../utils/Events';
 import ScratchAudio from '../../utils/ScratchAudio';
 import {gn, newHTML, setCanvasSize, setProps,
-    localx, localy, scaleMultiplier, hit3DRect, isTablet} from '../../utils/lib';
+    localx, localy, scaleMultiplier, hit3DRect} from '../../utils/lib';
 
 export default class Scripts {
     constructor (spr) {
@@ -43,7 +43,7 @@ export default class Scripts {
     ////////////////////////////////////////////////
 
     scriptsMouseDown (e) {
-        if (isTablet && e.touches && (e.touches.length > 1)) {
+        if (e.touches && (e.touches.length > 1)) {
             return;
         }
         if (ScratchJr.onHold) {

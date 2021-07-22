@@ -3,7 +3,7 @@
 ////////////////////////////////////////////////
 
 import Events from '../../utils/Events';
-import {newDiv, newHTML, CSSTransition3D, isTablet, setCanvasSize} from '../../utils/lib';
+import {newDiv, newHTML, CSSTransition3D, setCanvasSize} from '../../utils/lib';
 
 export default class Scroll {
     constructor (div, id, w, h, cfcn, ofcn) {
@@ -50,45 +50,33 @@ export default class Scroll {
         newHTML('div', 'halign down', this.adown);
 
         var me = this;
-        if (isTablet) {
-            this.aup.ontouchstart = function (e) {
-                me.scrolldown(e);
-            };
-        } else {
-            this.aup.onmousedown = function (e) {
-                me.scrolldown(e);
-            };
-        }
+        this.aup.ontouchstart = function (e) {
+            me.scrolldown(e);
+        };
+        this.aup.onmousedown = function (e) {
+            me.scrolldown(e);
+        };
 
-        if (isTablet) {
-            this.adown.ontouchstart = function (e) {
-                me.scrollup(e);
-            };
-        } else {
-            this.adown.onmousedown = function (e) {
-                me.scrollup(e);
-            };
-        }
+        this.adown.ontouchstart = function (e) {
+            me.scrollup(e);
+        };
+        this.adown.onmousedown = function (e) {
+            me.scrollup(e);
+        };
 
-        if (isTablet) {
-            this.aleft.ontouchstart = function (e) {
-                me.scrollright(e);
-            };
-        } else {
-            this.aleft.onmousedown = function (e) {
-                me.scrollright(e);
-            };
-        }
+        this.aleft.ontouchstart = function (e) {
+            me.scrollright(e);
+        };
+        this.aleft.onmousedown = function (e) {
+            me.scrollright(e);
+        };
 
-        if (isTablet) {
-            this.aright.ontouchstart = function (e) {
-                me.scrollleft(e);
-            };
-        } else {
-            this.aright.onmousedown = function (e) {
-                me.scrollleft(e);
-            };
-        }
+        this.aright.ontouchstart = function (e) {
+            me.scrollleft(e);
+        };
+        this.aright.onmousedown = function (e) {
+            me.scrollleft(e);
+        };
 
     }
 
@@ -329,7 +317,7 @@ export default class Scroll {
     ////////////////////////////////////////////////////////////
 
     scrolldown (e) {
-        if (isTablet && e.touches && (e.touches.length > 1)) {
+        if (e.touches && (e.touches.length > 1)) {
             return;
         }
         e.preventDefault();
@@ -357,7 +345,7 @@ export default class Scroll {
     }
 
     scrollup (e) {
-        if (isTablet && e.touches && (e.touches.length > 1)) {
+        if (e.touches && (e.touches.length > 1)) {
             return;
         }
         e.preventDefault();
@@ -385,7 +373,7 @@ export default class Scroll {
     }
 
     scrollright (e) {
-        if (isTablet && e.touches && (e.touches.length > 1)) {
+        if (e.touches && (e.touches.length > 1)) {
             return;
         }
         e.preventDefault();
@@ -413,7 +401,7 @@ export default class Scroll {
     }
 
     scrollleft (e) {
-        if (isTablet && e.touches && (e.touches.length > 1)) {
+        if (e.touches && (e.touches.length > 1)) {
             return;
         }
         e.preventDefault();

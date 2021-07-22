@@ -1,5 +1,5 @@
 import BlockSpecs from './BlockSpecs';
-import {scaleMultiplier, setProps, setCanvasSize, newHTML, isTablet,
+import {scaleMultiplier, setProps, setCanvasSize, newHTML,
     newDiv, getDocumentHeight, drawThumbnail, frame, globalx, globaly} from '../../utils/lib';
 
 let openMenu = undefined;
@@ -82,7 +82,7 @@ export default class Menu {
             fcn(evt, mu, block, c);
         };
         function handleTouchStart (e) {
-            if (isTablet && e.touches && (e.touches.length > 1)) {
+            if (e.touches && (e.touches.length > 1)) {
                 return;
             }
             e.preventDefault();
