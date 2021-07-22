@@ -5,7 +5,7 @@
 import ScratchJr from '../ScratchJr';
 import Events from '../../utils/Events';
 import Localization from '../../utils/Localization';
-import {gn, scaleMultiplier, isTablet, newDiv, setProps, newP, newCanvas} from '../../utils/lib';
+import {gn, scaleMultiplier, newDiv, setProps, newP, newCanvas} from '../../utils/lib';
 
 let width = 482;
 let height = 362;
