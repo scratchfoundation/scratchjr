@@ -28,7 +28,8 @@ export default class Page {
         this.sprites = JSON.stringify([]);
         this.bkg = newDiv(this.div, 0, 0, 480, 360, {
             position: 'absolute',
-            background: ScratchJr.stagecolor
+            background: ScratchJr.stagecolor,
+            zIndex: '-10',
         });
         this.bkg.type = 'background';
         ScratchJr.stage.pages.push(this);
