@@ -31,6 +31,12 @@ export default class Grid {
         Grid.setScaleAndPosition(grid, scaleMultiplier, 47, 75, width, height);
         grid.setAttribute('id', 'livegrid');
         Grid.drawLines(grid, width, height);
+        grid.ontouchstart = function (evt) {
+            ScratchJr.stage.mouseDown(evt);
+        };
+        grid.onmousedown = function (evt) {
+            ScratchJr.stage.mouseDown(evt);
+        };
         Grid.createNumbering(w, h);
         Grid.createCursor();
         Grid.createYcursor();
