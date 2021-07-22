@@ -727,6 +727,7 @@ export default class ScratchJr {
         if (delta == 0) {
             ScratchJr.needsToScroll(b);
         }
+        window.onkeypress = ScratchJr.handleKeyPressed;
     }
 
     static needsToScroll (b) {
@@ -751,6 +752,17 @@ export default class ScratchJr {
         activeFocus.delta = delta;
     }
 
+    static handleKeyPressed (evt) {
+        if ((evt.keyCode >= 48 && evt.keyCode <= 57) || evt.key == '-') {
+            var c = evt.key;
+            ScratchJr.fillValueWithKey(c);
+            return;
+        }
+        if (evt.key == 'Backspace') {
+            ScratchJr.numEditDelete();
+        }
+    }
+
     static numEditKey (e) {
         e.preventDefault();
         e.stopPropagation();
@@ -765,13 +777,17 @@ export default class ScratchJr {
             ScratchAudio.sndFX('keydown.wav');
         }
         var c = t.textContent;
-        var input = activeFocus.input;
         if (!c) {
             if ((t.parentNode.className == 'onekey delete') || (t.className == 'onekey delete')) {
                 ScratchJr.numEditDelete();
             }
             return;
         }
+        ScratchJr.fillValueWithKey(c);
+    }
+
+    static fillValueWithKey (c) {
+        var input = activeFocus.input;
         var val = input.textContent;
         if (editfirst) {
             editfirst = false;
@@ -846,6 +862,7 @@ export default class ScratchJr {
         keypad.className = 'picokeyboard off';
         activeFocus.div.className = 'numfield off';
         activeFocus = undefined;
+        window.onkeypress = undefined;
     }
 
     static numEditDone () {
