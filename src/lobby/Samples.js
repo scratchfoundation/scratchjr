@@ -52,10 +52,7 @@ export default class Samples {
             var name = mt.childNodes[1];
 
             // Localize sample project names
-            var sampleName = data.name;
-            sampleName = Localization.localize('SAMPLE_' + sampleName);
-
-            name.textContent = sampleName;
+            name.textContent = Localization.localizeSampleName(data.name);
             var cnv = mt.childNodes[0].childNodes[1];
             Samples.insertThumbnail(cnv, data.thumbnail);
             mt.onclick = function (evt) {

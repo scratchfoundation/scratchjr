@@ -355,7 +355,7 @@ export default class ScratchJr {
         if (ScratchJr.isEditable() && editmode == 'storyStarter' && storyStarted && !Project.error) {
             OS.analyticsEvent('samples', 'story_starter_edited', Project.metadata.name);
             // Localize sample project names
-            var sampleName = Localization.localize('SAMPLE_' + Project.metadata.name);
+            var sampleName = Localization.localizeSampleName(Project.metadata.name);
             // Get the new project name
             IO.uniqueProjectName({
                 name: sampleName

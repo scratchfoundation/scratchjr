@@ -112,6 +112,16 @@ export default class Localization {
         return 'String missing: ' + key;
     }
 
+    static localizeSampleName (key) {
+        var name = Localization.localizeOptional('SAMPLE_' + key);
+        // If the localized name is still started with 'SAMPLE_',
+        // it is not a preset name.
+        if (name.startsWith('SAMPLE_')) {
+            return key;
+        }
+        return name;
+    }
+
     // Translate a particular message given the message key and info;
     // if key not found, assume it's just a raw text string without a translation,
     // and return that

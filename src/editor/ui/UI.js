@@ -339,7 +339,7 @@ export default class UI {
         if (ScratchJr.isEditable() && ScratchJr.editmode == 'storyStarter' && !Project.error && ScratchJr.changed) {
             OS.analyticsEvent('samples', 'story_starter_edited', Project.metadata.name);
             // Get the new project name
-            var sampleName = Localization.localize('SAMPLE_' + Project.metadata.name);
+            var sampleName = Localization.localizeSampleName(Project.metadata.name);
             IO.uniqueProjectName({
                 name: sampleName
             }, function (jsonData) {
@@ -423,7 +423,11 @@ export default class UI {
         }
 
         if (ScratchJr.isEditable()) {
-            (document.forms.projectname.myproject).value = Project.metadata.name;
+            var name = Project.metadata.name;
+            if (ScratchJr.editmode == 'storyStarter') {
+                name = Localization.localizeSampleName(name);
+            }
+            (document.forms.projectname.myproject).value = name;
         } else {
             gn('pname').textContent = Project.metadata.name;
         }
