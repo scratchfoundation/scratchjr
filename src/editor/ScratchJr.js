@@ -352,7 +352,8 @@ export default class ScratchJr {
     }
 
     static saveProject (e, onDone) {
-        if (ScratchJr.isEditable() && editmode == 'storyStarter' && storyStarted && !Project.error) {
+        // Only save the sample project if it's changed.
+        if (ScratchJr.isEditable() && editmode == 'storyStarter' && storyStarted && !Project.error && changed) {
             OS.analyticsEvent('samples', 'story_starter_edited', Project.metadata.name);
             // Localize sample project names
             var sampleName = Localization.localizeSampleName(Project.metadata.name);
