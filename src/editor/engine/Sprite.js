@@ -44,6 +44,7 @@ export default class Sprite {
         this.div = document.createElement('div');
         setProps(this.div.style, {
             position: 'absolute',
+            zIndex: -1,
             left: '0px',
             top: '0px'
         });
@@ -464,6 +465,7 @@ export default class Sprite {
         this.div.appendChild(this.border);
         setProps(this.border.style, {
             position: 'absolute',
+            zIndex: -2,
             left: '0px',
             top: '0px'
         });

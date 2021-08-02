@@ -15,6 +15,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.util.Log;
@@ -49,7 +50,7 @@ import java.util.Vector;
  * @author markroth8
  */
 public class ScratchJrActivity
-    extends Activity
+    extends AppCompatActivity
 {
     /** Milliseconds to pan when showing the soft keyboard */
     private static final int SOFT_KEYBOARD_PAN_MS = 250;
