@@ -27,6 +27,7 @@ import android.widget.RelativeLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.CameraInfoUnavailableException;
 import androidx.camera.core.CameraSelector;
+import androidx.camera.core.ExperimentalUseCaseGroup;
 import androidx.camera.core.ImageCapture;
 import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
@@ -36,7 +37,7 @@ import androidx.core.content.ContextCompat;
 import com.google.common.util.concurrent.ListenableFuture;
 
 @SuppressLint("ViewConstructor")
-public class CameraxView extends RelativeLayout {
+public class CameraView extends RelativeLayout {
     private static final String LOG_TAG = "ScratchJr.CameraxView";
 
     private final RectF _rect;
@@ -52,7 +53,7 @@ public class CameraxView extends RelativeLayout {
     private final DisplayManager _displayManager;
     private int _displayId;
 
-    public CameraxView(AppCompatActivity context, RectF rect, float scale, boolean facingFront) {
+    public CameraView(AppCompatActivity context, RectF rect, float scale, boolean facingFront) {
         super(context);
         _activity = context;
         _currentFacingFront = facingFront;
@@ -94,7 +95,9 @@ public class CameraxView extends RelativeLayout {
         public void onDisplayRemoved(int displayId) {
         }
 
-        @SuppressLint("UnsafeOptInUsageError")
+        // The androidx.camera.core.Preview.setTargetRotation declaration is opt-in
+        // and its usage should be marked with @androidx.camera.core.ExperimentalUseCaseGroup
+        @ExperimentalUseCaseGroup
         @Override
         public void onDisplayChanged(int displayId) {
             if (displayId == _displayId) {
@@ -238,7 +241,7 @@ public class CameraxView extends RelativeLayout {
             // flip bitmap horizontally since front-facing camera is mirrored
             m.preScale(-1.0f, 1.0f);
         }
-        int rotation = CameraxView.findDisplayRotation(getContext(), _currentFacingFront);
+        int rotation = CameraView.findDisplayRotation(getContext(), _currentFacingFront);
         if (rotation == 180) {
             m.preScale(-1.0f, -1.0f);
         }

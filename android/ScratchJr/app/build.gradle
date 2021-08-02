@@ -27,6 +27,9 @@ android {
         }
     }
 
+    // The camera-view dependency contains Java 8 bytecode,
+    // we need to support java 8 to dex.
+    // See https://developer.android.com/studio/write/java8-support.html for details.
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

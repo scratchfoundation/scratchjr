@@ -49,7 +49,7 @@ public class JavaScriptDirectInterface {
     private final ScratchJrActivity _activity;
 
     /** Current camera view, if active */
-    private CameraxView _cameraView;
+    private CameraView _cameraView;
 
     /** Current camera mask, if active */
     private ImageView _cameraMask;
@@ -505,7 +505,7 @@ public class JavaScriptDirectInterface {
                 scaleRectFromCenter(maskRect, scale);
                 RelativeLayout container = _activity.getContainer();
 
-                _cameraView = new CameraxView(_activity, rect, scale * devicePixelRatio, true); // always start with front-facing camera
+                _cameraView = new CameraView(_activity, rect, scale * devicePixelRatio, true); // always start with front-facing camera
                 container.addView(_cameraView, new RelativeLayout.LayoutParams((int) (rect.width()), (int) (rect.height())));
                 _cameraView.setX(rect.left);
                 _cameraView.setY(rect.top);
