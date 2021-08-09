@@ -183,11 +183,9 @@ public class ScratchJrActivity
     public void requestPermissions() {
         cameraPermissionResult = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
         micPermissionResult = ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO);
-        readExtPermissionResult = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
 
         if (cameraPermissionResult == PackageManager.PERMISSION_GRANTED
-            && micPermissionResult == PackageManager.PERMISSION_GRANTED
-            && readExtPermissionResult == PackageManager.PERMISSION_GRANTED) {
+            && micPermissionResult == PackageManager.PERMISSION_GRANTED) {
             return;
         }
 
@@ -197,9 +195,6 @@ public class ScratchJrActivity
         }
         if (micPermissionResult != PackageManager.PERMISSION_GRANTED) {
             tmp.add(Manifest.permission.RECORD_AUDIO);
-        }
-        if (readExtPermissionResult != PackageManager.PERMISSION_GRANTED) {
-            tmp.add(Manifest.permission.READ_EXTERNAL_STORAGE);
         }
         Object[] tmpArray = tmp.toArray();
         String[] desiredPermissions = Arrays.copyOf(tmpArray, tmpArray.length, String[].class);
@@ -220,9 +215,6 @@ public class ScratchJrActivity
                 }
                 if (permission.equals(Manifest.permission.RECORD_AUDIO)) {
                     micPermissionResult = grantResults[permissionId];
-                }
-                if (permission.equals(Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                    readExtPermissionResult = grantResults[permissionId];
                 }
                 permissionId++;
             }
