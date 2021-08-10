@@ -182,6 +182,8 @@ export default class ScriptsPane {
             var dx = localx(sc, el.left);
             var dy = localy(sc, el.top);
             ScriptsPane.blockDropped(sc, dx, dy);
+            // Start the story if scripts is changed.
+            ScratchJr.storyStart('ScriptsPane.changed');
             break;
         case 'library':
             var thumb = Palette.getHittedThumb(el, gn('spritecc'));
