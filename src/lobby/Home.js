@@ -9,7 +9,8 @@ import Project from '../editor/ui/Project';
 import Localization from '../utils/Localization';
 import ScratchAudio from '../utils/ScratchAudio';
 import Vector from '../geom/Vector';
-import {gn, newHTML, isTablet} from '../utils/lib';
+import Events from '../utils/Events';
+import {gn, newHTML} from '../utils/lib';
 
 let frame;
 let scrollvalue;
@@ -318,27 +319,5 @@ export default class Home {
         function drawMe (url) {
             img.src = url;
         }
-    }
-}
-
-class Events {
-    static getTargetPoint (e) {
-        if (isTablet) {
-            if (e.touches && (e.touches.length > 0)) {
-                return {
-                    x: e.touches[0].pageX,
-                    y: e.touches[0].pageY
-                };
-            } else if (e.changedTouches) {
-                return {
-                    x: e.changedTouches[0].pageX,
-                    y: e.changedTouches[0].pageY
-                };
-            }
-        }
-        return {
-            x: e.clientX,
-            y: e.clientY
-        };
     }
 }

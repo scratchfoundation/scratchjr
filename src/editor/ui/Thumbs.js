@@ -12,7 +12,7 @@ import OS from '../../tablet/OS';
 import Events from '../../utils/Events';
 import ScratchAudio from '../../utils/ScratchAudio';
 import {frame, gn, localx, newHTML, scaleMultiplier, getIdFor,
-    isTablet, newImage, localy, setProps} from '../../utils/lib';
+    newImage, localy, setProps} from '../../utils/lib';
 
 let caret = undefined;
 
@@ -360,7 +360,7 @@ export default class Thumbs {
     }
 
     static clickOnEmptyPage (e) {
-        if (isTablet && e.touches && (e.touches.length > 1)) {
+        if (e.touches && (e.touches.length > 1)) {
             return;
         }
         ScratchAudio.sndFX('tap.wav');

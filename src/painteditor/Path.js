@@ -17,7 +17,7 @@ import PaintUndo from './PaintUndo';
 import PaintAction from './PaintAction';
 import Ghost from './Ghost';
 import Events from '../utils/Events';
-import {gn, getIdFor, setCanvasSize, isTablet} from '../utils/lib';
+import {gn, getIdFor, setCanvasSize, supportTouch} from '../utils/lib';
 
 // Previous "PathEdit" globals
 let lineDotColor = 'white';
@@ -139,7 +139,7 @@ export default class Path {
         var j = 0;
         var plist = [];
         plist.push(points[0]);
-        var dist = isTablet ? 40 : 30;
+        var dist = supportTouch ? 40 : 30;
         var before, here, after;
         while (i < n - 1) {
             before = points[j];
@@ -763,7 +763,7 @@ export default class Path {
     static getDot (g, cmd, pt) {
         cmd = cmd.toUpperCase();
         var iscurve = SVG2Canvas.curveoptions.indexOf(cmd) > -1;
-        var radius = Math.floor((isTablet ? idotsize : dotsize) / Paint.currentZoom) + 1;
+        var radius = Math.floor((supportTouch ? idotsize : dotsize) / Paint.currentZoom) + 1;
         var skip = (cmd == 'Z');
         var cp = SVGTools.addChild(g, 'circle', {
             'id': getIdFor('grab'),
@@ -990,7 +990,7 @@ export default class Path {
         }
         var pt = PaintAction.getScreenPt(evt);
         var closestdot = Path.getClosestDotTo(pt,
-            Math.floor((isTablet ? idotsize + 4 : dotsize) / Paint.currentZoom) * 2);
+            Math.floor((supportTouch ? idotsize + 4 : dotsize) / Paint.currentZoom) * 2);
         if (closestdot) {
             PaintAction.target = closestdot;
         }

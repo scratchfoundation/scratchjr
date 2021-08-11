@@ -21,7 +21,7 @@ import Events from '../../utils/Events';
 import Localization from '../../utils/Localization';
 import ScratchAudio from '../../utils/ScratchAudio';
 import {frame, gn, CSSTransition, localx, newHTML, scaleMultiplier, fullscreenScaleMultiplier,
-    getIdFor, isTablet, newDiv, newTextInput, isAndroid, getDocumentWidth, getDocumentHeight,
+    getIdFor, newDiv, newTextInput, isAndroid, getDocumentWidth, getDocumentHeight,
     setProps, globalx} from '../../utils/lib';
 
 let projectNameTextInput = null;
@@ -604,7 +604,7 @@ export default class UI {
     //////////////////////////////////
 
     static spriteThumbsActions (e) {
-        if (isTablet && e.touches && (e.touches.length > 1)) {
+        if (e.touches && (e.touches.length > 1)) {
             return;
         }
         if (ScratchJr.onHold) {

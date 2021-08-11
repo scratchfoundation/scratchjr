@@ -16,7 +16,7 @@ import Camera from './Camera';
 import Events from '../utils/Events';
 import Transform from './Transform';
 import Vector from '../geom/Vector';
-import {gn, newHTML, setCanvasSize, isTablet, getIdFor, isAndroid, setProps, hitRect, frame} from '../utils/lib';
+import {gn, newHTML, setCanvasSize, supportTouch, getIdFor, isAndroid, setProps, hitRect, frame} from '../utils/lib';
 
 // Originally several files (Paint.js, PaintIO.js, PaintLayout.js)
 // were all contributing utility functions to the Paint object.
@@ -359,7 +359,7 @@ export default class Paint {
     }
 
     static mouseDown (e) {
-        if ((isTablet && e.target.ontouchstart) || e.target.ontouchstart) {
+        if ((supportTouch && e.target.ontouchstart) || e.target.ontouchstart) {
             return;
         }
         var pt = Events.getTargetPoint(e);

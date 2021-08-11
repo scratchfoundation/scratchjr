@@ -13,7 +13,7 @@ import SVGImage from './SVGImage';
 import Camera from './Camera';
 import Events from '../utils/Events';
 import Rectangle from '../geom/Rectangle';
-import {gn, isTablet, getIdFor} from '../utils/lib';
+import {gn, supportTouch, getIdFor} from '../utils/lib';
 /*
 Type of objects:
 - fixed: Only exists on Assets Backgrounds and can it only be fill (color or camera) or removed
@@ -762,7 +762,7 @@ export default class PaintAction {
     }
 
     static cameraMouseUp (evt) {
-        if (isTablet) {
+        if (supportTouch) {
             PaintAction.fingerUp(evt);
         }
         if (currentShape == undefined) {
