@@ -374,7 +374,12 @@ export default class ScratchJr {
                     Project.prepareToSave(currentProject, onDone);
                 });
             }, true);
-        } else if (ScratchJr.isEditable() && currentProject && !Project.error && changed) {
+        } else if (ScratchJr.isEditable()
+            && editmode != 'storyStarter'
+            && currentProject
+            && !Project.error
+            && changed
+        ) {
             Project.prepareToSave(currentProject, onDone);
         } else {
             if (onDone) {
