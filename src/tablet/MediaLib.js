@@ -81,7 +81,6 @@ export default class MediaLib {
 
         // when we change sprites (or remove them) the old ones still need to be in keys
         // for projects that were created before the change
-        console.log('add legacy sprites to the keys');
         for (let i = 0; i < legacySprites.length; i++) {
             var legacySpr = legacySprites[i];
             keys[legacySpr.md5] = {width: legacySpr.width, height: legacySpr.height, name: legacySpr.name};

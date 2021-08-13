@@ -923,6 +923,9 @@ export default class SVGTools {
             if (elem.id.indexOf('Border') > -1) {
                 return true;
             }
+            if (elem.id.indexOf('Body') > -1) {
+                return false;
+            }
             if (elem.id.indexOf('Skip') > -1) {
                 return false;
             }
