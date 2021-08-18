@@ -366,6 +366,10 @@ export default class ScratchJr {
         }
     }
 
+    /**
+     * Save the story as a new project so that the user can
+     * continue to edit or share it in the future.
+     */
     static saveStory (onDone) {
         OS.analyticsEvent('samples', 'story_starter_edited', Project.metadata.name);
         // Localize sample project names
