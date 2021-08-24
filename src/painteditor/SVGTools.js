@@ -805,6 +805,9 @@ export default class SVGTools {
             var g = SVGTools.createGroup(p, getIdFor('group'));
             for (var i = 0; i < elem.childElementCount; i++) {
                 var shape = SVGTools.getClonedElement(g, elem.childNodes[i]);
+                if (!shape) {
+                    continue;
+                }
                 old.push(elem.childNodes[i].id);
                 newlist.push(shape.id);
                 if (elem.childNodes[i].getAttribute('id').indexOf('Border') > -1) {
