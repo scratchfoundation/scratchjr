@@ -545,12 +545,20 @@ public class ScratchJrActivity
 
     /**
      * Height of the status bar at the top of the screen
+     * We should always know the status bar height even if
+     * the status bar is not visible at all.
+     * See https://stackoverflow.com/a/14213035
      */
     private int getStatusBarHeight() {
-        Rect rectangle= new Rect();
-        Window window= getWindow();
-        window.getDecorView().getWindowVisibleDisplayFrame(rectangle);
-        int result = rectangle.top;
+        int result = 0;
+        int resourceId = getResources().getIdentifier(
+            "status_bar_height",
+            "dimen",
+            "android"
+        );
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
         return result;
     }
 
@@ -616,7 +624,11 @@ public class ScratchJrActivity
                                 animator.start();
                                 _currentAnimator = animator;
                             }
-                        } else if (currentVisibleHeight > _priorVisibleHeight) {
+                        } else if (currentVisibleHeight > _priorVisibleHeight + getStatusBarHeight()) {
+                            // The status bar will be hidden ONE second after the keyboard is shown,
+                            // on some devices like SM-T280, the `currentVisibleHeight` will increase
+                            // by the status bar height, we don't want it to infect the keyboard.
+                            // -- Yueyu Zhao
                             // Keyboard probably just became hidden
 
                             // Reset pan
