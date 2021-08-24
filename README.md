@@ -78,7 +78,7 @@ set up your own [app analytics](https://firebase.google.com/products/analytics) 
 All changes should be made in a fork. Before making a pull request, ensure all changes pass our linter:
 * <tt>npm run lint</tt>
 
-For more information, see [CONTRIBUTING.md](CONTRIBUTING.md).
+For more information, see [CONTRIBUTING.md](https://github.com/LLK/scratchjr/blob/develop/.github/CONTRIBUTING.md).
 
 ## Code credits
 ScratchJr would not be possible without free and open source libraries, including:

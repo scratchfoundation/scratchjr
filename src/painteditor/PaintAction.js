@@ -1139,12 +1139,10 @@ export default class PaintAction {
         pt2.x = pt.x;
         pt2.y = pt.y;
         var screenMatrix = Paint.root.getScreenCTM();
+        // screenMatrix should include the currentScale, apply scaling
+        screenMatrix.a = Paint.currentZoom;
+        screenMatrix.d = Paint.currentZoom;
         var globalPoint = pt2.matrixTransform(screenMatrix.inverse());
-        // screenMatrix should include the currentScale, if it doesn't match, apply scaling
-        if (screenMatrix.a != Paint.currentZoom) {
-            globalPoint.x = globalPoint.x / Paint.currentZoom;
-            globalPoint.y = globalPoint.y / Paint.currentZoom;
-        }
         return globalPoint;
     }
 }
