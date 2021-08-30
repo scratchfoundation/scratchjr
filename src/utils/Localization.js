@@ -89,9 +89,9 @@ export default class Localization {
             currentLocale = localizationCookie;
         }
         var topLevel = currentLocale.split('-')[0];
-        if (topLevel === 'zh') {
+        if (topLevel === 'zh' || topLevel === 'pt') {
             // need to handle locale in addition to language code for Chinese,
-            // ensure it's lower case to match filename
+            // and Portuguese, ensure it's lower case to match filename
             topLevel = currentLocale.toLowerCase();
         }
 
