@@ -837,7 +837,9 @@ export default class Paint {
         cc.onmousedown = Paint.closeCameraMode;
     }
 
-    static closeCameraMode () {
+    static closeCameraMode (evt) {
+        evt.preventDefault();
+        evt.stopPropagation();
         ScratchAudio.sndFX('exittap.wav');
         Camera.close();
         Paint.selectButton('select');
