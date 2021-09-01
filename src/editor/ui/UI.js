@@ -952,11 +952,14 @@ export default class UI {
     static createFormForText (p) {
         var tf = newHTML('div', 'pagetext off', p);
         tf.setAttribute('id', 'textbox');
-        if (isAndroid) {
-            tf.onmousedown = function (e) {
-                e.preventDefault();
-            };
-        }
+        // If the textbox is click or touched, the input may lost focus,
+        // and it may cause the text form miss closed.
+        var eatEvent = function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+        };
+        tf.ontouchstart = eatEvent;
+        tf.onmousedown = eatEvent;
         var activetb = newHTML('form', 'pageform', tf);
         activetb.name = 'activetextbox';
         activetb.id = 'myform';
