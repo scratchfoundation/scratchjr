@@ -609,6 +609,7 @@ export default class ScratchJr {
     static editArg (e, ti) {
         e.preventDefault();
         e.stopPropagation();
+        ScratchJr.stopStrips();
         if (ti && ti.owner.isText()) {
             ScratchJr.textClicked(e, ti);
         } else {
