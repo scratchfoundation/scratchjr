@@ -609,6 +609,9 @@ export default class ScratchJr {
     static editArg (e, ti) {
         e.preventDefault();
         e.stopPropagation();
+        // When the user try to change the block argument of a running script,
+        // its behavior or location is unpredictable and may cause other issues.
+        // See https://github.com/LLK/scratchjr/issues/509 for more details
         ScratchJr.stopStrips();
         if (ti && ti.owner.isText()) {
             ScratchJr.textClicked(e, ti);
