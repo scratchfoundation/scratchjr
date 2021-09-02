@@ -913,6 +913,13 @@ export default class Sprite {
                 me.unfocusText();
             });
         } else {
+            // On iOS if the bottom of the textbox is lower than half of the screen
+            // the color and font size menu may be covered by the keyboard
+            if (gn('textbox').offsetTop + gn('textbox').offsetHeight > WINDOW_INNER_HEIGHT / 2) {
+                // scroll up a little more than the textbox height 
+                // to show the color menu and font size menu.
+                window.scroll(0, gn('textbox').offsetHeight * 1.2);
+            }
             if (isTablet) {
                 ti.focus();
             } else {
