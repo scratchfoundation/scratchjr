@@ -915,7 +915,9 @@ export default class Sprite {
         } else {
             // On iOS if the bottom of the textbox is lower than half of the screen
             // the color and font size menu may be covered by the keyboard
-            if (gn('textbox').offsetTop + gn('textbox').offsetHeight > WINDOW_INNER_HEIGHT / 2) {
+            // 0.45 is a magic number and we should compare the bottom Y of the textbox VS
+            // WINDOW_INNER_HEIGHT substract the keyboard height.
+            if (gn('textbox').offsetTop + gn('textbox').offsetHeight > WINDOW_INNER_HEIGHT * 0.45) {
                 // scroll up a little more than the textbox height
                 // to show the color menu and font size menu.
                 window.scroll(0, gn('textbox').offsetHeight * 1.2);
