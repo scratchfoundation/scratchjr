@@ -50,6 +50,7 @@ NSDate *startDate;
     WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
     config.allowsInlineMediaPlayback = true;
     config.allowsAirPlayForMediaPlayback = true;
+    config.allowsPictureInPictureMediaPlayback = false;
     [config.preferences setValue:@YES forKey:@"allowFileAccessFromFileURLs"];
 
     WKUserContentController *controller = [[WKUserContentController alloc] init];
