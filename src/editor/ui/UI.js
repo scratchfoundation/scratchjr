@@ -952,8 +952,8 @@ export default class UI {
     static createFormForText (p) {
         var tf = newHTML('div', 'pagetext off', p);
         tf.setAttribute('id', 'textbox');
-        // If the textbox is click or touched, the input may lost focus,
-        // and it may cause the text form miss closed.
+        // If the textbox background is clicked or touched, the input loses focus,
+        // which causes the text input to close unexpectedly 
         var eatEvent = function (e) {
             e.stopPropagation();
             e.preventDefault();
