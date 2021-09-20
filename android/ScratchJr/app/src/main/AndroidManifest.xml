@@ -18,6 +18,9 @@
         android:theme="@style/AppTheme"
         android:hardwareAccelerated="true"
         android:resizeableActivity="false">
+
+        <meta-data android:name="firebase_analytics_collection_deactivated" android:value="${disableAnalytics}" />
+
         <provider android:name="ShareContentProvider"
                   android:grantUriPermissions="true"
                   android:authorities="${applicationId}.ShareContentProvider">
