@@ -15,6 +15,8 @@ export function inappAbout () {
     gn('aboutWhoSupportedDescription').innerHTML = (
         Localization.localize('ABOUT_WHO_SUPPORTED_DESCRIPTION')
     );
+    // Show names after translated contents are ready.
+    gn('aboutFameHall').style.display = 'block';
 
     // PBS-only
     if (window.Settings.edition == 'PBS') {
