@@ -669,7 +669,7 @@ export default class Paint {
         ScratchJr.activeFocus = undefined;
         var spr = ScratchJr.getSprite();
         var ti = e.target;
-        var val = ScratchJr.validate(ti.value, spr.name);
+        var val = ScratchJr.validate(ti.value, '');
         ti.value = val.substring(0, ti.maxLength);
         ScratchJr.storyStart('Paint.nameBlur');
     }
@@ -1417,10 +1417,7 @@ export default class Paint {
     }
 
     static getLoadType (sid, cid) {
-        if (!cid) {
-            return 'none';
-        }
-        if (sid && cid) {
+        if (sid) {
             return 'modify';
         }
         return 'add';
