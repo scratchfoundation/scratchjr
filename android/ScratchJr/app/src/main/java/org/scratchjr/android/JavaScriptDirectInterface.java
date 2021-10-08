@@ -662,6 +662,11 @@ public class JavaScriptDirectInterface {
     }
 
     @JavascriptInterface
+    public void registerLibraryAssets(String assets) {
+        _activity.registerLibraryAssets(assets.split(","));
+    }
+
+    @JavascriptInterface
     public void sendSjrUsingShareDialog(String fileName, String emailSubject,
                                         String emailBody, int shareType) {
         // Write a temporary file with the project data passed in from JS

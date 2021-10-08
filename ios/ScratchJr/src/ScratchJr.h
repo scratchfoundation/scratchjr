@@ -170,4 +170,7 @@
 
 // Imports
 + (void) receiveProject:(NSURL *) url;
+
++ (void) registerLibraryAssets: (NSArray<NSString *> *)assets;
++ (BOOL) libraryHasAsset: (NSString *)md5;
 @end

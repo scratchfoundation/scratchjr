@@ -16,6 +16,8 @@ AVCaptureVideoPreviewLayer* captureVideoPreviewLayer;
 
 NSString *oncomplete;
 
+NSMutableSet *assets;
+
 //////////////////////////
 // Init functions
 /////////////////////////
@@ -167,6 +169,19 @@ NSString *oncomplete;
     captureVideoPreviewLayer = nil;
     cameraView = nil;
     cameraMask = nil;
+}
+
++ (void) registerLibraryAssets: (NSArray<NSString *> *)assetArr {
+    if (assets == nil) {
+        assets = [[NSMutableSet alloc] init];
+    }
+    for (NSString* md5 in assetArr) {
+        [assets addObject:md5];
+    }
+}
+
++ (BOOL) libraryHasAsset:(NSString *)md5 {
+    return [assets containsObject:md5];
 }
 
 @end

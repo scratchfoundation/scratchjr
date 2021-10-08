@@ -342,6 +342,10 @@ NSMutableDictionary *soundtimers;
                 [fileManager copyItemAtPath:fromPath toPath:toPath error:nil];
             }
             
+            if ([ScratchJr libraryHasAsset:fileName]) {
+                continue;
+            }
+            
             NSArray *parts = [path componentsSeparatedByString:@"/"];
             if (parts.count > 1) {
                 NSString *folder = parts[1];

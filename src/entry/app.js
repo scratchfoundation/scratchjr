@@ -41,7 +41,10 @@ window.onload = () => {
         preprocessAndLoadCss('css', 'css/thumbs.css');
         /* For parental gate. These CSS properties should be refactored */
         preprocessAndLoadCss('css', 'css/editor.css');
-        entryFunction = () => OS.waitForInterface(indexMain);
+        entryFunction = () => OS.waitForInterface(function () {
+            var assets = Object.keys(MediaLib.keys).join(',');
+            OS.registerLibraryAssets(assets, indexMain);
+        });
         break;
     case 'home':
         // Lobby pages

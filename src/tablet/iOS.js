@@ -367,6 +367,13 @@ export default class iOS {
         iOS.call('sendSjrUsingShareDialog', fileName, emailSubject, emailBody, shareType);
     }
 
+    static registerLibraryAssets (assets, fcn) {
+        (async () => {
+            await iOS.call('registerLibraryAssets', assets);
+            fcn && fcn();
+        })();
+    }
+
     // Name of the device/iPad to display on the sharing dialog page
     // fcn is called with the device name as an arg
     static deviceName (fcn) {

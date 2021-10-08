@@ -207,4 +207,10 @@
     [request callback:[[UIDevice currentDevice] name]];
 }
 
+- (void) registerLibraryAssets: (JsRequest *) request {
+    NSString *assets = request.params[0];
+    [ScratchJr registerLibraryAssets: [assets componentsSeparatedByString:@","]];
+    [request callback:@"1"];
+}
+
 @end

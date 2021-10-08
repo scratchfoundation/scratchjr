@@ -339,6 +339,11 @@ public class IOManager {
             if ("thumbnails".equals(folderName) || "sounds".equals(folderName)) {
                 continue;
             }
+            if (activity.libraryHasAsset(fileName)) {
+                Log.e(LOG_TAG, "asset for " + fileName + " exists in library");
+                // this is in library assets.
+                continue;
+            }
             String table = "characters".equals(folderName) ? "usershapes" : "userbkgs";
             String statement = String.format("SELECT id FROM %s WHERE md5 = ?", table);
             JSONArray rows = _databaseManager.query(statement, new String[]{fileName});
