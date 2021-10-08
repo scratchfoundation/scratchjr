@@ -628,20 +628,14 @@ public class JavaScriptDirectInterface {
             }
             for (int i = 0; i < files.length(); i++) {
                 String file = files.optString(i);
-                if (file == null) {
-                    continue;
-                }
-                File srcFile = new File(_activity.getFilesDir() + File.separator + file);
-                if (!srcFile.exists()) {
-                    Log.e(LOG_TAG, "src file not exists" + file);
-                    continue;
-                }
-                File targetFile = new File(folder.getAbsolutePath() + File.separator + file);
-                // Log.d(LOG_TAG, "copying assets" + file);
-                try {
-                    ScratchJrUtil.copyFile(srcFile, targetFile);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if (file != null) {
+                    File targetFile = new File(folder.getAbsolutePath() + File.separator + file);
+                    try {
+                        this.copyAssetTo(file, targetFile);
+                    } catch (IOException e) {
+                        Log.e(LOG_TAG, "Asset for " + file + " copy failed.");
+                        e.printStackTrace();
+                    }
                 }
             }
         }
@@ -655,6 +649,16 @@ public class JavaScriptDirectInterface {
         // remove the temp folder
         ScratchJrUtil.removeFile(tempFolder);
         return fullName;
+    }
+
+    private void copyAssetTo(String file, File targetFile) throws IOException {
+        File srcFile = new File(_activity.getFilesDir() + File.separator + file);
+        if (srcFile.exists()) {
+            ScratchJrUtil.copyFile(srcFile, targetFile);
+        } else {
+            InputStream inputStream = _activity.getAssets().open("HTML5/svglibrary/" + file);
+            ScratchJrUtil.copyFile(inputStream, targetFile);
+        }
     }
 
     @JavascriptInterface

@@ -4,7 +4,7 @@ import {setCanvasSize, drawThumbnail} from '../utils/lib';
 import SVG2Canvas from '../utils/SVG2Canvas';
 
 const database = 'projects';
-const collectLibraryAssets = false;
+const collectLibraryAssets = true;
 
 // Sharing state
 let zipFileName = '';
