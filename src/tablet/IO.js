@@ -302,6 +302,7 @@ export default class IO {
                 'sounds': []
             };
             var jsonData = IO.parseProjectData(JSON.parse(projectFromDB)[0]);
+            jsonData.assetLibraryVersion = MediaLib.version;
 
             // Collect project assets for inclusion in zip file
             // Parse JSON representations of project data / thumbnail into usable types

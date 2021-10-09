@@ -7,6 +7,7 @@ let backgrounds;
 let sprites;
 let sounds;
 let keys = {};
+let version = 0;
 
 export default class MediaLib {
     static get path () {
@@ -33,6 +34,10 @@ export default class MediaLib {
         return keys;
     }
 
+    static get version () {
+        return version;
+    }
+
     static loadMediaLib (root, whenDone) {
         IO.requestFromServer(root + 'media.json', (result) => {
             let parsedResult = JSON.parse(result);
@@ -41,6 +46,10 @@ export default class MediaLib {
             sprites = parsedResult.sprites;
             backgrounds = parsedResult.backgrounds;
             sounds = parsedResult.sounds;
+
+            if (parsedResult.assetLibraryVersion) {
+                version = parsedResult.assetLibraryVersion;
+            }
 
             MediaLib.localizeMediaNames();
             MediaLib.generateKeys();
