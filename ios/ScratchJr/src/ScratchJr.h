@@ -155,6 +155,8 @@
 
 @interface ScratchJr : NSObject
 
+@property (class, nonatomic, assign) NSInteger assetLibraryVersion;
+
 + (void)sendBase64Image:(NSData *)imagedata;
 + (void)reportImageError;
 + (void)cameraInit;

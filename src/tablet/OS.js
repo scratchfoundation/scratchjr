@@ -247,8 +247,8 @@ export default class OS {
         return 1;
     }
 
-    static registerLibraryAssets (assets, fcn) {
-        tabletInterface.registerLibraryAssets(assets, fcn);
+    static registerLibraryAssets (version, assets, fcn) {
+        tabletInterface.registerLibraryAssets(version, assets, fcn);
     }
 
     // Name of the device/iPad to display on the sharing dialog page

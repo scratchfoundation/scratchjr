@@ -662,7 +662,8 @@ public class JavaScriptDirectInterface {
     }
 
     @JavascriptInterface
-    public void registerLibraryAssets(String assets) {
+    public void registerLibraryAssets(int version, String assets) {
+        _activity.assetLibraryVersion = version;
         _activity.registerLibraryAssets(assets.split(","));
     }
 

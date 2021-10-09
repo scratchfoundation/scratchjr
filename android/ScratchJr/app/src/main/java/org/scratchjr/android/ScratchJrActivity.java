@@ -120,6 +120,8 @@ public class ScratchJrActivity
      */
     private final HashSet<String> assetList = new HashSet<>(200);
 
+    public int assetLibraryVersion = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -43,7 +43,7 @@ window.onload = () => {
         preprocessAndLoadCss('css', 'css/editor.css');
         entryFunction = () => OS.waitForInterface(function () {
             var assets = Object.keys(MediaLib.keys).join(',');
-            OS.registerLibraryAssets(assets, indexMain);
+            OS.registerLibraryAssets(MediaLib.version, assets, indexMain);
         });
         break;
     case 'home':

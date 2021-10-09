@@ -367,9 +367,9 @@ export default class iOS {
         iOS.call('sendSjrUsingShareDialog', fileName, emailSubject, emailBody, shareType);
     }
 
-    static registerLibraryAssets (assets, fcn) {
+    static registerLibraryAssets (version, assets, fcn) {
         (async () => {
-            await iOS.call('registerLibraryAssets', assets);
+            await iOS.call('registerLibraryAssets', version, assets);
             fcn && fcn();
         })();
     }

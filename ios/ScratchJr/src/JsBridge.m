@@ -208,7 +208,8 @@
 }
 
 - (void) registerLibraryAssets: (JsRequest *) request {
-    NSString *assets = request.params[0];
+    ScratchJr.assetLibraryVersion = (NSInteger) request.params[0];
+    NSString *assets = request.params[1];
     [ScratchJr registerLibraryAssets: [assets componentsSeparatedByString:@","]];
     [request callback:@"1"];
 }

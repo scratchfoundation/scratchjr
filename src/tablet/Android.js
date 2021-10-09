@@ -254,8 +254,8 @@ export default class Android {
     //     return 1;
     // }
 
-    static registerLibraryAssets (assets, fcn) {
-        AndroidInterface.registerLibraryAssets(assets);
+    static registerLibraryAssets (version, assets, fcn) {
+        AndroidInterface.registerLibraryAssets(version, assets);
         fcn && fcn();
     }
 

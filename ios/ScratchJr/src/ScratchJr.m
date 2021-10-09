@@ -14,6 +14,16 @@ AVCaptureVideoPreviewLayer* captureVideoPreviewLayer;
 
 @implementation ScratchJr : NSObject
 
+static NSInteger _assetLibraryVersion = 0;
+
++ (NSInteger) assetLibraryVersion {
+    return _assetLibraryVersion;
+}
+
++ (void) setAssetLibraryVersion:(NSInteger)newValue {
+    _assetLibraryVersion = newValue;
+}
+
 NSString *oncomplete;
 
 NSMutableSet *assets;
