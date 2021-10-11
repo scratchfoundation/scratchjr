@@ -324,7 +324,7 @@ public class IOManager {
             if (entry == null) {
                 continue;
             }
-            if (!(entry.endsWith(".png") || entry.endsWith(".wav") || entry.endsWith(".svg"))) {
+            if (!(entry.endsWith(".png") || entry.endsWith(".wav") || entry.endsWith(".mp3") || entry.endsWith(".svg"))) {
                 continue;
             }
             // copy file to target file

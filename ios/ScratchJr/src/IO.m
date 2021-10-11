@@ -332,7 +332,7 @@ NSMutableDictionary *soundtimers;
     NSString *path;
     while ((path = [enumerator nextObject]) != nil) {
         // we are only interested in images and sounds
-        if ([path hasSuffix:@".png"] || [path hasSuffix:@".wav"] || [path hasSuffix:@".svg"]) {
+        if ([path hasSuffix:@".png"] || [path hasSuffix:@".wav"] || [path hasSuffix:@".mp3"] || [path hasSuffix:@".svg"]) {
             NSString *fileName = [path lastPathComponent];
             // extract file
             NSString *toPath = [[IO getpath] stringByAppendingPathComponent:fileName];
