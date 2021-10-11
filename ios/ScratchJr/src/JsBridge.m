@@ -214,4 +214,13 @@
     [request callback:@"1"];
 }
 
+// duplicate library/sample assets for further usage
+- (void) duplicateAsset: (JsRequest *) request {
+    NSString *path = request.params[0];
+    NSString *name = request.params[1];
+    NSLog(@"duplicate asset %@", path);
+    [IO duplicateAsset:path :name];
+    [request callback:@"1"];
+}
+
 @end

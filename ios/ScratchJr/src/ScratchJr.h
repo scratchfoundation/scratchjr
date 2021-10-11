@@ -151,6 +151,8 @@
 + (NSString *)registerSound:(NSString *)dir :(NSString *)name;
 + (NSString *)playSound:(NSString *)name;
 + (NSString *)stopSound:(NSString *)name;
+
++ (void) duplicateAsset: (NSString *)folder :(NSString *)fileName;
 @end
 
 @interface ScratchJr : NSObject

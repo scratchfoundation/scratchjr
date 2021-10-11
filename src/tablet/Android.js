@@ -259,6 +259,11 @@ export default class Android {
         fcn && fcn();
     }
 
+    static duplicateAsset (folder, name, fcn) {
+        AndroidInterface.duplicateAsset(folder, name);
+        fcn && fcn();
+    }
+
     // Name of the device/iPad to display on the sharing dialog page
     // fcn is called with the device name as an arg
     static deviceName (fcn) {

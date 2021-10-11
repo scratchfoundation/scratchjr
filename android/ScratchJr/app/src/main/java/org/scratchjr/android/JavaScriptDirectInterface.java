@@ -668,6 +668,23 @@ public class JavaScriptDirectInterface {
     }
 
     @JavascriptInterface
+    public void duplicateAsset(String path, String fileName) {
+        Log.d(LOG_TAG, "duplicate asset " + path);
+        File toFile = new File(_activity.getFilesDir() + File.separator + fileName);
+        if (!toFile.exists()) {
+            try {
+                if (path.startsWith("./")) {
+                    path = path.substring(2);
+                }
+                InputStream inputStream = _activity.getAssets().open("HTML5/" + path);
+                ScratchJrUtil.copyFile(inputStream, toFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @JavascriptInterface
     public void sendSjrUsingShareDialog(String fileName, String emailSubject,
                                         String emailBody, int shareType) {
         // Write a temporary file with the project data passed in from JS

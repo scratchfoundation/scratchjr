@@ -131,7 +131,19 @@ export default class Page {
             (name.indexOf('/') < 0) ? OS.path + name : name;
         var md5 = (MediaLib.keys[name]) ? MediaLib.path + name : name;
 
-        if (md5.substr(md5.length - 3) == 'png') {
+        var duplicateBkg = function () {
+            var fileName = IO.getFilenameWithExt(md5);
+            if (MediaLib.keys[name]) {
+                OS.duplicateAsset(md5, fileName);
+            } else if (name.indexOf('/') > -1) {
+                OS.duplicateAsset(md5, fileName);
+                me.md5 = name;
+            }
+        }
+
+        var isPng = md5.substr(md5.length - 3) == 'png';
+        if (isPng && (MediaLib.keys[name] || name.indexOf('/') > -1)) {
+            duplicateBkg();
             this.setBackgroundImage(url, fcn);
             this.svg = null;
             return;
@@ -143,9 +155,16 @@ export default class Page {
             OS.getmedia(md5, nextStep);
         }
         function nextStep (base64) {
-            doNext(atob(base64));
+            if (isPng) {
+                var data = IO.getImageDataURL(name, base64);
+                me.setBackgroundImage(data, fcn);
+                me.svg = null;
+            } else {
+                doNext(atob(base64));
+            }
         }
         function doNext (str) {
+            duplicateBkg();
             str = str.replace(/>\s*</g, '><');
             me.setSVG(str);
             IO.getImagesInSVG(str, function () {

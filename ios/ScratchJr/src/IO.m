@@ -652,4 +652,14 @@ NSMutableDictionary *soundtimers;
     return  [mutableData copy];
 }
 
++ (void) duplicateAsset:(NSString *)path :(NSString *)fileName {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString* libraryPath = [@"/HTML5/" stringByAppendingString:path];
+    NSString* fullPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:libraryPath];
+    NSString* toPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:fileName];
+    if (![fileManager fileExistsAtPath:toPath] && [fileManager fileExistsAtPath:fullPath]) {
+        [fileManager copyItemAtPath:fullPath toPath:toPath error:nil];
+    }
+}
+
 @end

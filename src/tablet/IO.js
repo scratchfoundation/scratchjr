@@ -281,6 +281,10 @@ export default class IO {
         return str.substring(0, str.indexOf('.'));
     }
 
+    static getFilenameWithExt (str) {
+        return str.substring(str.lastIndexOf('/') + 1, str.length);
+    }
+
     static parseProjectData (data) {
         var res = new Object();
         for (var key in data) {
