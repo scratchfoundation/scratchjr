@@ -139,7 +139,7 @@ export default class Page {
                 OS.duplicateAsset(md5, fileName);
                 me.md5 = name;
             }
-        }
+        };
 
         var isPng = md5.substr(md5.length - 3) == 'png';
         if (isPng && (MediaLib.keys[name] || name.indexOf('/') > -1)) {
