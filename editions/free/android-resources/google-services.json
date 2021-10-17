@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "887634545741",
+    "project_id": "free-scratchjr-test",
+    "storage_bucket": "free-scratchjr-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:887634545741:android:94e1a6ed42b9d1e3e9a004",
+        "android_client_info": {
+          "package_name": "org.scratchjr.androidfree"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "887634545741-5eiksqde6pmqdhatibd76gmbqvds6778.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSM1m575nqRHEuhLGNBR4NRf6OIorUBgE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "887634545741-5eiksqde6pmqdhatibd76gmbqvds6778.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

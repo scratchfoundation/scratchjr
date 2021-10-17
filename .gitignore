@@ -31,3 +31,6 @@
 ios/Pods
 google-services.json
 GoogleService-Info.plist
+
+# include for CI
+!editions/free/android-resources/google-services.json
