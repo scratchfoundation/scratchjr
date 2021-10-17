@@ -1,0 +1,101 @@
+# Use the latest 2.1 version of CircleCI pipeline process engine. 
+# See: https://circleci.com/docs/2.0/configuration-reference
+version: 2.1
+
+# Orbs are reusable packages of CircleCI configuration that you may share across projects, enabling you to create encapsulated, parameterized commands, jobs, and executors that can be used across multiple projects.
+orbs:
+  node: circleci/node@4.7.0
+  android: circleci/android@1.0.3
+
+jobs:
+  # Below is the definition of your job to build and test your app, you can rename and customize it as you want.
+  node:  
+    # These next lines define the Android machine image executor: https://circleci.com/docs/2.0/executor-types/
+    executor:
+      name: node/default
+
+    steps:
+      # Checkout the code as the first step.
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+      - run: 
+          command: npm run lint
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - node_modules
+ 
+  macos-build-and-test:
+    working_directory: ~/project/ios
+    macos:
+      xcode: 11.3.0
+    steps:
+      - checkout:
+          path: ~/project
+      - restore_cache:
+          key: pods-v1-{{ checksum "ios/Podfile.lock" }}-{{ arch }}
+      - run:
+          command: pod install
+          working_directory: ios
+      - save_cache:
+          key: pods-v1-{{ checksum "ios/Podfile.lock" }}-{{ arch }}
+          paths:
+            - ios/Pods
+
+  android-build-and-test:
+    working_directory: ~/project/android/ScratchJr
+    executor:
+      name: android/android
+      sdk-version: "30"
+      variant: node
+    steps:
+      - checkout:
+          path: ~/project
+      - attach_workspace:
+          at: ~/project
+      - run:
+          name: install imagemagick
+          command: sudo apt update && sudo apt install imagemagick librsvg2-bin
+      - run:
+          name: install pysvg
+          command: sudo pip install pysvg
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      # The next step will run the unit tests
+      # - android/run-tests:
+      #     test-command: ./gradlew lint testDebug --continue
+      - run:
+          name: Build debug APK
+          command: ./gradlew :app:assembleFreeDebug
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      # Then start the emulator and run the Instrumentation tests!
+      # - android/start-emulator-and-run-tests:
+      #     test-command: ./gradlew connectedDebugAndroidTest
+      #     system-image: system-images;android-25;google_apis;x86
+      - store_artifacts:
+          path: app/build/outputs/apk
+
+workflows:
+  # Below is the definition of your workflow.
+  # Inside the workflow, you provide the jobs you want to run, e.g this workflow runs the build-and-test job above.
+  # CircleCI will run this workflow on every commit.
+  # For more details on extending your workflow, see the configuration docs: https://circleci.com/docs/2.0/configuration-reference/#workflows
+  node-android-ios: 
+    jobs:
+      - node
+      - android-build-and-test:
+          requires:
+            - node
+      - macos-build-and-test:
+          requires:
+            - node
