@@ -7,6 +7,8 @@ android {
     defaultConfig {
         applicationId "org.scratchjr.android"
         manifestPlaceholders = [disableAnalytics: "false"]
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -27,6 +29,10 @@ android {
             versionName "1.2.11"
             manifestPlaceholders = [disableAnalytics: "true"]
         }
+    }
+
+    lintOptions {
+        abortOnError false
     }
 
     // The camera-view dependency contains Java 8 bytecode,
@@ -52,6 +58,11 @@ dependencies {
     implementation "androidx.camera:camera-lifecycle:$camerax_version"
     // CameraX View class
     implementation "androidx.camera:camera-view:1.0.0-alpha25"
+
+    // test
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
 
 def appModuleRootFolder = '.'

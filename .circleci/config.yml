@@ -39,6 +39,8 @@ jobs:
     steps:
       - checkout:
           path: ~/project
+      - attach_workspace:
+          at: ~/project
       - restore_cache:
           key: pods-v1-{{ checksum "ios/Podfile.lock" }}-{{ arch }}
       - run:
@@ -48,6 +50,9 @@ jobs:
           key: pods-v1-{{ checksum "ios/Podfile.lock" }}-{{ arch }}
           paths:
             - ios/Pods
+      - run: nvm alias default node --lts # step up node
+      - run: brew install librsvg && imagemagick
+      - run: pip install pysvg
 
   android-build-and-test:
     working_directory: ~/project/android/ScratchJr
@@ -68,34 +73,81 @@ jobs:
           command: sudo pip install pysvg
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-      # The next step will run the unit tests
-      # - android/run-tests:
-      #     test-command: ./gradlew lint testDebug --continue
+      - run:
+          name: Run Unit Test
+          command: ./gradlew lint test --continue
+      - run:
+          name: Save test results
+          command: |
+            mkdir -p ~/test-results/junit/
+            find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/test-results/junit/ \;
+          when: always
+      - store_test_results:
+          path: ~/test-results
+      - store_test_results: # for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
+          path: app/build/reports
       - run:
           name: Build debug APK
-          command: ./gradlew :app:assembleFreeDebug
+          command: ./gradlew :app:assembleDebug :app:assembleFreeDebugAndroidTest
       - save_cache:
           paths:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-      # Then start the emulator and run the Instrumentation tests!
-      # - android/start-emulator-and-run-tests:
-      #     test-command: ./gradlew connectedDebugAndroidTest
-      #     system-image: system-images;android-25;google_apis;x86
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - android/ScratchJr/app/build/outputs/apk
       - store_artifacts:
           path: app/build/outputs/apk
+
+  android-ui-test:
+    working_directory: ~/project/android/ScratchJr
+    executor:
+      name: android/android-machine
+    steps:
+      - checkout:
+          path: ~/project
+      - attach_workspace:
+          at: ~/project
+      - android/create-avd:
+          system-image: system-images;android-29;default;x86
+          avd-name: test
+          install: true
+      - android/start-emulator:
+          avd-name: test
+          no-window: true
+          post-emulator-launch-assemble-command: echo "emulater is ready."
+      - run:
+          name: Install APKs
+          command: |
+            adb install app/build/outputs/apk/free/debug/app-free-debug.apk; 
+            adb install app/build/outputs/apk/androidTest/free/debug/app-free-debug-androidTest.apk;
+      - run: 
+          name: Run Instrument Test
+          command: |
+            adb shell am instrument -w org.scratchjr.androidfree.test/androidx.test.runner.AndroidJUnitRunner > app/build/result.txt;
+            cat app/build/result.txt;
+            fail=$((grep -rn "FAILURES\!\!\!" app/build/result.txt || true) | wc -l);
+            if [[ $fail -gt 0 ]]; then
+              exit 1;
+            fi
+      - store_artifacts:
+          path: app/build/result.txt
 
 workflows:
   # Below is the definition of your workflow.
   # Inside the workflow, you provide the jobs you want to run, e.g this workflow runs the build-and-test job above.
   # CircleCI will run this workflow on every commit.
   # For more details on extending your workflow, see the configuration docs: https://circleci.com/docs/2.0/configuration-reference/#workflows
-  node-android-ios: 
+  node-android-ios:
     jobs:
       - node
       - android-build-and-test:
           requires:
             - node
-      - macos-build-and-test:
+      - android-ui-test:
           requires:
-            - node
+            - android-build-and-test
+      # - macos-build-and-test:
+      #     requires:
+      #       - node
