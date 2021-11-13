@@ -25,8 +25,17 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - ./node_modules
-      - run: 
-          command: npm run lint
+      - run: npm run lint
+      - run:
+          name: Install JUnit coverage reporter
+          command: npm i jest-junit -D
+      - run:
+          name: Run tests with JUnit as reporter
+          command: ./node_modules/.bin/jest --ci --runInBand --reporters=default --reporters=jest-junit
+          environment:
+            JEST_JUNIT_OUTPUT_DIR: ./reports/junit/
+      - store_test_results:
+          path: ./reports/junit/
       - persist_to_workspace:
           root: ~/project
           paths:
