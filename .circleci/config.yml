@@ -66,82 +66,42 @@ jobs:
   android-build-and-test:
     working_directory: ~/project/android/ScratchJr
     executor:
-      name: android/android
-      sdk-version: "30"
-      variant: node
-    steps:
-      - checkout:
-          path: ~/project
-      - attach_workspace:
-          at: ~/project
-      - run:
-          name: install imagemagick
-          command: sudo apt update && sudo apt install imagemagick librsvg2-bin
-      - run:
-          name: install pysvg
-          command: sudo pip install pysvg
-      - restore_cache:
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-      - run:
-          name: Run Unit Test
-          command: ./gradlew lint test --continue
-      - run:
-          name: Save test results
-          command: |
-            mkdir -p ~/test-results/junit/
-            find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/test-results/junit/ \;
-          when: always
-      - store_test_results:
-          path: ~/test-results
-      - store_test_results: # for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
-          path: app/build/reports
-      - run:
-          name: Build debug APK
-          command: ./gradlew :app:assembleDebug :app:assembleFreeDebugAndroidTest
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-      - persist_to_workspace:
-          root: ~/project
-          paths:
-            - android/ScratchJr/app/build/outputs/apk
-      - store_artifacts:
-          path: app/build/outputs/apk
-
-  android-ui-test:
-    working_directory: ~/project/android/ScratchJr
-    executor:
       name: android/android-machine
+      resource-class: large
     steps:
       - checkout:
           path: ~/project
       - attach_workspace:
           at: ~/project
-      - android/create-avd:
-          system-image: system-images;android-29;default;x86
-          avd-name: test
-          install: true
-      - android/start-emulator:
-          avd-name: test
-          no-window: true
-          post-emulator-launch-assemble-command: echo "emulater is ready."
       - run:
-          name: Install APKs
+          name: Install Softwares
           command: |
-            adb install app/build/outputs/apk/free/debug/app-free-debug.apk; 
-            adb install app/build/outputs/apk/androidTest/free/debug/app-free-debug-androidTest.apk;
-      - run: 
-          name: Run Instrument Test
-          command: |
-            adb shell am instrument -w org.scratchjr.androidfree.test/androidx.test.runner.AndroidJUnitRunner > app/build/result.txt;
-            cat app/build/result.txt;
-            fail=$((grep -rn "FAILURES\!\!\!" app/build/result.txt || true) | wc -l);
-            if [[ $fail -gt 0 ]]; then
-              exit 1;
-            fi
+            sudo apt update
+            sudo apt install imagemagick librsvg2-bin
+            pip install pysvg
+
+      - run: sudo ln -s $(which node) /usr/local/bin/node
+
+      # TODO: run tests on more different system images
+      # - run:
+      #     name: Show list of system-images
+      #     command: sdkmanager --list --verbose | grep system-images
+
+      # The next step will run the unit tests
+      - android/run-tests:
+          test-command: ./gradlew lint test --continue
+          max-tries: 1
+
+      # Then start the emulator and run the Instrumentation tests!
+      - android/start-emulator-and-run-tests:
+          post-emulator-launch-assemble-command: ./gradlew assembleFreeDebugAndroidTest
+          test-command: ./gradlew connectedFreeDebugAndroidTest
+          system-image: system-images;android-30;google_apis;x86
+          max-tries: 2
+
+      # Store Android instrumented test results
       - store_artifacts:
-          path: app/build/result.txt
+          path: app/build/reports/androidTests/
 
 workflows:
   # Below is the definition of your workflow.
@@ -154,9 +114,6 @@ workflows:
       - android-build-and-test:
           requires:
             - node
-      - android-ui-test:
-          requires:
-            - android-build-and-test
       # - macos-build-and-test:
       #     requires:
       #       - node
