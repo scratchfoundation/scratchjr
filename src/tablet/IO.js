@@ -4,7 +4,7 @@ import {setCanvasSize, drawThumbnail} from '../utils/lib';
 import SVG2Canvas from '../utils/SVG2Canvas';
 
 const database = 'projects';
-const collectLibraryAssets = false;
+const collectLibraryAssets = true;
 
 // Sharing state
 let zipFileName = '';
@@ -281,6 +281,10 @@ export default class IO {
         return str.substring(0, str.indexOf('.'));
     }
 
+    static getFilenameWithExt (str) {
+        return str.substring(str.lastIndexOf('/') + 1, str.length);
+    }
+
     static parseProjectData (data) {
         var res = new Object();
         for (var key in data) {
@@ -302,6 +306,7 @@ export default class IO {
                 'sounds': []
             };
             var jsonData = IO.parseProjectData(JSON.parse(projectFromDB)[0]);
+            jsonData.assetLibraryVersion = MediaLib.version;
 
             // Collect project assets for inclusion in zip file
             // Parse JSON representations of project data / thumbnail into usable types

@@ -61,7 +61,17 @@ export default class Sprite {
             this.name = Localization.localize('SAMPLE_TEXT_' + this.name);
         }
         for (var i = 0; i < this.sounds.length; i++) {
-            ScratchAudio.loadProjectSound(this.sounds[i]);
+            var sound = this.sounds[i];
+            if (sound.indexOf('/') > -1) {
+                // duplicate sample sounds
+                var name = IO.getFilenameWithExt(sound);
+                OS.duplicateAsset(sound, name, function () {
+                    ScratchAudio.loadProjectSound(name);
+                });
+                this.sounds[i] = name;
+            } else {
+                ScratchAudio.loadProjectSound(sound);
+            }
         }
         var sprites = JSON.parse(page.sprites);
         sprites.push(this.id);
@@ -88,6 +98,15 @@ export default class Sprite {
             doNext(atob(base64));
         }
         function doNext (str) {
+            if (MediaLib.keys[spr.md5] || spr.md5.indexOf('/') > -1) {
+                // duplicate asset in library or sample
+                // in case this asset is removed from library or sample
+                // we can still use this asset and open the project in the future
+                var name = IO.getFilenameWithExt(spr.md5);
+                OS.duplicateAsset(md5, name);
+                // use the duplicated one next time.
+                spr.md5 = name;
+            }
             str = str.replace(/>\s*</g, '><');
             spr.setSVG(str);
             IO.getImagesInSVG(str, function () {

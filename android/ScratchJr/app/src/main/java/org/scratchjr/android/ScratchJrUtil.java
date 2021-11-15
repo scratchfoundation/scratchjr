@@ -98,6 +98,10 @@ public class ScratchJrUtil {
         throws IOException
     {
         InputStream in = new FileInputStream(sourceLocation);
+        copyFile(in, targetLocation);
+    }
+
+    public static void copyFile(InputStream in, File targetLocation) throws IOException {
         OutputStream out = new FileOutputStream(targetLocation);
 
         // Copy the bits from instream to outstream

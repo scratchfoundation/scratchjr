@@ -1,4 +1,5 @@
 {
+    "assetLibraryVersion": 1,
     "path": "./svglibrary/",
     "samples": [
 	       "samples/Star.txt"

@@ -151,9 +151,13 @@
 + (NSString *)registerSound:(NSString *)dir :(NSString *)name;
 + (NSString *)playSound:(NSString *)name;
 + (NSString *)stopSound:(NSString *)name;
+
++ (void) duplicateAsset: (NSString *)folder :(NSString *)fileName;
 @end
 
 @interface ScratchJr : NSObject
+
+@property (class, nonatomic, assign) NSInteger assetLibraryVersion;
 
 + (void)sendBase64Image:(NSData *)imagedata;
 + (void)reportImageError;
@@ -170,4 +174,7 @@
 
 // Imports
 + (void) receiveProject:(NSURL *) url;
+
++ (void) registerLibraryAssets: (NSArray<NSString *> *)assets;
++ (BOOL) libraryHasAsset: (NSString *)md5;
 @end

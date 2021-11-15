@@ -207,4 +207,20 @@
     [request callback:[[UIDevice currentDevice] name]];
 }
 
+- (void) registerLibraryAssets: (JsRequest *) request {
+    ScratchJr.assetLibraryVersion = (NSInteger) request.params[0];
+    NSString *assets = request.params[1];
+    [ScratchJr registerLibraryAssets: [assets componentsSeparatedByString:@","]];
+    [request callback:@"1"];
+}
+
+// duplicate library/sample assets for further usage
+- (void) duplicateAsset: (JsRequest *) request {
+    NSString *path = request.params[0];
+    NSString *name = request.params[1];
+    NSLog(@"duplicate asset %@", path);
+    [IO duplicateAsset:path :name];
+    [request callback:@"1"];
+}
+
 @end

@@ -38,6 +38,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Vector;
 
 /**
@@ -112,6 +113,15 @@ public class ScratchJrActivity
      */
     private ArrayList<Uri> projectUris = new ArrayList<>();
 
+    /**
+     * This set will contain all the library assets.
+     * We are using set here so that we can find the asset
+     * whether in library in O(1) time.
+     */
+    private final HashSet<String> assetList = new HashSet<>(200);
+
+    public int assetLibraryVersion = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -183,9 +193,11 @@ public class ScratchJrActivity
     public void requestPermissions() {
         cameraPermissionResult = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
         micPermissionResult = ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO);
+        readExtPermissionResult = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
 
         if (cameraPermissionResult == PackageManager.PERMISSION_GRANTED
-            && micPermissionResult == PackageManager.PERMISSION_GRANTED) {
+            && micPermissionResult == PackageManager.PERMISSION_GRANTED
+            && readExtPermissionResult == PackageManager.PERMISSION_GRANTED) {
             return;
         }
 
@@ -195,6 +207,9 @@ public class ScratchJrActivity
         }
         if (micPermissionResult != PackageManager.PERMISSION_GRANTED) {
             tmp.add(Manifest.permission.RECORD_AUDIO);
+        }
+        if (readExtPermissionResult != PackageManager.PERMISSION_GRANTED) {
+            tmp.add(Manifest.permission.READ_EXTERNAL_STORAGE);
         }
         Object[] tmpArray = tmp.toArray();
         String[] desiredPermissions = Arrays.copyOf(tmpArray, tmpArray.length, String[].class);
@@ -215,6 +230,9 @@ public class ScratchJrActivity
                 }
                 if (permission.equals(Manifest.permission.RECORD_AUDIO)) {
                     micPermissionResult = grantResults[permissionId];
+                }
+                if (permission.equals(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                    readExtPermissionResult = grantResults[permissionId];
                 }
                 permissionId++;
             }
@@ -656,5 +674,22 @@ public class ScratchJrActivity
                     }
                 }
             });
+    }
+
+    /**
+     * We record all library assets names when app starts,
+     * so that we can know whether an asset should be marked
+     * as a user created one when importing.
+     * @param assets library asset md5
+     */
+    public void registerLibraryAssets(String[] assets) {
+        int length = assets.length;
+        for (int i = 0; i < length; i++) {
+            assetList.add(assets[i]);
+        }
+    }
+
+    public boolean libraryHasAsset(String md5) {
+        return assetList.contains(md5);
     }
 }
