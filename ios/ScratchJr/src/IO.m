@@ -242,13 +242,7 @@ NSMutableDictionary *soundtimers;
         NSString *subDir = [projectDir stringByAppendingPathComponent:key];
         [fileManager createDirectoryAtPath:subDir withIntermediateDirectories:true attributes:nil error:nil];
         for (NSString *file in [metadata valueForKey:key]) {
-            // copy file to target folder
-            // NSLog(@"%@ %@", key, file);
-            NSString *srcPath = [[IO getpath] stringByAppendingPathComponent:file];
-            NSString *toPath = [subDir stringByAppendingPathComponent:file];
-            if ([fileManager fileExistsAtPath:srcPath]) {
-                [fileManager copyItemAtPath:srcPath toPath:toPath error:nil];
-            }
+            [IO copyAssetTo:file :subDir];
         }
     }
     
@@ -268,6 +262,20 @@ NSMutableDictionary *soundtimers;
     // delete temp folder
     [fileManager removeItemAtPath:tempDir error:nil];
     return fullName;
+}
+
++ (void) copyAssetTo: (NSString *) file :(NSString *) toFolder {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *srcPath = [[IO getpath] stringByAppendingPathComponent:file];
+    NSString *toPath = [toFolder stringByAppendingPathComponent:file];
+    if (![fileManager fileExistsAtPath:srcPath]) {
+        // It's not a user created asset, goto svglibrary to find it.
+        NSString* libraryPath = [@"/HTML5/svglibrary/" stringByAppendingString:file];
+        srcPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingString:libraryPath];
+    }
+    if ([fileManager fileExistsAtPath:srcPath]) {
+        [fileManager copyItemAtPath:srcPath toPath:toPath error:nil];
+    }
 }
 
 // Receive a .sjr file from inside the app.  Send using native UI - Airdrop or Email
@@ -324,7 +332,7 @@ NSMutableDictionary *soundtimers;
     NSString *path;
     while ((path = [enumerator nextObject]) != nil) {
         // we are only interested in images and sounds
-        if ([path hasSuffix:@".png"] || [path hasSuffix:@".wav"] || [path hasSuffix:@".svg"]) {
+        if ([path hasSuffix:@".png"] || [path hasSuffix:@".wav"] || [path hasSuffix:@".mp3"] || [path hasSuffix:@".svg"]) {
             NSString *fileName = [path lastPathComponent];
             // extract file
             NSString *toPath = [[IO getpath] stringByAppendingPathComponent:fileName];
@@ -332,6 +340,10 @@ NSMutableDictionary *soundtimers;
                 // NSLog(@"copy file to path %@", toPath);
                 NSString *fromPath = [tempDir stringByAppendingString:path];
                 [fileManager copyItemAtPath:fromPath toPath:toPath error:nil];
+            }
+            
+            if ([ScratchJr libraryHasAsset:fileName]) {
+                continue;
             }
             
             NSArray *parts = [path componentsSeparatedByString:@"/"];
@@ -638,6 +650,16 @@ NSMutableDictionary *soundtimers;
     }
 
     return  [mutableData copy];
+}
+
++ (void) duplicateAsset:(NSString *)path :(NSString *)fileName {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString* libraryPath = [@"/HTML5/" stringByAppendingString:path];
+    NSString* fullPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:libraryPath];
+    NSString* toPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:fileName];
+    if (![fileManager fileExistsAtPath:toPath] && [fileManager fileExistsAtPath:fullPath]) {
+        [fileManager copyItemAtPath:fullPath toPath:toPath error:nil];
+    }
 }
 
 @end

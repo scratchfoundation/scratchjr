@@ -38,6 +38,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Vector;
 
 /**
@@ -111,6 +112,15 @@ public class ScratchJrActivity
      * Project uri that need to be imported.
      */
     private ArrayList<Uri> projectUris = new ArrayList<>();
+
+    /**
+     * This set will contain all the library assets.
+     * We are using set here so that we can find the asset
+     * whether in library in O(1) time.
+     */
+    private final HashSet<String> assetList = new HashSet<>(200);
+
+    public int assetLibraryVersion = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -664,5 +674,22 @@ public class ScratchJrActivity
                     }
                 }
             });
+    }
+
+    /**
+     * We record all library assets names when app starts,
+     * so that we can know whether an asset should be marked
+     * as a user created one when importing.
+     * @param assets library asset md5
+     */
+    public void registerLibraryAssets(String[] assets) {
+        int length = assets.length;
+        for (int i = 0; i < length; i++) {
+            assetList.add(assets[i]);
+        }
+    }
+
+    public boolean libraryHasAsset(String md5) {
+        return assetList.contains(md5);
     }
 }

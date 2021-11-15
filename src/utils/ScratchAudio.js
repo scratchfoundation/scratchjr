@@ -86,7 +86,7 @@ export default class ScratchAudio {
         var dir = '';
         if (!isAndroid) {
             if (md5.indexOf('/') > -1) dir = 'HTML5/';
-            else if (md5.indexOf('wav') > -1) dir = 'Documents';
+            else if (md5.indexOf('wav') > -1 || md5.indexOf('mp3') > -1) dir = 'Documents';
         }
         ScratchAudio.loadFromLocal(dir, md5, fcn);
     }
