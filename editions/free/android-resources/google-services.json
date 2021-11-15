@@ -1,34 +1,50 @@
 {
   "project_info": {
-    "project_number": "887634545741",
-    "project_id": "free-scratchjr-test",
-    "storage_bucket": "free-scratchjr-test.appspot.com"
+    "project_number": "739290711415",
+    "firebase_url": "https://scratchjrfree.firebaseio.com",
+    "project_id": "scratchjrfree",
+    "storage_bucket": "scratchjrfree.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:887634545741:android:94e1a6ed42b9d1e3e9a004",
+        "mobilesdk_app_id": "1:739290711415:android:1651615383e4803a4b8d72",
         "android_client_info": {
           "package_name": "org.scratchjr.androidfree"
         }
       },
       "oauth_client": [
         {
-          "client_id": "887634545741-5eiksqde6pmqdhatibd76gmbqvds6778.apps.googleusercontent.com",
+          "client_id": "739290711415-r70mgm1l3e94eiip8sp2012c729amro9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.scratchjr.androidfree",
+            "certificate_hash": "2e11cab098f04e213a7a375e0e6f769ec1f96cab"
+          }
+        },
+        {
+          "client_id": "739290711415-b96p36e61k2r6g8h7d6bedsvb1hpn0c8.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDSM1m575nqRHEuhLGNBR4NRf6OIorUBgE"
+          "current_key": "AIzaSyBtUJwBk537ROUCJyccXvY4dz5ou5XB0xA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "887634545741-5eiksqde6pmqdhatibd76gmbqvds6778.apps.googleusercontent.com",
+              "client_id": "739290711415-b96p36e61k2r6g8h7d6bedsvb1hpn0c8.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "739290711415-v2c3v1e215bc1pllqpnp54vr2b4rp1r3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "edu.mitmedialab.scratchjrfree"
+              }
             }
           ]
         }
