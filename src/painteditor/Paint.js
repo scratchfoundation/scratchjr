@@ -990,15 +990,15 @@ export default class Paint {
             '#2BBF8A', // new green
             '#027607', '#114D24', //greens
             '#FFFFFF', '#CCDDE7', '#61787C', '#1C1C1C', // grays
-            '#D830A3', // sarah's pink shoes border
+            // '#D830A3', // sarah's pink shoes border
             '#FF64E9', // purple pinks
             '#D999FF', ' #A159D3', // vilote
             '#722696', // sarah's violet
             '#141463', '#003399', '#1D40ED',
             '#0079D3', '#009EFF', '#76C8FF',
-            '#ACE0FD', '#11B7BC', '#21F9F3', '#C3FCFC', '#54311E',
-            '#8E572A', '#E4B69D', '#FFCDA4', '#FFEDD7' // skin colors
-
+            '#ACE0FD', '#11B7BC', '#21F9F3', '#C3FCFC',
+            // '#54311E', '#8E572A', '#E4B69D', '#FFCDA4', '#FFEDD7' // skin colors
+            '#FDDBB4', '#E4B681', '#BF8C5C', '#955D31', '#6B3D1F', '#482D18' // new skin colors
         ];
     }
 
