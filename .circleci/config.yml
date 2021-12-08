@@ -45,22 +45,35 @@ jobs:
     working_directory: ~/project/ios
     macos:
       xcode: 11.3.0
+    environment:
+      HOMEBREW_NO_AUTO_UPDATE: 1
     steps:
       - checkout:
           path: ~/project
       - attach_workspace:
           at: ~/project
       - restore_cache:
-          key: pods-v1-{{ checksum "ios/Podfile.lock" }}-{{ arch }}
+          key: pods-v2-{{ checksum "Podfile.lock" }}-{{ arch }}
       - run:
           command: pod install
-          working_directory: ios
       - save_cache:
-          key: pods-v1-{{ checksum "ios/Podfile.lock" }}-{{ arch }}
+          key: pods-v2-{{ checksum "Podfile.lock" }}-{{ arch }}
           paths:
-            - ios/Pods
-      - run: nvm alias default node --lts # step up node
-      - run: brew install librsvg && imagemagick
+            - Pods
+      - restore_cache:
+          # Caching Homebrew's files (see the save_cache step below) means that Homebrew doesn't have to update as
+          # much. The Homebrew update can take several minutes without this, but with the cache it tends to take less
+          # than a minute most of the time. The cache will expire periodically and be replaced by a more up-to-date
+          # cache, which should effectively cap the amount of updating that Homebrew needs to do on top of the cache.
+          name: Restore Homebrew cache
+          key: homebrew-cache-v1
+      - run: brew install librsvg imagemagick
+      - save_cache:
+          name: Save Homebrew cache
+          paths:
+            - ~/Library/Caches/Homebrew
+            - /usr/local/Homebrew
+          key: homebrew-cache-v1
       - run: pip install pysvg
 
   android-build-and-test:
@@ -114,6 +127,6 @@ workflows:
       - android-build-and-test:
           requires:
             - node
-      # - macos-build-and-test:
-      #     requires:
-      #       - node
+      - macos-build-and-test:
+          requires:
+            - node
