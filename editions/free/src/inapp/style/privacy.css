@@ -48,7 +48,8 @@ h3 {
   display: block;
   margin-bottom: ${css_vh(0.875)};
   padding: ${css_vh(2.85)};
-  font-size: ${css_vh(2.85)};
+  font-size: ${css_vh(3.8)};
+  line-height: ${css_vh(5.7)};
   background-color: rgba(76, 151, 255, 0.15);
 }
 
@@ -64,5 +65,6 @@ ul {
 
 .description {
   font-size: ${css_vh(2.85)};
+  line-height: ${css_vh(4.275)};
   margin-bottom: ${css_vh(1.3)};
 }
