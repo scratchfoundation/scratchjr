@@ -45,7 +45,7 @@ export default class MediaLib {
             path = parsedResult.path;
             samples = parsedResult.samples;
             sprites = parsedResult.sprites;
-            legacySprites = parsedResult.legacySprites;
+            legacySprites = parsedResult.legacySprites || [];
             backgrounds = parsedResult.backgrounds;
             sounds = parsedResult.sounds;
 
