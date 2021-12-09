@@ -1,0 +1,68 @@
+@import url('../../css/font.css');
+
+/*
+  0.65vh    => 12px
+  0.867vh   => 16px
+  0.975vh   => 18px
+  1.3vh     => 24px
+  1.95vh    => 36px
+  2.6vh     => 48px
+*/
+html {
+  -webkit-user-select: none;
+}
+
+body {
+  color: #595959;
+  font-family: Roboto;
+  padding: ${css_vh(2)} 6.05vw ${css_vh(2)};
+  margin: ${css_vh(2.6)} auto;
+  width: ${css_vw(87.89)};
+  height: auto;
+  margin-bottom: ${css_vh(10.4)};
+}
+
+h1 {
+  font-size: ${css_vh(5.3)};
+  margin-bottom: ${css_vh(0.65)};
+  color: #f5a322;
+}
+
+h2 {
+  font-size: ${css_vh(3.78)};
+  margin-bottom: ${css_vh(1.3)};
+}
+
+h3 {
+  font-size: ${css_vh(2.96)};
+  margin-top: ${css_vh(1.95)}; // 24px
+  margin-bottom: ${css_vh(0.65)}; // 12px
+}
+
+.privacy-section-wrapper {
+  display: block;
+  margin-bottom: ${css_vh(2.6)};
+}
+
+.highlight {
+  display: block;
+  margin-bottom: ${css_vh(0.875)};
+  padding: ${css_vh(2.85)};
+  font-size: ${css_vh(2.85)};
+  background-color: rgba(76, 151, 255, 0.15);
+}
+
+ul {
+  margin: ${css_vh(2.85)} 0;
+}
+
+.title {
+  font-weight: bold;
+  margin-bottom: ${css_vh(1.3)};
+  color: #2898cd;
+}
+
+.description {
+  font-size: ${css_vh(2.85)};
+  margin-bottom: ${css_vh(1.3)};
+}
