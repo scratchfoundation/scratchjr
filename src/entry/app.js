@@ -10,11 +10,11 @@ import {homeMain} from './home';
 import {editorMain} from './editor';
 import {gettingStartedMain} from './gettingstarted';
 import {
-    inappInterfaceGuide, 
-    inappAbout, 
-    inappBlocksGuide, 
+    inappInterfaceGuide,
+    inappAbout,
+    inappBlocksGuide,
     inappPaintEditorGuide,
-    inappPrivacyPolicy,
+    inappPrivacyPolicy
 } from './inapp';
 
 function loadSettings (settingsRoot, whenDone) {

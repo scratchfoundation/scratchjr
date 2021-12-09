@@ -205,7 +205,6 @@ export function inappPrivacyPolicy () {
     const elements = document.querySelectorAll('[data-i18n]');
     elements.forEach(function (item) {
         const key = item.getAttribute('data-i18n');
-        console.log(key);
         item.innerHTML = Localization.localize(key);
     });
 }
