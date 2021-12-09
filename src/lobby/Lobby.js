@@ -81,7 +81,7 @@ export default class Lobby {
             }
         };
         gn('blockstab').onclick = function () {
-            if (gn('booktab').className != 'tab on') {
+            if (gn('blockstab').className != 'tab on') {
                 Lobby.setSubMenu('blocks');
             }
         };
