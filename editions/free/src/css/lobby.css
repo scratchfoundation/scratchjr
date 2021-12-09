@@ -400,13 +400,12 @@ div.localizationselect.selected:after {
 
 #footer ul.footer-nav .tab>span , ul.footer-nav .tab2>span{
     position: relative;
-    top: ${css_vh(-6)};
-    left: ${css_vw(5)};
+    top: ${css_vh(-7)};
+    left: ${css_vw(4)};
     padding: 0px;
-    height: ${css_vh(2.86)};
     line-height: ${css_vh(2.86)};
     cursor: pointer;
-    width: ${css_vw(17.58)};
+    width: ${css_vw(11.58)};
     overflow: visible;
     font-size: ${css_vh(2.34)};
     margin: auto;
