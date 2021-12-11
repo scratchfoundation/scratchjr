@@ -156,14 +156,15 @@
 }
 
 .share {
-    position: relative;
-    top: ${css_vh(-22.14)};
-    right: ${css_vw(-12.7)};
+    position: absolute;
+    top: calc(2.75vh  + ${14 * scaleMultiplier}px);
+    left: calc(16.75vh + ${5 * scaleMultiplier}px);
     z-index: 5;
-    width: ${css_vw(5.47)};
-    height: ${css_vh(6.51)};
+    width: 6.72vh;
+    height: 6vh;
     background: url('../assets/ui/share-bow.svg');
     background-size: 101%;
+    background-repeat: no-repeat;
     visibility: hidden;
 }
 
@@ -171,9 +172,9 @@
     background-color: #1dafed;
     border: 3px solid #fff;
     height: ${css_vh(1.57)};
-    width: ${css_vw(18.75)};
-    position: relative;
-    top: ${css_vh(-27.34)};
+    width: 25vh;
+    position: absolute;
+    top: calc(4vh +  ${14 * scaleMultiplier}px);
     z-index: 4;
     visibility: hidden;
 }
@@ -182,10 +183,10 @@
     background-color: #1dafed;
     border: 3px solid #fff;
     width: ${css_vw(1.17)};
-    height: ${css_vh(19)};
-    position: relative;
-    top: ${css_vh(-32.81)};
-    right: ${css_vw(-14.65)};
+    height: 18.75vh;
+    position: absolute;
+    top: ${14 * scaleMultiplier}px;
+    left: calc(18.75vh + ${5 * scaleMultiplier}px);
     z-index: 4;
     visibility: hidden;
 }
