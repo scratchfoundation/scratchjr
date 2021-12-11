@@ -190,6 +190,13 @@ public class ScratchJrUtil {
             while ((ze = zin.getNextEntry()) != null) {
                 String path = toPath + File.separator + ze.getName();
                 File unzipFile = new File(path);
+                // Zip files can contain an entry (file or directory) having path
+                // traversal characters ("../") in its name. Before unzipping,
+                // we need to confirm it will only extract to the expected folder.
+                // For more details see https://support.google.com/faqs/answer/9294009
+                if (!unzipFile.getCanonicalPath().startsWith(toPath)) {
+                    continue;
+                }
                 if (ze.isDirectory()) {
                     if(!unzipFile.isDirectory()) {
                         unzipFile.mkdirs();
