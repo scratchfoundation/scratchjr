@@ -1,9 +1,8 @@
-#!/usr/bin/
+#!/usr/bin/env python3
 
-from pysvg import parser
 import getopt
 import os
-
+import pysvg.parser
 import shutil
 from subprocess import Popen, PIPE
 import sys
@@ -81,7 +80,7 @@ def main(argv):
         temp = sys.stdout
         sys.stdout = nullout
 
-        svg = parser.parse(svgDirectory + i)
+        svg = pysvg.parser.parse(svgDirectory + i)
         sys.stdout = temp
         svgHeight = float(svg.get_height()[:-2])
         svgWidth = float(svg.get_width()[:-2])
