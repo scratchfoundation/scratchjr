@@ -24,33 +24,33 @@ def main(argv):
         if os.path.isfile(localRsvgConvert):
             rsvgConvert = localRsvgConvert
         else:
-            print 'You must install librsvg2-bin to build'
+            print('You must install librsvg2-bin to build')
             sys.exit(1)
     
     if not os.path.isfile(imConvert):
         if os.path.isfile(localImConvert):
             imConvert = localImConvert
         else:
-            print 'You must install ImageMagick to build'
+            print('You must install ImageMagick to build')
             sys.exit(1)
 
     try:
         opts, args = getopt.getopt(argv,"hi:o:",["input=","output="])
     except getopt.GetoptError:
-        print 'convert-svg-to-png.py -i <svgDirectory> -o <pngDirectory>'
+        print('convert-svg-to-png.py -i <svgDirectory> -o <pngDirectory>')
         sys.exit(2)
 
     for opt, arg in opts:
         if opt == '-h':
-            print 'convert-svg-to-png.py -i <svgDirectory> -o <pngDirectory>'
+            print('convert-svg-to-png.py -i <svgDirectory> -o <pngDirectory>')
             sys.exit()
         elif opt in ("-i", "--input"):
             svgDirectory = arg.lstrip()
         elif opt in ("-o", "--output"):
             pngDirectory = arg.lstrip()
 
-    print 'Input svg directory is ' + svgDirectory
-    print 'Output png directory is ' + pngDirectory
+    print('Input svg directory is ' + svgDirectory)
+    print('Output png directory is ' + pngDirectory)
 
     MAX_WIDTH = 180
     MAX_HEIGHT = 140
@@ -98,7 +98,7 @@ def main(argv):
 
     nullout.close()
     
-    print 'Converted {0} svgs to png'.format(count)
+    print('Converted {0} svgs to png'.format(count))
 
 if __name__ == "__main__":
    main(sys.argv[1:])
