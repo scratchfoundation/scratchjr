@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/
 
 from pysvg import parser
 import getopt
