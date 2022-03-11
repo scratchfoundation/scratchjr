@@ -13,6 +13,7 @@ from subprocess import call
 # This script depends on the rsvg-convert to perform the conversion.
 
 def main(argv):
+    print("sys.path", sys.path)
     rsvgConvert = "/usr/bin/rsvg-convert"
     localRsvgConvert = "/usr/local/bin/rsvg-convert"
     imConvert = "/usr/bin/convert"
