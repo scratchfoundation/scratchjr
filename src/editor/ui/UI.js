@@ -953,7 +953,7 @@ export default class UI {
         var tf = newHTML('div', 'pagetext off', p);
         tf.setAttribute('id', 'textbox');
         // If the textbox background is clicked or touched, the input loses focus,
-        // which causes the text input to close unexpectedly 
+        // which causes the text input to close unexpectedly
         var eatEvent = function (e) {
             e.stopPropagation();
             e.preventDefault();

@@ -81,8 +81,13 @@ export default class Lobby {
             }
         };
         gn('blockstab').onclick = function () {
-            if (gn('booktab').className != 'tab2 on') {
+            if (gn('blockstab').className != 'tab on') {
                 Lobby.setSubMenu('blocks');
+            }
+        };
+        gn('privacytab').onclick = function () {
+            if (gn('privacytab').className != 'tab2 on') {
+                Lobby.setSubMenu('privacy');
             }
         };
         if (isAndroid) {
@@ -258,6 +263,10 @@ export default class Lobby {
             url = host + 'blocks.html';
             Lobby.loadLink(div, url, 'contentwrap scroll', 'htmlcontents scrolled');
             break;
+        case 'privacy':
+            url = host + 'privacy.html';
+            Lobby.loadLink(div, url, 'contentwrap scroll', 'htmlcontents scrolled');
+            break;
         default:
             Lobby.missing(page, div);
             break;
@@ -266,7 +275,7 @@ export default class Lobby {
     }
 
     static selectSubButton (str) {
-        var list = ['about', 'interface', 'paint', 'blocks'];
+        var list = ['about', 'interface', 'paint', 'blocks', 'privacy'];
         for (var i = 0; i < list.length; i++) {
             var kid = gn(list[i] + 'tab');
             var cls = kid.className.split(' ')[0];
