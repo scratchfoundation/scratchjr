@@ -195,7 +195,7 @@ public class ScratchJrUtil {
                 // we need to confirm it will only extract to the expected folder.
                 // For more details see https://support.google.com/faqs/answer/9294009
                 if (!unzipFile.getCanonicalPath().startsWith(toPath)) {
-                    continue;
+                    throw new SecurityException("Unsafe file path found and unzipping will not be allowed for security purposes.");
                 }
                 if (ze.isDirectory()) {
                     if(!unzipFile.isDirectory()) {
