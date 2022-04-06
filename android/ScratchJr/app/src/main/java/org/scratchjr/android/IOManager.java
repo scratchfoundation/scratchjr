@@ -284,7 +284,10 @@ public class IOManager {
         }
         File tempDir = new File(activity.getCacheDir() + File.separator + UUID.randomUUID().toString());
         tempDir.mkdir();
-        List<String> entries = ScratchJrUtil.unzip(activity.getContentResolver().openInputStream(uri), tempDir.getPath());
+        List<String> entries = ScratchJrUtil.unzip(
+            activity.getContentResolver().openInputStream(uri),
+            tempDir.getCanonicalPath()
+        );
         if (entries.isEmpty()) {
             Log.e(LOG_TAG, "no entries found");
             // no files
