@@ -98,6 +98,10 @@ public class ScratchJrUtil {
         throws IOException
     {
         InputStream in = new FileInputStream(sourceLocation);
+        copyFile(in, targetLocation);
+    }
+
+    public static void copyFile(InputStream in, File targetLocation) throws IOException {
         OutputStream out = new FileOutputStream(targetLocation);
 
         // Copy the bits from instream to outstream
@@ -186,6 +190,13 @@ public class ScratchJrUtil {
             while ((ze = zin.getNextEntry()) != null) {
                 String path = toPath + File.separator + ze.getName();
                 File unzipFile = new File(path);
+                // Zip files can contain an entry (file or directory) having path
+                // traversal characters ("../") in its name. Before unzipping,
+                // we need to confirm it will only extract to the expected folder.
+                // For more details see https://support.google.com/faqs/answer/9294009
+                if (!unzipFile.getCanonicalPath().startsWith(toPath)) {
+                    throw new SecurityException("Unsafe file path found and unzipping will not be allowed for security purposes.");
+                }
                 if (ze.isDirectory()) {
                     if(!unzipFile.isDirectory()) {
                         unzipFile.mkdirs();

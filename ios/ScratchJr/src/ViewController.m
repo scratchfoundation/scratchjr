@@ -52,6 +52,7 @@ NSDate *startDate;
     WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
     config.allowsInlineMediaPlayback = true;
     config.allowsAirPlayForMediaPlayback = true;
+    config.allowsPictureInPictureMediaPlayback = false;
     [config.preferences setValue:@YES forKey:@"allowFileAccessFromFileURLs"];
 
     WKUserContentController *controller = [[WKUserContentController alloc] init];
@@ -199,6 +200,24 @@ NSDate *startDate;
     dispatch_async(dispatch_get_main_queue(), ^{
         [webview evaluateJavaScript:callback completionHandler:nil];
     });
+}
+
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
+    // All internal urls are started with file:///, if the url scheme is http or https,
+    // the app is trying to open an external link, we should open it in the browser.
+    // For now, only the PBS edition opens an itunes link in the lobby.
+    // If we are going to support more shemes like opening other apps or ftp etc,
+    // this is the right place to go.
+    NSURL *url = navigationAction.request.URL;
+    NSString *scheme = url.scheme;
+    if ([scheme isEqualToString:@"http"] || [scheme isEqualToString:@"https"]) {
+        if ([UIApplication.sharedApplication canOpenURL:url]) {
+            [UIApplication.sharedApplication openURL:url options:@{} completionHandler:nil];
+        }
+        decisionHandler(WKNavigationActionPolicyCancel);
+        return;
+    }
+    decisionHandler(WKNavigationActionPolicyAllow);
 }
 
 // Sharing controllers - if we later decide to unify, use UIActivityViewController

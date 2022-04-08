@@ -165,6 +165,7 @@
     NSDictionary* metadata = request.params[1];
     NSString* name = request.params[2];
     NSString * fullName = [IO createZipForProject:projectData :metadata :name];
+    fullName = [fullName stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"];
     [request callback:fullName];
 }
 
@@ -213,6 +214,22 @@
 // iPad name (used for information in the name/sharing dialog to help people using Airdrop)
 - (void) deviceName: (JsRequest *) request {
     [request callback:[[UIDevice currentDevice] name]];
+}
+
+- (void) registerLibraryAssets: (JsRequest *) request {
+    ScratchJr.assetLibraryVersion = (NSInteger) request.params[0];
+    NSString *assets = request.params[1];
+    [ScratchJr registerLibraryAssets: [assets componentsSeparatedByString:@","]];
+    [request callback:@"1"];
+}
+
+// duplicate library/sample assets for further usage
+- (void) duplicateAsset: (JsRequest *) request {
+    NSString *path = request.params[0];
+    NSString *name = request.params[1];
+    NSLog(@"duplicate asset %@", path);
+    [IO duplicateAsset:path :name];
+    [request callback:@"1"];
 }
 
 @end

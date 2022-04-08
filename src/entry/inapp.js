@@ -200,3 +200,11 @@ export function inappBlocksGuide () {
         gn(blockDescriptionKeys[i]).textContent = Localization.localize(blockDescriptionKeys[i]);
     }
 }
+
+export function inappPrivacyPolicy () {
+    const elements = document.querySelectorAll('[data-i18n]');
+    elements.forEach(function (item) {
+        const key = item.getAttribute('data-i18n');
+        item.innerHTML = Localization.localize(key);
+    });
+}

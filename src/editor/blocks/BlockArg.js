@@ -206,6 +206,9 @@ export default class BlockArg {
             return;
         }
         this.argValue = val;
+        if (this.argType == 'n' && isNaN(Number(val))) {
+            this.argValue = 0;
+        }
         this.input.textContent = val;
     }
 

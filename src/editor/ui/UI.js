@@ -335,10 +335,10 @@ export default class UI {
 
     static handleTextFieldSave (dontHide) {
         // Handle story-starter mode project
-        if (ScratchJr.isEditable() && ScratchJr.editmode == 'storyStarter' && !Project.error) {
+        if (ScratchJr.isEditable() && ScratchJr.editmode == 'storyStarter' && !Project.error && ScratchJr.changed) {
             OS.analyticsEvent('samples', 'story_starter_edited', Project.metadata.name);
             // Get the new project name
-            var sampleName = Localization.localize('SAMPLE_' + Project.metadata.name);
+            var sampleName = Localization.localizeSampleName(Project.metadata.name);
             IO.uniqueProjectName({
                 name: sampleName
             }, function (jsonData) {
@@ -369,7 +369,6 @@ export default class UI {
             ScratchJr.storyStart('UI.handleTextFieldSave');
         }
         Project.metadata.name = pname;
-        ScratchJr.changed = true;
         OS.setfield(OS.database, Project.metadata.id, 'name', pname);
         if (!dontHide) {
             ScratchAudio.sndFX('exittap.wav');
@@ -387,6 +386,9 @@ export default class UI {
         if (ScratchJr.onHold) {
             return;
         }
+
+        var canShare = ScratchJr.editmode != 'storyStarter' || ScratchJr.changed;
+        gn('infoboxParentsSectionButton').style.display = canShare ? 'block' : 'none';
 
         // Prevent button from thrashing
         setTimeout(function () {
@@ -420,7 +422,11 @@ export default class UI {
         }
 
         if (ScratchJr.isEditable()) {
-            (document.forms.projectname.myproject).value = Project.metadata.name;
+            var name = Project.metadata.name;
+            if (ScratchJr.editmode == 'storyStarter') {
+                name = Localization.localizeSampleName(name);
+            }
+            (document.forms.projectname.myproject).value = name;
         } else {
             gn('pname').textContent = Project.metadata.name;
         }
@@ -946,11 +952,14 @@ export default class UI {
     static createFormForText (p) {
         var tf = newHTML('div', 'pagetext off', p);
         tf.setAttribute('id', 'textbox');
-        if (isAndroid) {
-            tf.onmousedown = function (e) {
-                e.preventDefault();
-            };
-        }
+        // If the textbox background is clicked or touched, the input loses focus,
+        // which causes the text input to close unexpectedly
+        var eatEvent = function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+        };
+        tf.ontouchstart = eatEvent;
+        tf.onmousedown = eatEvent;
         var activetb = newHTML('form', 'pageform', tf);
         activetb.name = 'activetextbox';
         activetb.id = 'myform';

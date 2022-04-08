@@ -41,10 +41,6 @@
     margin-right: auto;
 }
 
-.modal.fade {
-    top: -100%;
-}
-
 .modal-body {
     width: 420px;
     height: 113px;

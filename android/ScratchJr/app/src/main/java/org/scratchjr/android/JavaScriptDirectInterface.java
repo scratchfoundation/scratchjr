@@ -13,6 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -20,6 +21,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.RectF;
 import android.hardware.Camera;
+import android.media.Image;
 import android.net.Uri;
 import android.text.Html;
 import android.util.Base64;
@@ -28,6 +30,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.webkit.JavascriptInterface;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+
+import androidx.annotation.NonNull;
+import androidx.camera.core.ImageCapture;
+import androidx.camera.core.ImageCaptureException;
+import androidx.camera.core.ImageProxy;
 
 /**
  * The methods in this inner class are exposed directly to JavaScript in the HTML5 pages
@@ -410,19 +417,24 @@ public class JavaScriptDirectInterface {
 
     @JavascriptInterface
     public void scratchjr_captureimage(final String onCameraCaptureComplete) {
-        _cameraView.captureStillImage(
-            new Camera.PictureCallback() {
-                public void onPictureTaken(byte[] jpegData, Camera camera) {
+        _cameraView.captureStillImage(new ImageCapture.OnImageCapturedCallback() {
+            @Override
+            public void onCaptureSuccess(@NonNull ImageProxy imageProxy) {
+                @SuppressLint("UnsafeOptInUsageError")
+                Image image = imageProxy.getImage();
+                if (image != null) {
+                    byte[] jpegData = _cameraView.imageToByteArray(image);
                     sendBase64Image(onCameraCaptureComplete, jpegData);
                 }
-            },
-            new Runnable() {
-                public void run() {
-                    Log.e(LOG_TAG, "Could not capture picture");
-                    reportImageError(onCameraCaptureComplete);
-                }
+                imageProxy.close();
             }
-        );
+
+            @Override
+            public void onError(@NonNull ImageCaptureException exception) {
+                Log.e(LOG_TAG, "Could not capture picture");
+                reportImageError(onCameraCaptureComplete);
+            }
+        });
     }
 
     @JavascriptInterface
@@ -616,20 +628,14 @@ public class JavaScriptDirectInterface {
             }
             for (int i = 0; i < files.length(); i++) {
                 String file = files.optString(i);
-                if (file == null) {
-                    continue;
-                }
-                File srcFile = new File(_activity.getFilesDir() + File.separator + file);
-                if (!srcFile.exists()) {
-                    Log.e(LOG_TAG, "src file not exists" + file);
-                    continue;
-                }
-                File targetFile = new File(folder.getAbsolutePath() + File.separator + file);
-                // Log.d(LOG_TAG, "copying assets" + file);
-                try {
-                    ScratchJrUtil.copyFile(srcFile, targetFile);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if (file != null) {
+                    File targetFile = new File(folder.getAbsolutePath() + File.separator + file);
+                    try {
+                        this.copyAssetTo(file, targetFile);
+                    } catch (IOException e) {
+                        Log.e(LOG_TAG, "Asset for " + file + " copy failed.");
+                        e.printStackTrace();
+                    }
                 }
             }
         }
@@ -643,6 +649,39 @@ public class JavaScriptDirectInterface {
         // remove the temp folder
         ScratchJrUtil.removeFile(tempFolder);
         return fullName;
+    }
+
+    private void copyAssetTo(String file, File targetFile) throws IOException {
+        File srcFile = new File(_activity.getFilesDir() + File.separator + file);
+        if (srcFile.exists()) {
+            ScratchJrUtil.copyFile(srcFile, targetFile);
+        } else {
+            InputStream inputStream = _activity.getAssets().open("HTML5/svglibrary/" + file);
+            ScratchJrUtil.copyFile(inputStream, targetFile);
+        }
+    }
+
+    @JavascriptInterface
+    public void registerLibraryAssets(int version, String assets) {
+        _activity.assetLibraryVersion = version;
+        _activity.registerLibraryAssets(assets.split(","));
+    }
+
+    @JavascriptInterface
+    public void duplicateAsset(String path, String fileName) {
+        Log.d(LOG_TAG, "duplicate asset " + path);
+        File toFile = new File(_activity.getFilesDir() + File.separator + fileName);
+        if (!toFile.exists()) {
+            try {
+                if (path.startsWith("./")) {
+                    path = path.substring(2);
+                }
+                InputStream inputStream = _activity.getAssets().open("HTML5/" + path);
+                ScratchJrUtil.copyFile(inputStream, toFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @JavascriptInterface

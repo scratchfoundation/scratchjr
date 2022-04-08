@@ -83,6 +83,10 @@ export default class ScratchJr {
         changed = newChanged;
     }
 
+    static get changed () {
+        return changed;
+    }
+
     static set storyStarted (newStoryStarted) {
         storyStarted = newStoryStarted;
     }
@@ -126,6 +130,10 @@ export default class ScratchJr {
 
     static get currentProject () {
         return currentProject;
+    }
+
+    static set currentProject (md5) {
+        currentProject = md5;
     }
 
     static get editmode () {
@@ -342,36 +350,49 @@ export default class ScratchJr {
     }
 
     static saveProject (e, onDone) {
-        if (ScratchJr.isEditable() && editmode == 'storyStarter' && storyStarted && !Project.error) {
-            OS.analyticsEvent('samples', 'story_starter_edited', Project.metadata.name);
-            // Localize sample project names
-            var sampleName = Localization.localize('SAMPLE_' + Project.metadata.name);
-            // Get the new project name
-            IO.uniqueProjectName({
-                name: sampleName
-            }, function (jsonData) {
-                var newName = jsonData.name;
-                Project.metadata.name = newName;
-                // Create the new project
-                IO.createProject({
-                    name: newName,
-                    version: version,
-                    mtime: (new Date()).getTime().toString()
-                }, function (md5) {
-                    // Save project data
-                    currentProject = md5;
-                    // Switch out of story-starter mode to avoid creating new projects
-                    editmode = 'edit';
+        if (ScratchJr.isEditable() && !Project.error && changed) {
+            if (editmode != 'storyStarter') {
+                if (currentProject) {
                     Project.prepareToSave(currentProject, onDone);
-                });
-            }, true);
-        } else if (ScratchJr.isEditable() && currentProject && !Project.error && changed) {
-            Project.prepareToSave(currentProject, onDone);
-        } else {
-            if (onDone) {
-                onDone();
+                    return;
+                }
+            } else if (storyStarted) {
+                ScratchJr.saveStory(onDone);
+                return;
             }
         }
+        if (onDone) {
+            onDone();
+        }
+    }
+
+    /**
+     * Save the story as a new project so that the user can
+     * continue to edit or share it in the future.
+     */
+    static saveStory (onDone) {
+        OS.analyticsEvent('samples', 'story_starter_edited', Project.metadata.name);
+        // Localize sample project names
+        var sampleName = Localization.localizeSampleName(Project.metadata.name);
+        // Get the new project name
+        IO.uniqueProjectName({
+            name: sampleName
+        }, function (jsonData) {
+            var newName = jsonData.name;
+            Project.metadata.name = newName;
+            // Create the new project
+            IO.createProject({
+                name: newName,
+                version: version,
+                mtime: (new Date()).getTime().toString()
+            }, function (md5) {
+                // Save project data
+                currentProject = md5;
+                // Switch out of story-starter mode to avoid creating new projects
+                editmode = 'edit';
+                Project.prepareToSave(currentProject, onDone);
+            });
+        }, true);
     }
 
     static saveAndFlip (e) {
@@ -727,6 +748,10 @@ export default class ScratchJr {
         if (delta == 0) {
             ScratchJr.needsToScroll(b);
         }
+        // accept keyboard input
+        // `keypress` will not catch `Backspace`,
+        // so we listen to `keydown`
+        window.onkeydown = ScratchJr.handleKeyDown;
     }
 
     static needsToScroll (b) {
@@ -751,6 +776,21 @@ export default class ScratchJr {
         activeFocus.delta = delta;
     }
 
+    static handleKeyDown (evt) {
+        // 48 is the keyCode for 0
+        // 57 is the keyCode for 9
+        // For the detail of keyCode of keyboard event
+        // please refer to https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode#value_of_keycode
+        if ((evt.keyCode >= 48 && evt.keyCode <= 57) || evt.key == '-') {
+            // if the user input numbers or negative sign
+            ScratchJr.fillValueWithKey(evt.key);
+            return;
+        }
+        if (evt.key == 'Backspace') {
+            ScratchJr.numEditDelete();
+        }
+    }
+
     static numEditKey (e) {
         e.preventDefault();
         e.stopPropagation();
@@ -765,13 +805,21 @@ export default class ScratchJr {
             ScratchAudio.sndFX('keydown.wav');
         }
         var c = t.textContent;
-        var input = activeFocus.input;
         if (!c) {
             if ((t.parentNode.className == 'onekey delete') || (t.className == 'onekey delete')) {
                 ScratchJr.numEditDelete();
             }
             return;
         }
+        ScratchJr.fillValueWithKey(c);
+    }
+
+    /**
+     * Fill active focus with value `c`
+     * @param c The input char, should be 0...9 or `-`
+     */
+    static fillValueWithKey (c) {
+        var input = activeFocus.input;
         var val = input.textContent;
         if (editfirst) {
             editfirst = false;
@@ -846,6 +894,8 @@ export default class ScratchJr {
         keypad.className = 'picokeyboard off';
         activeFocus.div.className = 'numfield off';
         activeFocus = undefined;
+        // stop accepting keyboard events
+        window.onkeydown = undefined;
     }
 
     static numEditDone () {

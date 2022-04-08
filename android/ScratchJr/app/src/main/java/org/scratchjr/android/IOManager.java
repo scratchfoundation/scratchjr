@@ -284,7 +284,10 @@ public class IOManager {
         }
         File tempDir = new File(activity.getCacheDir() + File.separator + UUID.randomUUID().toString());
         tempDir.mkdir();
-        List<String> entries = ScratchJrUtil.unzip(activity.getContentResolver().openInputStream(uri), tempDir.getPath());
+        List<String> entries = ScratchJrUtil.unzip(
+            activity.getContentResolver().openInputStream(uri),
+            tempDir.getCanonicalPath()
+        );
         if (entries.isEmpty()) {
             Log.e(LOG_TAG, "no entries found");
             // no files
@@ -324,7 +327,7 @@ public class IOManager {
             if (entry == null) {
                 continue;
             }
-            if (!(entry.endsWith(".png") || entry.endsWith(".wav") || entry.endsWith(".svg"))) {
+            if (!(entry.endsWith(".png") || entry.endsWith(".wav") || entry.endsWith(".mp3") || entry.endsWith(".svg"))) {
                 continue;
             }
             // copy file to target file
@@ -337,6 +340,11 @@ public class IOManager {
             }
             String folderName = sourceFile.getParentFile().getName();
             if ("thumbnails".equals(folderName) || "sounds".equals(folderName)) {
+                continue;
+            }
+            if (activity.libraryHasAsset(fileName)) {
+                Log.e(LOG_TAG, "asset for " + fileName + " exists in library");
+                // this is in library assets.
                 continue;
             }
             String table = "characters".equals(folderName) ? "usershapes" : "userbkgs";

@@ -28,7 +28,7 @@ import {newHTML, newDiv, newP, gn,
     setCanvasSizeScaledToWindowDocumentHeight,
     DEGTOR, getIdFor, setProps, isTablet, isiOS,
     isAndroid, fitInRect, scaleMultiplier, setCanvasSize,
-    globaly, globalx, rgbToHex} from '../../utils/lib';
+    globaly, globalx, rgbToHex, WINDOW_INNER_HEIGHT} from '../../utils/lib';
 
 export default class Sprite {
     constructor (attr, whenDone) {
@@ -44,6 +44,7 @@ export default class Sprite {
         this.div = document.createElement('div');
         setProps(this.div.style, {
             position: 'absolute',
+            zIndex: -1,
             left: '0px',
             top: '0px'
         });
@@ -60,7 +61,17 @@ export default class Sprite {
             this.name = Localization.localize('SAMPLE_TEXT_' + this.name);
         }
         for (var i = 0; i < this.sounds.length; i++) {
-            ScratchAudio.loadProjectSound(this.sounds[i]);
+            var sound = this.sounds[i];
+            if (sound.indexOf('/') > -1) {
+                // duplicate sample sounds
+                var name = IO.getFilenameWithExt(sound);
+                OS.duplicateAsset(sound, name, function () {
+                    ScratchAudio.loadProjectSound(name);
+                });
+                this.sounds[i] = name;
+            } else {
+                ScratchAudio.loadProjectSound(sound);
+            }
         }
         var sprites = JSON.parse(page.sprites);
         sprites.push(this.id);
@@ -87,6 +98,15 @@ export default class Sprite {
             doNext(atob(base64));
         }
         function doNext (str) {
+            if (MediaLib.keys[spr.md5] || spr.md5.indexOf('/') > -1) {
+                // duplicate asset in library or sample
+                // in case this asset is removed from library or sample
+                // we can still use this asset and open the project in the future
+                var name = IO.getFilenameWithExt(spr.md5);
+                OS.duplicateAsset(md5, name);
+                // use the duplicated one next time.
+                spr.md5 = name;
+            }
             str = str.replace(/>\s*</g, '><');
             spr.setSVG(str);
             IO.getImagesInSVG(str, function () {
@@ -464,6 +484,7 @@ export default class Sprite {
         this.div.appendChild(this.border);
         setProps(this.border.style, {
             position: 'absolute',
+            zIndex: -2,
             left: '0px',
             top: '0px'
         });
@@ -911,6 +932,15 @@ export default class Sprite {
                 me.unfocusText();
             });
         } else {
+            // On iOS if the bottom of the textbox is lower than half of the screen
+            // the color and font size menu may be covered by the keyboard
+            // 0.45 is a magic number and we should compare the bottom Y of the textbox VS
+            // WINDOW_INNER_HEIGHT substract the keyboard height.
+            if (gn('textbox').offsetTop + gn('textbox').offsetHeight > WINDOW_INNER_HEIGHT * 0.45) {
+                // scroll up a little more than the textbox height
+                // to show the color menu and font size menu.
+                window.scroll(0, gn('textbox').offsetHeight * 1.2);
+            }
             if (isTablet) {
                 ti.focus();
             } else {
