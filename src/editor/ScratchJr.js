@@ -727,7 +727,10 @@ export default class ScratchJr {
         if (delta == 0) {
             ScratchJr.needsToScroll(b);
         }
-        window.onkeypress = ScratchJr.handleKeyPressed;
+        // accept keyboard input
+        // `keypress` will not catch `Backspace`,
+        // so we listen to `keydown`
+        window.onkeydown = ScratchJr.handleKeyDown;
     }
 
     static needsToScroll (b) {
@@ -752,10 +755,14 @@ export default class ScratchJr {
         activeFocus.delta = delta;
     }
 
-    static handleKeyPressed (evt) {
+    static handleKeyDown (evt) {
+        // 48 is the keyCode for 0
+        // 57 is the keyCode for 9
+        // For the detail of keyCode of keyboard event
+        // please refer to https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode#value_of_keycode
         if ((evt.keyCode >= 48 && evt.keyCode <= 57) || evt.key == '-') {
-            var c = evt.key;
-            ScratchJr.fillValueWithKey(c);
+            // if the user input numbers or negative sign
+            ScratchJr.fillValueWithKey(evt.key);
             return;
         }
         if (evt.key == 'Backspace') {
@@ -786,6 +793,10 @@ export default class ScratchJr {
         ScratchJr.fillValueWithKey(c);
     }
 
+    /**
+     * Fill active focus with value `c`
+     * @param c The input char, should be 0...9 or `-`
+     */
     static fillValueWithKey (c) {
         var input = activeFocus.input;
         var val = input.textContent;
@@ -862,7 +873,8 @@ export default class ScratchJr {
         keypad.className = 'picokeyboard off';
         activeFocus.div.className = 'numfield off';
         activeFocus = undefined;
-        window.onkeypress = undefined;
+        // stop accepting keyboard events
+        window.onkeydown = undefined;
     }
 
     static numEditDone () {
