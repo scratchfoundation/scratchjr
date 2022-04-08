@@ -144,6 +144,9 @@ export default class Events {
     }
 
     static holdit (c, fcn) {
+        if (timeoutEvent) {
+            return;
+        }
         var repeat = function () {
             Events.clearEvents();
             fcn(dragthumbnail);
