@@ -49,7 +49,7 @@
 			isEditable = 1;
 			outputFiles = (
 			);
-			script = "";
+			script = "# Type a script or drag a script file from your workspace to insert its path.\n";
 		};
 /* End PBXBuildRule section */
 
@@ -68,6 +68,7 @@
 		20B2226818A4404B003BDE44 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = SOURCE_ROOT; };
 		20B2226E18A46327003BDE44 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		20B2227818A53688003BDE44 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		40A3556426A8E31100FF2C2D /* ScratchJr Free.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ScratchJr Free.entitlements"; sourceTree = "<group>"; };
 		40AF1E472619DB10000F853E /* NSDictionary+JSONString.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+JSONString.h"; path = "src/NSDictionary+JSONString.h"; sourceTree = "<group>"; };
 		40AF1E482619DB10000F853E /* NSDictionary+JSONString.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+JSONString.m"; path = "src/NSDictionary+JSONString.m"; sourceTree = "<group>"; };
 		512C88D0E9938AB5972ACF38 /* libPods-ScratchJrTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ScratchJrTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -131,6 +132,7 @@
 		204D809C18A4140600ECBB8B = {
 			isa = PBXGroup;
 			children = (
+				40A3556426A8E31100FF2C2D /* ScratchJr Free.entitlements */,
 				D92D0FE41C335BDE00C573AD /* src */,
 				20B2226818A4404B003BDE44 /* Settings.bundle */,
 				D9104A9F1C220516004D1708 /* Editions */,
@@ -430,7 +432,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "EDITION=free;\n\n../bin/bundle-compile.sh;\n\nrsync -pvtrlL --cvs-exclude \\\n    ../editions/$EDITION/ios-resources/* \\\n    \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/\";\n\nrsync -pvtrlL --cvs-exclude \\\n    ../editions/$EDITION/src/* \\\n    \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/HTML5\";\n    \nmkdir -p \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/HTML5/pnglibrary\";\n\n../bin/convert-svg-to-png.py -i \"../editions/$EDITION/src/svglibrary/\" -o \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/HTML5/pnglibrary\";\n";
+			shellScript = "EDITION=free;\n\n#../bin/bundle-compile.sh;\n\nrsync -pvtrlL --cvs-exclude \\\n    ../editions/$EDITION/ios-resources/* \\\n    \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/\";\n\nrsync -pvtrlL --cvs-exclude \\\n    ../editions/$EDITION/src/* \\\n    \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/HTML5\";\n\nmkdir -p \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/HTML5/pnglibrary\";\n\n../bin/convert-svg-to-png.py -i \"../editions/$EDITION/src/svglibrary/\" -o \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/HTML5/pnglibrary\";\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -648,6 +650,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "Free-AppIcon";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Free-LaunchImage";
+				CODE_SIGN_ENTITLEMENTS = "ScratchJr Free.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = W7AR3WMP87;
@@ -659,9 +662,11 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../editions/free/Free-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.mitmedialab.scratchjrfree;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SUPPORTS_MACCATALYST = YES;
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
@@ -673,6 +678,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "Free-AppIcon";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Free-LaunchImage";
+				CODE_SIGN_ENTITLEMENTS = "ScratchJr Free.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = W7AR3WMP87;
@@ -684,9 +690,11 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../editions/free/Free-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.mitmedialab.scratchjrfree;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SUPPORTS_MACCATALYST = YES;
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};

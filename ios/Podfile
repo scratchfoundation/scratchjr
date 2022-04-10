@@ -1,3 +1,5 @@
+load 'remove_unsupported_libraries.rb'
+
 # Uncomment this line to define a global platform for your project
 platform :ios, '8.0'
 
@@ -10,4 +12,19 @@ end
 
 target 'ScratchJrTests' do
 
+end
+
+# define unsupported pods
+def unsupported_pods
+    ['Firebase/Analytics']
+end
+
+def supported_pods
+    ['SSZipArchive']
+end
+
+# Remove unsupported pods from your project
+post_install do |installer|
+    $verbose = true # remove or set to false to avoid printing
+    installer.configure_support_catalyst(supported_pods, unsupported_pods)
 end

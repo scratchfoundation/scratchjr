@@ -1,7 +1,9 @@
 #import "ScratchJr.h"
 #import <WebKit/WebKit.h>
 // @import MessageUI;
+#if !TARGET_OS_MACCATALYST
 @import Firebase;
+#endif
 
 WKWebView *webview;
 NSDate* startDate;
@@ -183,8 +185,10 @@ NSDate *startDate;
     NSArray<NSString*>* parts = [screenString componentsSeparatedByString:@"/"];
     NSString* page = [[[parts lastObject] componentsSeparatedByString:@"?"] firstObject];
 
+#if !TARGET_OS_MACCATALYST
     // Track pageview in Firebase?
     [FIRAnalytics setScreenName:page screenClass:NULL];
+#endif
 }
 
 - (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {

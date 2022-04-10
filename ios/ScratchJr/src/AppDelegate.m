@@ -1,6 +1,8 @@
 #import "AppDelegate.h"
 #import "ScratchJr.h"
+#if !TARGET_OS_MACCATALYST
 @import Firebase;
+#endif
 
 @implementation AppDelegate
 
@@ -20,8 +22,10 @@
     self.window.rootViewController = [[ViewController alloc] initWithNibName:@"View" bundle:nil];
     [self.window makeKeyAndVisible];
     
+#if !TARGET_OS_MACCATALYST
     // Configure Firebase
     [FIRApp configure];
+#endif
     
     return YES;
 }
