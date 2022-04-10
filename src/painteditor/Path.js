@@ -851,20 +851,30 @@ export default class Path {
     }
 
     static getHitIndex (ctx, commands, pt) {
-        ctx.save();
-        ctx.beginPath();
-        for (var i = 0; i < commands.length; i++) {
-            SVG2Canvas.drawCommand(ctx, commands[i]);
-            ctx.stroke();
-            pt = Vector.floor(pt);
-            var pixel = ctx.getImageData(pt.x, pt.y, 1, 1).data;
-            if (pixel[3] != 0) {
-                return i;
+        var drawWithLineMask = function (lineWidth) {
+            ctx.save();
+            ctx.lineWidth = lineWidth;
+            ctx.beginPath();
+            for (var i = 0; i < commands.length; i++) {
+                SVG2Canvas.drawCommand(ctx, commands[i]);
+                ctx.stroke();
+                pt = Vector.floor(pt);
+                var pixel = ctx.getImageData(pt.x, pt.y, 1, 1).data;
+                if (pixel[3] != 0) {
+                    return i;
+                }
             }
+            ctx.stroke();
+            ctx.restore();
+        };
+        // When using a mouse to add dragging points to paths,
+        // we need to try a precise guess first.
+        // For more detail see #504
+        var index = drawWithLineMask(2);
+        if (index > -1) {
+            return index;
         }
-        ctx.stroke();
-        ctx.restore();
-        return -1;
+        return drawWithLineMask(Ghost.linemask);
     }
 
     static getHitPointIndex (list, pt) {
