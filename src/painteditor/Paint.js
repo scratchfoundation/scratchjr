@@ -667,9 +667,8 @@ export default class Paint {
 
     static nameBlur (e) {
         ScratchJr.activeFocus = undefined;
-        var spr = ScratchJr.getSprite();
         var ti = e.target;
-        var val = ScratchJr.validate(ti.value, spr.name);
+        var val = ScratchJr.validate(ti.value, '');
         ti.value = val.substring(0, ti.maxLength);
         ScratchJr.storyStart('Paint.nameBlur');
     }
@@ -1331,7 +1330,7 @@ export default class Paint {
                 Paint.addOrModifySprite(str, fcn);
             });
         } else {
-            var type = Paint.getLoadType(spriteId, cname);
+            var type = Paint.getLoadType(spriteId);
             if ((cname != currentName) && (type == 'modify')) {
                 ScratchJr.stage.currentPage.modifySpriteName(cname, spriteId);
             } else if (currentMd5 && (type == 'add')) {
@@ -1402,7 +1401,7 @@ export default class Paint {
     static changePageSprite () {
         Paint.close();
         var cname = document.forms.spriteform.name.value;
-        var type = Paint.getLoadType(spriteId, cname);
+        var type = Paint.getLoadType(spriteId);
         switch (type) {
         case 'modify':
             ScratchJr.stage.currentPage.modifySprite(saveMD5, cname, spriteId);
@@ -1416,11 +1415,8 @@ export default class Paint {
         }
     }
 
-    static getLoadType (sid, cid) {
-        if (!cid) {
-            return 'none';
-        }
-        if (sid && cid) {
+    static getLoadType (sid) {
+        if (sid) {
             return 'modify';
         }
         return 'add';
